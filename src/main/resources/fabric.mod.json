@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "custom_player_animations",
+  "version": "${version}",
+  "name": "Custom Player Animations",
+  "description": "Mod creado para uso personal by RazorPlay",
+  "authors": [
+    "RazorPlay"
+  ],
+  "contributors": [
+    "McVader34",
+    "Kelvin285"
+  ],
+  "contact": {
+    "homepage": "https://github.com/RazorPlay01",
+    "sources": "https://github.com/RazorPlay01"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/custom_player_animations/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.razorplay.customplayeranimations.CustomPlayerAnimations"
+    ],
+    "client": [
+      "dev.razorplay.customplayeranimations.CustomPlayerAnimations"
+    ]
+  },
+  "mixins": [
+    "custom_player_animations.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.5",
+    "minecraft": "~1.21",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  },
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/class_742": [
+        "dev/razorplay/customplayeranimations/util/ITorsoControl"
+      ]
+    }
+  }
+}

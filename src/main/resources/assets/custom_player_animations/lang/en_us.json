@@ -1,0 +1,118 @@
+{
+  "text.autoconfig.customplayeranimation.title":"Custom Player Animations",
+
+  "text.autoconfig.customplayeranimation.option.client.animationSpeedMultiplier":"Custom Player Animations",
+  "text.autoconfig.customplayeranimation.option.client.animationSpeedMultiplier.@Tooltip":"Changes the animation speed multiplier for all animations",
+
+  "text.autoconfig.customplayeranimation.option.client.walkingAnimationConfig" : "Walking Animation",
+  "text.autoconfig.customplayeranimation.option.client.walkingAnimationConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.walkingAnimationConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.walkingBackwardsAnimationConfig" : "Walking Backwards Animation",
+  "text.autoconfig.customplayeranimation.option.client.walkingBackwardsAnimationConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.walkingBackwardsAnimationConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.walkingSneakAnimationConfig" : "Walking Sneak Animation",
+  "text.autoconfig.customplayeranimation.option.client.walkingSneakAnimationConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.walkingSneakAnimationConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.walkingSneakBackwardsAnimationConfig" : "Walking Sneak Backwards Animation",
+  "text.autoconfig.customplayeranimation.option.client.walkingSneakBackwardsAnimationConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.walkingSneakBackwardsAnimationConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.runningAnimationConfig" : "Running Animation",
+  "text.autoconfig.customplayeranimation.option.client.runningAnimationConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.runningAnimationConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.turningStandingAnimationConfig" : "Turning Standing Animation",
+  "text.autoconfig.customplayeranimation.option.client.turningStandingAnimationConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.turningStandingAnimationConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.idleStandingAnimationConfig" : "Idle Standing Animation",
+  "text.autoconfig.customplayeranimation.option.client.idleStandingAnimationConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.idleStandingAnimationConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.idleSneakAnimationConfig" : "Idle Sneak Animation",
+  "text.autoconfig.customplayeranimation.option.client.idleSneakAnimationConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.idleSneakAnimationConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.idleCreativeFlyingAnimationConfig" : "Idle Creative Flying Animation",
+  "text.autoconfig.customplayeranimation.option.client.idleCreativeFlyingAnimationConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.idleCreativeFlyingAnimationConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.fallingAnimationConfig" : "Falling Animation",
+  "text.autoconfig.customplayeranimation.option.client.fallingAnimationConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.fallingAnimationConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.climbingAnimationsConfig" : "Climbing Animations",
+  "text.autoconfig.customplayeranimation.option.client.climbingAnimationsConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.climbingAnimationsConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.crawlingAnimationsConfig" : "Crawling Animations",
+  "text.autoconfig.customplayeranimation.option.client.crawlingAnimationsConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.crawlingAnimationsConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.inWaterAnimationsConfig" : "In Water Animations",
+  "text.autoconfig.customplayeranimation.option.client.inWaterAnimationsConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.inWaterAnimationsConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.minecartAnimationsConfig" : "Minecart Animations",
+  "text.autoconfig.customplayeranimation.option.client.minecartAnimationsConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.minecartAnimationsConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.horseIdleAnimationConfig" : "Horse Idle Animation",
+  "text.autoconfig.customplayeranimation.option.client.horseIdleAnimationConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.horseIdleAnimationConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.horseRunningAnimationConfig" : "Horse Running Animation",
+  "text.autoconfig.customplayeranimation.option.client.horseRunningAnimationConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.horseRunningAnimationConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.boatAnimationsConfig" : "Boat Animations",
+  "text.autoconfig.customplayeranimation.option.client.boatAnimationsConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.boatAnimationsConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.elytraAnimationsConfig" : "Elytra Animations",
+  "text.autoconfig.customplayeranimation.option.client.elytraAnimationsConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.elytraAnimationsConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.swordAttackAnimationsConfig" : "Sword Attack Animations",
+  "text.autoconfig.customplayeranimation.option.client.swordAttackAnimationsConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.swordAttackAnimationsConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.bowAnimationsConfig" : "Bow Animations",
+  "text.autoconfig.customplayeranimation.option.client.bowAnimationsConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.bowAnimationsConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.pickaxeAnimationsConfig" : "Pickaxe Animations",
+  "text.autoconfig.customplayeranimation.option.client.pickaxeAnimationsConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.pickaxeAnimationsConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.axeAnimationsConfig" : "Axe Animations",
+  "text.autoconfig.customplayeranimation.option.client.axeAnimationsConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.axeAnimationsConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.shovelAnimationsConfig" : "Shovel Animations",
+  "text.autoconfig.customplayeranimation.option.client.shovelAnimationsConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.shovelAnimationsConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.sleepingAnimationsConfig" : "Sleeping Animations",
+  "text.autoconfig.customplayeranimation.option.client.sleepingAnimationsConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.sleepingAnimationsConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.eatingAnimationsConfig" : "Eating Animations",
+  "text.autoconfig.customplayeranimation.option.client.eatingAnimationsConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.eatingAnimationsConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.shieldAnimationConfig" : "Shield Animations",
+  "text.autoconfig.customplayeranimation.option.client.shieldAnimationConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.shieldAnimationConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.tridentAnimationConfig" : "Trident Animations",
+  "text.autoconfig.customplayeranimation.option.client.tridentAnimationConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.tridentAnimationConfig.speedMultiplier" : "Speed Multiplier",
+
+  "text.autoconfig.customplayeranimation.option.client.onFenceWalkAnimationConfig" : "On Fence Walk Animations",
+  "text.autoconfig.customplayeranimation.option.client.onFenceWalkAnimationConfig.isEnabled" : "Enabled",
+  "text.autoconfig.customplayeranimation.option.client.onFenceWalkAnimationConfig.speedMultiplier" : "Speed Multiplier"
+}
