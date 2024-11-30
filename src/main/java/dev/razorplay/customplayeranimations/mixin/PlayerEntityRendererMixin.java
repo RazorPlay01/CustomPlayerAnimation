@@ -18,7 +18,7 @@ public abstract class PlayerEntityRendererMixin {
         return null;
     }
 
-    @Inject(method = {"setModelProperties"}, at = {@At(value = "INVOKE",target = "Lnet/minecraft/client/renderer/entity/player/PlayerRenderer;getArmPose(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/client/model/HumanoidModel$ArmPose;", shift = At.Shift.BY, by = 2)})
+    @Inject(method = {"setModelProperties"}, at = {@At(value = "INVOKE",target = "Lnet/minecraft/client/renderer/entity/player/PlayerRenderer;getArmPose(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/client/model/HumanoidModel$ArmPose;" , shift = At.Shift.BY, by = 2)})
     private void setModelPose(AbstractClientPlayer player, CallbackInfo ci){
         player.setMainArmPosition(getArmPose(player, InteractionHand.MAIN_HAND));
         player.setOffArmPosition(getArmPose(player, InteractionHand.OFF_HAND));

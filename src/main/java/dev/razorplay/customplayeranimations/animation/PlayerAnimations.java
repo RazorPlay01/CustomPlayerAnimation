@@ -3,6 +3,10 @@ package dev.razorplay.customplayeranimations.animation;
 import dev.kosmx.playerAnim.api.IPlayable;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.minecraftApi.codec.AnimationCodecs;
+import dev.razorplay.customplayeranimations.CustomPlayerAnimations;
+import net.minecraft.world.level.block.BeaconBeamBlock;
+import net.minecraft.world.level.block.BeaconBlock;
+import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -67,7 +71,10 @@ public class PlayerAnimations {
         ON_FENCE_WALKING_ANIMATION(50, "on_fence_walk_animation"),
         ON_FENCE_IDLE_ANIMATION(51, "on_fence_idle_animation"),
         ON_EDGE_IDLE_ANIMATION(52, "on_edge_idle_animation"),
-        JUMP_ANIMATION(53, "jump_animation");
+        JUMP_ANIMATION(53, "jump_animation"),
+        SWORD_ATTACK_3_ANIMATION(54, "sword_attack_animation"),
+        SWORD_ATTACK_3_SNEAK_ANIMATION(55, "sword_attack_sneak_animation");
+
         private final int index;
         private final String animationId;
 
@@ -94,7 +101,7 @@ public class PlayerAnimations {
                 customPlayerAnimationsList.add((KeyframeAnimation) animation);
             }
         } catch (IOException e) {
-            dev.razorplay.customplayeranimations.CustomPlayerAnimations.LOGGER.error(e.toString());
+            CustomPlayerAnimations.LOGGER.error(e.toString());
         }
     }
 }

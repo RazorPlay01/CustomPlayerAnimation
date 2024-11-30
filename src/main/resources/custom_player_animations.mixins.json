@@ -2,10 +2,13 @@
   "required": true,
   "package": "dev.razorplay.customplayeranimations.mixin",
   "compatibilityLevel": "JAVA_21",
+  "plugin": "dev.razorplay.customplayeranimations.mixin.CustomPlayerAnimationsMixinPlugin",
   "mixins": [
+    "NEA.hands.NEANarutoRunningMixin"
   ],
   "injectors": {
-    "defaultRequire": 1
+    "defaultRequire": 1,
+    "maxShiftBy": 2
   },
   "client": [
     "AbstractClientPlayerEntityMixin",
