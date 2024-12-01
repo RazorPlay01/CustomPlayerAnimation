@@ -96,7 +96,10 @@ public class ClientConfig implements ConfigData {
     public AnimationConfig tridentAnimationConfig = new AnimationConfig();
 
     @ConfigEntry.Gui.CollapsibleObject
-    public AnimationConfig onFenceWalkAnimationConfig = new AnimationConfig();
+    public AnimationConfig onFenceAnimationConfig = new AnimationConfig();
+
+    @ConfigEntry.Gui.CollapsibleObject
+    public AnimationConfig onEdgeAnimationConfig = new AnimationConfig();
 
     @Getter
     public static class AnimationConfig {
