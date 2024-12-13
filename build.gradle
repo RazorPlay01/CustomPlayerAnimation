@@ -39,6 +39,10 @@ repositories {
     maven {
         url "https://maven.blamejared.com/"
     }
+    maven {
+        name "zigythebirdMods"
+        url "https://maven.zigythebird.com/mods"
+    }
 }
 
 dependencies {
@@ -71,6 +75,14 @@ dependencies {
     modCompileOnly("curse.maven:supplementaries-412082:5154524") { transitive false }
     modCompileOnly("curse.maven:sword-blocking-427738:5511755")
     modCompileOnly("maven.modrinth:oldcombatmod:0.1.4+1.21-fabric,1.21")
+    modImplementation ("com.zigythebird.playeranimatorapi:playeranimatorapi-fabric-1.21:2.2.1", {
+        exclude group: "software.bernie.geckolib"
+        exclude group: "com.github.Virtuoel"
+        exclude group: "mod.azure.azurelib"
+        exclude group: "com.eliotlash.mclib"
+        exclude group: "net.fabricmc.fabric-api"
+        exclude group: "maven.modrinth"
+    })
 }
 
 processResources {
