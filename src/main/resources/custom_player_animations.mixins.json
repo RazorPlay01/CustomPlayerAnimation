@@ -12,6 +12,7 @@
   },
   "client": [
     "AbstractClientPlayerEntityMixin",
+    "ItemInHandLayerMixin",
     "PlayerEntityRendererMixin"
   ]
 }
