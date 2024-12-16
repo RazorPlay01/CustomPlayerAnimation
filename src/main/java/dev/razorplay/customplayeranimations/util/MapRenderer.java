@@ -29,7 +29,7 @@ public class MapRenderer {
             .text(ResourceLocation.withDefaultNamespace("textures/map/map_background_checkerboard.png"));
 
     public static void renderFirstPersonMap(PoseStack matrices, MultiBufferSource vertexConsumers, int light,
-                                            ItemStack stack, boolean small, boolean isLefthanded) {
+                                            ItemStack stack, boolean small) {
         Minecraft client = Minecraft.getInstance();
         if (small) {
             matrices.mulPose(YP.rotationDegrees(160.0f));
@@ -38,22 +38,6 @@ public class MapRenderer {
 
             matrices.translate(-0.1, -1.2, 0.0);
             matrices.scale(0.0098125f, 0.0098125f, 0.0098125f);
-        } else {
-            if (isLefthanded) {
-                matrices.mulPose(YP.rotationDegrees(160.0f));
-                matrices.mulPose(ZP.rotationDegrees(150.0f));
-                matrices.scale(0.38f, 0.38f, 0.38f);
-
-                matrices.translate(+0.5, -1.3, 0.0);
-            } else {
-                matrices.mulPose(YP.rotationDegrees(160.0f));
-                matrices.mulPose(ZP.rotationDegrees(210.0f));
-                matrices.scale(0.38f, 0.38f, 0.38f);
-
-                matrices.translate(-1.0, -1.8, 0.0);
-            }
-
-            matrices.scale(0.0138125f, 0.0138125f, 0.0138125f);
         }
         MapId mapid = stack.get(DataComponents.MAP_ID);
 
@@ -77,7 +61,7 @@ public class MapRenderer {
         }
     }
 
-    public static void addVertex(VertexConsumer cons, Matrix4f matrix4f, float x, float y, float z, float u, float v, int lightmapUV) {
+    private static void addVertex(VertexConsumer cons, Matrix4f matrix4f, float x, float y, float z, float u, float v, int lightmapUV) {
         cons.addVertex(matrix4f, x, y, z).setColor(-1).setUv(u, v).setLight(lightmapUV);
     }
 }
