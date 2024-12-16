@@ -1,6 +1,7 @@
 package dev.razorplay.customplayeranimations.mixin;
 
 import com.mojang.authlib.GameProfile;
+import dev.kosmx.playerAnim.api.TransformType;
 import dev.kosmx.playerAnim.api.firstPerson.FirstPersonMode;
 import dev.kosmx.playerAnim.api.layered.IAnimation;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
@@ -9,7 +10,6 @@ import dev.kosmx.playerAnim.api.layered.modifier.*;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.core.util.Vec3f;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
-import dev.razorplay.customplayeranimations.FirstPersonModifier;
 import dev.razorplay.customplayeranimations.animation.PlayerAnimations;
 import dev.razorplay.customplayeranimations.compat.CarryOnCompat;
 import dev.razorplay.customplayeranimations.compat.SupplementariesCompat;
@@ -57,12 +57,11 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Shadow
     @Final
     public ClientLevel clientLevel;
-    @Shadow
-    protected Vec3 deltaMovementOnPreviousTick;
+
     @Unique
-    private final ModifierLayer<IAnimation> modAnimationContainer = new ModifierLayer<>();
+    private final ModifierLayer<IAnimation> modBaseAnimationContainer = new ModifierLayer<>();
     @Unique
-    private final ModifierLayer<IAnimation> modAnimationContainer2 = new ModifierLayer<>();
+    private final ModifierLayer<IAnimation> modOverlayAnimationContainer = new ModifierLayer<>();
     @Unique
     private static final String RIGHT_PREFIX = "right_";
     @Unique
@@ -74,7 +73,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Unique
     private KeyframeAnimation currentAnimation = null;
     @Unique
-    private KeyframeAnimation currentOverlay = null;
+    private KeyframeAnimation currentOverlayAnimation = null;
     @Unique
     private KeyframeAnimation.AnimationBuilder builder = null;
 
@@ -82,11 +81,6 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     private final MirrorModifier overlayMirrorModifier = new MirrorModifier();
     @Unique
     private final MirrorModifier animationMirrorModifier = new MirrorModifier();
-
-    @Unique
-    private final ModifierLayer<IAnimation> animationContainer = modAnimationContainer;
-    @Unique
-    private final ModifierLayer<IAnimation> animationContainer2 = modAnimationContainer2;
 
     @Unique
     private final SpeedModifier overlaySpeedModifier = new SpeedModifier();
@@ -105,11 +99,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Unique
     private String currentOverlayId = "";
     @Unique
-    private String prevModifyId = "";
-    @Unique
     private String prevOverlayId = "";
-    @Unique
-    private String modifyId = "";
 
     @Unique
     private int fadeTime = 0;
@@ -156,20 +146,6 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Unique
     private boolean isOnEdge = false;
 
-    @Unique
-    private boolean isDisableArms = false;
-    @Unique
-    private boolean isDisableLeftArmB = false;
-    @Unique
-    private boolean isDisableRightArmB = false;
-    @Unique
-    private boolean isDisableMainArmB = false;
-    @Unique
-    private boolean isDisableOffArmB = false;
-    @Unique
-    private boolean isDisableAnimationB = false;
-    @Unique
-    private boolean isDisableOverlayB = false;
 
     @Unique
     private Vec3 playerPosition;
@@ -179,7 +155,11 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Unique
     private final AdjustmentModifier rightBowModifier = createBowModifier(true);
     @Unique
+    private final AdjustmentModifier upRightHandModifier = createUpHandModifier(true);
+    @Unique
     private final AdjustmentModifier leftBowModifier = createBowModifier(false);
+    @Unique
+    private final AdjustmentModifier upLeftHandModifier = createUpHandModifier(false);
 
     @Unique
     private HumanoidModel.ArmPose mainArmPosition = HumanoidModel.ArmPose.EMPTY;
@@ -197,25 +177,30 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Unique
     private void initializeAnimationLayers() {
-        PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(1, modAnimationContainer);
-        modAnimationContainer.addModifierLast(animationSpeedModifier);
-        modAnimationContainer.addModifierLast(animationMirrorModifier);
+
+        PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(1, modBaseAnimationContainer);
+        modBaseAnimationContainer.addModifierLast(animationSpeedModifier);
+        modBaseAnimationContainer.addModifierLast(animationMirrorModifier);
         animationMirrorModifier.setEnabled(false);
 
-        PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(2, modAnimationContainer2);
-        modAnimationContainer2.addModifierLast(rightBowModifier);
+        PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(2, modOverlayAnimationContainer);
+        modOverlayAnimationContainer.addModifierLast(rightBowModifier);
+        modOverlayAnimationContainer.addModifierLast(upRightHandModifier);
         rightBowModifier.enabled = false;
-        modAnimationContainer2.addModifierLast(leftBowModifier);
+        upRightHandModifier.enabled = false;
+        modOverlayAnimationContainer.addModifierLast(leftBowModifier);
+        modOverlayAnimationContainer.addModifierLast(upLeftHandModifier);
         leftBowModifier.enabled = false;
+        upLeftHandModifier.enabled = false;
 
-        modAnimationContainer2.addModifierLast(overlaySpeedModifier);
-        modAnimationContainer2.addModifierLast(overlayMirrorModifier);
+        modOverlayAnimationContainer.addModifierLast(overlaySpeedModifier);
+        modOverlayAnimationContainer.addModifierLast(overlayMirrorModifier);
         overlayMirrorModifier.setEnabled(false);
 
         currentAnimation = IDLE_STANDING_ANIMATION.getAnimation();
-        currentOverlay = BLANK_LOOP_ANIMATION.getAnimation();
+        currentOverlayAnimation = BLANK_LOOP_ANIMATION.getAnimation();
 
-        modAnimationContainer2.addModifierBefore(firstPersonModifier);
+        modOverlayAnimationContainer.addModifierBefore(firstPersonModifier);
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
@@ -225,7 +210,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Override
     public ModifierLayer<IAnimation> customPlayerAnimations_getModAnimation() {
-        return modAnimationContainer;
+        return modBaseAnimationContainer;
     }
 
     @Override
@@ -240,7 +225,9 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Override
     public void disableArmsAnimation(boolean b) {
-        this.isDisableArms = b;
+        if (b) {
+            disableBothArms();
+        }
     }
 
     @Unique
@@ -287,6 +274,30 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
                         new Vec3f(0, 0, isRight ? pitch * 0.25f : -pitch * 0.25f),
                         new Vec3f(0, -pitch, 0))
                 );
+            }
+
+            return Optional.empty();
+        });
+    }
+
+    @Unique
+    private AdjustmentModifier createUpHandModifier(boolean isRight) {
+        return new AdjustmentModifier(partName -> {
+            float limitedPitch = Math.clamp(getXRot(), -45, 45);
+            float pitch = (float) Math.toRadians(limitedPitch) * 0.5f;
+            String mainArm = isRight ? "rightArm" : "leftArm";
+            if (partName.equals(mainArm)) {
+                Vec3f currentTransform = modBaseAnimationContainer.get3DTransform(
+                        mainArm,
+                        TransformType.POSITION,
+                        0f,
+                        new Vec3f(0, 0, 0)
+                );
+
+                return Optional.of(new AdjustmentModifier.PartModifier(
+                        new Vec3f(pitch, 0, 0),                   //rotation
+                        currentTransform                                //position
+                ));
             }
 
             return Optional.empty();
@@ -381,43 +392,82 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         playHandSwingAnimations();
         playSleepAnimation();
         playUseItemAnimations();
+        //playUpHandAnimation();
+    }
+
+    @Unique
+    private boolean lastMainHandState = false;
+    @Unique
+    private boolean lastOffHandState = false;
+
+    @Unique
+    private void playUpHandAnimation() {
+        boolean isMainHandUp = getMainHandItem().getItem() == Items.TORCH ||
+                getMainHandItem().getItem() == Items.SOUL_TORCH ||
+                getMainHandItem().getItem() == Items.REDSTONE_TORCH ||
+                getMainHandItem().getItem() == Items.FILLED_MAP ||
+                getMainHandItem().getItem() == Items.RECOVERY_COMPASS ||
+                getMainHandItem().getItem() == Items.COMPASS;
+        boolean isOffHandUp = getOffhandItem().getItem() == Items.TORCH ||
+                getOffhandItem().getItem() == Items.SOUL_TORCH ||
+                getOffhandItem().getItem() == Items.REDSTONE_TORCH ||
+                getOffhandItem().getItem() == Items.FILLED_MAP ||
+                getOffhandItem().getItem() == Items.RECOVERY_COMPASS ||
+                getOffhandItem().getItem() == Items.COMPASS;
+
+        // Detectar cambios de estado
+        boolean handStateChanged = (lastMainHandState != isMainHandUp) || (lastOffHandState != isOffHandUp);
+
+        if (handStateChanged) {
+            //disableAnimation();
+        }
+
+        if (isMainHandUp) {
+            overlayFadeTime = 10;
+            currentOverlayAnimation = UP_HAND_ANIMATION.getAnimation();
+            currentOverlayId = RIGHT_PREFIX + UP_HAND_ANIMATION.getAnimationId();
+            disableArmOverlayPos(ArmsEnum.RIGHT_ARM);
+            overlayMirrorModifier.setEnabled(true);
+            upRightHandModifier.enabled = true;
+        }
+        if (isOffHandUp) {
+            overlayFadeTime = 10;
+            currentOverlayAnimation = UP_HAND_ANIMATION.getAnimation();
+            currentOverlayId = LEFT_PREFIX + UP_HAND_ANIMATION.getAnimationId();
+            disableArmOverlayPos(ArmsEnum.LEFT_ARM);
+            overlayMirrorModifier.setEnabled(false);
+            upLeftHandModifier.enabled = true;
+        }
+        lastMainHandState = isMainHandUp;
+        lastOffHandState = isOffHandUp;
     }
 
     @Unique
     private void updateAnimationContainers() {
-        boolean condition = currentOverlayId.contains("trident") ||
-                currentOverlayId.contains("bow") ||
-                currentAnimationId.contains("climbing") ||
-                currentAnimationId.contains("boat") ||
-                currentAnimationId.contains("horse") ||
-                currentAnimationId.contains("minecart") ||
-                getOffhandItem().getItem() != Items.AIR ||
-                offArmPosition.equals(HumanoidModel.ArmPose.CROSSBOW_HOLD) ||
-                offArmPosition.equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
-                mainArmPosition.equals(HumanoidModel.ArmPose.CROSSBOW_HOLD) ||
-                mainArmPosition.equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE);
-        updateMainAnimationContainer(condition);
-        updateOverlayAnimationContainer(condition);
+        updateMainAnimationContainer();
+        updateOverlayAnimationContainer();
     }
 
     @Unique
-    private void updateOverlayAnimationContainer(boolean condition) {
+    private void updateOverlayAnimationContainer() {
         if ((!Objects.equals(currentOverlayId, prevOverlayId) && overlayPriority >= prevOverlayPriority) ||
-                !animationContainer2.isActive()) {
+                !modOverlayAnimationContainer.isActive()) {
 
             rightBowModifier.enabled = false;
+            upRightHandModifier.enabled = false;
             leftBowModifier.enabled = false;
+            upLeftHandModifier.enabled = false;
 
             if (prevOverlayId.contains("trident") && !currentOverlayId.contains("trident")) {
                 overlayFadeTime = 10;
             }
 
             if (!prevOverlayId.equals(currentOverlayId)) {
-                playCurrentAnimation(condition, animationContainer2, currentOverlay);
+                playCurrentAnimation(modOverlayAnimationContainer, currentOverlayAnimation);
             } else {
                 currentOverlayId = BLANK_LOOP_ANIMATION.getAnimationId();
-                currentOverlay = BLANK_LOOP_ANIMATION.getAnimation();
-                playCurrentAnimation(condition, animationContainer2, currentOverlay);
+                currentOverlayAnimation = BLANK_LOOP_ANIMATION.getAnimation();
+                playCurrentAnimation(modOverlayAnimationContainer, currentOverlayAnimation);
             }
 
             prevOverlayId = currentOverlayId;
@@ -464,8 +514,8 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             currentComboCount = 0;
         }
 
-        if (animationContainer2.getAnimation().isActive() &&
-                ((KeyframeAnimationPlayer) animationContainer2.getAnimation()).getData().getName().equalsIgnoreCase(BLANK_LOOP_ANIMATION.getAnimationId())) {
+        if (modOverlayAnimationContainer.getAnimation().isActive() &&
+                ((KeyframeAnimationPlayer) modOverlayAnimationContainer.getAnimation()).getData().getName().equalsIgnoreCase(BLANK_LOOP_ANIMATION.getAnimationId())) {
             if (currentComboCount < 2) {
                 currentComboCount++;
             } else {
@@ -475,7 +525,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
         lastSwingTick = currentTick;
 
-        overlayAnimationSpeed = 1.4f * CONFIG.getSwordAttackAnimationsConfig().getSpeedMultiplier();
+        overlayAnimationSpeed = CONFIG.getSwordAttackAnimationsConfig().getSpeedMultiplier();
         overlayFadeTime = 0;
         overlayPriority = 1;
         overlayMirrorModifier.setEnabled(rightHand != MAIN_HAND);
@@ -494,15 +544,15 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
         switch (currentComboCount) {
             case 1 -> {
-                currentOverlay = isSneaking ? SWORD_ATTACK_1_SNEAK_ANIMATION.getAnimation() : SWORD_ATTACK_1_ANIMATION.getAnimation();
+                currentOverlayAnimation = isSneaking ? SWORD_ATTACK_1_SNEAK_ANIMATION.getAnimation() : SWORD_ATTACK_1_ANIMATION.getAnimation();
                 currentOverlayId = isSneaking ? SWORD_ATTACK_1_SNEAK_ANIMATION.getAnimationId() : SWORD_ATTACK_1_ANIMATION.getAnimationId();
             }
             case 2 -> {
-                currentOverlay = isSneaking ? SWORD_ATTACK_2_SNEAK_ANIMATION.getAnimation() : SWORD_ATTACK_2_ANIMATION.getAnimation();
+                currentOverlayAnimation = isSneaking ? SWORD_ATTACK_2_SNEAK_ANIMATION.getAnimation() : SWORD_ATTACK_2_ANIMATION.getAnimation();
                 currentOverlayId = isSneaking ? SWORD_ATTACK_2_SNEAK_ANIMATION.getAnimationId() : SWORD_ATTACK_2_ANIMATION.getAnimationId();
             }
             default -> {
-                currentOverlay = isSneaking ? SWORD_ATTACK_3_SNEAK_ANIMATION.getAnimation() : SWORD_ATTACK_3_ANIMATION.getAnimation();
+                currentOverlayAnimation = isSneaking ? SWORD_ATTACK_3_SNEAK_ANIMATION.getAnimation() : SWORD_ATTACK_3_ANIMATION.getAnimation();
                 currentOverlayId = isSneaking ? SWORD_ATTACK_3_SNEAK_ANIMATION.getAnimationId() : SWORD_ATTACK_3_ANIMATION.getAnimationId();
             }
         }
@@ -519,7 +569,6 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         if (!getMainHandItem().isEmpty()) {
             // Check if the offhand item is a map
             boolean isMap = getMainHandItem().getItem() instanceof MapItem;
-            boolean isCompass = getMainHandItem().getItem() instanceof CompassItem;
             boolean isInstrument = getMainHandItem().getItem() instanceof InstrumentItem;
             boolean isBrush = getMainHandItem().getItem() instanceof BrushItem;
 
@@ -529,7 +578,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
                     (offArmPosition.equals(HumanoidModel.ArmPose.BOW_AND_ARROW) && !(getMainHandItem().getItem() instanceof BowItem)) ||
                     isScoping() || isInstrument || isBrush;
 
-            if (condition || (IS_NEA_LOADED && isMap) || (IS_NEA_LOADED && isCompass)) {
+            if (condition || (IS_NEA_LOADED && isMap)) {
                 disableArm(ArmsEnum.RIGHT_ARM);
             }
         }
@@ -547,7 +596,6 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
                     (offArmPosition.equals(HumanoidModel.ArmPose.BOW_AND_ARROW) && !(getOffhandItem().getItem() instanceof BowItem) ||
                             isScoping() || isInstrument || isBrush);
 
-            isDisableArms = condition || (IS_NEA_LOADED && isMap);
             if (condition || (IS_NEA_LOADED && isMap)) {
                 disableArm(ArmsEnum.LEFT_ARM);
             }
@@ -555,79 +603,52 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     }
 
     @Unique
-    private void applyArmDisabling() {
-        applySpecificArmDisabling(isDisableRightArmB, ArmsEnum.RIGHT_ARM, "disable_right");
-        applySpecificArmDisabling(isDisableLeftArmB, ArmsEnum.LEFT_ARM, "disable_left");
-        applyHandBasedArmDisabling(isDisableMainArmB, MAIN_HAND, "disable_main");
-        applyHandBasedArmDisabling(isDisableOffArmB, OFF_HAND, "disable_off");
-        applyBothArmsDisabling();
-        applyAnimationDisabling();
-    }
-
-    @Unique
-    private void applySpecificArmDisabling(boolean shouldDisable, ArmsEnum arm, String modifyIdValue) {
-        if (shouldDisable) {
-            disableArm(arm);
-            modifyId = modifyIdValue;
-            fadeTime = !Objects.equals(prevModifyId, modifyId) ? 1 : fadeTime;
-        }
-    }
-
-    @Unique
-    private void applyHandBasedArmDisabling(boolean shouldDisable, InteractionHand hand, String modifyIdValue) {
-        if (shouldDisable) {
-            disableArmBasedOnHand(hand);
-            modifyId = modifyIdValue;
-            fadeTime = !Objects.equals(prevModifyId, modifyId) ? 1 : fadeTime;
-        }
-    }
-
-    @Unique
-    private void applyBothArmsDisabling() {
-        if (isDisableArms) {
-            disableBothArms();
-            modifyId = "disable_both";
-            fadeTime = !Objects.equals(prevModifyId, modifyId) ? 1 : fadeTime;
-        }
-    }
-
-    @Unique
-    private void applyAnimationDisabling() {
-        if (isDisableAnimationB) {
-            disableAnimation();
-        }
-        if (isDisableOverlayB) {
-            disableAnimationOverlay();
-        }
-    }
-
-
-    @Unique
-    private void updateMainAnimationContainer(boolean condition) {
+    private void updateMainAnimationContainer() {
         if ((!Objects.equals(currentAnimationId, prevAnimationId) && priority >= prevPriority) ||
-                !animationContainer.isActive() ||
-                !Objects.equals(modifyId, prevModifyId)) {
+                !modBaseAnimationContainer.isActive()) {
 
-            playCurrentAnimation(condition, animationContainer, currentAnimation);
+            playCurrentAnimation(modBaseAnimationContainer, currentAnimation);
 
             prevAnimationId = currentAnimationId;
-            prevModifyId = modifyId;
             prevPriority = priority;
         }
     }
 
     @Unique
-    public void playCurrentAnimation(boolean condition, ModifierLayer<
-            IAnimation> animationContainer, KeyframeAnimation animation) {
-        firstPersonModifier.setEnabled(condition);
-
+    public void playCurrentAnimation(ModifierLayer<IAnimation> animationContainer, KeyframeAnimation animation) {
+        modifyFirstPersonConfig();
         this.builder = animation.mutableCopy();
 
         animationContainer.replaceAnimationWithFade(
                 AbstractFadeModifier.standardFadeIn(fadeTime, INOUTSINE),
-                new KeyframeAnimationPlayer(animation).setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL),
+                new KeyframeAnimationPlayer(animation).setFirstPersonMode(firstPersonModifier.getFirstPersonMode(0)),
                 true
         );
+    }
+
+    @Unique
+    private void modifyFirstPersonConfig() {
+        boolean condition = currentOverlayId.contains("trident") ||
+                currentOverlayId.contains("bow") ||
+                currentAnimationId.contains("climbing") ||
+                currentAnimationId.contains("boat") ||
+                currentAnimationId.contains("horse") ||
+                currentAnimationId.contains("minecart") ||
+                currentAnimationId.contains("water") ||
+                getOffhandItem().getItem() != Items.AIR ||
+                offArmPosition.equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
+                mainArmPosition.equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE);
+
+        firstPersonModifier.setCurrentFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL);
+
+        if (condition) {
+            firstPersonModifier.setCurrentFirstPersonConfig(FirstPersonModifier.FirstPersonConfigEnum.ENABLE_BOTH_ARMS);
+        } else {
+            firstPersonModifier.setCurrentFirstPersonConfig(FirstPersonModifier.FirstPersonConfigEnum.ONLY_RIGHT_ARM_AND_ITEM);
+        }
+        if (isScoping()) {
+            firstPersonModifier.setCurrentFirstPersonConfig(FirstPersonModifier.FirstPersonConfigEnum.DISABLE_BOTH_ARMS);
+        }
     }
 
     @Unique
@@ -669,18 +690,12 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Unique
     private void setEatingAnimation(ArmsEnum arm, boolean mirror) {
-        currentOverlay = EATINHG_ANIMATION.getAnimation();
+        currentOverlayAnimation = EATINHG_ANIMATION.getAnimation();
         currentOverlayId = (mirror ? LEFT_PREFIX : RIGHT_PREFIX) + EATINHG_ANIMATION.getAnimationId();
         disableArmOverlayPos(arm);
         overlayMirrorModifier.setEnabled(mirror);
     }
 
-    @Unique
-    private void playSpecialItemAnimation() {
-        disableActiveArm();
-        fadeTime = 1;
-        priority = 0;
-    }
 
     @Unique
     private void playTridentAnimation() {
@@ -707,7 +722,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             disableArmOverlayPos(ArmsEnum.RIGHT_ARM);
             disableArmOverlayPos(ArmsEnum.LEFT_ARM);
         } else {
-            currentOverlay = TRIDENT_ANIMATION.getAnimation();
+            currentOverlayAnimation = TRIDENT_ANIMATION.getAnimation();
             currentOverlayId = (isRightHand ? RIGHT_PREFIX : LEFT_PREFIX) + TRIDENT_ANIMATION.getAnimationId();
         }
         setYBodyRot(playerHeadYaw + yawOffset);
@@ -727,7 +742,6 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     private void disableBowArms() {
         disableArm(ArmsEnum.RIGHT_ARM);
         disableArm(ArmsEnum.LEFT_ARM);
-        modifyId = "bow_idle";
         fadeTime = 1;
     }
 
@@ -747,11 +761,11 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Unique
     private void setBowAnimationForHand(boolean isRightHand) {
         if (isCrouching()) {
-            currentOverlay = BOW_SNEAK_ANIMATION.getAnimation();
+            currentOverlayAnimation = BOW_SNEAK_ANIMATION.getAnimation();
             currentOverlayId = (isRightHand ? RIGHT_PREFIX : LEFT_PREFIX) + BOW_SNEAK_ANIMATION.getAnimationId();
             overlayFadeTime = 1;
         } else {
-            currentOverlay = BOW_IDLE_ANIMATION.getAnimation();
+            currentOverlayAnimation = BOW_IDLE_ANIMATION.getAnimation();
             currentOverlayId = (isRightHand ? RIGHT_PREFIX : LEFT_PREFIX) + BOW_IDLE_ANIMATION.getAnimationId();
         }
         disableArmOverlayPos(isRightHand ? ArmsEnum.RIGHT_ARM : ArmsEnum.LEFT_ARM);
@@ -788,10 +802,10 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Unique
     private void setShieldAnimation(boolean isRightHand) {
         if (isCrouching()) {
-            currentOverlay = SHIELD_SNEAK_ANIMATION.getAnimation();
+            currentOverlayAnimation = SHIELD_SNEAK_ANIMATION.getAnimation();
             currentOverlayId = (isRightHand ? RIGHT_PREFIX : LEFT_PREFIX) + SHIELD_SNEAK_ANIMATION.getAnimationId();
         } else {
-            currentOverlay = SHIELD_ANIMATION.getAnimation();
+            currentOverlayAnimation = SHIELD_ANIMATION.getAnimation();
             currentOverlayId = (isRightHand ? RIGHT_PREFIX : LEFT_PREFIX) + SHIELD_ANIMATION.getAnimationId();
         }
         disableArmOverlayPos(isRightHand ? ArmsEnum.RIGHT_ARM : ArmsEnum.LEFT_ARM);
@@ -842,7 +856,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Unique
     public void disableAnimationOverlay() {
-        currentOverlay = BLANK_LOOP_ANIMATION.getAnimation();
+        currentOverlayAnimation = BLANK_LOOP_ANIMATION.getAnimation();
         currentOverlayId = BLANK_LOOP_ANIMATION.getAnimationId();
     }
 
@@ -855,7 +869,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             overlayPriority = priority;
             overlayMirrorModifier.setEnabled(rightHand != MAIN_HAND);
 
-            currentOverlay = isCrouching() ? sneakAnimation.getAnimation() : animation.getAnimation();
+            currentOverlayAnimation = isCrouching() ? sneakAnimation.getAnimation() : animation.getAnimation();
             currentOverlayId = isCrouching() ? sneakAnimation.getAnimationId() : animation.getAnimationId();
         } else {
             genericHandswing();
@@ -866,7 +880,6 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     public void genericHandswing() {
         disableArmBasedOnHand(swingingArm);
         currentAnimationId = "handswinging" + currentAnimationId;
-        modifyId = "handswinging";
         fadeTime = 0;
         priority = 0;
     }
@@ -1294,7 +1307,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
                 priority = 0;
                 disableAnimation();
 
-                currentOverlay = SLEEPING_ANIMATION.getAnimation();
+                currentOverlayAnimation = SLEEPING_ANIMATION.getAnimation();
                 currentOverlayId = SLEEPING_ANIMATION.getAnimationId();
             }
         }

@@ -13,6 +13,7 @@
   "client": [
     "AbstractClientPlayerEntityMixin",
     "ItemInHandLayerMixin",
-    "PlayerEntityRendererMixin"
+    "PlayerEntityRendererMixin",
+    "SkinCustomizationScreenMixin"
   ]
 }

@@ -34,5 +34,6 @@ public class CustomPlayerAnimations implements ModInitializer, ClientModInitiali
         AutoConfig.register(ConfigWrapper.class, PartitioningSerializer.wrap(JanksonConfigSerializer::new));
         CONFIG = AutoConfig.getConfigHolder(ConfigWrapper.class).getConfig().client;
         loadAnimationsList();
+        LOGGER.info("Custom Player Animations initialized.");
     }
 }
