@@ -17,6 +17,7 @@ import dev.razorplay.customplayeranimations.config.ClientConfig;
 import dev.razorplay.customplayeranimations.util.ArmsEnum;
 import dev.razorplay.customplayeranimations.util.ICustomAnimatedPlayer;
 import dev.razorplay.customplayeranimations.util.ITorsoControl;
+import dev.razorplay.customplayeranimations.util.PlayerData;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -32,7 +33,6 @@ import net.minecraft.world.entity.vehicle.Minecart;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -57,114 +57,69 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Shadow
     @Final
     public ClientLevel clientLevel;
+    @Unique
+    private KeyframeAnimation.AnimationBuilder builder = null;
 
-    @Unique
-    private final ModifierLayer<IAnimation> modBaseAnimationContainer = new ModifierLayer<>();
-    @Unique
-    private final ModifierLayer<IAnimation> modOverlayAnimationContainer = new ModifierLayer<>();
     @Unique
     private static final String RIGHT_PREFIX = "right_";
     @Unique
     private static final String LEFT_PREFIX = "left_";
 
     @Unique
-    private final FirstPersonModifier firstPersonModifier = new FirstPersonModifier();
-
-    @Unique
-    private KeyframeAnimation currentAnimation = null;
-    @Unique
-    private KeyframeAnimation currentOverlayAnimation = null;
-    @Unique
-    private KeyframeAnimation.AnimationBuilder builder = null;
-
-    @Unique
-    private final MirrorModifier overlayMirrorModifier = new MirrorModifier();
+    private final ModifierLayer<IAnimation> modBaseAnimationContainer = new ModifierLayer<>();
     @Unique
     private final MirrorModifier animationMirrorModifier = new MirrorModifier();
-
-    @Unique
-    private final SpeedModifier overlaySpeedModifier = new SpeedModifier();
     @Unique
     private final SpeedModifier animationSpeedModifier = new SpeedModifier();
-
     @Unique
-    private InteractionHand rightHand = MAIN_HAND;
-    @Unique
-    private InteractionHand leftHand = OFF_HAND;
-
+    private KeyframeAnimation currentAnimation = null;
     @Unique
     private String currentAnimationId = "";
     @Unique
     private String prevAnimationId = "";
     @Unique
-    private String currentOverlayId = "";
-    @Unique
-    private String prevOverlayId = "";
-
-    @Unique
     private int fadeTime = 0;
     @Unique
     private int priority = 0;
+    @Unique
+    private int prevPriority = 0;
+    @Unique
+    private float animationSpeed;
+
+    @Unique
+    private final ModifierLayer<IAnimation> modOverlayAnimationContainer = new ModifierLayer<>();
+    @Unique
+    private final MirrorModifier overlayMirrorModifier = new MirrorModifier();
+    @Unique
+    private final SpeedModifier overlaySpeedModifier = new SpeedModifier();
+    @Unique
+    private final AdjustmentModifier rightBowModifier = createBowModifier(true);
+    @Unique
+    private final AdjustmentModifier leftBowModifier = createBowModifier(false);
+    @Unique
+    private KeyframeAnimation currentOverlayAnimation = null;
+    @Unique
+    private String currentOverlayId = "";
+    @Unique
+    private String prevOverlayId = "";
     @Unique
     private int overlayFadeTime = 0;
     @Unique
     private int overlayPriority = 0;
     @Unique
-    private int prevPriority = 0;
-    @Unique
-    private int flychecker = 0;
-    @Unique
     private int prevOverlayPriority = 0;
-
-    @Unique
-    private float animationSpeed;
     @Unique
     private float overlayAnimationSpeed = 1;
-    @Unique
-    private float playerBodyYaw = 0;
-    @Unique
-    private float playerHeadYaw = 0;
-    @Unique
-    private float vectorX = 0;
-    @Unique
-    private float vectorY = 0;
-    @Unique
-    private float vectorZ = 0;
-    @Unique
-    private float bodyYawDelta = 0;
-    @Unique
-    private float prevbyaw = 0;
 
     @Unique
-    private double moveSpeed = 0;
+    private final PlayerData playerData = new PlayerData();
 
     @Unique
-    private boolean isMovingBackwards = false;
-
-    @Unique
-    private boolean isOnFence = false;
-    @Unique
-    private boolean isOnEdge = false;
-
-
-    @Unique
-    private Vec3 playerPosition;
-    @Unique
-    private Vec3 lastPlayerPosition = new Vec3(0, 0, 0);
-
-    @Unique
-    private final AdjustmentModifier rightBowModifier = createBowModifier(true);
+    private final FirstPersonModifier firstPersonModifier = new FirstPersonModifier();
     @Unique
     private final AdjustmentModifier upRightHandModifier = createUpHandModifier(true);
     @Unique
-    private final AdjustmentModifier leftBowModifier = createBowModifier(false);
-    @Unique
     private final AdjustmentModifier upLeftHandModifier = createUpHandModifier(false);
-
-    @Unique
-    private HumanoidModel.ArmPose mainArmPosition = HumanoidModel.ArmPose.EMPTY;
-    @Unique
-    private HumanoidModel.ArmPose offArmPosition = HumanoidModel.ArmPose.EMPTY;
 
     protected AbstractClientPlayerEntityMixin(Level level, BlockPos blockPos, float f, GameProfile gameProfile) {
         super(level, blockPos, f, gameProfile);
@@ -215,12 +170,12 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Override
     public void setMainArmPosition(HumanoidModel.ArmPose armPosition) {
-        this.mainArmPosition = armPosition;
+        playerData.setMainArmPosition(armPosition);
     }
 
     @Override
     public void setOffArmPosition(HumanoidModel.ArmPose armPosition) {
-        this.offArmPosition = armPosition;
+        playerData.setOffArmPosition(armPosition);
     }
 
     @Override
@@ -324,18 +279,18 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         handleArmDisabling();
         updateAnimationContainers();
 
-        lastPlayerPosition = playerPosition;
-        prevbyaw = playerBodyYaw;
+        playerData.setPrevPlayerPosition(playerData.getPlayerPosition());
+        playerData.setPrevPlayerBodyYaw(playerData.getPlayerBodyYaw());
     }
 
     @Unique
     private void updateHandOrientation() {
-        if (getMainArm() == HumanoidArm.LEFT) {
-            rightHand = OFF_HAND;
-            leftHand = MAIN_HAND;
+        if (getMainArm() == HumanoidArm.RIGHT) {
+            playerData.setRightHand(MAIN_HAND);
+            playerData.setLeftHand(OFF_HAND);
         } else {
-            rightHand = MAIN_HAND;
-            leftHand = OFF_HAND;
+            playerData.setRightHand(OFF_HAND);
+            playerData.setLeftHand(MAIN_HAND);
         }
     }
 
@@ -347,29 +302,29 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Unique
     private void updatePlayerPosition() {
-        playerBodyYaw = getVisualRotationYInDegrees();
-        playerHeadYaw = getYHeadRot();
-        playerPosition = position();
-        vectorX = (float) (playerPosition.x - lastPlayerPosition.x);
-        vectorY = (float) (playerPosition.y - lastPlayerPosition.y);
-        vectorZ = (float) (playerPosition.z - lastPlayerPosition.z);
-        moveSpeed = sqrt(vectorX * vectorX + vectorZ * vectorZ);
-        bodyYawDelta = playerBodyYaw - prevbyaw;
+        playerData.setPlayerBodyYaw(getVisualRotationYInDegrees());
+        playerData.setPlayerHeadYaw(getYHeadRot());
+        playerData.setPlayerPosition(position());
+        playerData.setVectorX((float) (playerData.getPlayerPosition().x - playerData.getPrevPlayerPosition().x));
+        playerData.setVectorY((float) (playerData.getPlayerPosition().y - playerData.getPrevPlayerPosition().y));
+        playerData.setVectorZ((float) (playerData.getPlayerPosition().z - playerData.getPrevPlayerPosition().z));
+        playerData.setMovementSpeed(sqrt(playerData.getVectorX() * playerData.getVectorX() + playerData.getVectorZ() * playerData.getVectorZ()));
+        playerData.setBodyYawDelta(playerData.getPlayerBodyYaw() - playerData.getPrevPlayerBodyYaw());
     }
 
     @Unique
     private void updateMovementInfo() {
         double bodyYawRadians = toRadians(yBodyRot + 90);
-        Vector3f movementVector = new Vector3f(vectorX, 0, vectorZ);
+        Vector3f movementVector = new Vector3f(playerData.getVectorX(), 0, playerData.getVectorZ());
         Vector3f lookVector = new Vector3f((float) cos(bodyYawRadians), 0, (float) sin(bodyYawRadians));
-        isMovingBackwards = movementVector.length() > 0 && movementVector.dot(lookVector) < 0;
+        playerData.setMovingBackwards(movementVector.length() > 0 && movementVector.dot(lookVector) < 0);
     }
 
     @Unique
     private void updateEnvironmentInfo() {
         Block standingBlock = this.level().getBlockState(blockPosition().below()).getBlock();
-        isOnFence = (standingBlock instanceof FenceBlock || standingBlock instanceof WallBlock || standingBlock instanceof IronBarsBlock) && onGround();
-        isOnEdge = standingBlock instanceof AirBlock && onGround();
+        playerData.setOnFence((standingBlock instanceof FenceBlock || standingBlock instanceof WallBlock || standingBlock instanceof IronBarsBlock) && onGround());
+        playerData.setOnEdge(standingBlock instanceof AirBlock && onGround());
     }
 
     @Unique
@@ -528,7 +483,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         overlayAnimationSpeed = CONFIG.getSwordAttackAnimationsConfig().getSpeedMultiplier();
         overlayFadeTime = 0;
         overlayPriority = 1;
-        overlayMirrorModifier.setEnabled(rightHand != MAIN_HAND);
+        overlayMirrorModifier.setEnabled(playerData.getRightHand() != MAIN_HAND);
 
         selectComboAnimation();
 
@@ -573,9 +528,9 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             boolean isBrush = getMainHandItem().getItem() instanceof BrushItem;
 
             // Check if the arm pose is for a crossbow or bow, and if the offhand item is not a bow
-            boolean condition = mainArmPosition.equals(HumanoidModel.ArmPose.CROSSBOW_HOLD) ||
-                    offArmPosition.equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
-                    (offArmPosition.equals(HumanoidModel.ArmPose.BOW_AND_ARROW) && !(getMainHandItem().getItem() instanceof BowItem)) ||
+            boolean condition = playerData.getMainArmPosition().equals(HumanoidModel.ArmPose.CROSSBOW_HOLD) ||
+                    playerData.getMainArmPosition().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
+                    (playerData.getMainArmPosition().equals(HumanoidModel.ArmPose.BOW_AND_ARROW) && !(getMainHandItem().getItem() instanceof BowItem)) ||
                     isScoping() || isInstrument || isBrush;
 
             if (condition || (IS_NEA_LOADED && isMap)) {
@@ -591,9 +546,9 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             boolean isInstrument = getMainHandItem().getItem() instanceof InstrumentItem;
             boolean isBrush = getMainHandItem().getItem() instanceof BrushItem;
 
-            boolean condition = offArmPosition.equals(HumanoidModel.ArmPose.CROSSBOW_HOLD) ||
-                    offArmPosition.equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
-                    (offArmPosition.equals(HumanoidModel.ArmPose.BOW_AND_ARROW) && !(getOffhandItem().getItem() instanceof BowItem) ||
+            boolean condition = playerData.getOffArmPosition().equals(HumanoidModel.ArmPose.CROSSBOW_HOLD) ||
+                    playerData.getOffArmPosition().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
+                    (playerData.getOffArmPosition().equals(HumanoidModel.ArmPose.BOW_AND_ARROW) && !(getOffhandItem().getItem() instanceof BowItem) ||
                             isScoping() || isInstrument || isBrush);
 
             if (condition || (IS_NEA_LOADED && isMap)) {
@@ -636,8 +591,8 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
                 currentAnimationId.contains("minecart") ||
                 currentAnimationId.contains("water") ||
                 getOffhandItem().getItem() != Items.AIR ||
-                offArmPosition.equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
-                mainArmPosition.equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE);
+                playerData.getOffArmPosition().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
+                playerData.getMainArmPosition().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE);
 
         firstPersonModifier.setCurrentFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL);
 
@@ -680,9 +635,9 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             overlayAnimationSpeed = CONFIG.getEatingAnimationsConfig().getSpeedMultiplier();
             overlayPriority = 0;
 
-            if (getUsedItemHand().equals(rightHand)) {
+            if (getUsedItemHand().equals(playerData.getRightHand())) {
                 setEatingAnimation(ArmsEnum.RIGHT_ARM, false);
-            } else if (getUsedItemHand().equals(leftHand)) {
+            } else if (getUsedItemHand().equals(playerData.getLeftHand())) {
                 setEatingAnimation(ArmsEnum.LEFT_ARM, true);
             }
         }
@@ -704,9 +659,9 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             overlayAnimationSpeed = CONFIG.getTridentAnimationConfig().getSpeedMultiplier();
             overlayPriority = 0;
 
-            if (getUsedItemHand().equals(rightHand)) {
+            if (getUsedItemHand().equals(playerData.getRightHand())) {
                 setTridentAnimation(true, 55);
-            } else if (getUsedItemHand().equals(leftHand)) {
+            } else if (getUsedItemHand().equals(playerData.getLeftHand())) {
                 setTridentAnimation(false, -55);
             }
         } else {
@@ -725,7 +680,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             currentOverlayAnimation = TRIDENT_ANIMATION.getAnimation();
             currentOverlayId = (isRightHand ? RIGHT_PREFIX : LEFT_PREFIX) + TRIDENT_ANIMATION.getAnimationId();
         }
-        setYBodyRot(playerHeadYaw + yawOffset);
+        setYBodyRot(playerData.getPlayerHeadYaw() + yawOffset);
         overlayMirrorModifier.setEnabled(!isRightHand);
     }
 
@@ -751,9 +706,9 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         overlayAnimationSpeed = CONFIG.getBowAnimationsConfig().getSpeedMultiplier();
         overlayPriority = 0;
 
-        if (getUsedItemHand().equals(rightHand)) {
+        if (getUsedItemHand().equals(playerData.getRightHand())) {
             setBowAnimationForHand(true);
-        } else if (getUsedItemHand().equals(leftHand)) {
+        } else if (getUsedItemHand().equals(playerData.getLeftHand())) {
             setBowAnimationForHand(false);
         }
     }
@@ -772,10 +727,10 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
         if (isRightHand) {
             rightBowModifier.enabled = true;
-            setYBodyRot(playerHeadYaw - 90);
+            setYBodyRot(playerData.getPlayerHeadYaw() - 90);
         } else {
             leftBowModifier.enabled = true;
-            setYBodyRot(playerHeadYaw + 90);
+            setYBodyRot(playerData.getPlayerHeadYaw() + 90);
         }
         overlayMirrorModifier.setEnabled(!isRightHand);
     }
@@ -787,9 +742,9 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             overlayAnimationSpeed = CONFIG.getShieldAnimationConfig().getSpeedMultiplier();
             overlayPriority = 0;
 
-            if (getUsedItemHand().equals(rightHand)) {
+            if (getUsedItemHand().equals(playerData.getRightHand())) {
                 setShieldAnimation(true);
-            } else if (getUsedItemHand().equals(leftHand)) {
+            } else if (getUsedItemHand().equals(playerData.getLeftHand())) {
                 setShieldAnimation(false);
             }
         } else {
@@ -816,7 +771,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Unique
     private void disableArmBasedOnHand(InteractionHand hand) {
         builder = currentAnimation.mutableCopy();
-        disableArmInBuilder(hand == rightHand ? ArmsEnum.RIGHT_ARM : ArmsEnum.LEFT_ARM);
+        disableArmInBuilder(hand == playerData.getRightHand() ? ArmsEnum.RIGHT_ARM : ArmsEnum.LEFT_ARM);
         currentAnimation = builder.build();
     }
 
@@ -867,7 +822,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             overlayFadeTime = fade;
             overlayAnimationSpeed = config.getSpeedMultiplier();
             overlayPriority = priority;
-            overlayMirrorModifier.setEnabled(rightHand != MAIN_HAND);
+            overlayMirrorModifier.setEnabled(playerData.getRightHand() != MAIN_HAND);
 
             currentOverlayAnimation = isCrouching() ? sneakAnimation.getAnimation() : animation.getAnimation();
             currentOverlayId = isCrouching() ? sneakAnimation.getAnimationId() : animation.getAnimationId();
@@ -889,7 +844,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         if (!CONFIG.getWalkingAnimationConfig().isEnabled()) {
             disableAnimation();
         } else {
-            animationSpeed = (float) (moveSpeed * CONFIG.getWalkingAnimationConfig().getSpeedMultiplier());
+            animationSpeed = (float) (playerData.getMovementSpeed() * CONFIG.getWalkingAnimationConfig().getSpeedMultiplier());
 
             currentAnimation = WALKING_ANIMATION.getAnimation();
             currentAnimationId = WALKING_ANIMATION.getAnimationId();
@@ -904,7 +859,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         if (!CONFIG.getWalkingBackwardsAnimationConfig().isEnabled()) {
             disableAnimation();
         } else {
-            animationSpeed = (float) (moveSpeed * CONFIG.getWalkingBackwardsAnimationConfig().getSpeedMultiplier());
+            animationSpeed = (float) (playerData.getMovementSpeed() * CONFIG.getWalkingBackwardsAnimationConfig().getSpeedMultiplier());
 
             currentAnimation = WALKING_BACKWARDS_ANIMATION.getAnimation();
             currentAnimationId = WALKING_BACKWARDS_ANIMATION.getAnimationId();
@@ -919,7 +874,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         if (!CONFIG.getIdleSneakAnimationConfig().isEnabled()) {
             disableAnimation();
         } else {
-            animationSpeed = (float) (moveSpeed * CONFIG.getWalkingSneakAnimationConfig().getSpeedMultiplier());
+            animationSpeed = (float) (playerData.getMovementSpeed() * CONFIG.getWalkingSneakAnimationConfig().getSpeedMultiplier());
 
             currentAnimation = WALKING_SNEAK_ANIMATION.getAnimation();
             currentAnimationId = WALKING_SNEAK_ANIMATION.getAnimationId();
@@ -939,7 +894,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         if (!CONFIG.getWalkingSneakBackwardsAnimationConfig().isEnabled()) {
             disableAnimation();
         } else {
-            animationSpeed = (float) (moveSpeed * CONFIG.getWalkingSneakBackwardsAnimationConfig().getSpeedMultiplier());
+            animationSpeed = (float) (playerData.getMovementSpeed() * CONFIG.getWalkingSneakBackwardsAnimationConfig().getSpeedMultiplier());
 
             currentAnimation = WALKING_SNEAK_BACKWARDS_ANIMATION.getAnimation();
             currentAnimationId = WALKING_SNEAK_BACKWARDS_ANIMATION.getAnimationId();
@@ -959,7 +914,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         if (!CONFIG.getRunningAnimationConfig().isEnabled()) {
             disableAnimation();
         } else {
-            animationSpeed = (float) (moveSpeed * CONFIG.getRunningAnimationConfig().getSpeedMultiplier());
+            animationSpeed = (float) (playerData.getMovementSpeed() * CONFIG.getRunningAnimationConfig().getSpeedMultiplier());
 
             currentAnimation = RUNNING_ANIMATION.getAnimation();
             currentAnimationId = RUNNING_ANIMATION.getAnimationId();
@@ -973,13 +928,13 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         if (!CONFIG.getTurningStandingAnimationConfig().isEnabled()) {
             disableAnimation();
         } else {
-            currentAnimation = (bodyYawDelta < 0) ? TURN_LEFT_ANIMATION.getAnimation() : TURN_RIGHT_ANIMATION.getAnimation();
-            currentAnimationId = (bodyYawDelta < 0) ? TURN_LEFT_ANIMATION.getAnimationId() : TURN_RIGHT_ANIMATION.getAnimationId();
+            currentAnimation = (playerData.getBodyYawDelta() < 0) ? TURN_LEFT_ANIMATION.getAnimation() : TURN_RIGHT_ANIMATION.getAnimation();
+            currentAnimationId = (playerData.getBodyYawDelta() < 0) ? TURN_LEFT_ANIMATION.getAnimationId() : TURN_RIGHT_ANIMATION.getAnimationId();
 
-            if ((((float) 1 / 2) * bodyYawDelta) > 2 || (((float) 1 / 2) * bodyYawDelta) < 2) {
+            if ((((float) 1 / 2) * playerData.getBodyYawDelta()) > 2 || (((float) 1 / 2) * playerData.getBodyYawDelta()) < 2) {
                 animationSpeed = CONFIG.getTurningStandingAnimationConfig().getSpeedMultiplier();
             } else {
-                animationSpeed = abs((((float) 1 / 2) * bodyYawDelta) * CONFIG.getTurningStandingAnimationConfig().getSpeedMultiplier());
+                animationSpeed = abs((((float) 1 / 2) * playerData.getBodyYawDelta()) * CONFIG.getTurningStandingAnimationConfig().getSpeedMultiplier());
             }
         }
 
@@ -1037,7 +992,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Unique
     private void playFallAnimation() {
-        if (vectorY < -0.6 && !isPassenger() && !onGround()) {
+        if (playerData.getVectorY() < -0.6 && !isPassenger() && !onGround()) {
             if (!CONFIG.getFallingAnimationConfig().isEnabled()) {
                 disableAnimation();
             } else {
@@ -1088,10 +1043,10 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Unique
     private void playClimbingAnimation() {
         if (onClimbable()) {
-            if (vectorY > 0) {
+            if (playerData.getVectorY() > 0) {
                 currentAnimation = isCrouching() ? CLIMBING_SNEAK_ANIMATION.getAnimation() : CLIMBING_ANIMATION.getAnimation();
                 currentAnimationId = isCrouching() ? CLIMBING_SNEAK_ANIMATION.getAnimationId() : CLIMBING_ANIMATION.getAnimationId();
-            } else if (vectorY < 0) {
+            } else if (playerData.getVectorY() < 0) {
                 currentAnimation = CLIMBING_BACKWARDS_ANIMATION.getAnimation();
                 currentAnimationId = CLIMBING_BACKWARDS_ANIMATION.getAnimationId();
             } else {
@@ -1104,18 +1059,18 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Unique
     private void setBodyRotationOnClimbableBlocks() {
         if (!(getUseItem().getItem() instanceof BowItem)) {
-            playerBodyYaw = ((float) toDegrees(atan2((blockPosition().getZ() + 0.5 - playerPosition.z), (blockPosition().getX()) + 0.5 - playerPosition.x)) - 90);
-            playerHeadYaw = getYHeadRot();
-            playerBodyYaw = ((playerBodyYaw % 360) + 360) % 360;
-            playerHeadYaw = ((playerHeadYaw % 360) + 360) % 360;
-            setYBodyRot(playerBodyYaw);
-            playerHeadYaw = playerHeadYaw - playerBodyYaw;
-            playerHeadYaw = ((playerHeadYaw % 360) + 360) % 360;
+            playerData.setPrevPlayerBodyYaw(((float) toDegrees(atan2((blockPosition().getZ() + 0.5 - playerData.getPlayerPosition().z), (blockPosition().getX()) + 0.5 - playerData.getPlayerPosition().x)) - 90));
+            playerData.setPlayerHeadYaw(getYHeadRot());
+            playerData.setPrevPlayerBodyYaw(((playerData.getPlayerBodyYaw() % 360) + 360) % 360);
+            playerData.setPlayerHeadYaw(((playerData.getPlayerHeadYaw() % 360) + 360) % 360);
+            setYBodyRot(playerData.getPlayerBodyYaw());
+            playerData.setPlayerHeadYaw(playerData.getPlayerHeadYaw() - playerData.getPlayerBodyYaw());
+            playerData.setPlayerHeadYaw(((playerData.getPlayerHeadYaw() % 360) + 360) % 360);
 
-            if (playerHeadYaw > 90 && playerHeadYaw <= 180) {
-                setYHeadRot(playerBodyYaw + 90);
-            } else if (playerHeadYaw > 180 && playerHeadYaw < 270) {
-                setYHeadRot(playerBodyYaw + 270);
+            if (playerData.getPlayerHeadYaw() > 90 && playerData.getPlayerHeadYaw() <= 180) {
+                setYHeadRot(playerData.getPlayerBodyYaw() + 90);
+            } else if (playerData.getPlayerHeadYaw() > 180 && playerData.getPlayerHeadYaw() < 270) {
+                setYHeadRot(playerData.getPlayerBodyYaw() + 270);
             }
         }
     }
@@ -1124,28 +1079,28 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     private void setBodyRotationInLeadderAndVineBlocks() {
         if (!(getUseItem().getItem() instanceof BowItem)) {
             String blockStateString = String.valueOf(this.clientLevel.getBlockState(blockPosition()));
-            playerBodyYaw = getVisualRotationYInDegrees();
-            playerHeadYaw = getYHeadRot();
+            playerData.setPlayerBodyYaw(getVisualRotationYInDegrees());
+            playerData.setPlayerHeadYaw(getYHeadRot());
             if (blockStateString.contains("facing=north") || blockStateString.contains("south=true")) {
-                playerBodyYaw = 0;
+                playerData.setPlayerBodyYaw(0);
             } else if (blockStateString.contains("facing=south") || blockStateString.contains("north=true")) {
-                playerBodyYaw = 180;
+                playerData.setPlayerBodyYaw(180);
             } else if (blockStateString.contains("facing=west") || blockStateString.contains("east=true")) {
-                playerBodyYaw = 270;
+                playerData.setPlayerBodyYaw(270);
             } else if (blockStateString.contains("facing=east") || blockStateString.contains("west=true")) {
-                playerBodyYaw = 90;
+                playerData.setPlayerBodyYaw(90);
             }
 
-            playerBodyYaw = ((playerBodyYaw % 360) + 360) % 360;
-            playerHeadYaw = ((playerHeadYaw % 360) + 360) % 360;
-            setYBodyRot(playerBodyYaw);
-            playerHeadYaw = playerHeadYaw - playerBodyYaw;
-            playerHeadYaw = ((playerHeadYaw % 360) + 360) % 360;
+            playerData.setPlayerBodyYaw(((playerData.getPlayerBodyYaw() % 360) + 360) % 360);
+            playerData.setPlayerHeadYaw(((playerData.getPlayerHeadYaw() % 360) + 360) % 360);
+            setYBodyRot(playerData.getPlayerBodyYaw());
+            playerData.setPlayerHeadYaw(playerData.getPlayerHeadYaw() - playerData.getPlayerBodyYaw());
+            playerData.setPlayerHeadYaw(((playerData.getPlayerHeadYaw() % 360) + 360) % 360);
 
-            if (playerHeadYaw > 90 && playerHeadYaw <= 180) {
-                setYHeadRot(playerBodyYaw + 90);
-            } else if (playerHeadYaw > 180 && playerHeadYaw < 270) {
-                setYHeadRot(playerBodyYaw + 270);
+            if (playerData.getPlayerHeadYaw() > 90 && playerData.getPlayerHeadYaw() <= 180) {
+                setYHeadRot(playerData.getPlayerBodyYaw() + 90);
+            } else if (playerData.getPlayerHeadYaw() > 180 && playerData.getPlayerHeadYaw() < 270) {
+                setYHeadRot(playerData.getPlayerBodyYaw() + 270);
             }
         }
     }
@@ -1157,13 +1112,13 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         } else {
             if (isVisuallyCrawling()) {
                 animationSpeed = CONFIG.getCrawlingAnimationsConfig().getSpeedMultiplier();
-                if (moveSpeed > 0.0649) {
-                    animationSpeed += (float) moveSpeed;
+                if (playerData.getMovementSpeed() > 0.0649) {
+                    animationSpeed += (float) playerData.getMovementSpeed();
                 }
-                if (moveSpeed > 0 && !isMovingBackwards) {
+                if (playerData.getMovementSpeed() > 0 && !playerData.isMovingBackwards()) {
                     currentAnimation = CRAWLING_ANIMATION.getAnimation();
                     currentAnimationId = CRAWLING_ANIMATION.getAnimationId();
-                } else if (moveSpeed > 0) {
+                } else if (playerData.getMovementSpeed() > 0) {
                     currentAnimation = CRAWLING_BACKWARDS_ANIMATION.getAnimation();
                     currentAnimationId = CRAWLING_BACKWARDS_ANIMATION.getAnimationId();
                 } else {
@@ -1185,13 +1140,13 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             fadeTime = 10;
             priority = 0;
             if ((isInWaterOrBubble() || isInLava()) && !onGround() && !isVisuallySwimming()) {
-                if (moveSpeed > 0 && !isMovingBackwards) {
+                if (playerData.getMovementSpeed() > 0 && !playerData.isMovingBackwards()) {
                     currentAnimation = IN_WATER_FORWARD_ANIMATION.getAnimation();
                     currentAnimationId = IN_WATER_FORWARD_ANIMATION.getAnimationId();
-                } else if (moveSpeed > 0) {
+                } else if (playerData.getMovementSpeed() > 0) {
                     currentAnimation = IN_WATER_BACKWARDS_ANIMATION.getAnimation();
                     currentAnimationId = IN_WATER_BACKWARDS_ANIMATION.getAnimationId();
-                } else if (vectorY > 0) {
+                } else if (playerData.getVectorY() > 0) {
                     currentAnimation = IN_WATER_UP_ANIMATION.getAnimation();
                     currentAnimationId = IN_WATER_UP_ANIMATION.getAnimationId();
                 } else {
@@ -1224,7 +1179,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
                     || vehicle instanceof ZombieHorse
                     || vehicle instanceof Donkey
                     || vehicle instanceof Mule) {
-                if (moveSpeed > 0 && !isMovingBackwards) {
+                if (playerData.getMovementSpeed() > 0 && !playerData.isMovingBackwards()) {
                     if (!CONFIG.getHorseRunningAnimationConfig().isEnabled()) {
                         disableAnimation();
                     } else {
@@ -1266,7 +1221,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
                     boolean isLeftPaddleMoving = ((Boat) getVehicle()).getPaddleState(0);
                     boolean isRightPaddleMoving = ((Boat) getVehicle()).getPaddleState(1);
 
-                    if (moveSpeed > 0 && !isMovingBackwards) {
+                    if (playerData.getMovementSpeed() > 0 && !playerData.isMovingBackwards()) {
                         if (isLeftPaddleMoving && isRightPaddleMoving) {
                             currentAnimation = BOAT_FORWARD_ANIMATION.getAnimation();
                             currentAnimationId = BOAT_FORWARD_ANIMATION.getAnimationId();
@@ -1331,37 +1286,37 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Unique
     private void playFlyAnimation() {
-        double vyfly = Math.round(vectorY * 1000.0) / 1000.0;
+        double vyfly = Math.round(playerData.getVectorY() * 1000.0) / 1000.0;
         if ((vyfly == 0.0 || Math.abs(vyfly) == 0.375) && !onGround() && !isInWaterOrBubble()) {
-            flychecker++;
+            playerData.setFlychecker(playerData.getFlychecker() + 1);
         } else if (Math.abs(vyfly) > 0.375 || onGround()) {
-            flychecker = 0;
+            playerData.setFlychecker(0);
         }
 
-        if (flychecker > 10) {
+        if (playerData.getFlychecker() > 10) {
             playFlyIdleCreativeAnimation();
         }
     }
 
     @Unique
     private void playBaseAnimations() {
-        if (moveSpeed < 0.23 && moveSpeed > 0 && !isMovingBackwards && !isCrouching()) {
-            if (isOnFence) {
+        if (playerData.getMovementSpeed() < 0.23 && playerData.getMovementSpeed() > 0 && !playerData.isMovingBackwards() && !isCrouching()) {
+            if (playerData.isOnFence()) {
                 playOnFenceAnimation();
             } else {
                 playWalkingAnimation();
             }
-        } else if (isMovingBackwards && !isCrouching()) {
+        } else if (playerData.isMovingBackwards() && !isCrouching()) {
             playWalkingBackwardsAnimation();
-        } else if (moveSpeed > 0.23 && isSprinting() && !isMovingBackwards && !isCrouching()) {
+        } else if (playerData.getMovementSpeed() > 0.23 && isSprinting() && !playerData.isMovingBackwards() && !isCrouching()) {
             playRunningAnimation();
-        } else if (moveSpeed == 0 && !isCrouching() && !isSprinting()) {
+        } else if (playerData.getMovementSpeed() == 0 && !isCrouching() && !isSprinting()) {
             playTurningStandingAnimation();
-        } else if (isCrouching() && moveSpeed == 0 && !isMovingBackwards) {
+        } else if (isCrouching() && playerData.getMovementSpeed() == 0 && !playerData.isMovingBackwards()) {
             playSneakingAnimation();
-        } else if (isCrouching() && moveSpeed > 0 && !isMovingBackwards) {
+        } else if (isCrouching() && playerData.getMovementSpeed() > 0 && !playerData.isMovingBackwards()) {
             playWalkingSneakAnimation();
-        } else if (isCrouching() && moveSpeed > 0) {
+        } else if (isCrouching() && playerData.getMovementSpeed() > 0) {
             playWalkingSneakBackwardsAnimation();
         }
     }
@@ -1371,7 +1326,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         if (!CONFIG.getOnFenceAnimationConfig().isEnabled()) {
             playWalkingAnimation();
         } else {
-            animationSpeed = (float) moveSpeed * CONFIG.getOnFenceAnimationConfig().getSpeedMultiplier();
+            animationSpeed = (float) playerData.getMovementSpeed() * CONFIG.getOnFenceAnimationConfig().getSpeedMultiplier();
 
             currentAnimation = ON_FENCE_WALKING_ANIMATION.getAnimation();
             currentAnimationId = ON_FENCE_WALKING_ANIMATION.getAnimationId();
@@ -1383,15 +1338,15 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Unique
     private void playSneakingAnimation() {
-        if (bodyYawDelta != 0) {
+        if (playerData.getBodyYawDelta() != 0) {
             playWalkingSneakAnimation();
             if (!CONFIG.getTurningStandingAnimationConfig().isEnabled()) {
                 disableAnimation();
             } else {
-                if ((((float) 1 / 2) * bodyYawDelta) > 1.5 || (((float) 1 / 2) * bodyYawDelta) < -1.5) {
+                if ((((float) 1 / 2) * playerData.getBodyYawDelta()) > 1.5 || (((float) 1 / 2) * playerData.getBodyYawDelta()) < -1.5) {
                     animationSpeed = CONFIG.getTurningStandingAnimationConfig().getSpeedMultiplier();
                 } else {
-                    animationSpeed = abs((((float) 1 / 2) * bodyYawDelta) * CONFIG.getTurningStandingAnimationConfig().getSpeedMultiplier());
+                    animationSpeed = abs((((float) 1 / 2) * playerData.getBodyYawDelta()) * CONFIG.getTurningStandingAnimationConfig().getSpeedMultiplier());
                 }
             }
         } else {
@@ -1401,13 +1356,13 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Unique
     private void playTurningStandingAnimation() {
-        if (bodyYawDelta != 0) {
+        if (playerData.getBodyYawDelta() != 0) {
             playTurnLeftAndRightAnimation();
         } else {
-            if (CONFIG.onFenceAnimationConfig.isEnabled() && isOnFence) {
+            if (CONFIG.onFenceAnimationConfig.isEnabled() && playerData.isOnFence()) {
                 currentAnimation = ON_FENCE_IDLE_ANIMATION.getAnimation();
                 currentAnimationId = ON_FENCE_IDLE_ANIMATION.getAnimationId();
-            } else if (CONFIG.onEdgeAnimationConfig.isEnabled() && isOnEdge) {
+            } else if (CONFIG.onEdgeAnimationConfig.isEnabled() && playerData.isOnEdge()) {
                 currentAnimation = ON_EDGE_IDLE_ANIMATION.getAnimation();
                 currentAnimationId = ON_EDGE_IDLE_ANIMATION.getAnimationId();
             } else {
