@@ -10,14 +10,12 @@ import dev.kosmx.playerAnim.api.layered.modifier.*;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.core.util.Vec3f;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
+import dev.razorplay.customplayeranimations.animation.AnimationContainer;
 import dev.razorplay.customplayeranimations.animation.PlayerAnimations;
 import dev.razorplay.customplayeranimations.compat.CarryOnCompat;
 import dev.razorplay.customplayeranimations.compat.SupplementariesCompat;
 import dev.razorplay.customplayeranimations.config.ClientConfig;
-import dev.razorplay.customplayeranimations.util.ArmsEnum;
-import dev.razorplay.customplayeranimations.util.ICustomAnimatedPlayer;
-import dev.razorplay.customplayeranimations.util.ITorsoControl;
-import dev.razorplay.customplayeranimations.util.PlayerData;
+import dev.razorplay.customplayeranimations.util.*;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -42,12 +40,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
 import static dev.kosmx.playerAnim.core.util.Ease.INOUTSINE;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.*;
 import static dev.razorplay.customplayeranimations.animation.PlayerAnimations.Animations.*;
+import static dev.razorplay.customplayeranimations.util.Util.*;
 import static java.lang.Math.*;
 import static java.lang.Math.abs;
 import static net.minecraft.world.InteractionHand.*;
@@ -59,11 +60,6 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     public ClientLevel clientLevel;
     @Unique
     private KeyframeAnimation.AnimationBuilder builder = null;
-
-    @Unique
-    private static final String RIGHT_PREFIX = "right_";
-    @Unique
-    private static final String LEFT_PREFIX = "left_";
 
     @Unique
     private final ModifierLayer<IAnimation> modBaseAnimationContainer = new ModifierLayer<>();
@@ -85,6 +81,22 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     private int prevPriority = 0;
     @Unique
     private float animationSpeed;
+
+    @Unique
+    private final AnimationContainer overlayAnimationContainer = new AnimationContainer(
+            new ModifierLayer<>(),
+            new HashMap<>(
+                    Map.of("MirrorModifier", new MirrorModifier(),
+                            "SpeedModifier", new SpeedModifier(),
+                            "RightBowModifier", createBowModifier(true),
+                            "LeftBowModifier", createBowModifier(false))),
+            null,
+            "",
+            "",
+            0,
+            0,
+            0,
+            1);
 
     @Unique
     private final ModifierLayer<IAnimation> modOverlayAnimationContainer = new ModifierLayer<>();
@@ -132,7 +144,6 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Unique
     private void initializeAnimationLayers() {
-
         PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(1, modBaseAnimationContainer);
         modBaseAnimationContainer.addModifierLast(animationSpeedModifier);
         modBaseAnimationContainer.addModifierLast(animationMirrorModifier);
@@ -140,22 +151,23 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
         PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(2, modOverlayAnimationContainer);
         modOverlayAnimationContainer.addModifierLast(rightBowModifier);
-        modOverlayAnimationContainer.addModifierLast(upRightHandModifier);
         rightBowModifier.enabled = false;
-        upRightHandModifier.enabled = false;
         modOverlayAnimationContainer.addModifierLast(leftBowModifier);
-        modOverlayAnimationContainer.addModifierLast(upLeftHandModifier);
         leftBowModifier.enabled = false;
-        upLeftHandModifier.enabled = false;
 
         modOverlayAnimationContainer.addModifierLast(overlaySpeedModifier);
         modOverlayAnimationContainer.addModifierLast(overlayMirrorModifier);
         overlayMirrorModifier.setEnabled(false);
 
+        modOverlayAnimationContainer.addModifierLast(upRightHandModifier);
+        modOverlayAnimationContainer.addModifierLast(upLeftHandModifier);
+        upRightHandModifier.enabled = false;
+        upLeftHandModifier.enabled = false;
+        modOverlayAnimationContainer.addModifierBefore(firstPersonModifier);
+
+
         currentAnimation = IDLE_STANDING_ANIMATION.getAnimation();
         currentOverlayAnimation = BLANK_LOOP_ANIMATION.getAnimation();
-
-        modOverlayAnimationContainer.addModifierBefore(firstPersonModifier);
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
@@ -169,20 +181,34 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     }
 
     @Override
-    public void setMainArmPosition(HumanoidModel.ArmPose armPosition) {
-        playerData.setMainArmPosition(armPosition);
-    }
-
-    @Override
-    public void setOffArmPosition(HumanoidModel.ArmPose armPosition) {
-        playerData.setOffArmPosition(armPosition);
-    }
-
-    @Override
-    public void disableArmsAnimation(boolean b) {
-        if (b) {
+    public void disableArmsAnimation(boolean disableArms) {
+        if (disableArms) {
             disableBothArms();
         }
+    }
+
+    @Override
+    public void disableRightArmAnimation(boolean disableRightArm) {
+        if (disableRightArm) {
+            disableArmInBuilder(ArmsEnum.RIGHT_ARM);
+        }
+    }
+
+    @Override
+    public void disableLeftArmAnimation(boolean disableLeftArm) {
+        if (disableLeftArm) {
+            disableArmInBuilder(ArmsEnum.LEFT_ARM);
+        }
+    }
+
+    @Override
+    public void setMainArmPose(HumanoidModel.ArmPose armPosition) {
+        playerData.setMainArmPose(armPosition);
+    }
+
+    @Override
+    public void setOffArmPose(HumanoidModel.ArmPose armPosition) {
+        playerData.setOffArmPose(armPosition);
     }
 
     @Unique
@@ -216,8 +242,8 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     private AdjustmentModifier createBowModifier(boolean isRight) {
         return new AdjustmentModifier(partName -> {
             float pitch = (float) Math.toRadians(getXRot());
-            String mainArm = isRight ? "rightArm" : "leftArm";
-            String offArm = isRight ? "leftArm" : "rightArm";
+            String mainArm = isRight ? ArmsEnum.RIGHT_ARM.getArmId() : ArmsEnum.LEFT_ARM.getArmId();
+            String offArm = isRight ? ArmsEnum.LEFT_ARM.getArmId() : ArmsEnum.RIGHT_ARM.getArmId();
 
             if (partName.equals(mainArm)) {
                 return Optional.of(new AdjustmentModifier.PartModifier(
@@ -240,7 +266,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         return new AdjustmentModifier(partName -> {
             float limitedPitch = Math.clamp(getXRot(), -45, 45);
             float pitch = (float) Math.toRadians(limitedPitch) * 0.5f;
-            String mainArm = isRight ? "rightArm" : "leftArm";
+            String mainArm = isRight ? ArmsEnum.RIGHT_ARM.getArmId() : ArmsEnum.LEFT_ARM.getArmId();
             if (partName.equals(mainArm)) {
                 Vec3f currentTransform = modBaseAnimationContainer.get3DTransform(
                         mainArm,
@@ -347,7 +373,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         playHandSwingAnimations();
         playSleepAnimation();
         playUseItemAnimations();
-        //playUpHandAnimation();
+        playUpHandAnimation();
     }
 
     @Unique
@@ -374,7 +400,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         boolean handStateChanged = (lastMainHandState != isMainHandUp) || (lastOffHandState != isOffHandUp);
 
         if (handStateChanged) {
-            //disableAnimation();
+            disableAnimation();
         }
 
         if (isMainHandUp) {
@@ -528,9 +554,9 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             boolean isBrush = getMainHandItem().getItem() instanceof BrushItem;
 
             // Check if the arm pose is for a crossbow or bow, and if the offhand item is not a bow
-            boolean condition = playerData.getMainArmPosition().equals(HumanoidModel.ArmPose.CROSSBOW_HOLD) ||
-                    playerData.getMainArmPosition().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
-                    (playerData.getMainArmPosition().equals(HumanoidModel.ArmPose.BOW_AND_ARROW) && !(getMainHandItem().getItem() instanceof BowItem)) ||
+            boolean condition = playerData.getMainArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_HOLD) ||
+                    playerData.getMainArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
+                    (playerData.getMainArmPose().equals(HumanoidModel.ArmPose.BOW_AND_ARROW) && !(getMainHandItem().getItem() instanceof BowItem)) ||
                     isScoping() || isInstrument || isBrush;
 
             if (condition || (IS_NEA_LOADED && isMap)) {
@@ -546,9 +572,9 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             boolean isInstrument = getMainHandItem().getItem() instanceof InstrumentItem;
             boolean isBrush = getMainHandItem().getItem() instanceof BrushItem;
 
-            boolean condition = playerData.getOffArmPosition().equals(HumanoidModel.ArmPose.CROSSBOW_HOLD) ||
-                    playerData.getOffArmPosition().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
-                    (playerData.getOffArmPosition().equals(HumanoidModel.ArmPose.BOW_AND_ARROW) && !(getOffhandItem().getItem() instanceof BowItem) ||
+            boolean condition = playerData.getOffArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_HOLD) ||
+                    playerData.getOffArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
+                    (playerData.getOffArmPose().equals(HumanoidModel.ArmPose.BOW_AND_ARROW) && !(getOffhandItem().getItem() instanceof BowItem) ||
                             isScoping() || isInstrument || isBrush);
 
             if (condition || (IS_NEA_LOADED && isMap)) {
@@ -591,15 +617,15 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
                 currentAnimationId.contains("minecart") ||
                 currentAnimationId.contains("water") ||
                 getOffhandItem().getItem() != Items.AIR ||
-                playerData.getOffArmPosition().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
-                playerData.getMainArmPosition().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE);
+                playerData.getOffArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
+                playerData.getMainArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE);
 
         firstPersonModifier.setCurrentFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL);
 
         if (condition) {
             firstPersonModifier.setCurrentFirstPersonConfig(FirstPersonModifier.FirstPersonConfigEnum.ENABLE_BOTH_ARMS);
         } else {
-            firstPersonModifier.setCurrentFirstPersonConfig(FirstPersonModifier.FirstPersonConfigEnum.ONLY_RIGHT_ARM_AND_ITEM);
+            firstPersonModifier.setCurrentFirstPersonConfig(getMainArm() == HumanoidArm.RIGHT ? FirstPersonModifier.FirstPersonConfigEnum.ONLY_RIGHT_ARM_AND_ITEM : FirstPersonModifier.FirstPersonConfigEnum.ONLY_LEFT_ARM_AND_ITEM);
         }
         if (isScoping()) {
             firstPersonModifier.setCurrentFirstPersonConfig(FirstPersonModifier.FirstPersonConfigEnum.DISABLE_BOTH_ARMS);

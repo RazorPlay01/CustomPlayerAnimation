@@ -30,6 +30,6 @@ public class PlayerData {
     private boolean isOnEdge = false;
     private InteractionHand rightHand = MAIN_HAND;
     private InteractionHand leftHand = OFF_HAND;
-    private HumanoidModel.ArmPose mainArmPosition = HumanoidModel.ArmPose.EMPTY;
-    private HumanoidModel.ArmPose offArmPosition = HumanoidModel.ArmPose.EMPTY;
+    private HumanoidModel.ArmPose mainArmPose = HumanoidModel.ArmPose.EMPTY;
+    private HumanoidModel.ArmPose offArmPose = HumanoidModel.ArmPose.EMPTY;
 }
