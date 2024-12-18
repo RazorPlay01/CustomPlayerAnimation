@@ -72,7 +72,8 @@ public class PlayerAnimations {
         ON_EDGE_IDLE_ANIMATION(52, "on_edge_idle_animation"),
         JUMP_ANIMATION(53, "jump_animation"),
         SWORD_ATTACK_3_ANIMATION(54, "sword_attack_animation"),
-        SWORD_ATTACK_3_SNEAK_ANIMATION(55, "sword_attack_sneak_animation");
+        SWORD_ATTACK_3_SNEAK_ANIMATION(55, "sword_attack_sneak_animation"),
+        UP_HAND_ANIMATION(56,"up_hand_animation");
 
         private final int index;
         @Getter

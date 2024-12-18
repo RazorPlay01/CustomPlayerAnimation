@@ -10,6 +10,7 @@ import dev.kosmx.playerAnim.api.layered.modifier.*;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.core.util.Vec3f;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
+import dev.razorplay.customplayeranimations.animation.AnimationContainer;
 import dev.razorplay.customplayeranimations.animation.PlayerAnimations;
 import dev.razorplay.customplayeranimations.compat.CarryOnCompat;
 import dev.razorplay.customplayeranimations.compat.SupplementariesCompat;
@@ -42,12 +43,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 import static dev.kosmx.playerAnim.core.util.Ease.INOUTSINE;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.*;
 import static dev.razorplay.customplayeranimations.animation.PlayerAnimations.Animations.*;
+import static dev.razorplay.customplayeranimations.util.Util.*;
 import static java.lang.Math.*;
 import static java.lang.Math.abs;
 import static net.minecraft.world.InteractionHand.*;
@@ -59,67 +62,79 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     public ClientLevel clientLevel;
 
     @Unique
-    private final ModifierLayer<IAnimation> modBaseAnimationContainer = new ModifierLayer<>();
-    @Unique
-    private final ModifierLayer<IAnimation> modOverlayAnimationContainer = new ModifierLayer<>();
-    @Unique
-    private static final String RIGHT_PREFIX = "right_";
-    @Unique
-    private static final String LEFT_PREFIX = "left_";
-
-    @Unique
     private final FirstPersonModifier firstPersonModifier = new FirstPersonModifier();
 
     @Unique
-    private KeyframeAnimation currentAnimation = null;
-    @Unique
-    private KeyframeAnimation currentOverlayAnimation = null;
-    @Unique
-    private KeyframeAnimation.AnimationBuilder builder = null;
-
-    @Unique
-    private final MirrorModifier overlayMirrorModifier = new MirrorModifier();
+    private final ModifierLayer<IAnimation> modBaseAnimationContainer = new ModifierLayer<>();
     @Unique
     private final MirrorModifier animationMirrorModifier = new MirrorModifier();
-
-    @Unique
-    private final SpeedModifier overlaySpeedModifier = new SpeedModifier();
     @Unique
     private final SpeedModifier animationSpeedModifier = new SpeedModifier();
-
     @Unique
-    private InteractionHand rightHand = MAIN_HAND;
-    @Unique
-    private InteractionHand leftHand = OFF_HAND;
-
+    private KeyframeAnimation currentAnimation = null;
     @Unique
     private String currentAnimationId = "";
     @Unique
     private String prevAnimationId = "";
     @Unique
-    private String currentOverlayId = "";
-    @Unique
-    private String prevOverlayId = "";
-
-    @Unique
     private int fadeTime = 0;
     @Unique
     private int priority = 0;
+    @Unique
+    private int prevPriority = 0;
+    @Unique
+    private float animationSpeed;
+
+    @Unique
+    private final ModifierLayer<IAnimation> modOverlayAnimationContainer = new ModifierLayer<>();
+    @Unique
+    private final MirrorModifier overlayMirrorModifier = new MirrorModifier();
+    @Unique
+    private final SpeedModifier overlaySpeedModifier = new SpeedModifier();
+    @Unique
+    private final AdjustmentModifier rightBowModifier = createBowModifier(true);
+    @Unique
+    private final AdjustmentModifier leftBowModifier = createBowModifier(false);
+    @Unique
+    private KeyframeAnimation currentOverlayAnimation = null;
+    @Unique
+    private String currentOverlayId = "";
+    @Unique
+    private String prevOverlayId = "";
     @Unique
     private int overlayFadeTime = 0;
     @Unique
     private int overlayPriority = 0;
     @Unique
-    private int prevPriority = 0;
-    @Unique
-    private int flychecker = 0;
-    @Unique
     private int prevOverlayPriority = 0;
-
-    @Unique
-    private float animationSpeed;
     @Unique
     private float overlayAnimationSpeed = 1;
+
+    @Unique
+    private final AnimationContainer upHandAnimationContainer = new AnimationContainer(
+            new ModifierLayer<>(),
+            List.of(new MirrorModifier(),
+                    createUpHandModifier(true),
+                    createUpHandModifier(false),
+                    firstPersonModifier),
+            null,
+            "",
+            "",
+            0,
+            0,
+            0
+    );
+
+    @Unique
+    private KeyframeAnimation.AnimationBuilder builder = null;
+    @Unique
+    private InteractionHand rightHand = MAIN_HAND;
+    @Unique
+    private InteractionHand leftHand = OFF_HAND;
+
+
+    @Unique
+    private int flyChecker = 0;
     @Unique
     private float playerBodyYaw = 0;
     @Unique
@@ -133,7 +148,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Unique
     private float bodyYawDelta = 0;
     @Unique
-    private float prevbyaw = 0;
+    private float prevBodyYaw = 0;
 
     @Unique
     private double moveSpeed = 0;
@@ -151,15 +166,6 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     private Vec3 playerPosition;
     @Unique
     private Vec3 lastPlayerPosition = new Vec3(0, 0, 0);
-
-    @Unique
-    private final AdjustmentModifier rightBowModifier = createBowModifier(true);
-    @Unique
-    private final AdjustmentModifier upRightHandModifier = createUpHandModifier(true);
-    @Unique
-    private final AdjustmentModifier leftBowModifier = createBowModifier(false);
-    @Unique
-    private final AdjustmentModifier upLeftHandModifier = createUpHandModifier(false);
 
     @Unique
     private HumanoidModel.ArmPose mainArmPosition = HumanoidModel.ArmPose.EMPTY;
@@ -185,22 +191,24 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
         PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(2, modOverlayAnimationContainer);
         modOverlayAnimationContainer.addModifierLast(rightBowModifier);
-        modOverlayAnimationContainer.addModifierLast(upRightHandModifier);
         rightBowModifier.enabled = false;
-        upRightHandModifier.enabled = false;
         modOverlayAnimationContainer.addModifierLast(leftBowModifier);
-        modOverlayAnimationContainer.addModifierLast(upLeftHandModifier);
         leftBowModifier.enabled = false;
-        upLeftHandModifier.enabled = false;
 
-        modOverlayAnimationContainer.addModifierLast(overlaySpeedModifier);
-        modOverlayAnimationContainer.addModifierLast(overlayMirrorModifier);
-        overlayMirrorModifier.setEnabled(false);
+        //PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(3, upHandAnimationContainer.getAnimationModifierLayer());
+        for (AbstractModifier modifier : upHandAnimationContainer.getAnimationModifiers()) {
+            upHandAnimationContainer.getAnimationModifierLayer().addModifierLast(modifier);
+            if (modifier instanceof MirrorModifier mirrorModifier) {
+                mirrorModifier.setEnabled(false);
+            }
+            if (modifier instanceof AdjustmentModifier adjustmentModifier) {
+                adjustmentModifier.enabled = false;
+            }
+        }
+        upHandAnimationContainer.setCurrentAnimation(BLANK_LOOP_ANIMATION.getAnimation());
 
         currentAnimation = IDLE_STANDING_ANIMATION.getAnimation();
         currentOverlayAnimation = BLANK_LOOP_ANIMATION.getAnimation();
-
-        modOverlayAnimationContainer.addModifierBefore(firstPersonModifier);
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
@@ -258,53 +266,6 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     }
 
     @Unique
-    private AdjustmentModifier createBowModifier(boolean isRight) {
-        return new AdjustmentModifier(partName -> {
-            float pitch = (float) Math.toRadians(getXRot());
-            String mainArm = isRight ? "rightArm" : "leftArm";
-            String offArm = isRight ? "leftArm" : "rightArm";
-
-            if (partName.equals(mainArm)) {
-                return Optional.of(new AdjustmentModifier.PartModifier(
-                        new Vec3f(0, 0, isRight ? -pitch : pitch),
-                        new Vec3f(0, pitch, 0))
-                );
-            } else if (partName.equals(offArm)) {
-                return Optional.of(new AdjustmentModifier.PartModifier(
-                        new Vec3f(0, 0, isRight ? pitch * 0.25f : -pitch * 0.25f),
-                        new Vec3f(0, -pitch, 0))
-                );
-            }
-
-            return Optional.empty();
-        });
-    }
-
-    @Unique
-    private AdjustmentModifier createUpHandModifier(boolean isRight) {
-        return new AdjustmentModifier(partName -> {
-            float limitedPitch = Math.clamp(getXRot(), -45, 45);
-            float pitch = (float) Math.toRadians(limitedPitch) * 0.5f;
-            String mainArm = isRight ? "rightArm" : "leftArm";
-            if (partName.equals(mainArm)) {
-                Vec3f currentTransform = modBaseAnimationContainer.get3DTransform(
-                        mainArm,
-                        TransformType.POSITION,
-                        0f,
-                        new Vec3f(0, 0, 0)
-                );
-
-                return Optional.of(new AdjustmentModifier.PartModifier(
-                        new Vec3f(pitch, 0, 0),                   //rotation
-                        currentTransform                                //position
-                ));
-            }
-
-            return Optional.empty();
-        });
-    }
-
-    @Unique
     public void animatePlayer() {
         updateHandOrientation();
         updatePlayerPosition();
@@ -312,6 +273,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         updateEnvironmentInfo();
 
         disableAnimationOverlay();
+        //disableAnimationUpHand();
         resetOverlayProperties();
 
         playAnimationSequence();
@@ -325,7 +287,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         updateAnimationContainers();
 
         lastPlayerPosition = playerPosition;
-        prevbyaw = playerBodyYaw;
+        prevBodyYaw = playerBodyYaw;
     }
 
     @Unique
@@ -354,7 +316,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         vectorY = (float) (playerPosition.y - lastPlayerPosition.y);
         vectorZ = (float) (playerPosition.z - lastPlayerPosition.z);
         moveSpeed = sqrt(vectorX * vectorX + vectorZ * vectorZ);
-        bodyYawDelta = playerBodyYaw - prevbyaw;
+        bodyYawDelta = playerBodyYaw - prevBodyYaw;
     }
 
     @Unique
@@ -376,7 +338,6 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     private void resetOverlayProperties() {
         overlayFadeTime = 10;
         overlayAnimationSpeed = 1;
-        overlayPriority = 0;
     }
 
     @Unique
@@ -419,24 +380,23 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         boolean handStateChanged = (lastMainHandState != isMainHandUp) || (lastOffHandState != isOffHandUp);
 
         if (handStateChanged) {
-            //disableAnimation();
+            disableAnimation();
+            disableAnimationOverlay();
         }
 
         if (isMainHandUp) {
-            overlayFadeTime = 10;
-            currentOverlayAnimation = UP_HAND_ANIMATION.getAnimation();
-            currentOverlayId = RIGHT_PREFIX + UP_HAND_ANIMATION.getAnimationId();
-            disableArmOverlayPos(ArmsEnum.RIGHT_ARM);
-            overlayMirrorModifier.setEnabled(true);
-            upRightHandModifier.enabled = true;
+            upHandAnimationContainer.setCurrentAnimation(UP_HAND_ANIMATION.getAnimation());
+            upHandAnimationContainer.setCurrentAnimationId(RIGHT_PREFIX + UP_HAND_ANIMATION.getAnimationId());
+            disableUpHandPos(ArmsEnum.RIGHT_ARM);
+            ((MirrorModifier) upHandAnimationContainer.getAnimationModifiers().get(0)).setEnabled(true);
+            ((AdjustmentModifier) upHandAnimationContainer.getAnimationModifiers().get(1)).enabled = true;
         }
         if (isOffHandUp) {
-            overlayFadeTime = 10;
-            currentOverlayAnimation = UP_HAND_ANIMATION.getAnimation();
-            currentOverlayId = LEFT_PREFIX + UP_HAND_ANIMATION.getAnimationId();
-            disableArmOverlayPos(ArmsEnum.LEFT_ARM);
-            overlayMirrorModifier.setEnabled(false);
-            upLeftHandModifier.enabled = true;
+            upHandAnimationContainer.setCurrentAnimation(UP_HAND_ANIMATION.getAnimation());
+            upHandAnimationContainer.setCurrentAnimationId(LEFT_PREFIX + UP_HAND_ANIMATION.getAnimationId());
+            disableUpHandPos(ArmsEnum.LEFT_ARM);
+            ((MirrorModifier) upHandAnimationContainer.getAnimationModifiers().get(0)).setEnabled(false);
+            ((AdjustmentModifier) upHandAnimationContainer.getAnimationModifiers().get(2)).enabled = true;
         }
         lastMainHandState = isMainHandUp;
         lastOffHandState = isOffHandUp;
@@ -446,6 +406,24 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     private void updateAnimationContainers() {
         updateMainAnimationContainer();
         updateOverlayAnimationContainer();
+        updateUpHandAnimationContainer();
+    }
+
+    @Unique
+    private void updateUpHandAnimationContainer() {
+        if (!Objects.equals(upHandAnimationContainer.getCurrentAnimationId(), upHandAnimationContainer.getPrevAnimationId()) ||
+                !upHandAnimationContainer.getAnimationModifierLayer().isActive()) {
+
+            if (!upHandAnimationContainer.getPrevAnimationId().equals(upHandAnimationContainer.getCurrentAnimationId())) {
+                playCurrentAnimation(upHandAnimationContainer.getAnimationModifierLayer(), upHandAnimationContainer.getCurrentAnimation());
+            } else {
+                upHandAnimationContainer.setCurrentAnimationId(BLANK_LOOP_ANIMATION.getAnimationId());
+                upHandAnimationContainer.setCurrentAnimation(BLANK_LOOP_ANIMATION.getAnimation());
+                playCurrentAnimation(upHandAnimationContainer.getAnimationModifierLayer(), upHandAnimationContainer.getCurrentAnimation());
+            }
+
+            upHandAnimationContainer.setPrevAnimationId(upHandAnimationContainer.getCurrentAnimationId());
+        }
     }
 
     @Unique
@@ -454,9 +432,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
                 !modOverlayAnimationContainer.isActive()) {
 
             rightBowModifier.enabled = false;
-            upRightHandModifier.enabled = false;
             leftBowModifier.enabled = false;
-            upLeftHandModifier.enabled = false;
 
             if (prevOverlayId.contains("trident") && !currentOverlayId.contains("trident")) {
                 overlayFadeTime = 10;
@@ -644,7 +620,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         if (condition) {
             firstPersonModifier.setCurrentFirstPersonConfig(FirstPersonModifier.FirstPersonConfigEnum.ENABLE_BOTH_ARMS);
         } else {
-            firstPersonModifier.setCurrentFirstPersonConfig(FirstPersonModifier.FirstPersonConfigEnum.ONLY_RIGHT_ARM_AND_ITEM);
+            firstPersonModifier.setCurrentFirstPersonConfig(getMainArm().equals(HumanoidArm.RIGHT) ? FirstPersonModifier.FirstPersonConfigEnum.ONLY_RIGHT_ARM_AND_ITEM : FirstPersonModifier.FirstPersonConfigEnum.ONLY_LEFT_ARM_AND_ITEM);
         }
         if (isScoping()) {
             firstPersonModifier.setCurrentFirstPersonConfig(FirstPersonModifier.FirstPersonConfigEnum.DISABLE_BOTH_ARMS);
@@ -849,6 +825,27 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     }
 
     @Unique
+    public void disableUpHandPos(ArmsEnum arm) {
+        KeyframeAnimation.StateCollection currentArm;
+        builder = currentAnimation.mutableCopy();
+        currentArm = builder.getPart(arm.getArmId());
+        if (currentArm != null) {
+            currentArm.x.setEnabled(false);
+            currentArm.y.setEnabled(false);
+            currentArm.z.setEnabled(false);
+        }
+        currentAnimation = builder.build();
+        builder = currentOverlayAnimation.mutableCopy();
+        currentArm = builder.getPart(arm.getArmId());
+        if (currentArm != null) {
+            currentArm.x.setEnabled(false);
+            currentArm.y.setEnabled(false);
+            currentArm.z.setEnabled(false);
+        }
+        currentOverlayAnimation = builder.build();
+    }
+
+    @Unique
     public void disableAnimation() {
         currentAnimation = BLANK_LOOP_ANIMATION.getAnimation();
         currentAnimationId = BLANK_LOOP_ANIMATION.getAnimationId();
@@ -858,6 +855,12 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     public void disableAnimationOverlay() {
         currentOverlayAnimation = BLANK_LOOP_ANIMATION.getAnimation();
         currentOverlayId = BLANK_LOOP_ANIMATION.getAnimationId();
+    }
+
+    @Unique
+    public void disableAnimationUpHand() {
+        upHandAnimationContainer.setCurrentAnimation(BLANK_LOOP_ANIMATION.getAnimation());
+        upHandAnimationContainer.setCurrentAnimationId(BLANK_LOOP_ANIMATION.getAnimationId());
     }
 
     @Unique
@@ -1301,6 +1304,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         if (isSleeping()) {
             if (!CONFIG.getSleepingAnimationsConfig().isEnabled()) {
                 disableAnimationOverlay();
+                disableAnimationUpHand();
             } else {
                 fadeTime = 10;
                 animationSpeed = CONFIG.getSleepingAnimationsConfig().getSpeedMultiplier();
@@ -1333,12 +1337,12 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     private void playFlyAnimation() {
         double vyfly = Math.round(vectorY * 1000.0) / 1000.0;
         if ((vyfly == 0.0 || Math.abs(vyfly) == 0.375) && !onGround() && !isInWaterOrBubble()) {
-            flychecker++;
+            flyChecker++;
         } else if (Math.abs(vyfly) > 0.375 || onGround()) {
-            flychecker = 0;
+            flyChecker = 0;
         }
 
-        if (flychecker > 10) {
+        if (flyChecker > 10) {
             playFlyIdleCreativeAnimation();
         }
     }
@@ -1422,5 +1426,52 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             }
             priority = 0;
         }
+    }
+
+    @Unique
+    private AdjustmentModifier createBowModifier(boolean isRight) {
+        return new AdjustmentModifier(partName -> {
+            float pitch = (float) Math.toRadians(getXRot());
+            String mainArm = isRight ? "rightArm" : "leftArm";
+            String offArm = isRight ? "leftArm" : "rightArm";
+
+            if (partName.equals(mainArm)) {
+                return Optional.of(new AdjustmentModifier.PartModifier(
+                        new Vec3f(0, 0, isRight ? -pitch : pitch),
+                        new Vec3f(0, pitch, 0))
+                );
+            } else if (partName.equals(offArm)) {
+                return Optional.of(new AdjustmentModifier.PartModifier(
+                        new Vec3f(0, 0, isRight ? pitch * 0.25f : -pitch * 0.25f),
+                        new Vec3f(0, -pitch, 0))
+                );
+            }
+
+            return Optional.empty();
+        });
+    }
+
+    @Unique
+    private AdjustmentModifier createUpHandModifier(boolean isRight) {
+        return new AdjustmentModifier(partName -> {
+            float limitedPitch = Math.clamp(getXRot(), -45, 45);
+            float pitch = (float) Math.toRadians(limitedPitch) * 0.5f;
+            String mainArm = isRight ? "rightArm" : "leftArm";
+            if (partName.equals(mainArm)) {
+                Vec3f currentTransform = modOverlayAnimationContainer.get3DTransform(
+                        mainArm,
+                        TransformType.POSITION,
+                        0f,
+                        new Vec3f(0, 0, 0)
+                );
+
+                return Optional.of(new AdjustmentModifier.PartModifier(
+                        new Vec3f(pitch, 0, 0),                   //rotation
+                        currentTransform                                //position
+                ));
+            }
+
+            return Optional.empty();
+        });
     }
 }
