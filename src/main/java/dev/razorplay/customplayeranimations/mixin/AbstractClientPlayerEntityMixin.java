@@ -102,7 +102,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             null,
             "",
             "",
-            0,
+            10,
             0,
             0,
             1);
