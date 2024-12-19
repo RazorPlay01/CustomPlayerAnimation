@@ -1,7 +1,6 @@
 package dev.razorplay.customplayeranimations.animation;
 
 import dev.kosmx.playerAnim.api.IPlayable;
-import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.minecraftApi.codec.AnimationCodecs;
 import dev.razorplay.customplayeranimations.CustomPlayerAnimations;
