@@ -1,4 +1,4 @@
-package dev.razorplay.customplayeranimations.util;
+package dev.razorplay.customplayeranimations.util.enums;
 
 public enum ArmsEnum {
     RIGHT_ARM("rightArm"),

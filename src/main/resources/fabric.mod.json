@@ -44,7 +44,7 @@
   "custom": {
     "loom:injected_interfaces": {
       "net/minecraft/class_742": [
-        "dev/razorplay/customplayeranimations/util/ITorsoControl"
+        "dev/razorplay/customplayeranimations/util/interfaces/ITorsoControl"
       ]
     }
   }

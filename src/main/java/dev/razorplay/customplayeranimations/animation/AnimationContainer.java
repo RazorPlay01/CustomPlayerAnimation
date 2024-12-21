@@ -10,6 +10,9 @@ import lombok.Setter;
 
 import java.util.HashMap;
 
+import static dev.razorplay.customplayeranimations.animation.AnimationProvider.BLANK_LOOP_ANIMATION;
+
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -23,4 +26,9 @@ public class AnimationContainer {
     private int animationPriority;
     private int prevAnimationPriority;
     private float animationSpeed;
+
+    public void disableAnimation() {
+        this.setCurrentAnimation(BLANK_LOOP_ANIMATION.animation());
+        this.setCurrentAnimationId(BLANK_LOOP_ANIMATION.animationId());
+    }
 }

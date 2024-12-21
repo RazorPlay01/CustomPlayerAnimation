@@ -1,4 +1,4 @@
-package dev.razorplay.customplayeranimations.util;
+package dev.razorplay.customplayeranimations.util.interfaces;
 
 import net.minecraft.client.model.HumanoidModel;
 

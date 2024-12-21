@@ -11,8 +11,18 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 public class ClientConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip
     private float animationSpeedMultiplier = 1;
+    @ConfigEntry.Gui.Tooltip
+    private float animationMoveSpeedMultiplier = 4;
 
     @ConfigEntry.Category(value = "Animations")
+    @ConfigEntry.Gui.CollapsibleObject
+    public SwordAnimations swordAnimations = new SwordAnimations();
+    @ConfigEntry.Gui.CollapsibleObject
+    public HorseAnimations horseAnimationsConfig = new HorseAnimations();
+    @ConfigEntry.Gui.CollapsibleObject
+    public InWaterAnimations inWaterAnimationsConfig = new InWaterAnimations();
+    @ConfigEntry.Gui.CollapsibleObject
+    public BoatAnimations boatAnimations = new BoatAnimations();
 
     @ConfigEntry.Gui.CollapsibleObject
     public AnimationConfig walkingAnimationConfig = new AnimationConfig();
@@ -33,6 +43,9 @@ public class ClientConfig implements ConfigData {
     public AnimationConfig turningStandingAnimationConfig = new AnimationConfig();
 
     @ConfigEntry.Gui.CollapsibleObject
+    public AnimationConfig turningSneakAnimationConfig = new AnimationConfig();
+
+    @ConfigEntry.Gui.CollapsibleObject
     public AnimationConfig idleStandingAnimationConfig = new AnimationConfig();
 
     @ConfigEntry.Gui.CollapsibleObject
@@ -51,25 +64,10 @@ public class ClientConfig implements ConfigData {
     public AnimationConfig crawlingAnimationsConfig = new AnimationConfig();
 
     @ConfigEntry.Gui.CollapsibleObject
-    public AnimationConfig inWaterAnimationsConfig = new AnimationConfig();
-
-    @ConfigEntry.Gui.CollapsibleObject
     public AnimationConfig minecartAnimationsConfig = new AnimationConfig();
 
     @ConfigEntry.Gui.CollapsibleObject
-    public AnimationConfig horseIdleAnimationConfig = new AnimationConfig();
-
-    @ConfigEntry.Gui.CollapsibleObject
-    public AnimationConfig horseRunningAnimationConfig = new AnimationConfig();
-
-    @ConfigEntry.Gui.CollapsibleObject
-    public AnimationConfig boatAnimationsConfig = new AnimationConfig();
-
-    @ConfigEntry.Gui.CollapsibleObject
     public AnimationConfig elytraAnimationsConfig = new AnimationConfig();
-
-    @ConfigEntry.Gui.CollapsibleObject
-    public AnimationConfig swordAttackAnimationsConfig = new AnimationConfig();
 
     @ConfigEntry.Gui.CollapsibleObject
     public AnimationConfig bowAnimationsConfig = new AnimationConfig();
@@ -101,9 +99,64 @@ public class ClientConfig implements ConfigData {
     @ConfigEntry.Gui.CollapsibleObject
     public AnimationConfig onEdgeAnimationConfig = new AnimationConfig();
 
+    @ConfigEntry.Gui.CollapsibleObject
+    public AnimationConfig upHandAnimationConfig = new AnimationConfig();
+
     @Getter
     public static class AnimationConfig {
         boolean isEnabled = true;
         float speedMultiplier = 1;
+        int fadeTime = 10;
+        int priority = 0;
+    }
+
+    @Getter
+    public static class SwordAnimationConfig {
+        float speedMultiplier = 1;
+        int fadeTime = 10;
+        int priority = 0;
+    }
+
+    public static class HorseAnimations {
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig horseIdleAnimationConfig = new AnimationConfig();
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig horseRunningAnimationConfig = new AnimationConfig();
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig horseRunningBackwardsAnimationConfig = new AnimationConfig();
+    }
+
+    public static class InWaterAnimations {
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig inWaterUpAnimationConfig = new AnimationConfig();
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig inWaterSwimAnimationConfig = new AnimationConfig();
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig inWaterForwardAnimationConfig = new AnimationConfig();
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig inWaterBackwardsAnimationConfig = new AnimationConfig();
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig inWaterIdleAnimationConfig = new AnimationConfig();
+    }
+
+    public static class BoatAnimations {
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig boatTurnAnimationConfig = new AnimationConfig();
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig boatForwardAnimationConfig = new AnimationConfig();
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig boatIdleAnimationConfig = new AnimationConfig();
+    }
+
+    public static class SwordAnimations {
+        @Getter
+        @ConfigEntry.Gui.CollapsibleObject
+        boolean isEnabled = true;
+        @ConfigEntry.Gui.CollapsibleObject
+        public SwordAnimationConfig swordAttack1AnimationConfig = new SwordAnimationConfig();
+        @ConfigEntry.Gui.CollapsibleObject
+        public SwordAnimationConfig swordAttack2AnimationConfig = new SwordAnimationConfig();
+        @ConfigEntry.Gui.CollapsibleObject
+        public SwordAnimationConfig swordAttack3AnimationConfig = new SwordAnimationConfig();
     }
 }

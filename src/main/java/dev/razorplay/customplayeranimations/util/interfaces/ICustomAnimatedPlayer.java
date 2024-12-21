@@ -1,4 +1,4 @@
-package dev.razorplay.customplayeranimations.util;
+package dev.razorplay.customplayeranimations.util.interfaces;
 
 import dev.kosmx.playerAnim.api.layered.IAnimation;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;
