@@ -67,7 +67,8 @@ public enum AnimationsId {
     SWORD_ATTACK_3_ANIMATION("sword_attack_3_animation"),
     SWORD_ATTACK_3_SNEAK_ANIMATION("sword_attack_3_sneak_animation"),
     //UpHand Animation
-    UP_HAND_ANIMATION("up_hand_animation");
+    UP_HAND_ANIMATION("up_hand_animation"),
+    ITEM_SWAP_ANIMATION("item_swap_animation");
 
     private final String animationId;
 }

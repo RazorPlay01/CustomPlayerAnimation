@@ -22,13 +22,14 @@ import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import dev.razorplay.customplayeranimations.util.*;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import org.spongepowered.asm.mixin.Final;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -133,10 +134,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Inject(method = "tick", at = @At("TAIL"))
     public void tick(CallbackInfo ci) {
         // Update Player Data
-        playerData.updateHandOrientation(getMainArm());
-        playerData.updatePlayerPosition(getYHeadRot(), getVisualRotationYInDegrees(), position());
-        playerData.updateMovementInfo(yBodyRot);
-        playerData.updateEnvironmentInfo((AbstractClientPlayer) (Object) this);
+        playerData.update((AbstractClientPlayer) (Object) this);
 
         overlayAnimationContainer.resetAnimationProperties();
 
@@ -227,7 +225,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         InWaterForwardAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
         InWaterBackwardsAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
         InWaterUpAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        InWaterSwimAnimations.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
+        InWaterSwimAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
         MountAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
         MinecartAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
         HorseIdleAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
@@ -254,6 +252,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         SwordAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
         // UpHand Animation
         UpHandAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
+        ItemSwapAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
 
     }
 

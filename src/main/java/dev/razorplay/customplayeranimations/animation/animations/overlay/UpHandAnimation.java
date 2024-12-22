@@ -18,8 +18,7 @@ import java.util.Set;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
-import static dev.razorplay.customplayeranimations.util.Util.LEFT_PREFIX;
-import static dev.razorplay.customplayeranimations.util.Util.RIGHT_PREFIX;
+import static dev.razorplay.customplayeranimations.util.Util.*;
 
 public class UpHandAnimation {
     private static final Set<Item> UP_HAND_ITEMS = Set.of(
@@ -98,25 +97,13 @@ public class UpHandAnimation {
         context.upHandAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.UP_HAND_ANIMATION.getAnimationId()));
         String animationId = (arm == HumanoidArm.RIGHT ? RIGHT_PREFIX : LEFT_PREFIX) + AnimationsId.UP_HAND_ANIMATION.getAnimationId();
         context.upHandAnimationContainer().setCurrentAnimationId(animationId);
-        disableArmOverlayPos(context, arm == HumanoidArm.RIGHT ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
+        disableBodyPart(context.mainAnimationContainer(), arm == HumanoidArm.RIGHT ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
         ((MirrorModifier) context.upHandAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId()))
                 .setEnabled(arm == HumanoidArm.RIGHT);
     }
 
     private static boolean isHandUp(ItemStack itemStack) {
         return UP_HAND_ITEMS.contains(itemStack.getItem());
-    }
-
-    private static void disableArmOverlayPos(AnimationContext context, BodyParts arm) {
-        KeyframeAnimation.AnimationBuilder builder = context.mainAnimationContainer().getCurrentAnimation().mutableCopy();
-        var currentArm = builder.getPart(arm.getPartId());
-        if (currentArm != null) {
-            currentArm.setEnabled(false);
-            currentArm.x.setEnabled(false);
-            currentArm.y.setEnabled(false);
-            currentArm.z.setEnabled(false);
-        }
-        context.mainAnimationContainer().setCurrentAnimation(builder.build());
     }
 
     record HandStates(boolean isMainHandUp, boolean isOffHandUp) {

@@ -6,8 +6,8 @@ import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 
-public class InWaterSwimAnimations {
-    private InWaterSwimAnimations() {
+public class InWaterSwimAnimation {
+    private InWaterSwimAnimation() {
         //[]
     }
 

@@ -38,7 +38,7 @@ public class SwordAnimation {
         }
 
         if (context.overlayAnimationContainer().getAnimationModifierLayer().getAnimation().isActive() &&
-                ((KeyframeAnimationPlayer) context.overlayAnimationContainer().getAnimationModifierLayer().getAnimation()).getData().getName().equalsIgnoreCase(AnimationsId.ELYTRA_ANIMATION.getAnimationId())) {
+                ((KeyframeAnimationPlayer) context.overlayAnimationContainer().getAnimationModifierLayer().getAnimation()).getData().getName().equalsIgnoreCase(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId())) {
             if (currentComboCount < 2) {
                 currentComboCount++;
             } else {
@@ -47,7 +47,7 @@ public class SwordAnimation {
         }
 
         lastSwingTick = currentTick;
-
+        System.out.println(currentComboCount);
         switch (currentComboCount) {
             case 2 -> {
                 context.overlayAnimationContainer().setAnimationSpeed(CONFIG.swordAnimations.swordAttack2AnimationConfig.getSpeedMultiplier());
