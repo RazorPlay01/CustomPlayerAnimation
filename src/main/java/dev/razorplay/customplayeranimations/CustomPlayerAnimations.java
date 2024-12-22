@@ -22,13 +22,11 @@ public class CustomPlayerAnimations implements ModInitializer, ClientModInitiali
     public static ClientConfig CONFIG;
 
     public static final boolean IS_CARRYON_LOADED = FabricLoader.getInstance().isModLoaded("carryon");
-    public static final boolean IS_SWORDBLOCKING_LOADED = FabricLoader.getInstance().isModLoaded("swordblocking");
-    public static final boolean IS_OLDCOMBATMOD_LOADED = FabricLoader.getInstance().isModLoaded("oldcombatmod");
     public static final boolean IS_SUPPLEMENTARIES_LOADED = FabricLoader.getInstance().isModLoaded("supplementaries");
-    public static final boolean IS_NEA_LOADED = FabricLoader.getInstance().isModLoaded("notenoughanimations");
 
     @Override
     public void onInitialize() {
+        // []
     }
 
     @Override
@@ -38,8 +36,8 @@ public class CustomPlayerAnimations implements ModInitializer, ClientModInitiali
         LOGGER.info("Custom Player Animations initialized.");
     }
 
-    public static KeyframeAnimation getAnimation(ResourceLocation animationId) {
-        IPlayable playable = PlayerAnimationRegistry.getAnimation(animationId);
+    public static KeyframeAnimation getAnimation(String animationId) {
+        IPlayable playable = PlayerAnimationRegistry.getAnimation(ResourceLocation.fromNamespaceAndPath(CustomPlayerAnimations.MOD_ID, animationId));
         KeyframeAnimation anim = playable instanceof KeyframeAnimation ? (KeyframeAnimation) playable : null;
         if (anim == null) {
             LOGGER.error("Animation {} not found.", animationId);

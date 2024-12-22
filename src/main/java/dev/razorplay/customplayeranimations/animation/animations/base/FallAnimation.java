@@ -1,9 +1,10 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
+import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
-import static dev.razorplay.customplayeranimations.animation.AnimationProvider.FALLING_ANIMATION;
+import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 
 public class FallAnimation {
     private FallAnimation() {
@@ -19,8 +20,8 @@ public class FallAnimation {
                 context.mainAnimationContainer().setAnimationFadeTime(CONFIG.fallingAnimationConfig.getFadeTime());
                 context.mainAnimationContainer().setAnimationPriority(CONFIG.fallingAnimationConfig.getPriority());
 
-                context.mainAnimationContainer().setCurrentAnimation(FALLING_ANIMATION.animation());
-                context.mainAnimationContainer().setCurrentAnimationId(FALLING_ANIMATION.animationId());
+                context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.FALLING_ANIMATION.getAnimationId()));
+                context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.FALLING_ANIMATION.getAnimationId());
             }
         }
     }

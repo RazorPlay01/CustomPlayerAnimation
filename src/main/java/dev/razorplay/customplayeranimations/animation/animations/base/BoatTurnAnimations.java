@@ -1,12 +1,13 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
+import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import net.minecraft.world.entity.vehicle.Boat;
-import net.minecraft.world.entity.vehicle.ChestBoat;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
-import static dev.razorplay.customplayeranimations.animation.AnimationProvider.BOAT_TURN_LEFT_ANIMATION;
-import static dev.razorplay.customplayeranimations.animation.AnimationProvider.BOAT_TURN_RIGHT_ANIMATION;
+import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
+import static dev.razorplay.customplayeranimations.util.Util.configureAnimationContainer;
+import static dev.razorplay.customplayeranimations.util.Util.isBoat;
 
 public class BoatTurnAnimations {
     private BoatTurnAnimations() {
@@ -14,30 +15,43 @@ public class BoatTurnAnimations {
     }
 
     public static void playAnimation(AnimationContext context) {
-        if (context.player().isPassenger()) {
-            var vehicle = context.player().getVehicle();
-            if (vehicle instanceof Boat || vehicle instanceof ChestBoat) {
-                if (!CONFIG.boatAnimations.boatTurnAnimationConfig.isEnabled()) {
-                    context.mainAnimationContainer().disableAnimation();
-                } else {
-                    boolean isLeftPaddleMoving = ((Boat) vehicle).getPaddleState(0);
-                    boolean isRightPaddleMoving = ((Boat) vehicle).getPaddleState(1);
+        if (!context.player().isPassenger()) {
+            return;
+        }
 
-                    context.mainAnimationContainer().setAnimationSpeed(CONFIG.boatAnimations.boatTurnAnimationConfig.getSpeedMultiplier());
-                    context.mainAnimationContainer().setAnimationFadeTime(CONFIG.boatAnimations.boatTurnAnimationConfig.getFadeTime());
-                    context.mainAnimationContainer().setAnimationPriority(CONFIG.boatAnimations.boatTurnAnimationConfig.getPriority());
+        var vehicle = context.player().getVehicle();
+        if (isBoat(vehicle)) {
+            handleBoatAnimation(context, (Boat) vehicle);
+        }
+    }
 
-                    if (context.playerData().getMovementSpeed() > 0 && !context.playerData().isMovingBackwards()) {
-                        if (isLeftPaddleMoving) {
-                            context.mainAnimationContainer().setCurrentAnimation(BOAT_TURN_LEFT_ANIMATION.animation());
-                            context.mainAnimationContainer().setCurrentAnimationId(BOAT_TURN_LEFT_ANIMATION.animationId());
-                        } else if (isRightPaddleMoving) {
-                            context.mainAnimationContainer().setCurrentAnimation(BOAT_TURN_RIGHT_ANIMATION.animation());
-                            context.mainAnimationContainer().setCurrentAnimationId(BOAT_TURN_RIGHT_ANIMATION.animationId());
-                        }
-                    }
-                }
-            }
+    private static void handleBoatAnimation(AnimationContext context, Boat boat) {
+        if (!CONFIG.boatAnimations.boatTurnAnimationConfig.isEnabled()) {
+            context.mainAnimationContainer().disableAnimation();
+            return;
+        }
+
+        configureAnimationContainer(CONFIG.boatAnimations.boatTurnAnimationConfig, context.mainAnimationContainer());
+
+        if (shouldPlayAnimation(context)) {
+            playBoatTurnAnimation(context, boat);
+        }
+    }
+
+    private static boolean shouldPlayAnimation(AnimationContext context) {
+        return context.playerData().getMovementSpeed() > 0 && !context.playerData().isMovingBackwards();
+    }
+
+    private static void playBoatTurnAnimation(AnimationContext context, Boat boat) {
+        boolean isLeftPaddleMoving = boat.getPaddleState(0);
+        boolean isRightPaddleMoving = boat.getPaddleState(1);
+
+        if (isLeftPaddleMoving) {
+            context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.BOAT_TURN_LEFT_ANIMATION.getAnimationId()));
+            context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.BOAT_TURN_LEFT_ANIMATION.getAnimationId());
+        } else if (isRightPaddleMoving) {
+            context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.BOAT_TURN_RIGHT_ANIMATION.getAnimationId()));
+            context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.BOAT_TURN_RIGHT_ANIMATION.getAnimationId());
         }
     }
 }

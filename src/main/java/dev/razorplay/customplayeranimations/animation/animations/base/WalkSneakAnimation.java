@@ -1,9 +1,10 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
+import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
-import static dev.razorplay.customplayeranimations.animation.AnimationProvider.*;
+import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 
 public class WalkSneakAnimation {
     private WalkSneakAnimation() {
@@ -11,17 +12,42 @@ public class WalkSneakAnimation {
     }
 
     public static void playAnimation(AnimationContext context) {
-        if (context.playerData().getMovementSpeed() > 0 && !context.playerData().isMovingBackwards() && context.player().isCrouching()) {
-            if (!CONFIG.walkingSneakAnimationConfig.isEnabled()) {
-                context.mainAnimationContainer().disableAnimation();
-            } else {
-                context.mainAnimationContainer().setAnimationSpeed((float) (5 * context.playerData().getMovementSpeed() * CONFIG.getAnimationMoveSpeedMultiplier() * CONFIG.walkingSneakAnimationConfig.getSpeedMultiplier()));
-                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.walkingSneakAnimationConfig.getFadeTime());
-                context.mainAnimationContainer().setAnimationPriority(CONFIG.walkingSneakAnimationConfig.getPriority());
-
-                context.mainAnimationContainer().setCurrentAnimation(WALKING_SNEAK_ANIMATION.animation());
-                context.mainAnimationContainer().setCurrentAnimationId(WALKING_SNEAK_ANIMATION.animationId());
-            }
+        if (!shouldPlayAnimation(context)) {
+            return;
         }
+
+        if (!CONFIG.walkingSneakAnimationConfig.isEnabled()) {
+            context.mainAnimationContainer().disableAnimation();
+            return;
+        }
+
+        configureWalkSneakAnimation(context);
+        setWalkSneakAnimation(context);
+    }
+
+    private static boolean shouldPlayAnimation(AnimationContext context) {
+        return context.playerData().getMovementSpeed() > 0
+                && !context.playerData().isMovingBackwards()
+                && context.player().isCrouching();
+    }
+
+    private static void configureWalkSneakAnimation(AnimationContext context) {
+        var animationContainer = context.mainAnimationContainer();
+        var config = CONFIG.walkingSneakAnimationConfig;
+
+        animationContainer.setAnimationSpeed(calculateAnimationSpeed(context));
+        animationContainer.setAnimationFadeTime(config.getFadeTime());
+        animationContainer.setAnimationPriority(config.getPriority());
+    }
+
+    private static float calculateAnimationSpeed(AnimationContext context) {
+        return (float) (5 * context.playerData().getMovementSpeed()
+                * CONFIG.getAnimationMoveSpeedMultiplier()
+                * CONFIG.walkingSneakAnimationConfig.getSpeedMultiplier());
+    }
+
+    private static void setWalkSneakAnimation(AnimationContext context) {
+        context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.WALKING_SNEAK_ANIMATION.getAnimationId()));
+        context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.WALKING_SNEAK_ANIMATION.getAnimationId());
     }
 }

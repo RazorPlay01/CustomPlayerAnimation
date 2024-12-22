@@ -1,13 +1,14 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
+import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
-import static dev.razorplay.customplayeranimations.animation.AnimationProvider.IDLE_SNEAK_ANIMATION;
+import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 
 public class IdleSneakAnimation {
     private IdleSneakAnimation() {
-        //[]
+        // []
     }
 
     public static void playAnimation(AnimationContext context) {
@@ -19,8 +20,8 @@ public class IdleSneakAnimation {
                 context.mainAnimationContainer().setAnimationFadeTime(CONFIG.idleSneakAnimationConfig.getFadeTime());
                 context.mainAnimationContainer().setAnimationPriority(CONFIG.idleSneakAnimationConfig.getPriority());
 
-                context.mainAnimationContainer().setCurrentAnimation(IDLE_SNEAK_ANIMATION.animation());
-                context.mainAnimationContainer().setCurrentAnimationId(IDLE_SNEAK_ANIMATION.animationId());
+                context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.IDLE_SNEAK_ANIMATION.getAnimationId()));
+                context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.IDLE_SNEAK_ANIMATION.getAnimationId());
             }
         }
     }

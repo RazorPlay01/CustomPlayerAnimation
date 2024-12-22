@@ -1,9 +1,10 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
+import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
-import static dev.razorplay.customplayeranimations.animation.AnimationProvider.WALKING_BACKWARDS_ANIMATION;
+import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 
 public class WalkBackwardsAnimation {
     private WalkBackwardsAnimation() {
@@ -19,8 +20,8 @@ public class WalkBackwardsAnimation {
                 context.mainAnimationContainer().setAnimationFadeTime(CONFIG.walkingBackwardsAnimationConfig.getFadeTime());
                 context.mainAnimationContainer().setAnimationPriority(CONFIG.walkingBackwardsAnimationConfig.getPriority());
 
-                context.mainAnimationContainer().setCurrentAnimation(WALKING_BACKWARDS_ANIMATION.animation());
-                context.mainAnimationContainer().setCurrentAnimationId(WALKING_BACKWARDS_ANIMATION.animationId());
+                context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.WALKING_BACKWARDS_ANIMATION.getAnimationId()));
+                context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.WALKING_BACKWARDS_ANIMATION.getAnimationId());
             }
         }
     }

@@ -1,13 +1,14 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
+import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
-import static dev.razorplay.customplayeranimations.animation.AnimationProvider.IDLE_STANDING_ANIMATION;
+import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 
 public class IdleStandingAnimation {
     private IdleStandingAnimation() {
-        //[]
+        // []
     }
 
     public static void playAnimation(AnimationContext context) {
@@ -19,8 +20,8 @@ public class IdleStandingAnimation {
                 context.mainAnimationContainer().setAnimationFadeTime(CONFIG.idleStandingAnimationConfig.getFadeTime());
                 context.mainAnimationContainer().setAnimationPriority(CONFIG.idleStandingAnimationConfig.getPriority());
 
-                context.mainAnimationContainer().setCurrentAnimation(IDLE_STANDING_ANIMATION.animation());
-                context.mainAnimationContainer().setCurrentAnimationId(IDLE_STANDING_ANIMATION.animationId());
+                context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.IDLE_STANDING_ANIMATION.getAnimationId()));
+                context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.IDLE_STANDING_ANIMATION.getAnimationId());
             }
         }
     }

@@ -3,15 +3,15 @@ package dev.razorplay.customplayeranimations.animation.animations.overlay;
 import dev.kosmx.playerAnim.api.layered.modifier.AdjustmentModifier;
 import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
-import dev.razorplay.customplayeranimations.util.enums.ArmsEnum;
-import dev.razorplay.customplayeranimations.util.enums.ModifiersEnum;
+import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
+import dev.razorplay.customplayeranimations.util.enums.BodyParts;
+import dev.razorplay.customplayeranimations.util.enums.Modifiers;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.item.BowItem;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
-import static dev.razorplay.customplayeranimations.animation.AnimationProvider.*;
-import static dev.razorplay.customplayeranimations.animation.AnimationProvider.BOW_IDLE_ANIMATION;
+import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 import static dev.razorplay.customplayeranimations.util.Util.LEFT_PREFIX;
 import static dev.razorplay.customplayeranimations.util.Util.RIGHT_PREFIX;
 
@@ -45,28 +45,28 @@ public class BowAnimation {
 
     private static void setBowAnimationForHand(AnimationContext context, boolean isRightHand) {
         if (context.player().isCrouching()) {
-            context.overlayAnimationContainer().setCurrentAnimation(BOW_SNEAK_ANIMATION.animation());
-            context.overlayAnimationContainer().setCurrentAnimationId((isRightHand ? RIGHT_PREFIX : LEFT_PREFIX) + BOW_SNEAK_ANIMATION.animationId());
+            context.overlayAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.BOW_SNEAK_ANIMATION.getAnimationId()));
+            context.overlayAnimationContainer().setCurrentAnimationId((isRightHand ? RIGHT_PREFIX : LEFT_PREFIX) + AnimationsId.BOW_SNEAK_ANIMATION.getAnimationId());
             context.overlayAnimationContainer().setAnimationFadeTime(1);
         } else {
-            context.overlayAnimationContainer().setCurrentAnimation(BOW_IDLE_ANIMATION.animation());
-            context.overlayAnimationContainer().setCurrentAnimationId((isRightHand ? RIGHT_PREFIX : LEFT_PREFIX) + BOW_IDLE_ANIMATION.animationId());
+            context.overlayAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.BOW_IDLE_ANIMATION.getAnimationId()));
+            context.overlayAnimationContainer().setCurrentAnimationId((isRightHand ? RIGHT_PREFIX : LEFT_PREFIX) + AnimationsId.BOW_IDLE_ANIMATION.getAnimationId());
         }
-        disableArmOverlayPos(context, isRightHand ? ArmsEnum.RIGHT_ARM : ArmsEnum.LEFT_ARM);
+        disableArmOverlayPos(context, isRightHand ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
 
         if (isRightHand) {
-            ((AdjustmentModifier) context.overlayAnimationContainer().getAnimationModifiers().get(ModifiersEnum.RIGHT_BOW_MODIFIER.getModifierId())).enabled = true;
+            ((AdjustmentModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.RIGHT_BOW_MODIFIER.getModifierId())).enabled = true;
             context.player().setYBodyRot(context.playerData().getPlayerHeadYaw() - 90);
         } else {
-            ((AdjustmentModifier) context.overlayAnimationContainer().getAnimationModifiers().get(ModifiersEnum.LEFT_BOW_MODIFIER.getModifierId())).enabled = true;
+            ((AdjustmentModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.LEFT_BOW_MODIFIER.getModifierId())).enabled = true;
             context.player().setYBodyRot(context.playerData().getPlayerHeadYaw() + 90);
         }
-        ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(ModifiersEnum.MIRROR_MODIFIER.getModifierId())).setEnabled(!isRightHand);
+        ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(!isRightHand);
     }
 
-    private static void disableArmOverlayPos(AnimationContext context, ArmsEnum arm) {
+    private static void disableArmOverlayPos(AnimationContext context, BodyParts arm) {
         KeyframeAnimation.AnimationBuilder builder = context.mainAnimationContainer().getCurrentAnimation().mutableCopy();
-        var currentArm = builder.getPart(arm.getArmId());
+        var currentArm = builder.getPart(arm.getPartId());
         if (currentArm != null) {
             currentArm.setEnabled(false);
             currentArm.x.setEnabled(false);
@@ -76,9 +76,9 @@ public class BowAnimation {
         context.mainAnimationContainer().setCurrentAnimation(builder.build());
     }
 
-    private static void disableArmInBuilder(AnimationContext context, ArmsEnum arm) {
+    private static void disableArmInBuilder(AnimationContext context, BodyParts arm) {
         KeyframeAnimation.AnimationBuilder builder = context.mainAnimationContainer().getCurrentAnimation().mutableCopy();
-        var armPart = builder.getPart(arm.getArmId());
+        var armPart = builder.getPart(arm.getPartId());
         if (armPart != null) {
             armPart.pitch.setEnabled(false);
             armPart.yaw.setEnabled(false);
@@ -88,8 +88,8 @@ public class BowAnimation {
 
     private static void disableBothArms(AnimationContext context) {
         KeyframeAnimation.AnimationBuilder builder = context.mainAnimationContainer().getCurrentAnimation().mutableCopy();
-        disableArmInBuilder(context, ArmsEnum.RIGHT_ARM);
-        disableArmInBuilder(context, ArmsEnum.LEFT_ARM);
+        disableArmInBuilder(context, BodyParts.RIGHT_ARM);
+        disableArmInBuilder(context, BodyParts.LEFT_ARM);
         context.mainAnimationContainer().setCurrentAnimation(builder.build());
     }
 }

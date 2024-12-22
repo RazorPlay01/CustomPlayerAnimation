@@ -1,9 +1,10 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
+import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
-import static dev.razorplay.customplayeranimations.animation.AnimationProvider.IDLE_CREATIVE_FLYING_ANIMATION;
+import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 
 public class FlyAnimation {
     private FlyAnimation() {
@@ -27,12 +28,12 @@ public class FlyAnimation {
         if (!CONFIG.idleCreativeFlyingAnimationConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
         } else {
-            context.mainAnimationContainer().setCurrentAnimation(IDLE_CREATIVE_FLYING_ANIMATION.animation());
-            context.mainAnimationContainer().setCurrentAnimationId(IDLE_CREATIVE_FLYING_ANIMATION.animationId());
-
             context.mainAnimationContainer().setAnimationSpeed(CONFIG.idleCreativeFlyingAnimationConfig.getSpeedMultiplier());
             context.mainAnimationContainer().setAnimationFadeTime(CONFIG.idleCreativeFlyingAnimationConfig.getFadeTime());
             context.mainAnimationContainer().setAnimationPriority(CONFIG.idleCreativeFlyingAnimationConfig.getPriority());
+
+            context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.IDLE_CREATIVE_FLYING_ANIMATION.getAnimationId()));
+            context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.IDLE_CREATIVE_FLYING_ANIMATION.getAnimationId());
         }
     }
 }

@@ -1,9 +1,10 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
+import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
-import static dev.razorplay.customplayeranimations.animation.AnimationProvider.WALK_ANIMATION;
+import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 
 public class WalkAnimation {
     private WalkAnimation() {
@@ -19,8 +20,8 @@ public class WalkAnimation {
                 context.mainAnimationContainer().setAnimationFadeTime(CONFIG.walkingAnimationConfig.getFadeTime());
                 context.mainAnimationContainer().setAnimationPriority(CONFIG.walkingAnimationConfig.getPriority());
 
-                context.mainAnimationContainer().setCurrentAnimation(WALK_ANIMATION.animation());
-                context.mainAnimationContainer().setCurrentAnimationId(WALK_ANIMATION.animationId());
+                context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.WALKING_ANIMATION.getAnimationId()));
+                context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.WALKING_ANIMATION.getAnimationId());
             }
         }
     }

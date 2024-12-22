@@ -46,7 +46,7 @@ public abstract class ItemInHandLayerMixin<T extends LivingEntity, M extends Ent
                 matrices.mulPose(Axis.YP.rotationDegrees(200.0f));
                 boolean bl = arm == HumanoidArm.LEFT;
                 matrices.translate((bl ? -1 : 1) / 16.0f, 0.125, -0.625);
-                MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack,true);
+                MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack, true);
                 matrices.popPose();
                 info.cancel();
                 return;
@@ -59,11 +59,10 @@ public abstract class ItemInHandLayerMixin<T extends LivingEntity, M extends Ent
                 matrices.mulPose(Axis.YP.rotationDegrees(200.0f));
                 boolean bl = arm == HumanoidArm.LEFT;
                 matrices.translate((bl ? -1 : 1) / 16.0f, 0.125, -0.625);
-                MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack,true);
+                MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack, true);
                 matrices.popPose();
                 info.cancel();
             }
         }
-
     }
 }

@@ -1,9 +1,10 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
+import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
-import static dev.razorplay.customplayeranimations.animation.AnimationProvider.WALKING_SNEAK_ANIMATION;
+import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 import static java.lang.Math.abs;
 
 public class TurnSneakAnimation {
@@ -24,8 +25,8 @@ public class TurnSneakAnimation {
                 context.mainAnimationContainer().setAnimationFadeTime(CONFIG.turningSneakAnimationConfig.getFadeTime());
                 context.mainAnimationContainer().setAnimationPriority(CONFIG.turningSneakAnimationConfig.getPriority());
 
-                context.mainAnimationContainer().setCurrentAnimation(WALKING_SNEAK_ANIMATION.animation());
-                context.mainAnimationContainer().setCurrentAnimationId(WALKING_SNEAK_ANIMATION.animationId());
+                context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.WALKING_SNEAK_ANIMATION.getAnimationId()));
+                context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.WALKING_SNEAK_ANIMATION.getAnimationId());
             }
         }
     }

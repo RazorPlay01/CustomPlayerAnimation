@@ -1,7 +1,7 @@
 package dev.razorplay.customplayeranimations.animation.animations.overlay;
 
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
-import dev.razorplay.customplayeranimations.util.enums.ArmsEnum;
+import dev.razorplay.customplayeranimations.util.enums.BodyParts;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import net.minecraft.world.InteractionHand;
 
@@ -20,12 +20,12 @@ public class GenericHandswingAnimation {
     }
 
     private static void disableArmBasedOnHand(AnimationContext context, InteractionHand hand) {
-        disableArmInBuilder(context, hand == context.playerData().getRightHand() ? ArmsEnum.RIGHT_ARM : ArmsEnum.LEFT_ARM);
+        disableArmInBuilder(context, hand == context.playerData().getRightHand() ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
     }
 
-    private static void disableArmInBuilder(AnimationContext context, ArmsEnum arm) {
+    private static void disableArmInBuilder(AnimationContext context, BodyParts arm) {
         KeyframeAnimation.AnimationBuilder builder = context.mainAnimationContainer().getCurrentAnimation().mutableCopy();
-        var armPart = builder.getPart(arm.getArmId());
+        var armPart = builder.getPart(arm.getPartId());
         if (armPart != null) {
             armPart.pitch.setEnabled(false);
             armPart.yaw.setEnabled(false);
@@ -35,7 +35,7 @@ public class GenericHandswingAnimation {
         context.mainAnimationContainer().setCurrentAnimation(builder.build());
 
         builder = context.overlayAnimationContainer().getCurrentAnimation().mutableCopy();
-        armPart = builder.getPart(arm.getArmId());
+        armPart = builder.getPart(arm.getPartId());
         if (armPart != null) {
             armPart.pitch.setEnabled(false);
             armPart.yaw.setEnabled(false);

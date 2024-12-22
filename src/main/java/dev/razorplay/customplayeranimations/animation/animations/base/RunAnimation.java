@@ -1,9 +1,10 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
+import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
-import static dev.razorplay.customplayeranimations.animation.AnimationProvider.RUNNING_ANIMATION;
+import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 
 public class RunAnimation {
     private RunAnimation() {
@@ -19,8 +20,8 @@ public class RunAnimation {
                 context.mainAnimationContainer().setAnimationFadeTime(CONFIG.runningAnimationConfig.getFadeTime());
                 context.mainAnimationContainer().setAnimationPriority(CONFIG.runningAnimationConfig.getPriority());
 
-                context.mainAnimationContainer().setCurrentAnimation(RUNNING_ANIMATION.animation());
-                context.mainAnimationContainer().setCurrentAnimationId(RUNNING_ANIMATION.animationId());
+                context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.RUNNING_ANIMATION.getAnimationId()));
+                context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.RUNNING_ANIMATION.getAnimationId());
             }
         }
     }

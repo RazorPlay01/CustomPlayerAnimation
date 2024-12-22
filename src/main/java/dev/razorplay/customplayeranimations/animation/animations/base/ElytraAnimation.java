@@ -1,9 +1,10 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
+import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
-import static dev.razorplay.customplayeranimations.animation.AnimationProvider.ELYTRA_ANIMATION;
+import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 
 public class ElytraAnimation {
     private ElytraAnimation() {
@@ -19,8 +20,8 @@ public class ElytraAnimation {
                 context.mainAnimationContainer().setAnimationFadeTime(CONFIG.elytraAnimationsConfig.getFadeTime());
                 context.mainAnimationContainer().setAnimationPriority(CONFIG.elytraAnimationsConfig.getPriority());
 
-                context.mainAnimationContainer().setCurrentAnimation(ELYTRA_ANIMATION.animation());
-                context.mainAnimationContainer().setCurrentAnimationId(ELYTRA_ANIMATION.animationId());
+                context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.ELYTRA_ANIMATION.getAnimationId()));
+                context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.ELYTRA_ANIMATION.getAnimationId());
             }
         }
     }

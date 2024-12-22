@@ -2,18 +2,14 @@ package dev.razorplay.customplayeranimations.animation.animations.overlay;
 
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
 import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
-import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
-import dev.razorplay.customplayeranimations.util.enums.ArmsEnum;
-import dev.razorplay.customplayeranimations.util.enums.ModifiersEnum;
+import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
+import dev.razorplay.customplayeranimations.util.enums.Modifiers;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.TridentItem;
-import org.spongepowered.asm.mixin.Unique;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
-import static dev.razorplay.customplayeranimations.animation.AnimationProvider.*;
+import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 import static net.minecraft.world.InteractionHand.MAIN_HAND;
 
 public class SwordAnimation {
@@ -42,7 +38,7 @@ public class SwordAnimation {
         }
 
         if (context.overlayAnimationContainer().getAnimationModifierLayer().getAnimation().isActive() &&
-                ((KeyframeAnimationPlayer) context.overlayAnimationContainer().getAnimationModifierLayer().getAnimation()).getData().getName().equalsIgnoreCase(BLANK_LOOP_ANIMATION.animationId())) {
+                ((KeyframeAnimationPlayer) context.overlayAnimationContainer().getAnimationModifierLayer().getAnimation()).getData().getName().equalsIgnoreCase(AnimationsId.ELYTRA_ANIMATION.getAnimationId())) {
             if (currentComboCount < 2) {
                 currentComboCount++;
             } else {
@@ -70,7 +66,7 @@ public class SwordAnimation {
             }
         }
 
-        ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(ModifiersEnum.MIRROR_MODIFIER.getModifierId())).setEnabled(context.playerData().getRightHand() != MAIN_HAND);
+        ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(context.playerData().getRightHand() != MAIN_HAND);
 
         selectComboAnimation(context);
     }
@@ -80,16 +76,16 @@ public class SwordAnimation {
 
         switch (currentComboCount) {
             case 1 -> {
-                context.overlayAnimationContainer().setCurrentAnimation(isSneaking ? SWORD_ATTACK_1_SNEAK_ANIMATION.animation() : SWORD_ATTACK_1_ANIMATION.animation());
-                context.overlayAnimationContainer().setCurrentAnimationId(isSneaking ? SWORD_ATTACK_1_SNEAK_ANIMATION.animationId() : SWORD_ATTACK_1_ANIMATION.animationId());
+                context.overlayAnimationContainer().setCurrentAnimation(isSneaking ? getAnimation(AnimationsId.SWORD_ATTACK_1_SNEAK_ANIMATION.getAnimationId()) : getAnimation(AnimationsId.SWORD_ATTACK_1_ANIMATION.getAnimationId()));
+                context.overlayAnimationContainer().setCurrentAnimationId(isSneaking ? AnimationsId.SWORD_ATTACK_1_SNEAK_ANIMATION.getAnimationId() : AnimationsId.SWORD_ATTACK_1_ANIMATION.getAnimationId());
             }
             case 2 -> {
-                context.overlayAnimationContainer().setCurrentAnimation(isSneaking ? SWORD_ATTACK_2_SNEAK_ANIMATION.animation() : SWORD_ATTACK_2_ANIMATION.animation());
-                context.overlayAnimationContainer().setCurrentAnimationId(isSneaking ? SWORD_ATTACK_2_SNEAK_ANIMATION.animationId() : SWORD_ATTACK_2_ANIMATION.animationId());
+                context.overlayAnimationContainer().setCurrentAnimation(isSneaking ? getAnimation(AnimationsId.SWORD_ATTACK_2_SNEAK_ANIMATION.getAnimationId()) : getAnimation(AnimationsId.SWORD_ATTACK_2_ANIMATION.getAnimationId()));
+                context.overlayAnimationContainer().setCurrentAnimationId(isSneaking ? AnimationsId.SWORD_ATTACK_2_SNEAK_ANIMATION.getAnimationId() : AnimationsId.SWORD_ATTACK_2_ANIMATION.getAnimationId());
             }
             default -> {
-                context.overlayAnimationContainer().setCurrentAnimation(isSneaking ? SWORD_ATTACK_3_SNEAK_ANIMATION.animation() : SWORD_ATTACK_3_ANIMATION.animation());
-                context.overlayAnimationContainer().setCurrentAnimationId(isSneaking ? SWORD_ATTACK_3_SNEAK_ANIMATION.animationId() : SWORD_ATTACK_3_ANIMATION.animationId());
+                context.overlayAnimationContainer().setCurrentAnimation(isSneaking ? getAnimation(AnimationsId.SWORD_ATTACK_3_SNEAK_ANIMATION.getAnimationId()) : getAnimation(AnimationsId.SWORD_ATTACK_3_ANIMATION.getAnimationId()));
+                context.overlayAnimationContainer().setCurrentAnimationId(isSneaking ? AnimationsId.SWORD_ATTACK_3_SNEAK_ANIMATION.getAnimationId() : AnimationsId.SWORD_ATTACK_3_ANIMATION.getAnimationId());
             }
         }
     }

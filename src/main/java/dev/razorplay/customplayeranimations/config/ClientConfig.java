@@ -18,6 +18,8 @@ public class ClientConfig implements ConfigData {
     @ConfigEntry.Gui.CollapsibleObject
     public SwordAnimations swordAnimations = new SwordAnimations();
     @ConfigEntry.Gui.CollapsibleObject
+    public ToolsAnimations toolsAnimations = new ToolsAnimations();
+    @ConfigEntry.Gui.CollapsibleObject
     public HorseAnimations horseAnimationsConfig = new HorseAnimations();
     @ConfigEntry.Gui.CollapsibleObject
     public InWaterAnimations inWaterAnimationsConfig = new InWaterAnimations();
@@ -71,15 +73,6 @@ public class ClientConfig implements ConfigData {
 
     @ConfigEntry.Gui.CollapsibleObject
     public AnimationConfig bowAnimationsConfig = new AnimationConfig();
-
-    @ConfigEntry.Gui.CollapsibleObject
-    public AnimationConfig pickaxeAnimationsConfig = new AnimationConfig();
-
-    @ConfigEntry.Gui.CollapsibleObject
-    public AnimationConfig axeAnimationsConfig = new AnimationConfig();
-
-    @ConfigEntry.Gui.CollapsibleObject
-    public AnimationConfig shovelAnimationsConfig = new AnimationConfig();
 
     @ConfigEntry.Gui.CollapsibleObject
     public AnimationConfig sleepingAnimationsConfig = new AnimationConfig();
@@ -158,5 +151,19 @@ public class ClientConfig implements ConfigData {
         public SwordAnimationConfig swordAttack2AnimationConfig = new SwordAnimationConfig();
         @ConfigEntry.Gui.CollapsibleObject
         public SwordAnimationConfig swordAttack3AnimationConfig = new SwordAnimationConfig();
+    }
+
+    public static class ToolsAnimations {
+        @Getter
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig pickaxeAnimationsConfig = new AnimationConfig();
+
+        @Getter
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig axeAnimationsConfig = new AnimationConfig();
+
+        @Getter
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig shovelAnimationsConfig = new AnimationConfig();
     }
 }

@@ -1,9 +1,11 @@
 package dev.razorplay.customplayeranimations.util.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-public enum AnimationsIdEnum {
+@AllArgsConstructor
+public enum AnimationsId {
     //Base Animation
     BLANK_LOOP_ANIMATION("blank_loop_animation"),
     //Main Animations
@@ -68,8 +70,4 @@ public enum AnimationsIdEnum {
     UP_HAND_ANIMATION("up_hand_animation");
 
     private final String animationId;
-
-    AnimationsIdEnum(String animationId) {
-        this.animationId = animationId;
-    }
 }

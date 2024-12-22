@@ -1,7 +1,7 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "jump": {
+    "jump_animation": {
       "loop": true,
       "animation_length": 0.36,
       "bones": {

@@ -1,9 +1,10 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
+import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
-import static dev.razorplay.customplayeranimations.animation.AnimationProvider.ON_FENCE_WALKING_ANIMATION;
+import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 
 public class OnFenceWalkAnimation {
     private OnFenceWalkAnimation() {
@@ -19,8 +20,8 @@ public class OnFenceWalkAnimation {
                 context.mainAnimationContainer().setAnimationFadeTime(CONFIG.onFenceAnimationConfig.getFadeTime());
                 context.mainAnimationContainer().setAnimationPriority(CONFIG.onFenceAnimationConfig.getPriority());
 
-                context.mainAnimationContainer().setCurrentAnimation(ON_FENCE_WALKING_ANIMATION.animation());
-                context.mainAnimationContainer().setCurrentAnimationId(ON_FENCE_WALKING_ANIMATION.animationId());
+                context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.ON_FENCE_WALKING_ANIMATION.getAnimationId()));
+                context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.ON_FENCE_WALKING_ANIMATION.getAnimationId());
             }
         }
     }

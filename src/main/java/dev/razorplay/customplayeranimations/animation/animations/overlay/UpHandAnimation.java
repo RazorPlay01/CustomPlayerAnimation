@@ -3,9 +3,10 @@ package dev.razorplay.customplayeranimations.animation.animations.overlay;
 import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.razorplay.customplayeranimations.animation.AnimationContainer;
+import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
-import dev.razorplay.customplayeranimations.util.enums.ArmsEnum;
-import dev.razorplay.customplayeranimations.util.enums.ModifiersEnum;
+import dev.razorplay.customplayeranimations.util.enums.BodyParts;
+import dev.razorplay.customplayeranimations.util.enums.Modifiers;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.Item;
@@ -16,7 +17,7 @@ import java.util.Arrays;
 import java.util.Set;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
-import static dev.razorplay.customplayeranimations.animation.AnimationProvider.UP_HAND_ANIMATION;
+import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 import static dev.razorplay.customplayeranimations.util.Util.LEFT_PREFIX;
 import static dev.razorplay.customplayeranimations.util.Util.RIGHT_PREFIX;
 
@@ -94,11 +95,11 @@ public class UpHandAnimation {
 
     private static void setUpHandAnimation(AnimationContext context, HumanoidArm arm) {
         context.upHandAnimationContainer().setAnimationFadeTime(10);
-        context.upHandAnimationContainer().setCurrentAnimation(UP_HAND_ANIMATION.animation());
-        String animationId = (arm == HumanoidArm.RIGHT ? RIGHT_PREFIX : LEFT_PREFIX) + UP_HAND_ANIMATION.animationId();
+        context.upHandAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.UP_HAND_ANIMATION.getAnimationId()));
+        String animationId = (arm == HumanoidArm.RIGHT ? RIGHT_PREFIX : LEFT_PREFIX) + AnimationsId.UP_HAND_ANIMATION.getAnimationId();
         context.upHandAnimationContainer().setCurrentAnimationId(animationId);
-        disableArmOverlayPos(context, arm == HumanoidArm.RIGHT ? ArmsEnum.RIGHT_ARM : ArmsEnum.LEFT_ARM);
-        ((MirrorModifier) context.upHandAnimationContainer().getAnimationModifiers().get(ModifiersEnum.MIRROR_MODIFIER.getModifierId()))
+        disableArmOverlayPos(context, arm == HumanoidArm.RIGHT ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
+        ((MirrorModifier) context.upHandAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId()))
                 .setEnabled(arm == HumanoidArm.RIGHT);
     }
 
@@ -106,9 +107,9 @@ public class UpHandAnimation {
         return UP_HAND_ITEMS.contains(itemStack.getItem());
     }
 
-    private static void disableArmOverlayPos(AnimationContext context, ArmsEnum arm) {
+    private static void disableArmOverlayPos(AnimationContext context, BodyParts arm) {
         KeyframeAnimation.AnimationBuilder builder = context.mainAnimationContainer().getCurrentAnimation().mutableCopy();
-        var currentArm = builder.getPart(arm.getArmId());
+        var currentArm = builder.getPart(arm.getPartId());
         if (currentArm != null) {
             currentArm.setEnabled(false);
             currentArm.x.setEnabled(false);

@@ -1,9 +1,10 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
+import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
-import static dev.razorplay.customplayeranimations.animation.AnimationProvider.IN_WATER_SWIMMING_ANIMATION;
+import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 
 public class InWaterSwimAnimations {
     private InWaterSwimAnimations() {
@@ -19,8 +20,8 @@ public class InWaterSwimAnimations {
                 context.mainAnimationContainer().setAnimationFadeTime(CONFIG.inWaterAnimationsConfig.inWaterSwimAnimationConfig.getFadeTime());
                 context.mainAnimationContainer().setAnimationPriority(CONFIG.inWaterAnimationsConfig.inWaterSwimAnimationConfig.getPriority());
 
-                context.mainAnimationContainer().setCurrentAnimation(IN_WATER_SWIMMING_ANIMATION.animation());
-                context.mainAnimationContainer().setCurrentAnimationId(IN_WATER_SWIMMING_ANIMATION.animationId());
+                context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.IN_WATER_SWIMMING_ANIMATION.getAnimationId()));
+                context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.IN_WATER_SWIMMING_ANIMATION.getAnimationId());
             }
         }
     }

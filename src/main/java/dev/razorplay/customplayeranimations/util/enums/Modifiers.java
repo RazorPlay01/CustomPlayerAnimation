@@ -1,9 +1,11 @@
 package dev.razorplay.customplayeranimations.util.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-public enum ModifiersEnum {
+@AllArgsConstructor
+public enum Modifiers {
     MIRROR_MODIFIER("MirrorModifier"),
     SPEED_MODIFIER("SpeedModifier"),
     RIGHT_BOW_MODIFIER("RightBowModifier"),
@@ -12,8 +14,4 @@ public enum ModifiersEnum {
     LEFT_UP_HAND_MODIFIER("LeftUpHandModifier");
 
     private final String modifierId;
-
-    ModifiersEnum(String modifierId) {
-        this.modifierId = modifierId;
-    }
 }
