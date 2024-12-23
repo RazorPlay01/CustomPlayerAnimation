@@ -43,9 +43,6 @@ repositories {
         name "zigythebirdMods"
         url "https://maven.zigythebird.com/mods"
     }
-    flatDir {
-        dirs 'libs'
-    }
 }
 
 dependencies {

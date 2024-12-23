@@ -5,6 +5,7 @@ import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
+import static dev.razorplay.customplayeranimations.util.Util.configureAnimationContainer;
 
 public class InWaterSwimAnimation {
     private InWaterSwimAnimation() {
@@ -16,9 +17,7 @@ public class InWaterSwimAnimation {
             if (!CONFIG.inWaterAnimationsConfig.inWaterSwimAnimationConfig.isEnabled()) {
                 context.mainAnimationContainer().disableAnimation();
             } else {
-                context.mainAnimationContainer().setAnimationSpeed(CONFIG.inWaterAnimationsConfig.inWaterSwimAnimationConfig.getSpeedMultiplier());
-                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.inWaterAnimationsConfig.inWaterSwimAnimationConfig.getFadeTime());
-                context.mainAnimationContainer().setAnimationPriority(CONFIG.inWaterAnimationsConfig.inWaterSwimAnimationConfig.getPriority());
+                configureAnimationContainer(CONFIG.inWaterAnimationsConfig.inWaterSwimAnimationConfig, context.mainAnimationContainer());
 
                 context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.IN_WATER_SWIMMING_ANIMATION.getAnimationId()));
                 context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.IN_WATER_SWIMMING_ANIMATION.getAnimationId());

@@ -5,6 +5,7 @@ import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
+import static dev.razorplay.customplayeranimations.util.Util.configureAnimationContainer;
 import static dev.razorplay.customplayeranimations.util.Util.isHorse;
 
 public class HorseRunningBackwardsAnimation {
@@ -19,9 +20,7 @@ public class HorseRunningBackwardsAnimation {
                 if (!CONFIG.horseAnimationsConfig.horseRunningBackwardsAnimationConfig.isEnabled()) {
                     context.mainAnimationContainer().disableAnimation();
                 } else {
-                    context.mainAnimationContainer().setAnimationSpeed(CONFIG.horseAnimationsConfig.horseRunningBackwardsAnimationConfig.getSpeedMultiplier());
-                    context.mainAnimationContainer().setAnimationFadeTime(CONFIG.horseAnimationsConfig.horseRunningBackwardsAnimationConfig.getFadeTime());
-                    context.mainAnimationContainer().setAnimationPriority(CONFIG.horseAnimationsConfig.horseRunningBackwardsAnimationConfig.getPriority());
+                    configureAnimationContainer(CONFIG.horseAnimationsConfig.horseRunningBackwardsAnimationConfig, context.mainAnimationContainer());
 
                     context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.HORSE_IDLE_ANIMATION.getAnimationId()));
                     context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.HORSE_IDLE_ANIMATION.getAnimationId());

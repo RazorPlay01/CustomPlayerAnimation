@@ -5,6 +5,7 @@ import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
+import static dev.razorplay.customplayeranimations.util.Util.configureAnimationContainer;
 import static dev.razorplay.customplayeranimations.util.Util.isHorse;
 
 public class HorseRunningAnimation {
@@ -19,9 +20,7 @@ public class HorseRunningAnimation {
                 if (!CONFIG.horseAnimationsConfig.horseRunningAnimationConfig.isEnabled()) {
                     context.mainAnimationContainer().disableAnimation();
                 } else {
-                    context.mainAnimationContainer().setAnimationSpeed(CONFIG.horseAnimationsConfig.horseRunningAnimationConfig.getSpeedMultiplier());
-                    context.mainAnimationContainer().setAnimationFadeTime(CONFIG.horseAnimationsConfig.horseRunningAnimationConfig.getFadeTime());
-                    context.mainAnimationContainer().setAnimationPriority(CONFIG.horseAnimationsConfig.horseRunningAnimationConfig.getPriority());
+                    configureAnimationContainer(CONFIG.horseAnimationsConfig.horseRunningAnimationConfig, context.mainAnimationContainer());
 
                     context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.HORSE_RUNNING_ANIMATION.getAnimationId()));
                     context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.HORSE_RUNNING_ANIMATION.getAnimationId());

@@ -5,6 +5,7 @@ import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
+import static dev.razorplay.customplayeranimations.util.Util.configureAnimationContainer;
 
 public class FlyAnimation {
     private FlyAnimation() {
@@ -19,7 +20,7 @@ public class FlyAnimation {
             context.playerData().setFlychecker(0);
         }
 
-        if (context.playerData().getFlychecker() > 10) {
+        if (context.playerData().getFlychecker() > 10 && !context.player().isPassenger()) {
             playFlyIdleCreativeAnimation(context);
         }
     }
@@ -28,9 +29,7 @@ public class FlyAnimation {
         if (!CONFIG.idleCreativeFlyingAnimationConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
         } else {
-            context.mainAnimationContainer().setAnimationSpeed(CONFIG.idleCreativeFlyingAnimationConfig.getSpeedMultiplier());
-            context.mainAnimationContainer().setAnimationFadeTime(CONFIG.idleCreativeFlyingAnimationConfig.getFadeTime());
-            context.mainAnimationContainer().setAnimationPriority(CONFIG.idleCreativeFlyingAnimationConfig.getPriority());
+            configureAnimationContainer(CONFIG.idleCreativeFlyingAnimationConfig,context.mainAnimationContainer());
 
             context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.IDLE_CREATIVE_FLYING_ANIMATION.getAnimationId()));
             context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.IDLE_CREATIVE_FLYING_ANIMATION.getAnimationId());

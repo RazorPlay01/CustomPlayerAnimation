@@ -5,6 +5,7 @@ import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
+import static dev.razorplay.customplayeranimations.util.Util.configureAnimationContainer;
 
 public class IdleSneakAnimation {
     private IdleSneakAnimation() {
@@ -16,9 +17,7 @@ public class IdleSneakAnimation {
             if (!CONFIG.idleSneakAnimationConfig.isEnabled()) {
                 context.mainAnimationContainer().disableAnimation();
             } else {
-                context.mainAnimationContainer().setAnimationSpeed(CONFIG.idleSneakAnimationConfig.getSpeedMultiplier());
-                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.idleSneakAnimationConfig.getFadeTime());
-                context.mainAnimationContainer().setAnimationPriority(CONFIG.idleSneakAnimationConfig.getPriority());
+                configureAnimationContainer(CONFIG.idleSneakAnimationConfig, context.mainAnimationContainer());
 
                 context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.IDLE_SNEAK_ANIMATION.getAnimationId()));
                 context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.IDLE_SNEAK_ANIMATION.getAnimationId());

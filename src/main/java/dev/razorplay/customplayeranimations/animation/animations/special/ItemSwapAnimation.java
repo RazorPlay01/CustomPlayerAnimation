@@ -1,4 +1,4 @@
-package dev.razorplay.customplayeranimations.animation.animations.overlay;
+package dev.razorplay.customplayeranimations.animation.animations.special;
 
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.enums.BodyParts;
@@ -17,7 +17,6 @@ public class ItemSwapAnimation {
                 && context.playerData().getMainHandItem().getItem() != context.playerData().getOffHandItem().getItem()
                 && context.playerData().getMainHandItem().getItem() == context.player().getOffhandItem().getItem()
                 && context.playerData().getOffHandItem().getItem() == context.player().getMainHandItem().getItem()) {
-            System.out.println("AAAAAAAAA");
             context.upHandAnimationContainer().setAnimationFadeTime(0);
             context.upHandAnimationContainer().setAnimationSpeed(0.5f);
             context.upHandAnimationContainer().setAnimationPriority(1);

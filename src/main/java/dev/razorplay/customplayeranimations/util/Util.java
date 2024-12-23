@@ -27,8 +27,7 @@ public class Util {
         return vehicle instanceof Horse || vehicle instanceof SkeletonHorse || vehicle instanceof ZombieHorse || vehicle instanceof Donkey || vehicle instanceof Mule;
     }
 
-    public static void configureAnimationContainer(ClientConfig.AnimationConfig config,
-                                                   AnimationContainer animationContainer) {
+    public static void configureAnimationContainer(ClientConfig.AnimationConfig config, AnimationContainer animationContainer) {
         animationContainer.setAnimationSpeed(config.getSpeedMultiplier());
         animationContainer.setAnimationFadeTime(config.getFadeTime());
         animationContainer.setAnimationPriority(config.getPriority());

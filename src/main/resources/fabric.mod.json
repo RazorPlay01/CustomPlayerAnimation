@@ -5,7 +5,7 @@
   "name": "Custom Player Animations",
   "description": "Mod creado para uso personal by RazorPlay",
   "authors": [
-    "RazorPlay"
+    "RazorPlay01"
   ],
   "contributors": [
     "McVader34",
@@ -16,7 +16,7 @@
     "sources": "https://github.com/RazorPlay01"
   },
   "license": "CC0-1.0",
-  "icon": "assets/custom_player_animations/icon.png",
+  "icon": "assets/custom_player_animations/CPA.icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
@@ -44,7 +44,7 @@
   "custom": {
     "loom:injected_interfaces": {
       "net/minecraft/class_742": [
-        "dev/razorplay/customplayeranimations/util/interfaces/ITorsoControl"
+        "dev/razorplay/customplayeranimations/util/interfaces/IAnimationControl"
       ]
     }
   }

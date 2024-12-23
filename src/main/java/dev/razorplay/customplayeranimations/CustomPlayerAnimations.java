@@ -11,7 +11,6 @@ import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,9 +19,6 @@ public class CustomPlayerAnimations implements ModInitializer, ClientModInitiali
     public static final String MOD_ID = "custom_player_animations";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     public static ClientConfig CONFIG;
-
-    public static final boolean IS_CARRYON_LOADED = FabricLoader.getInstance().isModLoaded("carryon");
-    public static final boolean IS_SUPPLEMENTARIES_LOADED = FabricLoader.getInstance().isModLoaded("supplementaries");
 
     @Override
     public void onInitialize() {
@@ -38,7 +34,7 @@ public class CustomPlayerAnimations implements ModInitializer, ClientModInitiali
 
     public static KeyframeAnimation getAnimation(String animationId) {
         IPlayable playable = PlayerAnimationRegistry.getAnimation(ResourceLocation.fromNamespaceAndPath(CustomPlayerAnimations.MOD_ID, animationId));
-        KeyframeAnimation anim = playable instanceof KeyframeAnimation ? (KeyframeAnimation) playable : null;
+        KeyframeAnimation anim = playable instanceof IPlayable ? (KeyframeAnimation) playable : null;
         if (anim == null) {
             LOGGER.error("Animation {} not found.", animationId);
         }

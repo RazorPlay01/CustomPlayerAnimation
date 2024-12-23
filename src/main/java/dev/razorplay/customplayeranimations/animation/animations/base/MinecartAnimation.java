@@ -6,6 +6,7 @@ import net.minecraft.world.entity.vehicle.Minecart;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
+import static dev.razorplay.customplayeranimations.util.Util.configureAnimationContainer;
 
 public class MinecartAnimation {
     private MinecartAnimation() {
@@ -19,9 +20,7 @@ public class MinecartAnimation {
                 if (!CONFIG.minecartAnimationsConfig.isEnabled()) {
                     context.mainAnimationContainer().disableAnimation();
                 } else {
-                    context.mainAnimationContainer().setAnimationSpeed(CONFIG.minecartAnimationsConfig.getSpeedMultiplier());
-                    context.mainAnimationContainer().setAnimationFadeTime(CONFIG.minecartAnimationsConfig.getFadeTime());
-                    context.mainAnimationContainer().setAnimationPriority(CONFIG.minecartAnimationsConfig.getPriority());
+                    configureAnimationContainer(CONFIG.minecartAnimationsConfig, context.mainAnimationContainer());
 
                     context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.MINECART_IDLE_ANIMATION.getAnimationId()));
                     context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.MINECART_IDLE_ANIMATION.getAnimationId());

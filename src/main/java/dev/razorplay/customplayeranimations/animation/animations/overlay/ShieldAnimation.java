@@ -23,9 +23,7 @@ public class ShieldAnimation {
                 context.overlayAnimationContainer().disableAnimation();
                 disableActiveArm(context, context.mainAnimationContainer());
             } else {
-                context.overlayAnimationContainer().setAnimationSpeed(CONFIG.shieldAnimationConfig.getSpeedMultiplier());
-                context.overlayAnimationContainer().setAnimationFadeTime(CONFIG.shieldAnimationConfig.getFadeTime());
-                context.overlayAnimationContainer().setAnimationPriority(CONFIG.shieldAnimationConfig.getPriority());
+                configureAnimationContainer(CONFIG.shieldAnimationConfig, context.overlayAnimationContainer());
 
                 if (context.player().getUsedItemHand().equals(context.playerData().getRightHand())) {
                     setShieldAnimation(context, true);
@@ -45,6 +43,6 @@ public class ShieldAnimation {
             context.overlayAnimationContainer().setCurrentAnimationId((isRightHand ? RIGHT_PREFIX : LEFT_PREFIX) + AnimationsId.SHIELD_ANIMATION.getAnimationId());
         }
         disableBodyPart(context.mainAnimationContainer(), isRightHand ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
-        ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(!isRightHand);
+        ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(isRightHand);
     }
 }

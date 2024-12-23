@@ -16,7 +16,7 @@ public class WalkSneakAnimation {
             return;
         }
 
-        if (!CONFIG.walkingSneakAnimationConfig.isEnabled()) {
+        if (!CONFIG.moveAnimations.walkingSneakAnimationConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
             return;
         }
@@ -33,7 +33,7 @@ public class WalkSneakAnimation {
 
     private static void configureWalkSneakAnimation(AnimationContext context) {
         var animationContainer = context.mainAnimationContainer();
-        var config = CONFIG.walkingSneakAnimationConfig;
+        var config = CONFIG.moveAnimations.walkingSneakAnimationConfig;
 
         animationContainer.setAnimationSpeed(calculateAnimationSpeed(context));
         animationContainer.setAnimationFadeTime(config.getFadeTime());
@@ -43,7 +43,7 @@ public class WalkSneakAnimation {
     private static float calculateAnimationSpeed(AnimationContext context) {
         return (float) (5 * context.playerData().getMovementSpeed()
                 * CONFIG.getAnimationMoveSpeedMultiplier()
-                * CONFIG.walkingSneakAnimationConfig.getSpeedMultiplier());
+                * CONFIG.moveAnimations.walkingSneakAnimationConfig.getSpeedMultiplier());
     }
 
     private static void setWalkSneakAnimation(AnimationContext context) {

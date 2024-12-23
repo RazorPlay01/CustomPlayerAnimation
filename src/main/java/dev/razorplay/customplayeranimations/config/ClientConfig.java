@@ -10,11 +10,18 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 @Config(name = CustomPlayerAnimations.MOD_ID)
 public class ClientConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip
+    private boolean isCustomFirstPersonEnable = true;
+    @ConfigEntry.Gui.Tooltip
     private float animationSpeedMultiplier = 1;
     @ConfigEntry.Gui.Tooltip
     private float animationMoveSpeedMultiplier = 4;
 
     @ConfigEntry.Category(value = "Animations")
+    @ConfigEntry.Gui.CollapsibleObject
+    public BoatAnimations boatAnimations = new BoatAnimations();
+    @ConfigEntry.Gui.CollapsibleObject
+    public MoveAnimations moveAnimations = new MoveAnimations();
+
     @ConfigEntry.Gui.CollapsibleObject
     public SwordAnimations swordAnimations = new SwordAnimations();
     @ConfigEntry.Gui.CollapsibleObject
@@ -23,23 +30,6 @@ public class ClientConfig implements ConfigData {
     public HorseAnimations horseAnimationsConfig = new HorseAnimations();
     @ConfigEntry.Gui.CollapsibleObject
     public InWaterAnimations inWaterAnimationsConfig = new InWaterAnimations();
-    @ConfigEntry.Gui.CollapsibleObject
-    public BoatAnimations boatAnimations = new BoatAnimations();
-
-    @ConfigEntry.Gui.CollapsibleObject
-    public AnimationConfig walkingAnimationConfig = new AnimationConfig();
-
-    @ConfigEntry.Gui.CollapsibleObject
-    public AnimationConfig walkingBackwardsAnimationConfig = new AnimationConfig();
-
-    @ConfigEntry.Gui.CollapsibleObject
-    public AnimationConfig walkingSneakAnimationConfig = new AnimationConfig();
-
-    @ConfigEntry.Gui.CollapsibleObject
-    public AnimationConfig walkingSneakBackwardsAnimationConfig = new AnimationConfig();
-
-    @ConfigEntry.Gui.CollapsibleObject
-    public AnimationConfig runningAnimationConfig = new AnimationConfig();
 
     @ConfigEntry.Gui.CollapsibleObject
     public AnimationConfig turningStandingAnimationConfig = new AnimationConfig();
@@ -139,6 +129,21 @@ public class ClientConfig implements ConfigData {
         public AnimationConfig boatForwardAnimationConfig = new AnimationConfig();
         @ConfigEntry.Gui.CollapsibleObject
         public AnimationConfig boatIdleAnimationConfig = new AnimationConfig();
+    }
+
+    public static class MoveAnimations {
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig walkingAnimationConfig = new AnimationConfig();
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig walkingBackwardsAnimationConfig = new AnimationConfig();
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig walkingSneakAnimationConfig = new AnimationConfig();
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig walkingSneakBackwardsAnimationConfig = new AnimationConfig();
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig runningAnimationConfig = new AnimationConfig();
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig onFenceWalkAnimationConfig = new AnimationConfig();
     }
 
     public static class SwordAnimations {

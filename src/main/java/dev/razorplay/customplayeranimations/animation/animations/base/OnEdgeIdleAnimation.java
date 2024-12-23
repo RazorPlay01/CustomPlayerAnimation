@@ -5,6 +5,7 @@ import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
+import static dev.razorplay.customplayeranimations.util.Util.configureAnimationContainer;
 
 public class OnEdgeIdleAnimation {
     private OnEdgeIdleAnimation() {
@@ -16,9 +17,7 @@ public class OnEdgeIdleAnimation {
             if (!CONFIG.onEdgeAnimationConfig.isEnabled()) {
                 context.mainAnimationContainer().disableAnimation();
             } else {
-                context.mainAnimationContainer().setAnimationSpeed(CONFIG.onEdgeAnimationConfig.getSpeedMultiplier());
-                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.onEdgeAnimationConfig.getFadeTime());
-                context.mainAnimationContainer().setAnimationPriority(CONFIG.onEdgeAnimationConfig.getPriority());
+                configureAnimationContainer(CONFIG.onEdgeAnimationConfig, context.mainAnimationContainer());
 
                 context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.ON_EDGE_IDLE_ANIMATION.getAnimationId()));
                 context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.ON_EDGE_IDLE_ANIMATION.getAnimationId());

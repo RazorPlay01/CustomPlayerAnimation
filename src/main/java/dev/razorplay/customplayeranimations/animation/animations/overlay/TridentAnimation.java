@@ -20,12 +20,9 @@ public class TridentAnimation {
         if (context.player().isUsingItem() && context.player().getUseItem().getItem() instanceof TridentItem) {
             if (!CONFIG.tridentAnimationConfig.isEnabled()) {
                 context.overlayAnimationContainer().disableAnimation();
-                context.overlayAnimationContainer().setAnimationFadeTime(1);
                 disableActiveArm(context, context.mainAnimationContainer());
             } else {
-                context.overlayAnimationContainer().setAnimationSpeed(CONFIG.tridentAnimationConfig.getSpeedMultiplier());
-                context.overlayAnimationContainer().setAnimationFadeTime(CONFIG.tridentAnimationConfig.getFadeTime());
-                context.overlayAnimationContainer().setAnimationPriority(CONFIG.tridentAnimationConfig.getPriority());
+                configureAnimationContainer(CONFIG.tridentAnimationConfig, context.overlayAnimationContainer());
 
                 if (context.player().getUsedItemHand().equals(context.playerData().getRightHand())) {
                     setTridentAnimation(context, true, 55);

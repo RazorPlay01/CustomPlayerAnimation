@@ -1,7 +1,6 @@
-package dev.razorplay.customplayeranimations.animation.animations.overlay;
+package dev.razorplay.customplayeranimations.animation.animations.special;
 
 import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
-import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.razorplay.customplayeranimations.animation.AnimationContainer;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
@@ -64,7 +63,7 @@ public class UpHandAnimation {
 
     private static boolean isBlockingAnimation(AnimationContainer overlay, AnimationContainer main) {
         return containsAnyAnimation(overlay, "bow") ||
-                containsAnyAnimation(main, "water", "boat_forward", "boat_turn", "climbing", "sleep");
+                containsAnyAnimation(main, "water", "boat_forward", "boat_turn", "climbing", "sleep", "crawl");
     }
 
     private static boolean containsAnyAnimation(AnimationContainer container, String... animations) {

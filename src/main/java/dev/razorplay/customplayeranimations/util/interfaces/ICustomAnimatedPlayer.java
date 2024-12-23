@@ -1,10 +1,11 @@
 package dev.razorplay.customplayeranimations.util.interfaces;
 
-import dev.kosmx.playerAnim.api.layered.IAnimation;
-import dev.kosmx.playerAnim.api.layered.ModifierLayer;
+import dev.razorplay.customplayeranimations.animation.AnimationContainer;
 
 public interface ICustomAnimatedPlayer {
-    ModifierLayer<IAnimation> getMainAnimationCPA();
+    AnimationContainer getMainAnimationCPA();
 
-    ModifierLayer<IAnimation> getOverlayAnimationCPA();
+    AnimationContainer getOverlayAnimationCPA();
+
+    AnimationContainer getSpecialAnimationCPA();
 }

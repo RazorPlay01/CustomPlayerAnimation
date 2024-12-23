@@ -5,6 +5,7 @@ import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
+import static dev.razorplay.customplayeranimations.util.Util.configureAnimationContainer;
 
 public class CrawlAnimations {
     private CrawlAnimations() {
@@ -16,9 +17,7 @@ public class CrawlAnimations {
             if (!CONFIG.crawlingAnimationsConfig.isEnabled()) {
                 context.mainAnimationContainer().disableAnimation();
             } else {
-                context.mainAnimationContainer().setAnimationSpeed(CONFIG.crawlingAnimationsConfig.getSpeedMultiplier());
-                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.crawlingAnimationsConfig.getFadeTime());
-                context.mainAnimationContainer().setAnimationPriority(CONFIG.crawlingAnimationsConfig.getPriority());
+                configureAnimationContainer(CONFIG.crawlingAnimationsConfig, context.mainAnimationContainer());
 
                 if (context.playerData().getMovementSpeed() > 0.0649) {
                     context.mainAnimationContainer().setAnimationSpeed(context.mainAnimationContainer().getAnimationSpeed() + (float) context.playerData().getMovementSpeed());

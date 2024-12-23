@@ -10,6 +10,7 @@ import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG
 
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
+import static dev.razorplay.customplayeranimations.util.Util.configureAnimationContainer;
 import static net.minecraft.world.InteractionHand.MAIN_HAND;
 
 public class AxeAnimation {
@@ -22,14 +23,11 @@ public class AxeAnimation {
             if (!CONFIG.toolsAnimations.axeAnimationsConfig.isEnabled()) {
                 context.overlayAnimationContainer().disableAnimation();
             } else {
-                context.overlayAnimationContainer().setAnimationSpeed(CONFIG.toolsAnimations.axeAnimationsConfig.getSpeedMultiplier());
-                context.overlayAnimationContainer().setAnimationFadeTime(CONFIG.toolsAnimations.axeAnimationsConfig.getFadeTime());
-                context.overlayAnimationContainer().setAnimationPriority(CONFIG.toolsAnimations.axeAnimationsConfig.getPriority());
-
-                ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(context.playerData().getRightHand() != MAIN_HAND);
+                configureAnimationContainer(CONFIG.toolsAnimations.axeAnimationsConfig, context.overlayAnimationContainer());
 
                 context.overlayAnimationContainer().setCurrentAnimation(context.player().isCrouching() ? getAnimation(AnimationsId.AXE_SNEAK_ANIMATION.getAnimationId()) : getAnimation(AnimationsId.AXE_ANIMATION.getAnimationId()));
                 context.overlayAnimationContainer().setCurrentAnimationId(context.player().isCrouching() ? AnimationsId.AXE_SNEAK_ANIMATION.getAnimationId() : AnimationsId.AXE_ANIMATION.getAnimationId());
+                ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(context.playerData().getRightHand() != MAIN_HAND);
             }
         }
     }

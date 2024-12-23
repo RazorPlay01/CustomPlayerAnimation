@@ -13,25 +13,24 @@ import dev.razorplay.customplayeranimations.animation.AnimationContainer;
 import dev.razorplay.customplayeranimations.animation.animations.CompatAnimation;
 import dev.razorplay.customplayeranimations.animation.animations.base.*;
 import dev.razorplay.customplayeranimations.animation.animations.overlay.*;
+import dev.razorplay.customplayeranimations.animation.animations.special.ItemSwapAnimation;
+import dev.razorplay.customplayeranimations.animation.animations.special.UpHandAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.enums.BodyParts;
 import dev.razorplay.customplayeranimations.util.enums.Modifiers;
 import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimatedPlayer;
-import dev.razorplay.customplayeranimations.util.interfaces.ITorsoControl;
+import dev.razorplay.customplayeranimations.util.interfaces.IAnimationControl;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import dev.razorplay.customplayeranimations.util.*;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -44,7 +43,7 @@ import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.*;
 import static dev.razorplay.customplayeranimations.util.Util.disableArmInBuilder;
 
 @Mixin(AbstractClientPlayer.class)
-public abstract class AbstractClientPlayerEntityMixin extends Player implements ITorsoControl, ICustomAnimatedPlayer {
+public abstract class AbstractClientPlayerEntityMixin extends Player implements IAnimationControl, ICustomAnimatedPlayer {
     @Unique
     private final AnimationContainer mainAnimationContainer = new AnimationContainer(
             new ModifierLayer<>(),
@@ -76,7 +75,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             1);
 
     @Unique
-    private final AnimationContainer upHandAnimationContainer = new AnimationContainer(
+    private final AnimationContainer specialAnimationContainer = new AnimationContainer(
             new ModifierLayer<>(),
             new HashMap<>(
                     Map.of(Modifiers.MIRROR_MODIFIER.getModifierId(), new MirrorModifier())),
@@ -119,16 +118,16 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         ((MirrorModifier) overlayAnimationContainer.getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(false);
 
         // UpHand Animation Container
-        PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(3, upHandAnimationContainer.getAnimationModifierLayer());
-        upHandAnimationContainer.getAnimationModifierLayer().addModifierLast(upHandAnimationContainer.getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId()));
-        ((MirrorModifier) upHandAnimationContainer.getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(false);
+        PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(3, specialAnimationContainer.getAnimationModifierLayer());
+        specialAnimationContainer.getAnimationModifierLayer().addModifierLast(specialAnimationContainer.getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId()));
+        ((MirrorModifier) specialAnimationContainer.getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(false);
 
         mainAnimationContainer.setCurrentAnimation(getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()));
         overlayAnimationContainer.setCurrentAnimation(getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()));
-        upHandAnimationContainer.setCurrentAnimation(getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()));
+        specialAnimationContainer.setCurrentAnimation(getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()));
 
         // FirstPerson Modifier
-        upHandAnimationContainer.getAnimationModifierLayer().addModifierBefore(firstPersonModifier);
+        specialAnimationContainer.getAnimationModifierLayer().addModifierBefore(firstPersonModifier);
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
@@ -151,15 +150,19 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         playerData.setPrevOnGround(onGround());
     }
 
-
     @Override
-    public ModifierLayer<IAnimation> getMainAnimationCPA() {
-        return mainAnimationContainer.getAnimationModifierLayer();
+    public AnimationContainer getMainAnimationCPA() {
+        return mainAnimationContainer;
     }
 
     @Override
-    public ModifierLayer<IAnimation> getOverlayAnimationCPA() {
-        return overlayAnimationContainer.getAnimationModifierLayer();
+    public AnimationContainer getOverlayAnimationCPA() {
+        return overlayAnimationContainer;
+    }
+
+    @Override
+    public AnimationContainer getSpecialAnimationCPA() {
+        return specialAnimationContainer;
     }
 
     @Override
@@ -203,57 +206,56 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Unique
     private void playAnimationSequence() {
+        AnimationContext actualAnimationContext = new AnimationContext(mainAnimationContainer, overlayAnimationContainer, specialAnimationContainer, (AbstractClientPlayer) (Object) this, playerData);
         // Main Animations
-        IdleStandingAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        IdleSneakAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        OnEdgeIdleAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        OnFenceIdleAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        TurnAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        TurnSneakAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        WalkAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        WalkBackwardsAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        RunAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        OnFenceWalkAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        WalkSneakAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        WalkSneakBackwardsAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        //JumpAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        FlyAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        FallAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        ClimbAnimations.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        CrawlAnimations.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        InWaterIdleAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        InWaterForwardAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        InWaterBackwardsAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        InWaterUpAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        InWaterSwimAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        MountAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        MinecartAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        HorseIdleAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        HorseRunningAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        HorseRunningBackwardsAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        BoatTurnAnimations.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        BoatForwardAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        BoatIdleAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        ElytraAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        SleepAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
+        IdleStandingAnimation.playAnimation(actualAnimationContext);
+        IdleSneakAnimation.playAnimation(actualAnimationContext);
+        OnEdgeIdleAnimation.playAnimation(actualAnimationContext);
+        OnFenceIdleAnimation.playAnimation(actualAnimationContext);
+        TurnAnimation.playAnimation(actualAnimationContext);
+        TurnSneakAnimation.playAnimation(actualAnimationContext);
+        WalkAnimation.playAnimation(actualAnimationContext);
+        WalkBackwardsAnimation.playAnimation(actualAnimationContext);
+        RunAnimation.playAnimation(actualAnimationContext);
+        OnFenceWalkAnimation.playAnimation(actualAnimationContext);
+        WalkSneakAnimation.playAnimation(actualAnimationContext);
+        WalkSneakBackwardsAnimation.playAnimation(actualAnimationContext);
+        FlyAnimation.playAnimation(actualAnimationContext);
+        FallAnimation.playAnimation(actualAnimationContext);
+        ClimbAnimations.playAnimation(actualAnimationContext);
+        CrawlAnimations.playAnimation(actualAnimationContext);
+        InWaterIdleAnimation.playAnimation(actualAnimationContext);
+        InWaterForwardAnimation.playAnimation(actualAnimationContext);
+        InWaterBackwardsAnimation.playAnimation(actualAnimationContext);
+        InWaterUpAnimation.playAnimation(actualAnimationContext);
+        InWaterSwimAnimation.playAnimation(actualAnimationContext);
+        MountAnimation.playAnimation(actualAnimationContext);
+        MinecartAnimation.playAnimation(actualAnimationContext);
+        HorseIdleAnimation.playAnimation(actualAnimationContext);
+        HorseRunningAnimation.playAnimation(actualAnimationContext);
+        HorseRunningBackwardsAnimation.playAnimation(actualAnimationContext);
+        BoatTurnAnimations.playAnimation(actualAnimationContext);
+        BoatForwardAnimation.playAnimation(actualAnimationContext);
+        BoatIdleAnimation.playAnimation(actualAnimationContext);
+        ElytraAnimation.playAnimation(actualAnimationContext);
+        SleepAnimation.playAnimation(actualAnimationContext);
         // Overlay Animations
         // Use Items
-        EatAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        TridentAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        BowAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        ShieldAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        CrossbowAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        CompatAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
+        EatAnimation.playAnimation(actualAnimationContext);
+        TridentAnimation.playAnimation(actualAnimationContext);
+        BowAnimation.playAnimation(actualAnimationContext);
+        ShieldAnimation.playAnimation(actualAnimationContext);
+        CrossbowAnimation.playAnimation(actualAnimationContext);
+        CompatAnimation.playAnimation(actualAnimationContext);
         // Handswing
-        GenericHandswingAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        PickaxeAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        AxeAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        ShovelAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        SwordAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
+        GenericHandSwingAnimation.playAnimation(actualAnimationContext);
+        PickaxeAnimation.playAnimation(actualAnimationContext);
+        AxeAnimation.playAnimation(actualAnimationContext);
+        ShovelAnimation.playAnimation(actualAnimationContext);
+        SwordAnimation.playAnimation(actualAnimationContext);
         // UpHand Animation
-        UpHandAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-        ItemSwapAnimation.playAnimation(new AnimationContext(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, (AbstractClientPlayer) (Object) this, playerData));
-
+        UpHandAnimation.playAnimation(actualAnimationContext);
+        ItemSwapAnimation.playAnimation(actualAnimationContext);
     }
 
     @Unique
@@ -298,13 +300,13 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Unique
     private void updateUpHandAnimationContainer() {
-        if ((!Objects.equals(upHandAnimationContainer.getCurrentAnimationId(), upHandAnimationContainer.getPrevAnimationId()) && upHandAnimationContainer.getAnimationPriority() >= overlayAnimationContainer.getPrevAnimationPriority()) ||
-                !upHandAnimationContainer.getAnimationModifierLayer().isActive()) {
+        if ((!Objects.equals(specialAnimationContainer.getCurrentAnimationId(), specialAnimationContainer.getPrevAnimationId()) && specialAnimationContainer.getAnimationPriority() >= overlayAnimationContainer.getPrevAnimationPriority()) ||
+                !specialAnimationContainer.getAnimationModifierLayer().isActive()) {
 
-            playCurrentAnimation(upHandAnimationContainer.getAnimationModifierLayer(), upHandAnimationContainer.getCurrentAnimation());
+            playCurrentAnimation(specialAnimationContainer.getAnimationModifierLayer(), specialAnimationContainer.getCurrentAnimation());
 
-            upHandAnimationContainer.setPrevAnimationId(upHandAnimationContainer.getCurrentAnimationId());
-            upHandAnimationContainer.setPrevAnimationPriority(upHandAnimationContainer.getAnimationPriority());
+            specialAnimationContainer.setPrevAnimationId(specialAnimationContainer.getCurrentAnimationId());
+            specialAnimationContainer.setPrevAnimationPriority(specialAnimationContainer.getAnimationPriority());
         }
     }
 
@@ -320,50 +322,46 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Unique
     private void modifyFirstPersonConfig() {
-        boolean condition = overlayAnimationContainer.getCurrentAnimationId().contains("trident") ||
-                overlayAnimationContainer.getCurrentAnimationId().contains("bow") ||
-                mainAnimationContainer.getCurrentAnimationId().contains("climbing") ||
-                mainAnimationContainer.getCurrentAnimationId().contains("boat") ||
-                mainAnimationContainer.getCurrentAnimationId().contains("horse") ||
-                mainAnimationContainer.getCurrentAnimationId().contains("minecart") ||
-                mainAnimationContainer.getCurrentAnimationId().contains("water") ||
-                getOffhandItem().getItem() != Items.AIR ||
-                playerData.getOffArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
-                playerData.getMainArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE);
+        if (CONFIG.isCustomFirstPersonEnable()) {
+            boolean condition = overlayAnimationContainer.getCurrentAnimationId().contains("trident") ||
+                    overlayAnimationContainer.getCurrentAnimationId().contains("bow") ||
+                    mainAnimationContainer.getCurrentAnimationId().contains("climbing") ||
+                    mainAnimationContainer.getCurrentAnimationId().contains("boat") ||
+                    mainAnimationContainer.getCurrentAnimationId().contains("horse") ||
+                    mainAnimationContainer.getCurrentAnimationId().contains("minecart") ||
+                    mainAnimationContainer.getCurrentAnimationId().contains("water") ||
+                    mainAnimationContainer.getCurrentAnimationId().contains("crawl") ||
+                    getOffhandItem().getItem() != Items.AIR ||
+                    playerData.getOffArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
+                    playerData.getMainArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE);
 
-        firstPersonModifier.setCurrentFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL);
+            firstPersonModifier.setCurrentFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL);
 
-        if (condition) {
-            firstPersonModifier.setCurrentFirstPersonConfig(FirstPersonModifier.FirstPersonConfigEnum.ENABLE_BOTH_ARMS);
+            if (condition) {
+                firstPersonModifier.setCurrentFirstPersonConfig(FirstPersonModifier.FirstPersonConfigEnum.ENABLE_BOTH_ARMS);
+            } else {
+                firstPersonModifier.setCurrentFirstPersonConfig(getMainArm() == HumanoidArm.RIGHT ? FirstPersonModifier.FirstPersonConfigEnum.ONLY_RIGHT_ARM_AND_ITEM : FirstPersonModifier.FirstPersonConfigEnum.ONLY_LEFT_ARM_AND_ITEM);
+            }
+            if (isScoping()) {
+                firstPersonModifier.setCurrentFirstPersonConfig(FirstPersonModifier.FirstPersonConfigEnum.DISABLE_BOTH_ARMS);
+            }
         } else {
-            firstPersonModifier.setCurrentFirstPersonConfig(getMainArm() == HumanoidArm.RIGHT ? FirstPersonModifier.FirstPersonConfigEnum.ONLY_RIGHT_ARM_AND_ITEM : FirstPersonModifier.FirstPersonConfigEnum.ONLY_LEFT_ARM_AND_ITEM);
-        }
-        if (isScoping()) {
-            firstPersonModifier.setCurrentFirstPersonConfig(FirstPersonModifier.FirstPersonConfigEnum.DISABLE_BOTH_ARMS);
+            firstPersonModifier.setCurrentFirstPersonMode(FirstPersonMode.DISABLED);
+            firstPersonModifier.setCurrentFirstPersonConfig(FirstPersonModifier.FirstPersonConfigEnum.ENABLE_BOTH_ARMS);
         }
     }
 
     @Unique
     private void checkMainHandItemForArmDisabling() {
-        if (!getMainHandItem().isEmpty()) {
-            boolean isInstrument = getMainHandItem().getItem() instanceof InstrumentItem;
-            boolean isBrush = getMainHandItem().getItem() instanceof BrushItem;
-
-            if (isScoping() || isInstrument || isBrush) {
-                disableArmInBuilder(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, BodyParts.RIGHT_ARM);
-            }
+        if (!getMainHandItem().isEmpty() && (isScoping() || getMainHandItem().getItem() instanceof InstrumentItem || getMainHandItem().getItem() instanceof BrushItem)) {
+            disableArmInBuilder(mainAnimationContainer, overlayAnimationContainer, specialAnimationContainer, BodyParts.RIGHT_ARM);
         }
     }
 
     @Unique
     private void checkOffHandItemForArmDisabling() {
-        if (!getOffhandItem().isEmpty()) {
-            boolean isInstrument = getMainHandItem().getItem() instanceof InstrumentItem;
-            boolean isBrush = getMainHandItem().getItem() instanceof BrushItem;
-
-            if (isScoping() || isInstrument || isBrush) {
-                disableArmInBuilder(mainAnimationContainer, overlayAnimationContainer, upHandAnimationContainer, BodyParts.LEFT_ARM);
-            }
+        if (!getOffhandItem().isEmpty() && (isScoping() || getMainHandItem().getItem() instanceof InstrumentItem || getMainHandItem().getItem() instanceof BrushItem)) {
+            disableArmInBuilder(mainAnimationContainer, overlayAnimationContainer, specialAnimationContainer, BodyParts.LEFT_ARM);
         }
     }
 }

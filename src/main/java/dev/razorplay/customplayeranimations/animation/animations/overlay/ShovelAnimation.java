@@ -8,6 +8,7 @@ import net.minecraft.world.item.ShovelItem;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
+import static dev.razorplay.customplayeranimations.util.Util.configureAnimationContainer;
 import static net.minecraft.world.InteractionHand.MAIN_HAND;
 
 public class ShovelAnimation {
@@ -20,14 +21,11 @@ public class ShovelAnimation {
             if (!CONFIG.toolsAnimations.shovelAnimationsConfig.isEnabled()) {
                 context.overlayAnimationContainer().disableAnimation();
             } else {
-                context.overlayAnimationContainer().setAnimationSpeed(CONFIG.toolsAnimations.shovelAnimationsConfig.getSpeedMultiplier());
-                context.overlayAnimationContainer().setAnimationFadeTime(CONFIG.toolsAnimations.shovelAnimationsConfig.getFadeTime());
-                context.overlayAnimationContainer().setAnimationPriority(CONFIG.toolsAnimations.shovelAnimationsConfig.getPriority());
-
-                ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(context.playerData().getRightHand() != MAIN_HAND);
+                configureAnimationContainer(CONFIG.toolsAnimations.shovelAnimationsConfig, context.overlayAnimationContainer());
 
                 context.overlayAnimationContainer().setCurrentAnimation(context.player().isCrouching() ? getAnimation(AnimationsId.SHOVEL_SNEAK_ANIMATION.getAnimationId()) : getAnimation(AnimationsId.SHOVEL_ANIMATION.getAnimationId()));
                 context.overlayAnimationContainer().setCurrentAnimationId(context.player().isCrouching() ? AnimationsId.SHOVEL_SNEAK_ANIMATION.getAnimationId() : AnimationsId.SHOVEL_ANIMATION.getAnimationId());
+                ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(context.playerData().getRightHand() != MAIN_HAND);
             }
         }
     }

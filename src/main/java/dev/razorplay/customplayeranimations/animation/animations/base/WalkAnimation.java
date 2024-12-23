@@ -13,12 +13,12 @@ public class WalkAnimation {
 
     public static void playAnimation(AnimationContext context) {
         if (context.playerData().getMovementSpeed() > 0 && !context.playerData().isMovingBackwards() && !context.player().isCrouching()) {
-            if (!CONFIG.walkingAnimationConfig.isEnabled()) {
+            if (!CONFIG.moveAnimations.walkingAnimationConfig.isEnabled()) {
                 context.mainAnimationContainer().disableAnimation();
             } else {
-                context.mainAnimationContainer().setAnimationSpeed((float) (context.playerData().getMovementSpeed() * CONFIG.getAnimationMoveSpeedMultiplier() * CONFIG.walkingAnimationConfig.getSpeedMultiplier()));
-                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.walkingAnimationConfig.getFadeTime());
-                context.mainAnimationContainer().setAnimationPriority(CONFIG.walkingAnimationConfig.getPriority());
+                context.mainAnimationContainer().setAnimationSpeed((float) (context.playerData().getMovementSpeed() * CONFIG.getAnimationMoveSpeedMultiplier() * CONFIG.moveAnimations.walkingAnimationConfig.getSpeedMultiplier()));
+                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.moveAnimations.walkingAnimationConfig.getFadeTime());
+                context.mainAnimationContainer().setAnimationPriority(CONFIG.moveAnimations.walkingAnimationConfig.getPriority());
 
                 context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.WALKING_ANIMATION.getAnimationId()));
                 context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.WALKING_ANIMATION.getAnimationId());

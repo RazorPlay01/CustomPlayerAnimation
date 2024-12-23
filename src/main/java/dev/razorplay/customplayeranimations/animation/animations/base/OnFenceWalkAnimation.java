@@ -13,12 +13,12 @@ public class OnFenceWalkAnimation {
 
     public static void playAnimation(AnimationContext context) {
         if (context.playerData().getMovementSpeed() > 0 && !context.playerData().isMovingBackwards() && !context.player().isCrouching() && context.playerData().isOnFence()) {
-            if (!CONFIG.onFenceAnimationConfig.isEnabled()) {
+            if (!CONFIG.moveAnimations.onFenceWalkAnimationConfig.isEnabled()) {
                 context.mainAnimationContainer().disableAnimation();
             } else {
-                context.mainAnimationContainer().setAnimationSpeed((float) context.playerData().getMovementSpeed() * CONFIG.getAnimationMoveSpeedMultiplier() * CONFIG.onFenceAnimationConfig.getSpeedMultiplier());
-                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.onFenceAnimationConfig.getFadeTime());
-                context.mainAnimationContainer().setAnimationPriority(CONFIG.onFenceAnimationConfig.getPriority());
+                context.mainAnimationContainer().setAnimationSpeed((float) context.playerData().getMovementSpeed() * CONFIG.getAnimationMoveSpeedMultiplier() * CONFIG.moveAnimations.onFenceWalkAnimationConfig.getSpeedMultiplier());
+                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.moveAnimations.onFenceWalkAnimationConfig.getFadeTime());
+                context.mainAnimationContainer().setAnimationPriority(CONFIG.moveAnimations.onFenceWalkAnimationConfig.getPriority());
 
                 context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.ON_FENCE_WALKING_ANIMATION.getAnimationId()));
                 context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.ON_FENCE_WALKING_ANIMATION.getAnimationId());

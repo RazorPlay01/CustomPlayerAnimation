@@ -5,6 +5,7 @@ import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
+import static dev.razorplay.customplayeranimations.util.Util.configureAnimationContainer;
 
 public class InWaterUpAnimation {
     private InWaterUpAnimation() {
@@ -16,9 +17,7 @@ public class InWaterUpAnimation {
             if (!CONFIG.inWaterAnimationsConfig.inWaterUpAnimationConfig.isEnabled()) {
                 context.mainAnimationContainer().disableAnimation();
             } else {
-                context.mainAnimationContainer().setAnimationSpeed(CONFIG.inWaterAnimationsConfig.inWaterUpAnimationConfig.getSpeedMultiplier());
-                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.inWaterAnimationsConfig.inWaterUpAnimationConfig.getFadeTime());
-                context.mainAnimationContainer().setAnimationPriority(CONFIG.inWaterAnimationsConfig.inWaterUpAnimationConfig.getPriority());
+                configureAnimationContainer(CONFIG.inWaterAnimationsConfig.inWaterUpAnimationConfig, context.mainAnimationContainer());
 
                 context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.IN_WATER_UP_ANIMATION.getAnimationId()));
                 context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.IN_WATER_UP_ANIMATION.getAnimationId());

@@ -5,6 +5,7 @@ import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
+import static dev.razorplay.customplayeranimations.util.Util.configureAnimationContainer;
 
 public class OnFenceIdleAnimation {
     private OnFenceIdleAnimation() {
@@ -16,9 +17,7 @@ public class OnFenceIdleAnimation {
             if (!CONFIG.onFenceAnimationConfig.isEnabled()) {
                 context.mainAnimationContainer().disableAnimation();
             } else {
-                context.mainAnimationContainer().setAnimationSpeed(CONFIG.onFenceAnimationConfig.getSpeedMultiplier());
-                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.onFenceAnimationConfig.getFadeTime());
-                context.mainAnimationContainer().setAnimationPriority(CONFIG.onFenceAnimationConfig.getPriority());
+                configureAnimationContainer(CONFIG.onFenceAnimationConfig, context.mainAnimationContainer());
 
                 context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.ON_FENCE_IDLE_ANIMATION.getAnimationId()));
                 context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.ON_FENCE_IDLE_ANIMATION.getAnimationId());

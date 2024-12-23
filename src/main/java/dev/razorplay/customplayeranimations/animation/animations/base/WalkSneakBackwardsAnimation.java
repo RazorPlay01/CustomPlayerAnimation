@@ -13,12 +13,12 @@ public class WalkSneakBackwardsAnimation {
 
     public static void playAnimation(AnimationContext context) {
         if (shouldPlayAnimation(context)) {
-            if (!CONFIG.walkingSneakBackwardsAnimationConfig.isEnabled()) {
+            if (!CONFIG.moveAnimations.walkingSneakBackwardsAnimationConfig.isEnabled()) {
                 context.mainAnimationContainer().disableAnimation();
             } else {
-                context.mainAnimationContainer().setAnimationSpeed((float) (5 * context.playerData().getMovementSpeed() * CONFIG.getAnimationMoveSpeedMultiplier() * CONFIG.walkingSneakBackwardsAnimationConfig.getSpeedMultiplier()));
-                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.walkingSneakBackwardsAnimationConfig.getFadeTime());
-                context.mainAnimationContainer().setAnimationPriority(CONFIG.walkingSneakBackwardsAnimationConfig.getPriority());
+                context.mainAnimationContainer().setAnimationSpeed((float) (5 * context.playerData().getMovementSpeed() * CONFIG.getAnimationMoveSpeedMultiplier() * CONFIG.moveAnimations.walkingSneakBackwardsAnimationConfig.getSpeedMultiplier()));
+                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.moveAnimations.walkingSneakBackwardsAnimationConfig.getFadeTime());
+                context.mainAnimationContainer().setAnimationPriority(CONFIG.moveAnimations.walkingSneakBackwardsAnimationConfig.getPriority());
 
                 context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.WALKING_SNEAK_BACKWARDS_ANIMATION.getAnimationId()));
                 context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.WALKING_SNEAK_BACKWARDS_ANIMATION.getAnimationId());

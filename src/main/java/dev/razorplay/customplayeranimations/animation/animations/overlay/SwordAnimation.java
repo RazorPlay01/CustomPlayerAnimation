@@ -10,6 +10,7 @@ import net.minecraft.world.item.TridentItem;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
+import static dev.razorplay.customplayeranimations.util.Util.configureAnimationContainer;
 import static net.minecraft.world.InteractionHand.MAIN_HAND;
 
 public class SwordAnimation {
@@ -47,7 +48,6 @@ public class SwordAnimation {
         }
 
         lastSwingTick = currentTick;
-        System.out.println(currentComboCount);
         switch (currentComboCount) {
             case 2 -> {
                 context.overlayAnimationContainer().setAnimationSpeed(CONFIG.swordAnimations.swordAttack2AnimationConfig.getSpeedMultiplier());
@@ -66,9 +66,8 @@ public class SwordAnimation {
             }
         }
 
-        ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(context.playerData().getRightHand() != MAIN_HAND);
-
         selectComboAnimation(context);
+        ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(context.playerData().getRightHand() != MAIN_HAND);
     }
 
     private static void selectComboAnimation(AnimationContext context) {
