@@ -15,9 +15,9 @@
     "homepage": "https://github.com/RazorPlay01",
     "sources": "https://github.com/RazorPlay01"
   },
-  "license": "CC0-1.0",
+  "license": "All Rights Reserved",
   "icon": "assets/custom_player_animations/CPA.icon.png",
-  "environment": "*",
+  "environment": "client",
   "entrypoints": {
     "main": [
       "dev.razorplay.customplayeranimations.CustomPlayerAnimations"
