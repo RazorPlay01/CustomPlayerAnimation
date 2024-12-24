@@ -11,7 +11,6 @@ import net.minecraft.world.item.TridentItem;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
-import static dev.razorplay.customplayeranimations.util.Util.configureAnimationContainer;
 import static net.minecraft.world.InteractionHand.MAIN_HAND;
 
 public class SwordAnimation implements ICustomAnimation {
