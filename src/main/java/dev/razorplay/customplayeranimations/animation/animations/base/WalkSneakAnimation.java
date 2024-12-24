@@ -1,17 +1,15 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
+import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 
-public class WalkSneakAnimation {
-    private WalkSneakAnimation() {
-        //[]
-    }
-
-    public static void playAnimation(AnimationContext context) {
+public class WalkSneakAnimation implements ICustomAnimation {
+    @Override
+    public void playAnimation(AnimationContext context) {
         if (!shouldPlayAnimation(context)) {
             return;
         }
@@ -25,10 +23,11 @@ public class WalkSneakAnimation {
         setWalkSneakAnimation(context);
     }
 
-    private static boolean shouldPlayAnimation(AnimationContext context) {
+    @Override
+    public boolean shouldPlayAnimation(AnimationContext context) {
         return context.playerData().getMovementSpeed() > 0
                 && !context.playerData().isMovingBackwards()
-                && context.player().isCrouching();
+                && context.player().isCrouching() && !context.player().isPassenger();
     }
 
     private static void configureWalkSneakAnimation(AnimationContext context) {
@@ -42,7 +41,7 @@ public class WalkSneakAnimation {
 
     private static float calculateAnimationSpeed(AnimationContext context) {
         return (float) (5 * context.playerData().getMovementSpeed()
-                * CONFIG.getAnimationMoveSpeedMultiplier()
+                * CONFIG.moveAnimations.getAnimationMoveSpeedMultiplier()
                 * CONFIG.moveAnimations.walkingSneakAnimationConfig.getSpeedMultiplier());
     }
 

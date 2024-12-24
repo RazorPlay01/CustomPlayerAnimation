@@ -5,5 +5,5 @@ import dev.razorplay.customplayeranimations.util.PlayerData;
 import net.minecraft.client.player.AbstractClientPlayer;
 
 public record AnimationContext(AnimationContainer mainAnimationContainer, AnimationContainer overlayAnimationContainer,
-                               AnimationContainer upHandAnimationContainer, AbstractClientPlayer player, PlayerData playerData) {
+                               AnimationContainer specialAnimationContainer, AbstractClientPlayer player, PlayerData playerData) {
 }

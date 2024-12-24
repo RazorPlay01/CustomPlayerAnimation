@@ -2,6 +2,7 @@ package dev.razorplay.customplayeranimations.animation.animations.overlay;
 
 import dev.kosmx.playerAnim.api.layered.modifier.AdjustmentModifier;
 import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
+import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.enums.BodyParts;
 import dev.razorplay.customplayeranimations.util.enums.Modifiers;
@@ -13,22 +14,19 @@ import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 import static dev.razorplay.customplayeranimations.util.Util.*;
 
-public class BowAnimation {
-    private BowAnimation() {
-        // []
-    }
-
-    public static void playAnimation(AnimationContext context) {
-        if (context.player().isUsingItem() && context.player().getUseItem().getItem() instanceof BowItem) {
-            if (!CONFIG.bowAnimationsConfig.isEnabled()) {
+public class BowAnimation implements ICustomAnimation {
+    @Override
+    public void playAnimation(AnimationContext context) {
+        if (shouldPlayAnimation(context)) {
+            if (!CONFIG.useItemAnimation.bowAnimationsConfig.isEnabled()) {
                 context.overlayAnimationContainer().disableAnimation();
                 if (context.playerData().getMainArmPose().equals(HumanoidModel.ArmPose.BOW_AND_ARROW) ||
                         context.playerData().getOffArmPose().equals(HumanoidModel.ArmPose.BOW_AND_ARROW)) {
-                    disableArmInBuilder(context, BodyParts.RIGHT_ARM);
-                    disableArmInBuilder(context, BodyParts.LEFT_ARM);
+                    context.player().disableBodyPartAnimationInAllContainers(BodyParts.RIGHT_ARM);
+                    context.player().disableBodyPartAnimationInAllContainers(BodyParts.LEFT_ARM);
                 }
             } else {
-                configureAnimationContainer(CONFIG.bowAnimationsConfig, context.overlayAnimationContainer());
+                configureAnimationContainer(CONFIG.useItemAnimation.bowAnimationsConfig, context.overlayAnimationContainer());
 
                 if (context.player().getUsedItemHand().equals(context.playerData().getRightHand())) {
                     setBowAnimationForHand(context, true);
@@ -37,6 +35,11 @@ public class BowAnimation {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean shouldPlayAnimation(AnimationContext context) {
+        return context.player().isUsingItem() && context.player().getUseItem().getItem() instanceof BowItem;
     }
 
     private static void setBowAnimationForHand(AnimationContext context, boolean isRightHand) {
@@ -48,7 +51,7 @@ public class BowAnimation {
             context.overlayAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.BOW_IDLE_ANIMATION.getAnimationId()));
             context.overlayAnimationContainer().setCurrentAnimationId((isRightHand ? RIGHT_PREFIX : LEFT_PREFIX) + AnimationsId.BOW_IDLE_ANIMATION.getAnimationId());
         }
-        disableBodyPart(context.mainAnimationContainer(), isRightHand ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
+        context.player().disableBodyPartAnimation(context.mainAnimationContainer(), isRightHand ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
 
         if (isRightHand) {
             ((AdjustmentModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.RIGHT_BOW_MODIFIER.getModifierId())).enabled = true;

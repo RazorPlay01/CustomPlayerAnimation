@@ -1,5 +1,6 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
+import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
@@ -8,25 +9,24 @@ import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAni
 import static dev.razorplay.customplayeranimations.util.Util.configureAnimationContainer;
 import static dev.razorplay.customplayeranimations.util.Util.isHorse;
 
-public class HorseRunningAnimation {
-    private HorseRunningAnimation() {
-        // []
+public class HorseRunningAnimation implements ICustomAnimation {
+    @Override
+    public void playAnimation(AnimationContext context) {
+        if (shouldPlayAnimation(context)) {
+            if (!CONFIG.mountAnimations.horseAnimationsConfig.horseRunningAnimationConfig.isEnabled()) {
+                context.mainAnimationContainer().disableAnimation();
+            } else {
+                configureAnimationContainer(CONFIG.mountAnimations.horseAnimationsConfig.horseRunningAnimationConfig, context.mainAnimationContainer());
+
+                context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.HORSE_RUNNING_ANIMATION.getAnimationId()));
+                context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.HORSE_RUNNING_ANIMATION.getAnimationId());
+            }
+        }
     }
 
-    public static void playAnimation(AnimationContext context) {
-        if (context.player().isPassenger()) {
-            var vehicle = context.player().getVehicle();
-            if (isHorse(vehicle) && context.playerData().getMovementSpeed() > 0 && !context.playerData().isMovingBackwards()) {
-                if (!CONFIG.horseAnimationsConfig.horseRunningAnimationConfig.isEnabled()) {
-                    context.mainAnimationContainer().disableAnimation();
-                } else {
-                    configureAnimationContainer(CONFIG.horseAnimationsConfig.horseRunningAnimationConfig, context.mainAnimationContainer());
-
-                    context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.HORSE_RUNNING_ANIMATION.getAnimationId()));
-                    context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.HORSE_RUNNING_ANIMATION.getAnimationId());
-                }
-            }
-
-        }
+    @Override
+    public boolean shouldPlayAnimation(AnimationContext context) {
+        var vehicle = context.player().getVehicle();
+        return context.player().isPassenger() && isHorse(vehicle) && context.playerData().getMovementSpeed() > 0 && !context.playerData().isMovingBackwards();
     }
 }

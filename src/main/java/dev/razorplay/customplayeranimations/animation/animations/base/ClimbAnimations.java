@@ -1,5 +1,6 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
+import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import net.minecraft.world.item.BowItem;
@@ -10,17 +11,14 @@ import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAni
 import static java.lang.Math.atan2;
 import static java.lang.Math.toDegrees;
 
-public class ClimbAnimations {
-    private ClimbAnimations() {
-        // []
-    }
-
-    public static void playAnimation(AnimationContext context) {
-        if (context.player().onGround() || context.player().isPassenger()) {
+public class ClimbAnimations implements ICustomAnimation {
+    @Override
+    public void playAnimation(AnimationContext context) {
+        if (shouldPlayAnimation(context)) {
             return;
         }
 
-        if (!CONFIG.climbingAnimationsConfig.isEnabled()) {
+        if (!CONFIG.extraAnimations.climbingAnimationsConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
             return;
         }
@@ -34,6 +32,11 @@ public class ClimbAnimations {
         } else if (isPowderSnow(block)) {
             handlePowderSnowAnimation(context);
         }
+    }
+
+    @Override
+    public boolean shouldPlayAnimation(AnimationContext context) {
+        return context.player().onGround() || context.player().isPassenger();
     }
 
     private static Block getPlayerBlock(AnimationContext context) {
@@ -85,7 +88,7 @@ public class ClimbAnimations {
     }
 
     private static void configureAnimationContainer(AnimationContext context) {
-        var config = CONFIG.climbingAnimationsConfig;
+        var config = CONFIG.extraAnimations.climbingAnimationsConfig;
         var animationContainer = context.mainAnimationContainer();
 
         animationContainer.setAnimationSpeed(config.getSpeedMultiplier());

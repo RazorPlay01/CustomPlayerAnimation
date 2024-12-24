@@ -1,19 +1,14 @@
 package dev.razorplay.customplayeranimations.animation.animations;
 
+import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
 import dev.razorplay.customplayeranimations.compat.CarryOnCompat;
 import dev.razorplay.customplayeranimations.compat.SupplementariesCompat;
 import dev.razorplay.customplayeranimations.util.enums.BodyParts;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import net.fabricmc.loader.api.FabricLoader;
 
-import static dev.razorplay.customplayeranimations.util.Util.disableArmInBuilder;
-
-public class CompatAnimation {
-    private CompatAnimation() {
-        // []
-    }
-
-    public static void playAnimation(AnimationContext context) {
+public class CompatAnimation implements ICustomAnimation {
+    public void playAnimation(AnimationContext context) {
         if (context.player().isUsingItem() && FabricLoader.getInstance().isModLoaded("supplementaries") && SupplementariesCompat.checkFluteItem(context.player().getUseItem().getItem())) {
             disableBothArms(context);
         }
@@ -22,8 +17,13 @@ public class CompatAnimation {
         }
     }
 
+    @Override
+    public boolean shouldPlayAnimation(AnimationContext context) {
+        return false;
+    }
+
     private static void disableBothArms(AnimationContext context) {
-        disableArmInBuilder(context, BodyParts.RIGHT_ARM);
-        disableArmInBuilder(context, BodyParts.LEFT_ARM);
+        context.player().disableBodyPartAnimationInAllContainers(BodyParts.RIGHT_ARM);
+        context.player().disableBodyPartAnimationInAllContainers(BodyParts.LEFT_ARM);
     }
 }

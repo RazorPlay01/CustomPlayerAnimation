@@ -1,5 +1,6 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
+import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import net.minecraft.world.entity.vehicle.Boat;
@@ -9,36 +10,29 @@ import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAni
 import static dev.razorplay.customplayeranimations.util.Util.configureAnimationContainer;
 import static dev.razorplay.customplayeranimations.util.Util.isBoat;
 
-public class BoatTurnAnimations {
-    private BoatTurnAnimations() {
-        // []
-    }
-
-    public static void playAnimation(AnimationContext context) {
+public class BoatTurnAnimations implements ICustomAnimation {
+    @Override
+    public void playAnimation(AnimationContext context) {
         if (!context.player().isPassenger()) {
             return;
         }
 
         var vehicle = context.player().getVehicle();
         if (isBoat(vehicle)) {
-            handleBoatAnimation(context, (Boat) vehicle);
+            if (!CONFIG.mountAnimations.boatAnimations.boatTurnAnimationConfig.isEnabled()) {
+                context.mainAnimationContainer().disableAnimation();
+                return;
+            }
+
+            configureAnimationContainer(CONFIG.mountAnimations.boatAnimations.boatTurnAnimationConfig, context.mainAnimationContainer());
+
+            if (shouldPlayAnimation(context)) {
+                playBoatTurnAnimation(context, (Boat) vehicle);
+            }
         }
     }
 
-    private static void handleBoatAnimation(AnimationContext context, Boat boat) {
-        if (!CONFIG.boatAnimations.boatTurnAnimationConfig.isEnabled()) {
-            context.mainAnimationContainer().disableAnimation();
-            return;
-        }
-
-        configureAnimationContainer(CONFIG.boatAnimations.boatTurnAnimationConfig, context.mainAnimationContainer());
-
-        if (shouldPlayAnimation(context)) {
-            playBoatTurnAnimation(context, boat);
-        }
-    }
-
-    private static boolean shouldPlayAnimation(AnimationContext context) {
+    public boolean shouldPlayAnimation(AnimationContext context) {
         return context.playerData().getMovementSpeed() > 0 && !context.playerData().isMovingBackwards();
     }
 

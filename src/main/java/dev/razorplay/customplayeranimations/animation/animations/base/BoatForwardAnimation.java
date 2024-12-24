@@ -1,5 +1,6 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
+import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import net.minecraft.world.entity.vehicle.Boat;
@@ -9,27 +10,28 @@ import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAni
 import static dev.razorplay.customplayeranimations.util.Util.configureAnimationContainer;
 import static dev.razorplay.customplayeranimations.util.Util.isBoat;
 
-public class BoatForwardAnimation {
-    private BoatForwardAnimation() {
-        // []
+public class BoatForwardAnimation implements ICustomAnimation {
+    @Override
+    public void playAnimation(AnimationContext context) {
+        if (shouldPlayAnimation(context)) {
+            handleBoatAnimation(context);
+        }
     }
 
-    public static void playAnimation(AnimationContext context) {
-        if (!context.player().isPassenger()) {
-            return;
-        }
+    @Override
+    public boolean shouldPlayAnimation(AnimationContext context) {
         var vehicle = context.player().getVehicle();
-        if (isBoat(vehicle)) {
-            handleBoatAnimation(context, (Boat) vehicle);
-        }
+        return context.player().isPassenger() && isBoat(vehicle);
     }
 
-    private static void handleBoatAnimation(AnimationContext context, Boat boat) {
-        if (!CONFIG.boatAnimations.boatForwardAnimationConfig.isEnabled()) {
+    private static void handleBoatAnimation(AnimationContext context) {
+        Boat boat = (Boat) context.player().getVehicle();
+
+        if (!CONFIG.mountAnimations.boatAnimations.boatForwardAnimationConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
             return;
         }
-        configureAnimationContainer(CONFIG.boatAnimations.boatForwardAnimationConfig, context.mainAnimationContainer());
+        configureAnimationContainer(CONFIG.mountAnimations.boatAnimations.boatForwardAnimationConfig, context.mainAnimationContainer());
 
         boolean isLeftPaddleMoving = boat.getPaddleState(0);
         boolean isRightPaddleMoving = boat.getPaddleState(1);

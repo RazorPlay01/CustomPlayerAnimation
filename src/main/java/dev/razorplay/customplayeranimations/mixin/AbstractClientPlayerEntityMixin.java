@@ -10,11 +10,8 @@ import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.core.util.Vec3f;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
 import dev.razorplay.customplayeranimations.animation.AnimationContainer;
-import dev.razorplay.customplayeranimations.animation.animations.CompatAnimation;
-import dev.razorplay.customplayeranimations.animation.animations.base.*;
-import dev.razorplay.customplayeranimations.animation.animations.overlay.*;
-import dev.razorplay.customplayeranimations.animation.animations.special.ItemSwapAnimation;
-import dev.razorplay.customplayeranimations.animation.animations.special.UpHandAnimation;
+import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
+import dev.razorplay.customplayeranimations.animation.animations.AnimationProvider;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.enums.BodyParts;
 import dev.razorplay.customplayeranimations.util.enums.Modifiers;
@@ -40,7 +37,7 @@ import java.util.*;
 
 import static dev.kosmx.playerAnim.core.util.Ease.INOUTSINE;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.*;
-import static dev.razorplay.customplayeranimations.util.Util.disableArmInBuilder;
+import static net.minecraft.world.InteractionHand.MAIN_HAND;
 
 @Mixin(AbstractClientPlayer.class)
 public abstract class AbstractClientPlayerEntityMixin extends Player implements IAnimationControl, ICustomAnimatedPlayer {
@@ -93,6 +90,9 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Unique
     private final FirstPersonModifier firstPersonModifier = new FirstPersonModifier();
 
+    @Unique
+    private AnimationContext actualAnimationContext;
+
     protected AbstractClientPlayerEntityMixin(Level level, BlockPos blockPos, float f, GameProfile gameProfile) {
         super(level, blockPos, f, gameProfile);
     }
@@ -137,6 +137,8 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
         overlayAnimationContainer.resetAnimationProperties();
 
+        this.actualAnimationContext = new AnimationContext(mainAnimationContainer, overlayAnimationContainer, specialAnimationContainer, (AbstractClientPlayer) (Object) this, playerData);
+
         playAnimationSequence();
         updateAnimationSpeeds();
 
@@ -163,6 +165,32 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Override
     public AnimationContainer getSpecialAnimationCPA() {
         return specialAnimationContainer;
+    }
+
+    @Override
+    public void disableBodyPartAnimation(AnimationContainer animationContainer, BodyParts bodyPart) {
+        KeyframeAnimation.AnimationBuilder internalBuilder = animationContainer.getCurrentAnimation().mutableCopy();
+        var part = internalBuilder.getPart(bodyPart.getPartId());
+        if (part != null) {
+            part.setEnabled(false);
+        }
+        animationContainer.setCurrentAnimation(internalBuilder.build());
+    }
+
+    @Override
+    public void disableBodyPartAnimationInAllContainers(BodyParts bodyPart) {
+        this.disableBodyPartAnimation(actualAnimationContext.mainAnimationContainer(), bodyPart);
+        this.disableBodyPartAnimation(actualAnimationContext.overlayAnimationContainer(), bodyPart);
+        this.disableBodyPartAnimation(actualAnimationContext.specialAnimationContainer(), bodyPart);
+    }
+
+    @Override
+    public void disableActiveArm(AnimationContainer animationContainer) {
+        if (actualAnimationContext.player().getUsedItemHand().equals(MAIN_HAND)) {
+            this.disableBodyPartAnimation(animationContainer, actualAnimationContext.player().getMainArm() == HumanoidArm.RIGHT ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
+        } else {
+            this.disableBodyPartAnimation(animationContainer, actualAnimationContext.player().getMainArm() == HumanoidArm.RIGHT ? BodyParts.LEFT_ARM : BodyParts.RIGHT_ARM);
+        }
     }
 
     @Override
@@ -206,56 +234,18 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Unique
     private void playAnimationSequence() {
-        AnimationContext actualAnimationContext = new AnimationContext(mainAnimationContainer, overlayAnimationContainer, specialAnimationContainer, (AbstractClientPlayer) (Object) this, playerData);
         // Main Animations
-        IdleStandingAnimation.playAnimation(actualAnimationContext);
-        IdleSneakAnimation.playAnimation(actualAnimationContext);
-        OnEdgeIdleAnimation.playAnimation(actualAnimationContext);
-        OnFenceIdleAnimation.playAnimation(actualAnimationContext);
-        TurnAnimation.playAnimation(actualAnimationContext);
-        TurnSneakAnimation.playAnimation(actualAnimationContext);
-        WalkAnimation.playAnimation(actualAnimationContext);
-        WalkBackwardsAnimation.playAnimation(actualAnimationContext);
-        RunAnimation.playAnimation(actualAnimationContext);
-        OnFenceWalkAnimation.playAnimation(actualAnimationContext);
-        WalkSneakAnimation.playAnimation(actualAnimationContext);
-        WalkSneakBackwardsAnimation.playAnimation(actualAnimationContext);
-        FlyAnimation.playAnimation(actualAnimationContext);
-        FallAnimation.playAnimation(actualAnimationContext);
-        ClimbAnimations.playAnimation(actualAnimationContext);
-        CrawlAnimations.playAnimation(actualAnimationContext);
-        InWaterIdleAnimation.playAnimation(actualAnimationContext);
-        InWaterForwardAnimation.playAnimation(actualAnimationContext);
-        InWaterBackwardsAnimation.playAnimation(actualAnimationContext);
-        InWaterUpAnimation.playAnimation(actualAnimationContext);
-        InWaterSwimAnimation.playAnimation(actualAnimationContext);
-        MountAnimation.playAnimation(actualAnimationContext);
-        MinecartAnimation.playAnimation(actualAnimationContext);
-        HorseIdleAnimation.playAnimation(actualAnimationContext);
-        HorseRunningAnimation.playAnimation(actualAnimationContext);
-        HorseRunningBackwardsAnimation.playAnimation(actualAnimationContext);
-        BoatTurnAnimations.playAnimation(actualAnimationContext);
-        BoatForwardAnimation.playAnimation(actualAnimationContext);
-        BoatIdleAnimation.playAnimation(actualAnimationContext);
-        ElytraAnimation.playAnimation(actualAnimationContext);
-        SleepAnimation.playAnimation(actualAnimationContext);
+        for (ICustomAnimation animation : AnimationProvider.MAIN_ANIMATIONS) {
+            animation.playAnimation(actualAnimationContext);
+        }
         // Overlay Animations
-        // Use Items
-        EatAnimation.playAnimation(actualAnimationContext);
-        TridentAnimation.playAnimation(actualAnimationContext);
-        BowAnimation.playAnimation(actualAnimationContext);
-        ShieldAnimation.playAnimation(actualAnimationContext);
-        CrossbowAnimation.playAnimation(actualAnimationContext);
-        CompatAnimation.playAnimation(actualAnimationContext);
-        // Handswing
-        GenericHandSwingAnimation.playAnimation(actualAnimationContext);
-        PickaxeAnimation.playAnimation(actualAnimationContext);
-        AxeAnimation.playAnimation(actualAnimationContext);
-        ShovelAnimation.playAnimation(actualAnimationContext);
-        SwordAnimation.playAnimation(actualAnimationContext);
-        // UpHand Animation
-        UpHandAnimation.playAnimation(actualAnimationContext);
-        ItemSwapAnimation.playAnimation(actualAnimationContext);
+        for (ICustomAnimation animation : AnimationProvider.OVERLAY_ANIMATIONS) {
+            animation.playAnimation(actualAnimationContext);
+        }
+        // Special Animations
+        for (ICustomAnimation animation : AnimationProvider.SPECIAL_ANIMATIONS) {
+            animation.playAnimation(actualAnimationContext);
+        }
     }
 
     @Unique
@@ -354,14 +344,14 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Unique
     private void checkMainHandItemForArmDisabling() {
         if (!getMainHandItem().isEmpty() && (isScoping() || getMainHandItem().getItem() instanceof InstrumentItem || getMainHandItem().getItem() instanceof BrushItem)) {
-            disableArmInBuilder(mainAnimationContainer, overlayAnimationContainer, specialAnimationContainer, BodyParts.RIGHT_ARM);
+            this.disableBodyPartAnimationInAllContainers(BodyParts.RIGHT_ARM);
         }
     }
 
     @Unique
     private void checkOffHandItemForArmDisabling() {
         if (!getOffhandItem().isEmpty() && (isScoping() || getMainHandItem().getItem() instanceof InstrumentItem || getMainHandItem().getItem() instanceof BrushItem)) {
-            disableArmInBuilder(mainAnimationContainer, overlayAnimationContainer, specialAnimationContainer, BodyParts.LEFT_ARM);
+            this.disableBodyPartAnimationInAllContainers(BodyParts.LEFT_ARM);
         }
     }
 }

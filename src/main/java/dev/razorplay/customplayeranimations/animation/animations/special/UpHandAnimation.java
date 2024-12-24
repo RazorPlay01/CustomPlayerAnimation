@@ -2,6 +2,7 @@ package dev.razorplay.customplayeranimations.animation.animations.special;
 
 import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
 import dev.razorplay.customplayeranimations.animation.AnimationContainer;
+import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import dev.razorplay.customplayeranimations.util.enums.BodyParts;
@@ -19,7 +20,7 @@ import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 import static dev.razorplay.customplayeranimations.util.Util.*;
 
-public class UpHandAnimation {
+public class UpHandAnimation implements ICustomAnimation {
     private static final Set<Item> UP_HAND_ITEMS = Set.of(
             Items.TORCH, Items.SOUL_TORCH, Items.REDSTONE_TORCH,
             Items.FILLED_MAP, Items.RECOVERY_COMPASS, Items.COMPASS
@@ -28,19 +29,24 @@ public class UpHandAnimation {
     private static boolean lastOffHandState = false;
 
 
-    public static void playAnimation(AnimationContext context) {
-        if (!CONFIG.upHandAnimationConfig.isEnabled()) {
-            context.upHandAnimationContainer().disableAnimation();
+    public void playAnimation(AnimationContext context) {
+        if (!CONFIG.specialAnimations.upHandAnimationConfig.isEnabled()) {
+            context.specialAnimationContainer().disableAnimation();
         } else {
             HandStates handStates = determineHandStates(context.player());
             handleHandStateChange(handStates, context.mainAnimationContainer());
             if (shouldPlayHandAnimation(handStates, context)) {
                 playHandAnimations(handStates, context);
             } else {
-                context.upHandAnimationContainer().disableAnimation();
+                context.specialAnimationContainer().disableAnimation();
             }
             updateLastHandStates(handStates);
         }
+    }
+
+    @Override
+    public boolean shouldPlayAnimation(AnimationContext context) {
+        return false;
     }
 
     private static HandStates determineHandStates(AbstractClientPlayer player) {
@@ -92,12 +98,12 @@ public class UpHandAnimation {
     }
 
     private static void setUpHandAnimation(AnimationContext context, HumanoidArm arm) {
-        context.upHandAnimationContainer().setAnimationFadeTime(10);
-        context.upHandAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.UP_HAND_ANIMATION.getAnimationId()));
+        context.specialAnimationContainer().setAnimationFadeTime(10);
+        context.specialAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.UP_HAND_ANIMATION.getAnimationId()));
         String animationId = (arm == HumanoidArm.RIGHT ? RIGHT_PREFIX : LEFT_PREFIX) + AnimationsId.UP_HAND_ANIMATION.getAnimationId();
-        context.upHandAnimationContainer().setCurrentAnimationId(animationId);
-        disableBodyPart(context.mainAnimationContainer(), arm == HumanoidArm.RIGHT ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
-        ((MirrorModifier) context.upHandAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId()))
+        context.specialAnimationContainer().setCurrentAnimationId(animationId);
+        context.player().disableBodyPartAnimation(context.mainAnimationContainer(), arm == HumanoidArm.RIGHT ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
+        ((MirrorModifier) context.specialAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId()))
                 .setEnabled(arm == HumanoidArm.RIGHT);
     }
 

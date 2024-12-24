@@ -8,23 +8,23 @@ import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 import static dev.razorplay.customplayeranimations.util.Util.configureAnimationContainer;
 
-public class InWaterBackwardsAnimation implements ICustomAnimation {
+public class InWaterDownAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
         if (shouldPlayAnimation(context)) {
-            if (!CONFIG.inWaterAnimationsConfig.inWaterBackwardsAnimationConfig.isEnabled()) {
+            if (!CONFIG.inWaterAnimationsConfig.inWaterUpAnimationConfig.isEnabled()) {
                 context.mainAnimationContainer().disableAnimation();
             } else {
-                configureAnimationContainer(CONFIG.inWaterAnimationsConfig.inWaterBackwardsAnimationConfig, context.mainAnimationContainer());
+                configureAnimationContainer(CONFIG.inWaterAnimationsConfig.inWaterUpAnimationConfig, context.mainAnimationContainer());
 
-                context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.IN_WATER_BACKWARDS_ANIMATION.getAnimationId()));
-                context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.IN_WATER_BACKWARDS_ANIMATION.getAnimationId());
+                context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.IN_WATER_IDLE_ANIMATION.getAnimationId()));
+                context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.IN_WATER_IDLE_ANIMATION.getAnimationId());
             }
         }
     }
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return (context.player().isInWaterOrBubble() || context.player().isInLava()) && !context.player().onGround() && !context.player().isVisuallySwimming() && (context.playerData().getMovementSpeed() > 0 && context.playerData().isMovingBackwards());
+        return (context.player().isInWaterOrBubble() || context.player().isInLava()) && !context.player().onGround() && !context.player().isVisuallySwimming() && context.player().isCrouching();
     }
 }
