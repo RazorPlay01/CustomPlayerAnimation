@@ -1,7 +1,7 @@
 package dev.razorplay.customplayeranimations.animation.animations.overlay;
 
 import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
-import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
+import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.enums.Modifiers;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
@@ -15,18 +15,16 @@ import static dev.razorplay.customplayeranimations.util.Util.configureAnimationC
 import static net.minecraft.world.InteractionHand.MAIN_HAND;
 
 public class AxeAnimation implements ICustomAnimation {
-   @Override
+    @Override
     public void playAnimation(AnimationContext context) {
-        if (shouldPlayAnimation(context)) {
-            if (!CONFIG.toolsAnimations.axeAnimationsConfig.isEnabled()) {
-                context.overlayAnimationContainer().disableAnimation();
-            } else {
-                configureAnimationContainer(CONFIG.toolsAnimations.axeAnimationsConfig, context.overlayAnimationContainer());
+        if (!CONFIG.toolsAnimations.axeAnimationsConfig.isEnabled()) {
+            context.overlayAnimationContainer().disableAnimation();
+        } else {
+            configureAnimationContainer(CONFIG.toolsAnimations.axeAnimationsConfig, context.overlayAnimationContainer());
 
-                context.overlayAnimationContainer().setCurrentAnimation(context.player().isCrouching() ? getAnimation(AnimationsId.AXE_SNEAK_ANIMATION.getAnimationId()) : getAnimation(AnimationsId.AXE_ANIMATION.getAnimationId()));
-                context.overlayAnimationContainer().setCurrentAnimationId(context.player().isCrouching() ? AnimationsId.AXE_SNEAK_ANIMATION.getAnimationId() : AnimationsId.AXE_ANIMATION.getAnimationId());
-                ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(context.playerData().getRightHand() != MAIN_HAND);
-            }
+            context.overlayAnimationContainer().setCurrentAnimation(context.player().isCrouching() ? getAnimation(AnimationsId.AXE_SNEAK_ANIMATION.getAnimationId()) : getAnimation(AnimationsId.AXE_ANIMATION.getAnimationId()));
+            context.overlayAnimationContainer().setCurrentAnimationId(context.player().isCrouching() ? AnimationsId.AXE_SNEAK_ANIMATION.getAnimationId() : AnimationsId.AXE_ANIMATION.getAnimationId());
+            ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(context.playerData().getRightHand() != MAIN_HAND);
         }
     }
 

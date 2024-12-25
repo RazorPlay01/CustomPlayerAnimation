@@ -1,6 +1,6 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
-import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
+import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
@@ -10,17 +10,15 @@ import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAni
 public class WalkSneakBackwardsAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (shouldPlayAnimation(context)) {
-            if (!CONFIG.moveAnimations.walkingSneakBackwardsAnimationConfig.isEnabled()) {
-                context.mainAnimationContainer().disableAnimation();
-            } else {
-                context.mainAnimationContainer().setAnimationSpeed((float) (5 * context.playerData().getMovementSpeed() * CONFIG.moveAnimations.getAnimationMoveSpeedMultiplier() * CONFIG.moveAnimations.walkingSneakBackwardsAnimationConfig.getSpeedMultiplier()));
-                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.moveAnimations.walkingSneakBackwardsAnimationConfig.getFadeTime());
-                context.mainAnimationContainer().setAnimationPriority(CONFIG.moveAnimations.walkingSneakBackwardsAnimationConfig.getPriority());
+        if (!CONFIG.moveAnimations.walkingSneakBackwardsAnimationConfig.isEnabled()) {
+            context.mainAnimationContainer().disableAnimation();
+        } else {
+            context.mainAnimationContainer().setAnimationSpeed((float) (5 * context.playerData().getMovementSpeed() * CONFIG.moveAnimations.getAnimationMoveSpeedMultiplier() * CONFIG.moveAnimations.walkingSneakBackwardsAnimationConfig.getSpeedMultiplier()));
+            context.mainAnimationContainer().setAnimationFadeTime(CONFIG.moveAnimations.walkingSneakBackwardsAnimationConfig.getFadeTime());
+            context.mainAnimationContainer().setAnimationPriority(CONFIG.moveAnimations.walkingSneakBackwardsAnimationConfig.getPriority());
 
-                context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.WALKING_SNEAK_BACKWARDS_ANIMATION.getAnimationId()));
-                context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.WALKING_SNEAK_BACKWARDS_ANIMATION.getAnimationId());
-            }
+            context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.WALK_SNEAK_BACKWARDS_ANIMATION.getAnimationId()));
+            context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.WALK_SNEAK_BACKWARDS_ANIMATION.getAnimationId());
         }
     }
 

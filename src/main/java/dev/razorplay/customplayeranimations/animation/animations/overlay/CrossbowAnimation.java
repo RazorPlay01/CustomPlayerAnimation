@@ -1,6 +1,6 @@
 package dev.razorplay.customplayeranimations.animation.animations.overlay;
 
-import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
+import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.BodyParts;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import net.minecraft.client.model.HumanoidModel;
@@ -26,6 +26,6 @@ public class CrossbowAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return false;
+        return true;
     }
 }

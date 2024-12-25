@@ -1,6 +1,6 @@
 package dev.razorplay.customplayeranimations.animation.animations;
 
-import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
+import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.compat.CarryOnCompat;
 import dev.razorplay.customplayeranimations.compat.SupplementariesCompat;
 import dev.razorplay.customplayeranimations.util.enums.BodyParts;
@@ -19,7 +19,7 @@ public class CompatAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return false;
+        return true;
     }
 
     private static void disableBothArms(AnimationContext context) {

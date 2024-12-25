@@ -1,4 +1,4 @@
-package dev.razorplay.customplayeranimations.animation;
+package dev.razorplay.customplayeranimations.util.interfaces;
 
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 

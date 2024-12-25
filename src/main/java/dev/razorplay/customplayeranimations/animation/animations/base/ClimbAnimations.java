@@ -1,6 +1,6 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
-import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
+import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import net.minecraft.world.item.BowItem;
@@ -14,10 +14,6 @@ import static java.lang.Math.toDegrees;
 public class ClimbAnimations implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (shouldPlayAnimation(context)) {
-            return;
-        }
-
         if (!CONFIG.extraAnimations.climbingAnimationsConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
             return;
@@ -36,7 +32,7 @@ public class ClimbAnimations implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return context.player().onGround() || context.player().isPassenger();
+        return !context.player().onGround() || !context.player().isPassenger();
     }
 
     private static Block getPlayerBlock(AnimationContext context) {
@@ -103,14 +99,14 @@ public class ClimbAnimations implements ICustomAnimation {
         double verticalSpeed = playerData.getVectorY();
 
         if (verticalSpeed > 0) {
-            context.mainAnimationContainer().setCurrentAnimation(isCrouching ? getAnimation(AnimationsId.CLIMBING_SNEAK_ANIMATION.getAnimationId()) : getAnimation(AnimationsId.CLIMBING_ANIMATION.getAnimationId()));
-            context.mainAnimationContainer().setCurrentAnimationId(isCrouching ? AnimationsId.CLIMBING_SNEAK_ANIMATION.getAnimationId() : AnimationsId.CLIMBING_ANIMATION.getAnimationId());
+            context.mainAnimationContainer().setCurrentAnimation(isCrouching ? getAnimation(AnimationsId.CLIMB_SNEAK_ANIMATION.getAnimationId()) : getAnimation(AnimationsId.CLIMB_ANIMATION.getAnimationId()));
+            context.mainAnimationContainer().setCurrentAnimationId(isCrouching ? AnimationsId.CLIMB_SNEAK_ANIMATION.getAnimationId() : AnimationsId.CLIMB_ANIMATION.getAnimationId());
         } else if (verticalSpeed < 0) {
-            context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.CLIMBING_BACKWARDS_ANIMATION.getAnimationId()));
-            context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.CLIMBING_BACKWARDS_ANIMATION.getAnimationId());
+            context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.CLIMB_BACKWARDS_ANIMATION.getAnimationId()));
+            context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.CLIMB_BACKWARDS_ANIMATION.getAnimationId());
         } else {
-            context.mainAnimationContainer().setCurrentAnimation(isCrouching ? getAnimation(AnimationsId.CLIMBING_SNEAK_IDLE_ANIMATION.getAnimationId()) : getAnimation(AnimationsId.CLIMBING_IDLE_ANIMATION.getAnimationId()));
-            context.mainAnimationContainer().setCurrentAnimationId(isCrouching ? AnimationsId.CLIMBING_SNEAK_IDLE_ANIMATION.getAnimationId() : AnimationsId.CLIMBING_IDLE_ANIMATION.getAnimationId());
+            context.mainAnimationContainer().setCurrentAnimation(isCrouching ? getAnimation(AnimationsId.CLIMB_IDLE_SNEAK_ANIMATION.getAnimationId()) : getAnimation(AnimationsId.CLIMB_IDLE_ANIMATION.getAnimationId()));
+            context.mainAnimationContainer().setCurrentAnimationId(isCrouching ? AnimationsId.CLIMB_IDLE_SNEAK_ANIMATION.getAnimationId() : AnimationsId.CLIMB_IDLE_ANIMATION.getAnimationId());
         }
     }
 

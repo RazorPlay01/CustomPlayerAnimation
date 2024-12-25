@@ -1,6 +1,6 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
-import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
+import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
@@ -11,15 +11,13 @@ import static dev.razorplay.customplayeranimations.util.Util.configureAnimationC
 public class ElytraAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (shouldPlayAnimation(context)) {
-            if (!CONFIG.extraAnimations.elytraAnimationsConfig.isEnabled()) {
-                context.mainAnimationContainer().disableAnimation();
-            } else {
-                configureAnimationContainer(CONFIG.extraAnimations.elytraAnimationsConfig, context.mainAnimationContainer());
+        if (!CONFIG.extraAnimations.elytraAnimationsConfig.isEnabled()) {
+            context.mainAnimationContainer().disableAnimation();
+        } else {
+            configureAnimationContainer(CONFIG.extraAnimations.elytraAnimationsConfig, context.mainAnimationContainer());
 
-                context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.ELYTRA_ANIMATION.getAnimationId()));
-                context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.ELYTRA_ANIMATION.getAnimationId());
-            }
+            context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.ELYTRA_ANIMATION.getAnimationId()));
+            context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.ELYTRA_ANIMATION.getAnimationId());
         }
     }
 

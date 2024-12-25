@@ -1,6 +1,6 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
-import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
+import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
@@ -11,15 +11,13 @@ import static dev.razorplay.customplayeranimations.util.Util.configureAnimationC
 public class IdleSneakAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (shouldPlayAnimation(context)) {
-            if (!CONFIG.idleAnimations.idleSneakAnimationConfig.isEnabled()) {
-                context.mainAnimationContainer().disableAnimation();
-            } else {
-                configureAnimationContainer(CONFIG.idleAnimations.idleSneakAnimationConfig, context.mainAnimationContainer());
+        if (!CONFIG.idleAnimations.idleSneakAnimationConfig.isEnabled()) {
+            context.mainAnimationContainer().disableAnimation();
+        } else {
+            configureAnimationContainer(CONFIG.idleAnimations.idleSneakAnimationConfig, context.mainAnimationContainer());
 
-                context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.IDLE_SNEAK_ANIMATION.getAnimationId()));
-                context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.IDLE_SNEAK_ANIMATION.getAnimationId());
-            }
+            context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.IDLE_SNEAK_ANIMATION.getAnimationId()));
+            context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.IDLE_SNEAK_ANIMATION.getAnimationId());
         }
     }
 

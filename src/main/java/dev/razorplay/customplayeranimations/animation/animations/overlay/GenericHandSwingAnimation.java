@@ -1,6 +1,6 @@
 package dev.razorplay.customplayeranimations.animation.animations.overlay;
 
-import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
+import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.BodyParts;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import net.minecraft.world.InteractionHand;
@@ -8,12 +8,10 @@ import net.minecraft.world.InteractionHand;
 public class GenericHandSwingAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (shouldPlayAnimation(context)) {
-            disableArmBasedOnHand(context, context.player().swingingArm);
-            context.overlayAnimationContainer().setCurrentAnimationId("hand_swing" + context.overlayAnimationContainer().getCurrentAnimationId());
-            context.overlayAnimationContainer().setAnimationFadeTime(0);
-            context.overlayAnimationContainer().setAnimationPriority(0);
-        }
+        disableArmBasedOnHand(context, context.player().swingingArm);
+        context.overlayAnimationContainer().setCurrentAnimationId("hand_swing" + context.overlayAnimationContainer().getCurrentAnimationId());
+        context.overlayAnimationContainer().setAnimationFadeTime(0);
+        context.overlayAnimationContainer().setAnimationPriority(0);
     }
 
     @Override

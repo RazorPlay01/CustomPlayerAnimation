@@ -1,6 +1,6 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
-import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
+import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
@@ -10,17 +10,15 @@ import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAni
 public class WalkBackwardsAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (shouldPlayAnimation(context)) {
-            if (!CONFIG.moveAnimations.walkingBackwardsAnimationConfig.isEnabled()) {
-                context.mainAnimationContainer().disableAnimation();
-            } else {
-                context.mainAnimationContainer().setAnimationSpeed((float) (context.playerData().getMovementSpeed() * CONFIG.moveAnimations.getAnimationMoveSpeedMultiplier() * CONFIG.moveAnimations.walkingBackwardsAnimationConfig.getSpeedMultiplier()));
-                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.moveAnimations.walkingBackwardsAnimationConfig.getFadeTime());
-                context.mainAnimationContainer().setAnimationPriority(CONFIG.moveAnimations.walkingBackwardsAnimationConfig.getPriority());
+        if (!CONFIG.moveAnimations.walkingBackwardsAnimationConfig.isEnabled()) {
+            context.mainAnimationContainer().disableAnimation();
+        } else {
+            context.mainAnimationContainer().setAnimationSpeed((float) (context.playerData().getMovementSpeed() * CONFIG.moveAnimations.getAnimationMoveSpeedMultiplier() * CONFIG.moveAnimations.walkingBackwardsAnimationConfig.getSpeedMultiplier()));
+            context.mainAnimationContainer().setAnimationFadeTime(CONFIG.moveAnimations.walkingBackwardsAnimationConfig.getFadeTime());
+            context.mainAnimationContainer().setAnimationPriority(CONFIG.moveAnimations.walkingBackwardsAnimationConfig.getPriority());
 
-                context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.WALKING_BACKWARDS_ANIMATION.getAnimationId()));
-                context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.WALKING_BACKWARDS_ANIMATION.getAnimationId());
-            }
+            context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.WALK_BACKWARDS_ANIMATION.getAnimationId()));
+            context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.WALK_BACKWARDS_ANIMATION.getAnimationId());
         }
     }
 

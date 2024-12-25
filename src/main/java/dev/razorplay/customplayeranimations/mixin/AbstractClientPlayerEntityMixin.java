@@ -10,7 +10,7 @@ import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.core.util.Vec3f;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
 import dev.razorplay.customplayeranimations.animation.AnimationContainer;
-import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
+import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.animation.animations.AnimationProvider;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.enums.BodyParts;
@@ -133,7 +133,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Inject(method = "tick", at = @At("TAIL"))
     public void tick(CallbackInfo ci) {
         // Update Player Data
-        playerData.update((AbstractClientPlayer) (Object) this);
+        this.playerData.update((AbstractClientPlayer) (Object) this);
 
         overlayAnimationContainer.resetAnimationProperties();
 
@@ -147,9 +147,9 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
         updateAnimationContainers();
 
-        playerData.setPrevPlayerPosition(playerData.getPlayerPosition());
-        playerData.setPrevPlayerBodyYaw(playerData.getPlayerBodyYaw());
-        playerData.setPrevOnGround(onGround());
+        this.playerData.setPrevPlayerPosition(this.playerData.getPlayerPosition());
+        this.playerData.setPrevPlayerBodyYaw(this.playerData.getPlayerBodyYaw());
+        this.playerData.setPrevOnGround(onGround());
     }
 
     @Override
@@ -195,12 +195,12 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Override
     public void setMainArmPose(HumanoidModel.ArmPose armPosition) {
-        playerData.setMainArmPose(armPosition);
+        this.playerData.setMainArmPose(armPosition);
     }
 
     @Override
     public void setOffArmPose(HumanoidModel.ArmPose armPosition) {
-        playerData.setOffArmPose(armPosition);
+        this.playerData.setOffArmPose(armPosition);
     }
 
     @Unique
@@ -236,15 +236,21 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     private void playAnimationSequence() {
         // Main Animations
         for (ICustomAnimation animation : AnimationProvider.MAIN_ANIMATIONS) {
-            animation.playAnimation(actualAnimationContext);
+            if (animation.shouldPlayAnimation(actualAnimationContext)) {
+                animation.playAnimation(actualAnimationContext);
+            }
         }
         // Overlay Animations
         for (ICustomAnimation animation : AnimationProvider.OVERLAY_ANIMATIONS) {
-            animation.playAnimation(actualAnimationContext);
+            if (animation.shouldPlayAnimation(actualAnimationContext)) {
+                animation.playAnimation(actualAnimationContext);
+            }
         }
         // Special Animations
         for (ICustomAnimation animation : AnimationProvider.SPECIAL_ANIMATIONS) {
-            animation.playAnimation(actualAnimationContext);
+            if (animation.shouldPlayAnimation(actualAnimationContext)) {
+                animation.playAnimation(actualAnimationContext);
+            }
         }
     }
 
@@ -322,8 +328,8 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
                     mainAnimationContainer.getCurrentAnimationId().contains("water") ||
                     mainAnimationContainer.getCurrentAnimationId().contains("crawl") ||
                     getOffhandItem().getItem() != Items.AIR ||
-                    playerData.getOffArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
-                    playerData.getMainArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE);
+                    this.playerData.getOffArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
+                    this.playerData.getMainArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE);
 
             firstPersonModifier.setCurrentFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL);
 

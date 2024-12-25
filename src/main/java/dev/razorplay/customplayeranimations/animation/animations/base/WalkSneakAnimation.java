@@ -1,6 +1,6 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
-import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
+import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
@@ -10,10 +10,6 @@ import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAni
 public class WalkSneakAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!shouldPlayAnimation(context)) {
-            return;
-        }
-
         if (!CONFIG.moveAnimations.walkingSneakAnimationConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
             return;
@@ -46,7 +42,7 @@ public class WalkSneakAnimation implements ICustomAnimation {
     }
 
     private static void setWalkSneakAnimation(AnimationContext context) {
-        context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.WALKING_SNEAK_ANIMATION.getAnimationId()));
-        context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.WALKING_SNEAK_ANIMATION.getAnimationId());
+        context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.WALK_SNEAK_ANIMATION.getAnimationId()));
+        context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.WALK_SNEAK_ANIMATION.getAnimationId());
     }
 }

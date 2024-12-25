@@ -1,6 +1,6 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
-import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
+import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
@@ -18,9 +18,7 @@ public class CreativeFlyIdleAnimation implements ICustomAnimation {
             context.playerData().setFlychecker(0);
         }
 
-        if (shouldPlayAnimation(context)) {
-            playFlyIdleCreativeAnimation(context);
-        }
+        playFlyIdleCreativeAnimation(context);
     }
 
     @Override
@@ -34,8 +32,8 @@ public class CreativeFlyIdleAnimation implements ICustomAnimation {
         } else {
             configureAnimationContainer(CONFIG.idleAnimations.idleCreativeFlyingAnimationConfig, context.mainAnimationContainer());
 
-            context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.IDLE_CREATIVE_FLYING_ANIMATION.getAnimationId()));
-            context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.IDLE_CREATIVE_FLYING_ANIMATION.getAnimationId());
+            context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.IDLE_CREATIVE_FLY_ANIMATION.getAnimationId()));
+            context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.IDLE_CREATIVE_FLY_ANIMATION.getAnimationId());
         }
     }
 }

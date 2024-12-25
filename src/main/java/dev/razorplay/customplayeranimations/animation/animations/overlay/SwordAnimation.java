@@ -2,7 +2,7 @@ package dev.razorplay.customplayeranimations.animation.animations.overlay;
 
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
 import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
-import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
+import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.enums.Modifiers;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
@@ -20,12 +20,10 @@ public class SwordAnimation implements ICustomAnimation {
 
     @Override
     public void playAnimation(AnimationContext context) {
-        if (shouldPlayAnimation(context)) {
-            if (!CONFIG.swordAnimations.isEnabled()) {
-                context.overlayAnimationContainer().disableAnimation();
-            } else {
-                handleSwordComboAnimation(context);
-            }
+        if (!CONFIG.swordAnimations.isEnabled()) {
+            context.overlayAnimationContainer().disableAnimation();
+        } else {
+            handleSwordComboAnimation(context);
         }
     }
 

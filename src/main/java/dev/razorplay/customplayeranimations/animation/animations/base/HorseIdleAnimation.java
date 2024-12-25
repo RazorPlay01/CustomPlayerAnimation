@@ -1,6 +1,6 @@
 package dev.razorplay.customplayeranimations.animation.animations.base;
 
-import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
+import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 
@@ -12,15 +12,13 @@ import static dev.razorplay.customplayeranimations.util.Util.isHorse;
 public class HorseIdleAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (shouldPlayAnimation(context)) {
-            if (!CONFIG.mountAnimations.horseAnimationsConfig.horseIdleAnimationConfig.isEnabled()) {
-                context.mainAnimationContainer().disableAnimation();
-            } else {
-                configureAnimationContainer(CONFIG.mountAnimations.horseAnimationsConfig.horseIdleAnimationConfig, context.mainAnimationContainer());
+        if (!CONFIG.mountAnimations.horseAnimationsConfig.horseIdleAnimationConfig.isEnabled()) {
+            context.mainAnimationContainer().disableAnimation();
+        } else {
+            configureAnimationContainer(CONFIG.mountAnimations.horseAnimationsConfig.horseIdleAnimationConfig, context.mainAnimationContainer());
 
-                context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.HORSE_IDLE_ANIMATION.getAnimationId()));
-                context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.HORSE_IDLE_ANIMATION.getAnimationId());
-            }
+            context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.HORSE_IDLE_ANIMATION.getAnimationId()));
+            context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.HORSE_IDLE_ANIMATION.getAnimationId());
         }
     }
 

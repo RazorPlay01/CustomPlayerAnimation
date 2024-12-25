@@ -1,7 +1,7 @@
 package dev.razorplay.customplayeranimations.animation.animations.overlay;
 
 import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
-import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
+import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.enums.BodyParts;
 import dev.razorplay.customplayeranimations.util.enums.Modifiers;
@@ -16,18 +16,16 @@ import static dev.razorplay.customplayeranimations.util.Util.*;
 public class ShieldAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (shouldPlayAnimation(context)) {
-            if (!CONFIG.useItemAnimation.shieldAnimationConfig.isEnabled()) {
-                context.overlayAnimationContainer().disableAnimation();
-                context.player().disableActiveArm(context.mainAnimationContainer());
-            } else {
-                configureAnimationContainer(CONFIG.useItemAnimation.shieldAnimationConfig, context.overlayAnimationContainer());
+        if (!CONFIG.useItemAnimation.shieldAnimationConfig.isEnabled()) {
+            context.overlayAnimationContainer().disableAnimation();
+            context.player().disableActiveArm(context.mainAnimationContainer());
+        } else {
+            configureAnimationContainer(CONFIG.useItemAnimation.shieldAnimationConfig, context.overlayAnimationContainer());
 
-                if (context.player().getUsedItemHand().equals(context.playerData().getRightHand())) {
-                    setShieldAnimation(context, true);
-                } else if (context.player().getUsedItemHand().equals(context.playerData().getLeftHand())) {
-                    setShieldAnimation(context, false);
-                }
+            if (context.player().getUsedItemHand().equals(context.playerData().getRightHand())) {
+                setShieldAnimation(context, true);
+            } else if (context.player().getUsedItemHand().equals(context.playerData().getLeftHand())) {
+                setShieldAnimation(context, false);
             }
         }
     }

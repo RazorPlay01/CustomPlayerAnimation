@@ -1,6 +1,6 @@
 package dev.razorplay.customplayeranimations.animation.animations;
 
-import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
+import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.animation.animations.base.*;
 import dev.razorplay.customplayeranimations.animation.animations.overlay.*;
 import dev.razorplay.customplayeranimations.animation.animations.special.ItemSwapAnimation;

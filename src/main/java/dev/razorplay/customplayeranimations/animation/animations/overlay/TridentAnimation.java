@@ -1,7 +1,7 @@
 package dev.razorplay.customplayeranimations.animation.animations.overlay;
 
 import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
-import dev.razorplay.customplayeranimations.animation.ICustomAnimation;
+import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.enums.BodyParts;
 import dev.razorplay.customplayeranimations.util.enums.Modifiers;
@@ -15,18 +15,16 @@ import static dev.razorplay.customplayeranimations.util.Util.*;
 public class TridentAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (shouldPlayAnimation(context)) {
-            if (!CONFIG.useItemAnimation.tridentAnimationConfig.isEnabled()) {
-                context.overlayAnimationContainer().disableAnimation();
-                context.player().disableActiveArm(context.mainAnimationContainer());
-            } else {
-                configureAnimationContainer(CONFIG.useItemAnimation.tridentAnimationConfig, context.overlayAnimationContainer());
+        if (!CONFIG.useItemAnimation.tridentAnimationConfig.isEnabled()) {
+            context.overlayAnimationContainer().disableAnimation();
+            context.player().disableActiveArm(context.mainAnimationContainer());
+        } else {
+            configureAnimationContainer(CONFIG.useItemAnimation.tridentAnimationConfig, context.overlayAnimationContainer());
 
-                if (context.player().getUsedItemHand().equals(context.playerData().getRightHand())) {
-                    setTridentAnimation(context, true, 55);
-                } else if (context.player().getUsedItemHand().equals(context.playerData().getLeftHand())) {
-                    setTridentAnimation(context, false, -55);
-                }
+            if (context.player().getUsedItemHand().equals(context.playerData().getRightHand())) {
+                setTridentAnimation(context, true, 55);
+            } else if (context.player().getUsedItemHand().equals(context.playerData().getLeftHand())) {
+                setTridentAnimation(context, false, -55);
             }
         }
     }
