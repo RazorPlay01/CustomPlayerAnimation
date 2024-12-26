@@ -13,7 +13,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-import java.util.Arrays;
 import java.util.Set;
 
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
@@ -68,13 +67,8 @@ public class UpHandAnimation implements ICustomAnimation {
     }
 
     private static boolean isBlockingAnimation(AnimationContainer overlay, AnimationContainer main) {
-        return containsAnyAnimation(overlay, "bow") ||
-                containsAnyAnimation(main, "water", "boat_forward", "boat_turn", "climbing", "sleep", "crawl");
-    }
-
-    private static boolean containsAnyAnimation(AnimationContainer container, String... animations) {
-        String currentAnimation = container.getCurrentAnimationId();
-        return Arrays.stream(animations).anyMatch(currentAnimation::contains);
+        return containsAnyAnimation(overlay, CONFIG.getUpHandDisableAnimationIds()) ||
+                containsAnyAnimation(main, CONFIG.getUpHandDisableAnimationIds());
     }
 
     private static void playHandAnimations(HandStates states, AnimationContext context) {

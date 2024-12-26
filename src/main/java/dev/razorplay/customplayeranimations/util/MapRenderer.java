@@ -28,17 +28,14 @@ public class MapRenderer {
     private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderType
             .text(ResourceLocation.withDefaultNamespace("textures/map/map_background_checkerboard.png"));
 
-    public static void renderFirstPersonMap(PoseStack matrices, MultiBufferSource vertexConsumers, int light,
-                                            ItemStack stack, boolean small) {
+    public static void renderFirstPersonMap(PoseStack matrices, MultiBufferSource vertexConsumers, int light, ItemStack stack) {
         Minecraft client = Minecraft.getInstance();
-        if (small) {
-            matrices.mulPose(YP.rotationDegrees(160.0f));
-            matrices.mulPose(ZP.rotationDegrees(180.0f));
-            matrices.scale(0.38f, 0.38f, 0.38f);
+        matrices.mulPose(YP.rotationDegrees(160.0f));
+        matrices.mulPose(ZP.rotationDegrees(180.0f));
+        matrices.scale(0.38f, 0.38f, 0.38f);
 
-            matrices.translate(-0.1, -1.2, 0.0);
-            matrices.scale(0.0098125f, 0.0098125f, 0.0098125f);
-        }
+        matrices.translate(-0.1, -1.2, 0.0);
+        matrices.scale(0.0098125f, 0.0098125f, 0.0098125f);
         MapId mapid = stack.get(DataComponents.MAP_ID);
 
         MapItemSavedData mapState = MapItem.getSavedData(stack, client.level);

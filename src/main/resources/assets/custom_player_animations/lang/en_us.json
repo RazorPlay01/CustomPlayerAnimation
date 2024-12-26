@@ -3,8 +3,12 @@
 
   "text.autoconfig.custom_player_animations.option.client.isCustomFirstPersonEnable": "Custom First Person Mode",
   "text.autoconfig.custom_player_animations.option.client.isCustomFirstPersonEnable.@Tooltip": "Change the first person mode. Set no for vanilla mode",
+  "text.autoconfig.custom_player_animations.option.client.animationsThatShowBothHand": "Show both hands",
+  "text.autoconfig.custom_player_animations.option.client.animationsThatShowBothHand.@Tooltip": "List of animations showing both hands when Custom First Person Mode is enabled",
   "text.autoconfig.custom_player_animations.option.client.animationSpeedMultiplier": "Animation Speed Multiplier",
   "text.autoconfig.custom_player_animations.option.client.animationSpeedMultiplier.@Tooltip": "Changes the animation speed multiplier for all animations",
+  "text.autoconfig.custom_player_animations.option.client.upHandDisableAnimationIds": "Disable UpHandAnimation",
+  "text.autoconfig.custom_player_animations.option.client.upHandDisableAnimationIds.@Tooltip": "List of animations that have priority over UpHandAnimation",
 
   "text.autoconfig.custom_player_animations.option.client.moveAnimations": "Move Animations",
 

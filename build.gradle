@@ -43,6 +43,9 @@ repositories {
         name "zigythebirdMods"
         url "https://maven.zigythebird.com/mods"
     }
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 dependencies {
@@ -55,7 +58,8 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     //Player Animator
-    modImplementation("dev.kosmx.player-anim:player-animation-lib-fabric:${project.player_anim}")
+    //modImplementation("dev.kosmx.player-anim:player-animation-lib-fabric:${project.player_anim}")
+    modImplementation files('libs/player-animation-lib-fabric-2.0.0+1.21.1.jar')
 
     implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${project.mixin_extras_ver}"))
     include("io.github.llamalad7:mixinextras-fabric:${project.mixin_extras_ver}:slim")

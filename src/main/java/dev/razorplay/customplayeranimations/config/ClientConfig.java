@@ -1,10 +1,13 @@
 package dev.razorplay.customplayeranimations.config;
 
 import dev.razorplay.customplayeranimations.CustomPlayerAnimations;
+import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import lombok.Getter;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
+
+import java.util.List;
 
 @Getter
 @Config(name = CustomPlayerAnimations.MOD_ID)
@@ -12,7 +15,11 @@ public class ClientConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip
     private boolean isCustomFirstPersonEnable = true;
     @ConfigEntry.Gui.Tooltip
+    private List<String> animationsThatShowBothHand = List.of("bow", "trident", "climbing", "boat", "horse", "minecart", "water", "crawl");
+    @ConfigEntry.Gui.Tooltip
     private float animationSpeedMultiplier = 1;
+    @ConfigEntry.Gui.Tooltip
+    private List<String> upHandDisableAnimationIds = List.of("bow", "trident", "water", "boat_forward", "boat_turn", "climbing", "sleep", "crawl");
 
     @ConfigEntry.Category(value = "Animations")
     @ConfigEntry.Gui.CollapsibleObject

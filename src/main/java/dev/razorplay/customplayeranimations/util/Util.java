@@ -5,6 +5,9 @@ import dev.razorplay.customplayeranimations.config.ClientConfig;
 import net.minecraft.world.entity.animal.horse.*;
 import net.minecraft.world.entity.vehicle.Boat;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Util {
     public static final String RIGHT_PREFIX = "right_";
     public static final String LEFT_PREFIX = "left_";
@@ -25,5 +28,13 @@ public class Util {
         animationContainer.setAnimationSpeed(config.getSpeedMultiplier());
         animationContainer.setAnimationFadeTime(config.getFadeTime());
         animationContainer.setAnimationPriority(config.getPriority());
+    }
+
+    public static boolean containsAnyAnimation(AnimationContainer container, List<String> animations) {
+        String currentAnimation = container.getCurrentAnimationId();
+        if (animations == null || animations.isEmpty()) {
+            return false;
+        }
+        return animations.stream().anyMatch(currentAnimation::contains);
     }
 }

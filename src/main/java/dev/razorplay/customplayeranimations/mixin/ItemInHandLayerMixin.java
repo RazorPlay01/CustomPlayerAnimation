@@ -30,39 +30,47 @@ public abstract class ItemInHandLayerMixin<T extends LivingEntity, M extends Ent
 
     @Inject(at = @At("HEAD"), method = "renderArmWithItem", cancellable = true)
     private void renderArmWithItem(LivingEntity livingEntity, ItemStack itemStack, ItemDisplayContext itemDisplayContext, HumanoidArm humanoidArm, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
-        onRenderItem(livingEntity, this.getParentModel(), itemStack, humanoidArm, poseStack, multiBufferSource, i, ci);
+        onRenderItem(livingEntity, this.getParentModel(), humanoidArm, poseStack, multiBufferSource, i, ci);
     }
 
     @Unique
-    public void onRenderItem(LivingEntity entity, EntityModel<?> model, ItemStack itemStack, HumanoidArm arm,
-                             PoseStack matrices, MultiBufferSource vertexConsumers, int light, CallbackInfo info) {
-
-        if (model instanceof ArmedModel armedModel && model instanceof HumanoidModel<?> humanoid
-                && ((arm == HumanoidArm.RIGHT && humanoid.rightArm.visible) || (arm == HumanoidArm.LEFT && humanoid.leftArm.visible))) {
-            if (arm == entity.getMainArm() && entity.getMainHandItem().getItem().equals(Items.FILLED_MAP)) { // Mainhand
-                matrices.pushPose();
-                armedModel.translateToHand(arm, matrices);
-                matrices.mulPose(Axis.XP.rotationDegrees(-90.0f));
-                matrices.mulPose(Axis.YP.rotationDegrees(200.0f));
-                boolean bl = arm == HumanoidArm.LEFT;
-                matrices.translate((bl ? -1 : 1) / 16.0f, 0.125, -0.625);
-                MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack, true);
-                matrices.popPose();
-                info.cancel();
-                return;
-            }
-            if (arm != entity.getMainArm() && entity.getOffhandItem().getItem().equals(Items.FILLED_MAP)) { // Only
-                // offhand
-                matrices.pushPose();
-                armedModel.translateToHand(arm, matrices);
-                matrices.mulPose(Axis.XP.rotationDegrees(-90.0f));
-                matrices.mulPose(Axis.YP.rotationDegrees(200.0f));
-                boolean bl = arm == HumanoidArm.LEFT;
-                matrices.translate((bl ? -1 : 1) / 16.0f, 0.125, -0.625);
-                MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack, true);
-                matrices.popPose();
-                info.cancel();
-            }
+    public void onRenderItem(LivingEntity entity, EntityModel<?> model, HumanoidArm arm, PoseStack matrices, MultiBufferSource vertexConsumers, int light, CallbackInfo info) {
+        if (!(model instanceof HumanoidModel<?> humanoid)) {
+            return;
         }
+        if (!isArmVisible(humanoid, arm)) {
+            return;
+        }
+
+        boolean isMainHand = arm == entity.getMainArm();
+        ItemStack heldItem = isMainHand ? entity.getMainHandItem() : entity.getOffhandItem();
+
+        if (heldItem.getItem().equals(Items.FILLED_MAP)) {
+            renderMapInHand(humanoid, arm, matrices, vertexConsumers, light, heldItem);
+            info.cancel();
+        }
+    }
+
+    @Unique
+    private boolean isArmVisible(HumanoidModel<?> humanoid, HumanoidArm arm) {
+        return (arm == HumanoidArm.RIGHT && humanoid.rightArm.visible) ||
+                (arm == HumanoidArm.LEFT && humanoid.leftArm.visible);
+    }
+
+    @Unique
+    private void renderMapInHand(HumanoidModel<?> humanoid, HumanoidArm arm, PoseStack matrices,
+                                 MultiBufferSource vertexConsumers, int light, ItemStack itemStack) {
+        matrices.pushPose();
+        humanoid.translateToHand(arm, matrices);
+
+        matrices.mulPose(Axis.XP.rotationDegrees(-90.0f));
+        matrices.mulPose(Axis.YP.rotationDegrees(200.0f));
+
+        boolean isLeftHand = arm == HumanoidArm.LEFT;
+        matrices.translate((isLeftHand ? -1 : 1) / 16.0f, 0.125, -0.625);
+
+        MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack);
+
+        matrices.popPose();
     }
 }

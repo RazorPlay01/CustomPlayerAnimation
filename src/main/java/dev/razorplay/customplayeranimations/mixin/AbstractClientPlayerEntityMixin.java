@@ -37,6 +37,7 @@ import java.util.*;
 
 import static dev.kosmx.playerAnim.core.util.Ease.INOUTSINE;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.*;
+import static dev.razorplay.customplayeranimations.util.Util.containsAnyAnimation;
 import static net.minecraft.world.InteractionHand.MAIN_HAND;
 
 @Mixin(AbstractClientPlayer.class)
@@ -319,14 +320,8 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Unique
     private void modifyFirstPersonConfig() {
         if (CONFIG.isCustomFirstPersonEnable()) {
-            boolean condition = overlayAnimationContainer.getCurrentAnimationId().contains("trident") ||
-                    overlayAnimationContainer.getCurrentAnimationId().contains("bow") ||
-                    mainAnimationContainer.getCurrentAnimationId().contains("climbing") ||
-                    mainAnimationContainer.getCurrentAnimationId().contains("boat") ||
-                    mainAnimationContainer.getCurrentAnimationId().contains("horse") ||
-                    mainAnimationContainer.getCurrentAnimationId().contains("minecart") ||
-                    mainAnimationContainer.getCurrentAnimationId().contains("water") ||
-                    mainAnimationContainer.getCurrentAnimationId().contains("crawl") ||
+            boolean condition = containsAnyAnimation(overlayAnimationContainer, CONFIG.getAnimationsThatShowBothHand()) ||
+                    containsAnyAnimation(mainAnimationContainer, CONFIG.getAnimationsThatShowBothHand()) ||
                     getOffhandItem().getItem() != Items.AIR ||
                     this.playerData.getOffArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
                     this.playerData.getMainArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE);
