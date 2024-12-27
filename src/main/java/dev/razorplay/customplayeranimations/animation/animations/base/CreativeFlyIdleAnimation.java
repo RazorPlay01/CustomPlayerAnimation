@@ -11,19 +11,12 @@ import static dev.razorplay.customplayeranimations.util.Util.configureAnimationC
 public class CreativeFlyIdleAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        double flyVectorY = Math.round(context.playerData().getVectorY() * 1000.0) / 1000.0;
-        if ((flyVectorY == 0.0 || Math.abs(flyVectorY) == 0.375) && !context.player().onGround() && !context.player().isInWaterOrBubble()) {
-            context.playerData().setFlychecker(context.playerData().getFlychecker() + 1);
-        } else if (Math.abs(flyVectorY) > 0.375 || context.player().onGround()) {
-            context.playerData().setFlychecker(0);
-        }
-
         playFlyIdleCreativeAnimation(context);
     }
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return context.playerData().getFlychecker() > 10 && !context.player().isPassenger();
+        return context.playerData().getFlychecker() > 10 && !context.player().isPassenger() && context.player().isCreative();
     }
 
     private static void playFlyIdleCreativeAnimation(AnimationContext context) {

@@ -1,5 +1,6 @@
 package dev.razorplay.customplayeranimations.animation.animations.overlay;
 
+import dev.kosmx.playerAnim.api.layered.modifier.AdjustmentModifier;
 import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
 import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
@@ -44,6 +45,7 @@ public class ShieldAnimation implements ICustomAnimation {
             context.overlayAnimationContainer().setCurrentAnimationId((isRightHand ? RIGHT_PREFIX : LEFT_PREFIX) + AnimationsId.SHIELD_ANIMATION.getAnimationId());
         }
         context.player().disableBodyPartAnimation(context.mainAnimationContainer(), isRightHand ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
+        ((AdjustmentModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.SHIELD_MODIFIER.getModifierId())).enabled = true;
         ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(isRightHand);
     }
 }

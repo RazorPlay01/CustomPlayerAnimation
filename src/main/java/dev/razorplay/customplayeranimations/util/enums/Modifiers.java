@@ -10,6 +10,7 @@ public enum Modifiers {
     SPEED_MODIFIER("SpeedModifier"),
     RIGHT_BOW_MODIFIER("RightBowModifier"),
     LEFT_BOW_MODIFIER("LeftBowModifier"),
+    SHIELD_MODIFIER("ShieldModifier"),
     RIGHT_UP_HAND_MODIFIER("RightUpHandModifier"),
     LEFT_UP_HAND_MODIFIER("LeftUpHandModifier");
 

@@ -48,6 +48,7 @@ public class PlayerData {
         updatePlayerPosition(player.getYHeadRot(), player.getVisualRotationYInDegrees(), player.position());
         updateMovementInfo(player.yBodyRot);
         updateEnvironmentInfo(player);
+        updateFlyChecker(player);
     }
 
     private void updateHandOrientation(HumanoidArm mainHand) {
@@ -82,5 +83,14 @@ public class PlayerData {
         Block standingBlock = player.level().getBlockState(player.blockPosition().below()).getBlock();
         setOnFence((standingBlock instanceof FenceBlock || standingBlock instanceof WallBlock || standingBlock instanceof IronBarsBlock) && player.onGround());
         setOnEdge(standingBlock instanceof AirBlock && player.onGround());
+    }
+
+    private void updateFlyChecker(AbstractClientPlayer player) {
+        double flyVectorY = Math.round(getVectorY() * 1000.0) / 1000.0;
+        if ((flyVectorY == 0.0 || Math.abs(flyVectorY) == 0.375) && !player.onGround() && !player.isInWaterOrBubble()) {
+            setFlychecker(getFlychecker() + 1);
+        } else if (Math.abs(flyVectorY) > 0.375 || player.onGround()) {
+            setFlychecker(0);
+        }
     }
 }
