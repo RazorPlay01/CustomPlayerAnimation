@@ -28,6 +28,6 @@ public class PickaxeAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return context.player().swinging && context.player().getMainHandItem().getItem() instanceof PickaxeItem && context.player().swingingArm.equals(MAIN_HAND);
+        return context.player().swinging && context.player().getMainHandItem().getItem() instanceof PickaxeItem && context.player().swingingArm.equals(MAIN_HAND) && !context.mainAnimationContainer().getCurrentAnimationId().equalsIgnoreCase(AnimationsId.SLEEP_ANIMATION.getAnimationId());
     }
 }

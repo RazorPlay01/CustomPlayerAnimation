@@ -8,11 +8,9 @@ import lombok.Getter;
 public enum Modifiers {
     MIRROR_MODIFIER("MirrorModifier"),
     SPEED_MODIFIER("SpeedModifier"),
-    RIGHT_BOW_MODIFIER("RightBowModifier"),
-    LEFT_BOW_MODIFIER("LeftBowModifier"),
+    BOW_MODIFIER("BowModifier"),
     SHIELD_MODIFIER("ShieldModifier"),
-    RIGHT_UP_HAND_MODIFIER("RightUpHandModifier"),
-    LEFT_UP_HAND_MODIFIER("LeftUpHandModifier");
+    ATTACK_MODIFIER("AttackModifier");
 
     private final String modifierId;
 }

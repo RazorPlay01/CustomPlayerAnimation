@@ -6,6 +6,7 @@ import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.enums.Modifiers;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.TridentItem;
 
@@ -29,7 +30,7 @@ public class SwordAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return context.player().swinging && (context.player().getMainHandItem().getItem() instanceof SwordItem || context.player().getMainHandItem().getItem() instanceof TridentItem) && context.player().swingingArm.equals(MAIN_HAND);
+        return isPlayerSwingingWeapon(context.player()) && !context.mainAnimationContainer().getCurrentAnimationId().equalsIgnoreCase(AnimationsId.SLEEP_ANIMATION.getAnimationId());
     }
 
     private static void handleSwordComboAnimation(AnimationContext context) {
@@ -87,5 +88,9 @@ public class SwordAnimation implements ICustomAnimation {
                 context.overlayAnimationContainer().setCurrentAnimationId(isSneaking ? AnimationsId.SWORD_ATTACK_3_SNEAK_ANIMATION.getAnimationId() : AnimationsId.SWORD_ATTACK_3_ANIMATION.getAnimationId());
             }
         }
+    }
+
+    public static boolean isPlayerSwingingWeapon(AbstractClientPlayer player) {
+        return player.swinging && (player.getMainHandItem().getItem() instanceof SwordItem || player.getMainHandItem().getItem() instanceof TridentItem) && player.swingingArm.equals(MAIN_HAND);
     }
 }

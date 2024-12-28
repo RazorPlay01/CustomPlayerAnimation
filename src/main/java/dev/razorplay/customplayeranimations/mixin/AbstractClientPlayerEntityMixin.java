@@ -21,12 +21,14 @@ import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import dev.razorplay.customplayeranimations.util.*;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -38,6 +40,7 @@ import java.util.*;
 
 import static dev.kosmx.playerAnim.core.util.Ease.INOUTSINE;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.*;
+import static dev.razorplay.customplayeranimations.animation.animations.overlay.SwordAnimation.isPlayerSwingingWeapon;
 import static dev.razorplay.customplayeranimations.util.Util.containsAnyAnimation;
 import static net.minecraft.world.InteractionHand.MAIN_HAND;
 
@@ -67,8 +70,8 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
                     Map.of(Modifiers.MIRROR_MODIFIER.getModifierId(), new MirrorModifier(),
                             Modifiers.SPEED_MODIFIER.getModifierId(), new SpeedModifier(),
                             Modifiers.SHIELD_MODIFIER.getModifierId(), createShieldModifier(),
-                            Modifiers.RIGHT_BOW_MODIFIER.getModifierId(), createBowModifier(true),
-                            Modifiers.LEFT_BOW_MODIFIER.getModifierId(), createBowModifier(false))),
+                            Modifiers.ATTACK_MODIFIER.getModifierId(), createAttackAdjustment(),
+                            Modifiers.BOW_MODIFIER.getModifierId(), createBowModifier())),
             null,
             "",
             "",
@@ -114,18 +117,13 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         // Overlay Animation Container
         PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(2, overlayAnimationContainer.getAnimationModifierLayer());
         //Bow Modifier
-        overlayAnimationContainer.getAnimationModifierLayer().addModifierLast(overlayAnimationContainer.getAnimationModifiers().get(Modifiers.RIGHT_BOW_MODIFIER.getModifierId()));
-        overlayAnimationContainer.getAnimationModifierLayer().addModifierLast(overlayAnimationContainer.getAnimationModifiers().get(Modifiers.LEFT_BOW_MODIFIER.getModifierId()));
-        ((AdjustmentModifier) overlayAnimationContainer.getAnimationModifiers().get(Modifiers.RIGHT_BOW_MODIFIER.getModifierId())).enabled = false;
-        ((AdjustmentModifier) overlayAnimationContainer.getAnimationModifiers().get(Modifiers.LEFT_BOW_MODIFIER.getModifierId())).enabled = false;
+        overlayAnimationContainer.getAnimationModifierLayer().addModifierLast(overlayAnimationContainer.getAnimationModifiers().get(Modifiers.BOW_MODIFIER.getModifierId()));
         //Speed and Mirror Modifier
         overlayAnimationContainer.getAnimationModifierLayer().addModifierLast(overlayAnimationContainer.getAnimationModifiers().get(Modifiers.SPEED_MODIFIER.getModifierId()));
         overlayAnimationContainer.getAnimationModifierLayer().addModifierLast(overlayAnimationContainer.getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId()));
         ((MirrorModifier) overlayAnimationContainer.getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(false);
-
         overlayAnimationContainer.getAnimationModifierLayer().addModifierLast(overlayAnimationContainer.getAnimationModifiers().get(Modifiers.SHIELD_MODIFIER.getModifierId()));
-        ((AdjustmentModifier) overlayAnimationContainer.getAnimationModifiers().get(Modifiers.SHIELD_MODIFIER.getModifierId())).enabled = false;
-
+        overlayAnimationContainer.getAnimationModifierLayer().addModifierLast(overlayAnimationContainer.getAnimationModifiers().get(Modifiers.ATTACK_MODIFIER.getModifierId()));
 
         // UpHand Animation Container
         PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(3, specialAnimationContainer.getAnimationModifierLayer());
@@ -149,7 +147,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
         this.actualAnimationContext = new AnimationContext(mainAnimationContainer, overlayAnimationContainer, specialAnimationContainer, (AbstractClientPlayer) (Object) this, playerData);
 
-        playAnimatios();
+        playAnimations();
         updateAnimationSpeeds();
 
         checkMainHandItemForArmDisabling();
@@ -214,24 +212,19 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     }
 
     @Unique
-    private AdjustmentModifier createBowModifier(boolean isRight) {
+    private AdjustmentModifier createBowModifier() {
         return new AdjustmentModifier(partName -> {
-            float pitch = (float) Math.toRadians(getXRot());
-            String mainArm = isRight ? BodyParts.RIGHT_ARM.getPartId() : BodyParts.LEFT_ARM.getPartId();
-            String offArm = isRight ? BodyParts.LEFT_ARM.getPartId() : BodyParts.RIGHT_ARM.getPartId();
+            boolean isUsingBow = isUsingItem() && getUseItem().getItem() instanceof BowItem;
+            if (!isUsingBow) return Optional.empty();
+            boolean isRight = (getMainArm() != HumanoidArm.RIGHT || !(getOffhandItem().getItem() instanceof BowItem)) && (getMainArm() != HumanoidArm.LEFT || !(getMainHandItem().getItem() instanceof BowItem));
 
-            if (partName.equals(mainArm)) {
+            float pitch = (float) Math.toRadians(getXRot());
+            if (partName.equals(BodyParts.RIGHT_ARM.getPartId()) || partName.equals(BodyParts.LEFT_ARM.getPartId())) {
                 return Optional.of(new AdjustmentModifier.PartModifier(
                         new Vec3f(0, 0, isRight ? -pitch : pitch),
                         new Vec3f(0, pitch, 0))
                 );
-            } else if (partName.equals(offArm)) {
-                return Optional.of(new AdjustmentModifier.PartModifier(
-                        new Vec3f(0, 0, isRight ? pitch * 0.25f : -pitch * 0.25f),
-                        new Vec3f(0, -pitch, 0))
-                );
             }
-
             return Optional.empty();
         });
     }
@@ -239,39 +232,68 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Unique
     private AdjustmentModifier createShieldModifier() {
         return new AdjustmentModifier(partName -> {
-            return Optional.empty();
-            /*// Verifica si está usando escudo
             boolean isUsingShield = isUsingItem() && getUseItem().getItem() instanceof ShieldItem;
             if (!isUsingShield) return Optional.empty();
 
-            // Obtiene la mano que sostiene el escudo
-            boolean isRightHand = getUsedItemHand() == InteractionHand.MAIN_HAND;
-            String shieldArm = isRightHand ? BodyParts.RIGHT_ARM.getPartId() : BodyParts.LEFT_ARM.getPartId();
+            float limitedPitch = Math.clamp(getXRot(), -45, 45);
+            float pitch = (float) Math.toRadians(limitedPitch) * 0.5f;
 
-            // Solo aplica la modificación al brazo que sostiene el escudo
-            if (!partName.equals(shieldArm)) return Optional.empty();
+            if (partName.equals(BodyParts.LEFT_ARM.getPartId()) || partName.equals(BodyParts.RIGHT_ARM.getPartId())) {
+                return Optional.of(new AdjustmentModifier.PartModifier(
+                        new Vec3f(pitch, 0, 0),                   //rotation
+                        Vec3f.ZERO                                //position
+                ));
+            }
+            return Optional.empty();
+        });
+    }
 
-            // Calcula los ángulos
-            float pitch = (float) Math.toRadians(getXRot());
-            float yaw = (float) Math.toRadians(getYHeadRot());
+    @Unique
+    private AdjustmentModifier createAttackAdjustment() {
+        var player = (AbstractClientPlayer) (Object) this;
+        return new AdjustmentModifier(partName -> {
+            if (!isPlayerSwingingWeapon((AbstractClientPlayer) (Object) this)) return Optional.empty();
 
-            // Ajusta las rotaciones según el brazo
-            float rotationX = pitch * 0.5f;  // Ajuste vertical
-            float rotationY = yaw * 0.3f;    // Ajuste horizontal
-            float rotationZ = isRightHand ? -0.5f : 0.5f;  // Ligera inclinación del brazo
-
-            // Ajusta el offset para posicionar mejor el brazo
-            float offsetX = isRightHand ? -0.2f : 0.2f;
+            float rotationX = 0;
+            float rotationY = 0;
+            float rotationZ = 0;
+            float offsetX = 0;
             float offsetY = 0;
-            float offsetZ = 0.3f;
+            float offsetZ = 0;
 
-            return Optional.of(
-                    new AdjustmentModifier.PartModifier(
-                            new Vec3f(rotationX, rotationY, rotationZ),
-                            new Vec3f(0, 0, 0), // Scale generalmente no es necesario
-                            new Vec3f(offsetX, offsetY, offsetZ)
-                    )
-            );*/
+            if (FirstPersonMode.isFirstPersonPass()) {
+                var pitch = player.getXRot();
+                pitch = (float) Math.toRadians(pitch);
+                switch (partName) {
+                    case "body" -> {
+                        rotationX -= pitch;
+                        if (pitch < 0) {
+                            var offset = Math.abs(Math.sin(pitch));
+                            offsetY += (float) (offset * 0.5);
+                            offsetZ -= (float) offset;
+                        }
+                    }
+                    case "rightArm", "leftArm" -> rotationX = pitch;
+                    default -> {
+                        return Optional.empty();
+                    }
+                }
+            } else {
+                var pitch = player.getXRot();
+                pitch = (float) Math.toRadians(pitch);
+                switch (partName) {
+                    case "rightArm", "leftArm" -> rotationX += pitch * 0.25F;
+                    case "body", "rightLeg", "leftLeg" -> rotationX -= pitch * 0.75F;
+                    default -> {
+                        return Optional.empty();
+                    }
+                }
+            }
+
+            return Optional.of(new AdjustmentModifier.PartModifier(
+                    new Vec3f(rotationX, rotationY, rotationZ),
+                    new Vec3f(offsetX, offsetY, offsetZ))
+            );
         });
     }
 
@@ -282,7 +304,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     }
 
     @Unique
-    private void playAnimatios() {
+    private void playAnimations() {
         // Main Animations
         for (ICustomAnimation animation : AnimationProvider.MAIN_ANIMATIONS) {
             if (animation.shouldPlayAnimation(actualAnimationContext)) {
@@ -326,10 +348,6 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     private void updateOverlayAnimationContainer() {
         if ((!Objects.equals(overlayAnimationContainer.getCurrentAnimationId(), overlayAnimationContainer.getPrevAnimationId()) && overlayAnimationContainer.getAnimationPriority() >= overlayAnimationContainer.getPrevAnimationPriority()) ||
                 !overlayAnimationContainer.getAnimationModifierLayer().isActive()) {
-
-            ((AdjustmentModifier) overlayAnimationContainer.getAnimationModifiers().get(Modifiers.RIGHT_BOW_MODIFIER.getModifierId())).enabled = false;
-            ((AdjustmentModifier) overlayAnimationContainer.getAnimationModifiers().get(Modifiers.LEFT_BOW_MODIFIER.getModifierId())).enabled = false;
-            ((AdjustmentModifier) overlayAnimationContainer.getAnimationModifiers().get(Modifiers.SHIELD_MODIFIER.getModifierId())).enabled = false;
 
             if (!overlayAnimationContainer.getPrevAnimationId().equals(overlayAnimationContainer.getCurrentAnimationId())) {
                 playCurrentAnimation(overlayAnimationContainer.getAnimationModifierLayer(), overlayAnimationContainer.getCurrentAnimation());

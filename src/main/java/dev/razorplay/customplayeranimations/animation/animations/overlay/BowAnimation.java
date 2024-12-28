@@ -1,6 +1,5 @@
 package dev.razorplay.customplayeranimations.animation.animations.overlay;
 
-import dev.kosmx.playerAnim.api.layered.modifier.AdjustmentModifier;
 import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
 import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
@@ -52,10 +51,8 @@ public class BowAnimation implements ICustomAnimation {
         context.player().disableBodyPartAnimation(context.mainAnimationContainer(), isRightHand ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
 
         if (isRightHand) {
-            ((AdjustmentModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.RIGHT_BOW_MODIFIER.getModifierId())).enabled = true;
             context.player().setYBodyRot(context.playerData().getPlayerHeadYaw() - 90);
         } else {
-            ((AdjustmentModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.LEFT_BOW_MODIFIER.getModifierId())).enabled = true;
             context.player().setYBodyRot(context.playerData().getPlayerHeadYaw() + 90);
         }
         ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(!isRightHand);
