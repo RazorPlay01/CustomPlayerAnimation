@@ -1,8 +1,9 @@
 package dev.razorplay.customplayeranimations.config;
 
 import dev.razorplay.customplayeranimations.CustomPlayerAnimations;
-import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
@@ -44,6 +45,8 @@ public class ClientConfig implements ConfigData {
     public MountAnimations mountAnimations = new MountAnimations();
 
     @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class AnimationConfig {
         boolean isEnabled = true;
         float speedMultiplier = 1;
@@ -90,7 +93,7 @@ public class ClientConfig implements ConfigData {
         @ConfigEntry.Gui.CollapsibleObject
         public AnimationConfig upHandAnimationConfig = new AnimationConfig();
         @ConfigEntry.Gui.CollapsibleObject
-        public AnimationConfig itemSwapAnimationConfig = new AnimationConfig();
+        public AnimationConfig itemSwapAnimationConfig = new AnimationConfig(true, 1.5f, 0, 1);
     }
 
     public static class UseItemAnimation {

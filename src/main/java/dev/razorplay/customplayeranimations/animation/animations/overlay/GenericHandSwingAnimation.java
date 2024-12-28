@@ -4,6 +4,11 @@ import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.BodyParts;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.*;
+
+import java.io.ObjectInputFilter;
+
+import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
 
 public class GenericHandSwingAnimation implements ICustomAnimation {
     @Override
@@ -16,7 +21,11 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return context.player().swinging;
+        return context.player().swinging &&
+                !(CONFIG.swordAnimations.isEnabled() && context.player().getMainHandItem().getItem() instanceof SwordItem || context.player().getMainHandItem().getItem() instanceof TridentItem) &&
+                !(CONFIG.toolsAnimations.axeAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem() instanceof AxeItem) &&
+                !(CONFIG.toolsAnimations.pickaxeAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem() instanceof PickaxeItem) &&
+                !(CONFIG.toolsAnimations.shovelAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem() instanceof ShovelItem);
     }
 
     private static void disableArmBasedOnHand(AnimationContext context, InteractionHand hand) {

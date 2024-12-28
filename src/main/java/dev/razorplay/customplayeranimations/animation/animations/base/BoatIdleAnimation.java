@@ -20,10 +20,8 @@ public class BoatIdleAnimation implements ICustomAnimation {
             }
             configureAnimationContainer(CONFIG.mountAnimations.boatAnimations.boatIdleAnimationConfig, context.mainAnimationContainer());
 
-            if (shouldPlayAnimation(context)) {
-                context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.BOAT_IDLE_ANIMATION.getAnimationId()));
-                context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.BOAT_IDLE_ANIMATION.getAnimationId());
-            }
+            context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.BOAT_IDLE_ANIMATION.getAnimationId()));
+            context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.BOAT_IDLE_ANIMATION.getAnimationId());
         }
     }
 

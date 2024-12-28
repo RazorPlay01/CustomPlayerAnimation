@@ -1918,16 +1918,6 @@
               "easing": "linear"
             }
           }
-        },
-        "body": {
-          "position": {
-            "vector": [
-              0,
-              -3,
-              0
-            ],
-            "easing": "linear"
-          }
         }
       }
     }

@@ -92,7 +92,9 @@ public class UpHandAnimation implements ICustomAnimation {
     }
 
     private static void setUpHandAnimation(AnimationContext context, HumanoidArm arm) {
-        context.specialAnimationContainer().setAnimationFadeTime(10);
+        context.specialAnimationContainer().setAnimationSpeed(CONFIG.specialAnimations.upHandAnimationConfig.getSpeedMultiplier());
+        context.specialAnimationContainer().setAnimationFadeTime(CONFIG.specialAnimations.upHandAnimationConfig.getFadeTime());
+        context.specialAnimationContainer().setAnimationPriority(CONFIG.specialAnimations.upHandAnimationConfig.getPriority());
         context.specialAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.UP_HAND_ANIMATION.getAnimationId()));
         String animationId = (arm == HumanoidArm.RIGHT ? RIGHT_PREFIX : LEFT_PREFIX) + AnimationsId.UP_HAND_ANIMATION.getAnimationId();
         context.specialAnimationContainer().setCurrentAnimationId(animationId);

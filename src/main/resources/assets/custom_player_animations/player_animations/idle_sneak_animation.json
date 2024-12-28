@@ -1918,16 +1918,6 @@
               "easing": "easeInOutQuad"
             }
           }
-        },
-        "body": {
-          "position": {
-            "vector": [
-              0,
-              -4,
-              0
-            ],
-            "easing": "linear"
-          }
         }
       }
     }

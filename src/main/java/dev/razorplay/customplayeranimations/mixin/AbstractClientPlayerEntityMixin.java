@@ -21,16 +21,13 @@ import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import dev.razorplay.customplayeranimations.util.*;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -46,8 +43,8 @@ import static net.minecraft.world.InteractionHand.MAIN_HAND;
 
 @Mixin(AbstractClientPlayer.class)
 public abstract class AbstractClientPlayerEntityMixin extends Player implements IAnimationControl, ICustomAnimatedPlayer {
-    @Shadow
-    public abstract boolean isSpectator();
+    @Unique
+    private final FirstPersonModifier firstPersonModifier = new FirstPersonModifier();
 
     @Unique
     private final AnimationContainer mainAnimationContainer = new AnimationContainer(
@@ -55,8 +52,8 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             new HashMap<>(
                     Map.of(Modifiers.MIRROR_MODIFIER.getModifierId(), new MirrorModifier(),
                             Modifiers.SPEED_MODIFIER.getModifierId(), new SpeedModifier())),
-            null,
-            "",
+            getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()),
+            AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId(),
             "",
             0,
             0,
@@ -70,34 +67,33 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
                     Map.of(Modifiers.MIRROR_MODIFIER.getModifierId(), new MirrorModifier(),
                             Modifiers.SPEED_MODIFIER.getModifierId(), new SpeedModifier(),
                             Modifiers.SHIELD_MODIFIER.getModifierId(), createShieldModifier(),
-                            Modifiers.ATTACK_MODIFIER.getModifierId(), createAttackAdjustment(),
+                            Modifiers.ATTACK_MODIFIER.getModifierId(), createAttackModifier(),
                             Modifiers.BOW_MODIFIER.getModifierId(), createBowModifier())),
-            null,
+            getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()),
+            AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId(),
             "",
-            "",
             0,
             0,
             0,
-            1);
+            0);
 
     @Unique
     private final AnimationContainer specialAnimationContainer = new AnimationContainer(
             new ModifierLayer<>(),
             new HashMap<>(
-                    Map.of(Modifiers.MIRROR_MODIFIER.getModifierId(), new MirrorModifier())),
-            null,
+                    Map.of(Modifiers.SPEED_MODIFIER.getModifierId(), new SpeedModifier(),
+                            Modifiers.MIRROR_MODIFIER.getModifierId(), new MirrorModifier(),
+                            Modifiers.FIRST_PERSON_MODIFIER.getModifierId(), firstPersonModifier)),
+            getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()),
+            AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId(),
             "",
-            "",
-            10,
             0,
             0,
-            1);
+            0,
+            0);
 
     @Unique
     private final PlayerData playerData = new PlayerData();
-
-    @Unique
-    private final FirstPersonModifier firstPersonModifier = new FirstPersonModifier();
 
     @Unique
     private AnimationContext actualAnimationContext;
@@ -110,32 +106,15 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     private void init(ClientLevel world, GameProfile profile, CallbackInfo info) {
         // Main Animation Container
         PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(1, mainAnimationContainer.getAnimationModifierLayer());
-        mainAnimationContainer.getAnimationModifierLayer().addModifierLast(mainAnimationContainer.getAnimationModifiers().get(Modifiers.SPEED_MODIFIER.getModifierId()));
-        mainAnimationContainer.getAnimationModifierLayer().addModifierLast(mainAnimationContainer.getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId()));
-        ((MirrorModifier) mainAnimationContainer.getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(false);
+        addModifiersToContainer(mainAnimationContainer);
 
         // Overlay Animation Container
         PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(2, overlayAnimationContainer.getAnimationModifierLayer());
-        //Bow Modifier
-        overlayAnimationContainer.getAnimationModifierLayer().addModifierLast(overlayAnimationContainer.getAnimationModifiers().get(Modifiers.BOW_MODIFIER.getModifierId()));
-        //Speed and Mirror Modifier
-        overlayAnimationContainer.getAnimationModifierLayer().addModifierLast(overlayAnimationContainer.getAnimationModifiers().get(Modifiers.SPEED_MODIFIER.getModifierId()));
-        overlayAnimationContainer.getAnimationModifierLayer().addModifierLast(overlayAnimationContainer.getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId()));
-        ((MirrorModifier) overlayAnimationContainer.getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(false);
-        overlayAnimationContainer.getAnimationModifierLayer().addModifierLast(overlayAnimationContainer.getAnimationModifiers().get(Modifiers.SHIELD_MODIFIER.getModifierId()));
-        overlayAnimationContainer.getAnimationModifierLayer().addModifierLast(overlayAnimationContainer.getAnimationModifiers().get(Modifiers.ATTACK_MODIFIER.getModifierId()));
+        addModifiersToContainer(overlayAnimationContainer);
 
         // UpHand Animation Container
         PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(3, specialAnimationContainer.getAnimationModifierLayer());
-        specialAnimationContainer.getAnimationModifierLayer().addModifierLast(specialAnimationContainer.getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId()));
-        ((MirrorModifier) specialAnimationContainer.getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(false);
-
-        mainAnimationContainer.setCurrentAnimation(getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()));
-        overlayAnimationContainer.setCurrentAnimation(getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()));
-        specialAnimationContainer.setCurrentAnimation(getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()));
-
-        // FirstPerson Modifier
-        specialAnimationContainer.getAnimationModifierLayer().addModifierBefore(firstPersonModifier);
+        addModifiersToContainer(specialAnimationContainer);
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
@@ -249,15 +228,11 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     }
 
     @Unique
-    private AdjustmentModifier createAttackAdjustment() {
+    private AdjustmentModifier createAttackModifier() {
         var player = (AbstractClientPlayer) (Object) this;
         return new AdjustmentModifier(partName -> {
             if (!isPlayerSwingingWeapon((AbstractClientPlayer) (Object) this)) return Optional.empty();
-
-            float rotationX = 0;
-            float rotationY = 0;
-            float rotationZ = 0;
-            float offsetX = 0;
+            float xRot = 0;
             float offsetY = 0;
             float offsetZ = 0;
 
@@ -266,14 +241,14 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
                 pitch = (float) Math.toRadians(pitch);
                 switch (partName) {
                     case "body" -> {
-                        rotationX -= pitch;
+                        xRot -= pitch;
                         if (pitch < 0) {
                             var offset = Math.abs(Math.sin(pitch));
                             offsetY += (float) (offset * 0.5);
                             offsetZ -= (float) offset;
                         }
                     }
-                    case "rightArm", "leftArm" -> rotationX = pitch;
+                    case "rightArm", "leftArm" -> xRot = pitch;
                     default -> {
                         return Optional.empty();
                     }
@@ -282,8 +257,8 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
                 var pitch = player.getXRot();
                 pitch = (float) Math.toRadians(pitch);
                 switch (partName) {
-                    case "rightArm", "leftArm" -> rotationX += pitch * 0.25F;
-                    case "body", "rightLeg", "leftLeg" -> rotationX -= pitch * 0.75F;
+                    case "rightArm", "leftArm" -> xRot += pitch * 0.25F;
+                    case "body", "rightLeg", "leftLeg" -> xRot -= pitch * 0.75F;
                     default -> {
                         return Optional.empty();
                     }
@@ -291,8 +266,8 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             }
 
             return Optional.of(new AdjustmentModifier.PartModifier(
-                    new Vec3f(rotationX, rotationY, rotationZ),
-                    new Vec3f(offsetX, offsetY, offsetZ))
+                    new Vec3f(xRot, 0, 0),
+                    new Vec3f(0, offsetY, offsetZ))
             );
         });
     }
@@ -301,6 +276,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     private void updateAnimationSpeeds() {
         ((SpeedModifier) mainAnimationContainer.getAnimationModifiers().get(Modifiers.SPEED_MODIFIER.getModifierId())).speed = mainAnimationContainer.getAnimationSpeed() * CONFIG.getAnimationSpeedMultiplier();
         ((SpeedModifier) overlayAnimationContainer.getAnimationModifiers().get(Modifiers.SPEED_MODIFIER.getModifierId())).speed = overlayAnimationContainer.getAnimationSpeed() * CONFIG.getAnimationSpeedMultiplier();
+        ((SpeedModifier) specialAnimationContainer.getAnimationModifiers().get(Modifiers.SPEED_MODIFIER.getModifierId())).speed = specialAnimationContainer.getAnimationSpeed() * CONFIG.getAnimationSpeedMultiplier();
     }
 
     @Unique
@@ -420,6 +396,16 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     private void checkOffHandItemForArmDisabling() {
         if (!getOffhandItem().isEmpty() && (isScoping() || getMainHandItem().getItem() instanceof InstrumentItem || getMainHandItem().getItem() instanceof BrushItem)) {
             this.disableBodyPartAnimationInAllContainers(BodyParts.LEFT_ARM);
+        }
+    }
+
+    @Unique
+    private static void addModifiersToContainer(AnimationContainer container) {
+        for (AbstractModifier modifier : container.getAnimationModifiers().values()) {
+            container.getAnimationModifierLayer().addModifierLast(modifier);
+            if (modifier instanceof MirrorModifier mirrorModifier) {
+                mirrorModifier.setEnabled(false);
+            }
         }
     }
 }
