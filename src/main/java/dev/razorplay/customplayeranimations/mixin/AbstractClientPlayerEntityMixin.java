@@ -7,7 +7,6 @@ import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.api.layered.modifier.*;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
-import dev.kosmx.playerAnim.core.util.Vec3f;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
 import dev.razorplay.customplayeranimations.animation.AnimationContainer;
 import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
@@ -37,8 +36,8 @@ import java.util.*;
 
 import static dev.kosmx.playerAnim.core.util.Ease.INOUTSINE;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.*;
-import static dev.razorplay.customplayeranimations.animation.animations.overlay.SwordAnimation.isPlayerSwingingWeapon;
-import static dev.razorplay.customplayeranimations.util.Util.containsAnyAnimation;
+import static dev.razorplay.customplayeranimations.util.CustomModifiers.*;
+import static dev.razorplay.customplayeranimations.util.Util.*;
 import static net.minecraft.world.InteractionHand.MAIN_HAND;
 
 @Mixin(AbstractClientPlayer.class)
@@ -66,9 +65,9 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             new HashMap<>(
                     Map.of(Modifiers.MIRROR_MODIFIER.getModifierId(), new MirrorModifier(),
                             Modifiers.SPEED_MODIFIER.getModifierId(), new SpeedModifier(),
-                            Modifiers.SHIELD_MODIFIER.getModifierId(), createShieldModifier(),
-                            Modifiers.ATTACK_MODIFIER.getModifierId(), createAttackModifier(),
-                            Modifiers.BOW_MODIFIER.getModifierId(), createBowModifier())),
+                            Modifiers.SHIELD_MODIFIER.getModifierId(), createShieldModifier((AbstractClientPlayer) (Object) this),
+                            Modifiers.HAND_SWING_MODIFIER.getModifierId(), createSwingModifier((AbstractClientPlayer) (Object) this, mainAnimationContainer),
+                            Modifiers.BOW_MODIFIER.getModifierId(), createBowModifier((AbstractClientPlayer) (Object) this))),
             getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()),
             AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId(),
             "",
@@ -188,88 +187,6 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Override
     public void setOffArmPose(HumanoidModel.ArmPose armPosition) {
         this.playerData.setOffArmPose(armPosition);
-    }
-
-    @Unique
-    private AdjustmentModifier createBowModifier() {
-        return new AdjustmentModifier(partName -> {
-            boolean isUsingBow = isUsingItem() && getUseItem().getItem() instanceof BowItem;
-            if (!isUsingBow) return Optional.empty();
-            boolean isRight = (getMainArm() != HumanoidArm.RIGHT || !(getOffhandItem().getItem() instanceof BowItem)) && (getMainArm() != HumanoidArm.LEFT || !(getMainHandItem().getItem() instanceof BowItem));
-
-            float pitch = (float) Math.toRadians(getXRot());
-            if (partName.equals(BodyParts.RIGHT_ARM.getPartId()) || partName.equals(BodyParts.LEFT_ARM.getPartId())) {
-                return Optional.of(new AdjustmentModifier.PartModifier(
-                        new Vec3f(0, 0, isRight ? -pitch : pitch),
-                        new Vec3f(0, pitch, 0))
-                );
-            }
-            return Optional.empty();
-        });
-    }
-
-    @Unique
-    private AdjustmentModifier createShieldModifier() {
-        return new AdjustmentModifier(partName -> {
-            boolean isUsingShield = isUsingItem() && getUseItem().getItem() instanceof ShieldItem;
-            if (!isUsingShield) return Optional.empty();
-
-            float limitedPitch = Math.clamp(getXRot(), -45, 45);
-            float pitch = (float) Math.toRadians(limitedPitch) * 0.5f;
-
-            if (partName.equals(BodyParts.LEFT_ARM.getPartId()) || partName.equals(BodyParts.RIGHT_ARM.getPartId())) {
-                return Optional.of(new AdjustmentModifier.PartModifier(
-                        new Vec3f(pitch, 0, 0),                   //rotation
-                        Vec3f.ZERO                                //position
-                ));
-            }
-            return Optional.empty();
-        });
-    }
-
-    @Unique
-    private AdjustmentModifier createAttackModifier() {
-        var player = (AbstractClientPlayer) (Object) this;
-        return new AdjustmentModifier(partName -> {
-            if (!isPlayerSwingingWeapon((AbstractClientPlayer) (Object) this)) return Optional.empty();
-            float xRot = 0;
-            float offsetY = 0;
-            float offsetZ = 0;
-
-            if (FirstPersonMode.isFirstPersonPass()) {
-                var pitch = player.getXRot();
-                pitch = (float) Math.toRadians(pitch);
-                switch (partName) {
-                    case "body" -> {
-                        xRot -= pitch;
-                        if (pitch < 0) {
-                            var offset = Math.abs(Math.sin(pitch));
-                            offsetY += (float) (offset * 0.5);
-                            offsetZ -= (float) offset;
-                        }
-                    }
-                    case "rightArm", "leftArm" -> xRot = pitch;
-                    default -> {
-                        return Optional.empty();
-                    }
-                }
-            } else {
-                var pitch = player.getXRot();
-                pitch = (float) Math.toRadians(pitch);
-                switch (partName) {
-                    case "rightArm", "leftArm" -> xRot += pitch * 0.25F;
-                    case "body", "rightLeg", "leftLeg" -> xRot -= pitch * 0.75F;
-                    default -> {
-                        return Optional.empty();
-                    }
-                }
-            }
-
-            return Optional.of(new AdjustmentModifier.PartModifier(
-                    new Vec3f(xRot, 0, 0),
-                    new Vec3f(0, offsetY, offsetZ))
-            );
-        });
     }
 
     @Unique
@@ -396,16 +313,6 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     private void checkOffHandItemForArmDisabling() {
         if (!getOffhandItem().isEmpty() && (isScoping() || getMainHandItem().getItem() instanceof InstrumentItem || getMainHandItem().getItem() instanceof BrushItem)) {
             this.disableBodyPartAnimationInAllContainers(BodyParts.LEFT_ARM);
-        }
-    }
-
-    @Unique
-    private static void addModifiersToContainer(AnimationContainer container) {
-        for (AbstractModifier modifier : container.getAnimationModifiers().values()) {
-            container.getAnimationModifierLayer().addModifierLast(modifier);
-            if (modifier instanceof MirrorModifier mirrorModifier) {
-                mirrorModifier.setEnabled(false);
-            }
         }
     }
 }

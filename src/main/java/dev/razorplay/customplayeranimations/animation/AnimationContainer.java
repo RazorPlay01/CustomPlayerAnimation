@@ -31,6 +31,7 @@ public class AnimationContainer {
         this.setCurrentAnimation(getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()));
         this.setCurrentAnimationId(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId());
     }
+
     public void resetAnimationProperties() {
         this.disableAnimation();
         this.setAnimationFadeTime(10);

@@ -1,12 +1,21 @@
 package dev.razorplay.customplayeranimations.util;
 
+import dev.kosmx.playerAnim.api.layered.modifier.AbstractModifier;
+import dev.kosmx.playerAnim.api.layered.modifier.AdjustmentModifier;
+import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
+import dev.kosmx.playerAnim.core.util.Vec3f;
 import dev.razorplay.customplayeranimations.animation.AnimationContainer;
 import dev.razorplay.customplayeranimations.config.ClientConfig;
+import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.entity.animal.horse.*;
 import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.item.*;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+
+import static net.minecraft.world.InteractionHand.MAIN_HAND;
 
 public class Util {
     public static final String RIGHT_PREFIX = "right_";
@@ -36,5 +45,66 @@ public class Util {
             return false;
         }
         return animations.stream().anyMatch(currentAnimation::contains);
+    }
+
+    public static void addModifiersToContainer(AnimationContainer container) {
+        for (AbstractModifier modifier : container.getAnimationModifiers().values()) {
+            container.getAnimationModifierLayer().addModifierLast(modifier);
+            if (modifier instanceof MirrorModifier mirrorModifier) {
+                mirrorModifier.setEnabled(false);
+            }
+        }
+    }
+
+    public static boolean isSwingingSwordOrTools(AbstractClientPlayer player, AnimationContainer animationContainer) {
+        return player.swinging &&
+                (player.getMainHandItem().getItem() instanceof ShovelItem ||
+                        player.getMainHandItem().getItem() instanceof PickaxeItem ||
+                        player.getMainHandItem().getItem() instanceof AxeItem ||
+                        player.getMainHandItem().getItem() instanceof SwordItem ||
+                        player.getMainHandItem().getItem() instanceof TridentItem) &&
+                player.swingingArm.equals(MAIN_HAND) &&
+                !animationContainer.getCurrentAnimationId().equalsIgnoreCase(AnimationsId.SLEEP_ANIMATION.getAnimationId());
+    }
+
+    public static Optional<AdjustmentModifier.PartModifier> handleFirstPersonPass(String partName, float pitchRadians) {
+        float xRot = 0;
+        float offsetY = 0;
+        float offsetZ = 0;
+
+        if (partName.equals("body")) {
+            if (pitchRadians < 0) {
+                xRot -= pitchRadians;
+                float offset = Math.abs((float) Math.sin(pitchRadians));
+                offsetY += offset * 0.5f;
+                offsetZ -= offset;
+            }
+        } else if (partName.equals("rightArm") || partName.equals("leftArm")) {
+            xRot = pitchRadians;
+        } else {
+            return Optional.empty();
+        }
+
+        return Optional.of(new AdjustmentModifier.PartModifier(
+                new Vec3f(xRot, 0, 0),
+                new Vec3f(0, offsetY, offsetZ))
+        );
+    }
+
+    public static Optional<AdjustmentModifier.PartModifier> handleThirdPersonPass(String partName, float pitchRadians) {
+        float xRot = 0;
+
+        switch (partName) {
+            case "rightArm", "leftArm" -> xRot += pitchRadians * 0.25F;
+            case "body", "rightLeg", "leftLeg" -> xRot -= pitchRadians * 0.50F;
+            default -> {
+                return Optional.empty();
+            }
+        }
+
+        return Optional.of(new AdjustmentModifier.PartModifier(
+                new Vec3f(xRot, 0, 0),
+                new Vec3f(0, 0, 0))
+        );
     }
 }
