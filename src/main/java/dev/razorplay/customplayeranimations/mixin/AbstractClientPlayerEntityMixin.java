@@ -304,15 +304,15 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Unique
     private void checkMainHandItemForArmDisabling() {
-        if (!getMainHandItem().isEmpty() && (isScoping() || getMainHandItem().getItem() instanceof InstrumentItem || getMainHandItem().getItem() instanceof BrushItem)) {
-            this.disableBodyPartAnimationInAllContainers(BodyParts.RIGHT_ARM);
+        if (!getMainHandItem().isEmpty() && isUsingItem() && (isScoping() || getMainHandItem().getItem() instanceof InstrumentItem || getMainHandItem().getItem() instanceof BrushItem)) {
+            this.disableBodyPartAnimationInAllContainers(getMainArm() == HumanoidArm.RIGHT ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
         }
     }
 
     @Unique
     private void checkOffHandItemForArmDisabling() {
-        if (!getOffhandItem().isEmpty() && (isScoping() || getMainHandItem().getItem() instanceof InstrumentItem || getMainHandItem().getItem() instanceof BrushItem)) {
-            this.disableBodyPartAnimationInAllContainers(BodyParts.LEFT_ARM);
+        if (!getOffhandItem().isEmpty() && isUsingItem() && (isScoping() || getMainHandItem().getItem() instanceof InstrumentItem || getMainHandItem().getItem() instanceof BrushItem)) {
+            this.disableBodyPartAnimationInAllContainers(getMainArm() == HumanoidArm.RIGHT ? BodyParts.LEFT_ARM : BodyParts.RIGHT_ARM);
         }
     }
 }
