@@ -3,7 +3,6 @@ package dev.razorplay.customplayeranimations.animation.animations.overlay;
 import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
 import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
-import dev.razorplay.customplayeranimations.util.enums.BodyParts;
 import dev.razorplay.customplayeranimations.util.enums.Modifiers;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import net.minecraft.world.item.ShieldItem;
@@ -43,7 +42,6 @@ public class ShieldAnimation implements ICustomAnimation {
             context.overlayAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.SHIELD_ANIMATION.getAnimationId()));
             context.overlayAnimationContainer().setCurrentAnimationId((isRightHand ? RIGHT_PREFIX : LEFT_PREFIX) + AnimationsId.SHIELD_ANIMATION.getAnimationId());
         }
-        context.player().disableBodyPartAnimation(context.mainAnimationContainer(), isRightHand ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
         ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(isRightHand);
     }
 }

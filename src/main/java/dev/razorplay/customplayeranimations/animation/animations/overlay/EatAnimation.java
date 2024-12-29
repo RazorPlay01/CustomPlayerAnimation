@@ -37,7 +37,6 @@ public class EatAnimation implements ICustomAnimation {
     private static void setEatingAnimation(AnimationContext context, BodyParts arm, boolean mirror) {
         context.overlayAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.EAT_ANIMATION.getAnimationId()));
         context.overlayAnimationContainer().setCurrentAnimationId((mirror ? LEFT_PREFIX : RIGHT_PREFIX) + AnimationsId.EAT_ANIMATION.getAnimationId());
-        context.player().disableBodyPartAnimation(context.mainAnimationContainer(), arm);
         ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(mirror);
     }
 }
