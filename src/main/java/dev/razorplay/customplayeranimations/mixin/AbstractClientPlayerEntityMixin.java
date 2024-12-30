@@ -101,7 +101,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         super(level, blockPos, f, gameProfile);
     }
 
-    @Inject(method = "<init>", at = @At(value = "RETURN"))
+    @Inject(method = "<init>", at = @At(value = "TAIL"))
     private void init(ClientLevel world, GameProfile profile, CallbackInfo info) {
         // Main Animation Container
         PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(1, mainAnimationContainer.getAnimationModifierLayer());
@@ -118,12 +118,11 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Inject(method = "tick", at = @At("TAIL"))
     public void tick(CallbackInfo ci) {
-        // Update Player Data
         this.playerData.update((AbstractClientPlayer) (Object) this);
 
         overlayAnimationContainer.resetAnimationProperties();
 
-        this.actualAnimationContext = new AnimationContext(mainAnimationContainer, overlayAnimationContainer, specialAnimationContainer, (AbstractClientPlayer) (Object) this, playerData);
+        this.actualAnimationContext = new AnimationContext(mainAnimationContainer, overlayAnimationContainer, specialAnimationContainer, (AbstractClientPlayer) (Object) this, playerData, firstPersonModifier);
 
         playAnimations();
         updateAnimationSpeeds();
@@ -180,8 +179,18 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     }
 
     @Override
+    public HumanoidModel.ArmPose getMainArmPose() {
+        return this.playerData.getMainArmPose();
+    }
+
+    @Override
     public void setMainArmPose(HumanoidModel.ArmPose armPosition) {
         this.playerData.setMainArmPose(armPosition);
+    }
+
+    @Override
+    public HumanoidModel.ArmPose getOffArmPose() {
+        return this.playerData.getOffArmPose();
     }
 
     @Override
@@ -280,18 +289,13 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Unique
     private void modifyFirstPersonConfig() {
         if (CONFIG.isCustomFirstPersonEnable()) {
-            boolean condition = containsAnyAnimation(overlayAnimationContainer, CONFIG.getAnimationsThatShowBothHand()) ||
-                    containsAnyAnimation(mainAnimationContainer, CONFIG.getAnimationsThatShowBothHand()) ||
-                    getOffhandItem().getItem() != Items.AIR ||
-                    this.playerData.getOffArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
-                    this.playerData.getMainArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE);
-
             firstPersonModifier.setCurrentFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL);
-
-            if (condition) {
+            if (FirstPersonConditionRegistry.checkConditions((AbstractClientPlayer) (Object) this)) {
                 firstPersonModifier.setCurrentFirstPersonConfig(FirstPersonModifier.FirstPersonConfigEnum.ENABLE_BOTH_ARMS);
             } else {
-                firstPersonModifier.setCurrentFirstPersonConfig(getMainArm() == HumanoidArm.RIGHT ? FirstPersonModifier.FirstPersonConfigEnum.ONLY_RIGHT_ARM_AND_ITEM : FirstPersonModifier.FirstPersonConfigEnum.ONLY_LEFT_ARM_AND_ITEM);
+                firstPersonModifier.setCurrentFirstPersonConfig(getMainArm() == HumanoidArm.RIGHT ?
+                        FirstPersonModifier.FirstPersonConfigEnum.ONLY_RIGHT_ARM_AND_ITEM :
+                        FirstPersonModifier.FirstPersonConfigEnum.ONLY_LEFT_ARM_AND_ITEM);
             }
             if (isScoping() || isSpectator()) {
                 firstPersonModifier.setCurrentFirstPersonConfig(FirstPersonModifier.FirstPersonConfigEnum.DISABLE_BOTH_ARMS);

@@ -14,5 +14,9 @@ public interface IAnimationControl {
     void setMainArmPose(HumanoidModel.ArmPose armPose);
 
     void setOffArmPose(HumanoidModel.ArmPose armPose);
+
+    HumanoidModel.ArmPose getMainArmPose();
+
+    HumanoidModel.ArmPose getOffArmPose();
 }
 
