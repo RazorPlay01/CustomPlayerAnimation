@@ -7,6 +7,8 @@ import dev.kosmx.playerAnim.core.util.Vec3f;
 import dev.razorplay.customplayeranimations.animation.AnimationContainer;
 import dev.razorplay.customplayeranimations.config.ClientConfig;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
+import dev.razorplay.customplayeranimations.util.enums.BodyParts;
+import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.entity.animal.horse.*;
 import net.minecraft.world.entity.vehicle.Boat;
@@ -45,6 +47,11 @@ public class Util {
             return false;
         }
         return animations.stream().anyMatch(currentAnimation::contains);
+    }
+
+    public static void disableBothArms(AnimationContext context) {
+        context.player().disableBodyPartAnimationInAllContainers(BodyParts.RIGHT_ARM);
+        context.player().disableBodyPartAnimationInAllContainers(BodyParts.LEFT_ARM);
     }
 
     public static void addModifiersToContainer(AnimationContainer container) {

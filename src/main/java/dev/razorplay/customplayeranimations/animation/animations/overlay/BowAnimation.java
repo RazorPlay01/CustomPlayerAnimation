@@ -3,7 +3,6 @@ package dev.razorplay.customplayeranimations.animation.animations.overlay;
 import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
 import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
-import dev.razorplay.customplayeranimations.util.enums.BodyParts;
 import dev.razorplay.customplayeranimations.util.enums.Modifiers;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import net.minecraft.client.model.HumanoidModel;
@@ -20,8 +19,7 @@ public class BowAnimation implements ICustomAnimation {
             context.overlayAnimationContainer().disableAnimation();
             if (context.playerData().getMainArmPose().equals(HumanoidModel.ArmPose.BOW_AND_ARROW) ||
                     context.playerData().getOffArmPose().equals(HumanoidModel.ArmPose.BOW_AND_ARROW)) {
-                context.player().disableBodyPartAnimationInAllContainers(BodyParts.RIGHT_ARM);
-                context.player().disableBodyPartAnimationInAllContainers(BodyParts.LEFT_ARM);
+                disableBothArms(context);
             }
         } else {
             configureAnimationContainer(CONFIG.useItemAnimation.bowAnimationsConfig, context.overlayAnimationContainer());

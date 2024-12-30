@@ -7,12 +7,13 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.CrossbowItem;
 
+import static dev.razorplay.customplayeranimations.util.Util.disableBothArms;
+
 public class CrossbowAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
         if (context.player().isUsingItem() && context.player().getUseItem().getItem() instanceof CrossbowItem) {
-            context.player().disableBodyPartAnimationInAllContainers(BodyParts.RIGHT_ARM);
-            context.player().disableBodyPartAnimationInAllContainers(BodyParts.LEFT_ARM);
+            disableBothArms(context);
         }
         if (context.playerData().getMainArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_HOLD) ||
                 context.playerData().getMainArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE)) {
