@@ -3,26 +3,50 @@ package dev.razorplay.customplayeranimations.animation.animations.base;
 import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 
+import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.CONFIG;
 import static dev.razorplay.customplayeranimations.CustomPlayerAnimations.getAnimation;
 
 public class DeathAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        /*if (!CONFIG.deathAnimations.deathAnimationConfig.isEnabled()) {
+        if (!CONFIG.deathAnimations.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
-        } else {*/
-        // Determina la animación según la causa de la muerte
-        String animationId = AnimationsId.RUN_ANIMATION.getAnimationId(); //getDeathAnimationId(context);
+        } else {
+            // Determina la animación según la causa de la muerte
+            String animationId = getDeathAnimationId(context);
+            configureAnimationContainer(context, animationId);
 
-        // Configura la animación seleccionada
-        context.mainAnimationContainer().setAnimationSpeed(1);
-        context.mainAnimationContainer().setAnimationFadeTime(10);
-        context.mainAnimationContainer().setAnimationPriority(0);
+            context.mainAnimationContainer().setCurrentAnimation(getAnimation(animationId));
+            context.mainAnimationContainer().setCurrentAnimationId(animationId);
+        }
+    }
 
-        context.mainAnimationContainer().setCurrentAnimation(getAnimation(animationId));
-        context.mainAnimationContainer().setCurrentAnimationId(animationId);
-        //}
+    private static void configureAnimationContainer(AnimationContext context, String animationId) {
+        switch (animationId) {
+            case "death_burn" -> {
+                context.mainAnimationContainer().setAnimationSpeed(CONFIG.deathAnimations.deathBurnAnimationConfig.getSpeedMultiplier());
+                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.deathAnimations.deathBurnAnimationConfig.getFadeTime());
+                context.mainAnimationContainer().setAnimationPriority(CONFIG.deathAnimations.deathBurnAnimationConfig.getPriority());
+            }
+            case "death_explosion" -> {
+                context.mainAnimationContainer().setAnimationSpeed(CONFIG.deathAnimations.deathExplosionAnimationConfig.getSpeedMultiplier());
+                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.deathAnimations.deathExplosionAnimationConfig.getFadeTime());
+                context.mainAnimationContainer().setAnimationPriority(CONFIG.deathAnimations.deathExplosionAnimationConfig.getPriority());
+            }
+            case "death_drown" -> {
+                context.mainAnimationContainer().setAnimationSpeed(CONFIG.deathAnimations.deathDrownAnimationConfig.getSpeedMultiplier());
+                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.deathAnimations.deathDrownAnimationConfig.getFadeTime());
+                context.mainAnimationContainer().setAnimationPriority(CONFIG.deathAnimations.deathDrownAnimationConfig.getPriority());
+            }
+            default -> {
+                context.mainAnimationContainer().setAnimationSpeed(CONFIG.deathAnimations.getSpeedMultiplier());
+                context.mainAnimationContainer().setAnimationSpeed(CONFIG.deathAnimations.getFadeTime());
+                context.mainAnimationContainer().setAnimationSpeed(CONFIG.deathAnimations.getPriority());
+            }
+        }
     }
 
     @Override
@@ -30,26 +54,17 @@ public class DeathAnimation implements ICustomAnimation {
         return context.player().getHealth() <= 0;
     }
 
-    /*private String getDeathAnimationId(AnimationContext context) {
-        // Obtener la última fuente de daño (causa de muerte)
+    private String getDeathAnimationId(AnimationContext context) {
         DamageSource lastDamageSource = context.player().getLastDamageSource();
-
         if (lastDamageSource != null) {
-            if (lastDamageSource.is(DamageTypes.IN_FIRE) || lastDamageSource.is(DamageTypes.ON_FIRE)) {
-                return AnimationsId.DEATH_BURN_ANIMATION.getAnimationId(); // Muerte por fuego
-            } else if (lastDamageSource.isExplosive()) {
-                return AnimationsId.DEATH_EXPLOSION_ANIMATION.getAnimationId(); // Muerte por explosión
-            } else if (lastDamageSource.isMagic()) {
-                return AnimationsId.DEATH_MAGIC_ANIMATION.getAnimationId(); // Muerte por magia
-            } else if (lastDamageSource.isProjectile()) {
-                return AnimationsId.DEATH_PROJECTILE_ANIMATION.getAnimationId(); // Muerte por proyectil
-            } else if (lastDamageSource == DamageSource.DROWN) {
-                return AnimationsId.DEATH_DROWN_ANIMATION.getAnimationId(); // Muerte por ahogamiento
-            } else if (lastDamageSource == DamageSource.FALL) {
-                return AnimationsId.DEATH_FALL_ANIMATION.getAnimationId(); // Muerte por caída
+            if (lastDamageSource.is(DamageTypes.IN_FIRE) || lastDamageSource.is(DamageTypes.ON_FIRE) || lastDamageSource.is(DamageTypes.CAMPFIRE)) {
+                return AnimationsId.DEATH_BURN_ANIMATION.getAnimationId();
+            } else if (lastDamageSource.is(DamageTypes.EXPLOSION) || lastDamageSource.is(DamageTypes.PLAYER_EXPLOSION)) {
+                return AnimationsId.DEATH_EXPLOSION_ANIMATION.getAnimationId();
+            } else if (lastDamageSource.is(DamageTypes.DROWN)) {
+                return AnimationsId.DEATH_DROWN_ANIMATION.getAnimationId();
             }
         }
-        // Animación predeterminada si no se reconoce la causa
         return AnimationsId.DEATH_DEFAULT_ANIMATION.getAnimationId();
-    }*/
+    }
 }

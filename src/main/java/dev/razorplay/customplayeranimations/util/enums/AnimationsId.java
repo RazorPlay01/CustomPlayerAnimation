@@ -68,7 +68,13 @@ public enum AnimationsId {
     SWORD_ATTACK_3_SNEAK_ANIMATION("sword_attack_3_sneak_animation"),
     //UpHand Animation
     UP_HAND_ANIMATION("up_hand_animation"),
-    ITEM_SWAP_ANIMATION("item_swap_animation");
+    ITEM_SWAP_ANIMATION("item_swap_animation"),
+
+    // Death Animations
+    DEATH_DEFAULT_ANIMATION("death_default_animation"),
+    DEATH_BURN_ANIMATION("death_burn_animation"),
+    DEATH_EXPLOSION_ANIMATION("death_explosion_animation"),
+    DEATH_DROWN_ANIMATION("death_drown_animation");
 
     private final String animationId;
 }

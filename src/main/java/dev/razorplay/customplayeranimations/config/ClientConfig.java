@@ -29,6 +29,8 @@ public class ClientConfig implements ConfigData {
     public IdleAnimations idleAnimations = new IdleAnimations();
     @ConfigEntry.Gui.CollapsibleObject
     public InWaterAnimations inWaterAnimationsConfig = new InWaterAnimations();
+    @ConfigEntry.Gui.CollapsibleObject
+    public DeathAnimations deathAnimations = new DeathAnimations();
 
     @ConfigEntry.Gui.CollapsibleObject
     public UseItemAnimation useItemAnimation = new UseItemAnimation();
@@ -197,6 +199,23 @@ public class ClientConfig implements ConfigData {
         public SwordAnimationConfig swordAttack2AnimationConfig = new SwordAnimationConfig();
         @ConfigEntry.Gui.CollapsibleObject
         public SwordAnimationConfig swordAttack3AnimationConfig = new SwordAnimationConfig();
+    }
+
+    @Getter
+    public static class DeathAnimations {
+        boolean isEnabled = true;
+        float speedMultiplier = 1;
+        int fadeTime = 10;
+        int priority = 0;
+
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig deathBurnAnimationConfig = new AnimationConfig();
+
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig deathExplosionAnimationConfig = new AnimationConfig();
+
+        @ConfigEntry.Gui.CollapsibleObject
+        public AnimationConfig deathDrownAnimationConfig = new AnimationConfig();
     }
 
     public static class ToolsAnimations {
