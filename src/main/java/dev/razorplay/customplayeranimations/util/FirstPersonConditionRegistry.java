@@ -108,11 +108,5 @@ public class FirstPersonConditionRegistry {
                 player.getOffArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE) ||
                         player.getMainArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE)
         );
-
-        register(ResourceLocation.fromNamespaceAndPath(CustomPlayerAnimations.MOD_ID, "flute_item"), player ->
-                player.getUseItem().getItem() instanceof FluteItem
-        );
-
-        register(ResourceLocation.fromNamespaceAndPath(CustomPlayerAnimations.MOD_ID, "carry_on"), CarryOnCompatAnimation::check);
     }
 }
