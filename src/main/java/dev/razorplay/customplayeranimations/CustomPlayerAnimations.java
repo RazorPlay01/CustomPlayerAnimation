@@ -5,6 +5,7 @@ import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
 import dev.razorplay.customplayeranimations.config.ClientConfig;
 import dev.razorplay.customplayeranimations.config.ConfigWrapper;
+import dev.razorplay.customplayeranimations.util.FirstPersonConditionRegistry;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
@@ -29,6 +30,7 @@ public class CustomPlayerAnimations implements ModInitializer, ClientModInitiali
     public void onInitializeClient() {
         AutoConfig.register(ConfigWrapper.class, PartitioningSerializer.wrap(JanksonConfigSerializer::new));
         CONFIG = AutoConfig.getConfigHolder(ConfigWrapper.class).getConfig().client;
+        FirstPersonConditionRegistry.registerDefaultConditions();
         LOGGER.info("Custom Player Animations initialized.");
     }
 
