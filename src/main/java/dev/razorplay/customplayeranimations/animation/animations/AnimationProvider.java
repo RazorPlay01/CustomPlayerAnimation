@@ -1,5 +1,7 @@
 package dev.razorplay.customplayeranimations.animation.animations;
 
+import dev.razorplay.customplayeranimations.animation.animations.compat.CarryOnCompatAnimation;
+import dev.razorplay.customplayeranimations.animation.animations.compat.SupplementariesCompatAnimation;
 import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.animation.animations.base.*;
 import dev.razorplay.customplayeranimations.animation.animations.overlay.*;
@@ -42,7 +44,8 @@ public class AnimationProvider {
             new BoatForwardAnimation(),
             new BoatIdleAnimation(),
             new ElytraAnimation(),
-            new SleepAnimation()
+            new SleepAnimation(),
+            new DeathAnimation()
     );
     public static final List<ICustomAnimation> OVERLAY_ANIMATIONS = List.of(
             new EatAnimation(),
@@ -50,12 +53,15 @@ public class AnimationProvider {
             new BowAnimation(),
             new ShieldAnimation(),
             new CrossbowAnimation(),
-            new CompatAnimation(),
             new GenericHandSwingAnimation(),
             new PickaxeAnimation(),
             new AxeAnimation(),
             new ShovelAnimation(),
-            new SwordAnimation()
+            new SwordAnimation(),
+
+            // Compat Animations
+            new SupplementariesCompatAnimation(),
+            new CarryOnCompatAnimation()
     );
     public static final List<ICustomAnimation> SPECIAL_ANIMATIONS = List.of(
             new UpHandAnimation(),
