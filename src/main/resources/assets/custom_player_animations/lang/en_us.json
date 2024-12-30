@@ -284,5 +284,29 @@
   "text.autoconfig.custom_player_animations.option.client.mountAnimations.minecartAnimationsConfig.isEnabled": "Is Enabled",
   "text.autoconfig.custom_player_animations.option.client.mountAnimations.minecartAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
   "text.autoconfig.custom_player_animations.option.client.mountAnimations.minecartAnimationsConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.minecartAnimationsConfig.priority": "Animation Priority"
+  "text.autoconfig.custom_player_animations.option.client.mountAnimations.minecartAnimationsConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.deathAnimations": "Death Animations",
+  "text.autoconfig.custom_player_animations.option.client.deathAnimations.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.deathAnimations.speedMultiplier": "Default Death Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.deathAnimations.fadeTime": "Default Death Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.deathAnimations.priority": "Default Death Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathBurnAnimationConfig": "Burn Death Animation",
+  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathBurnAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathBurnAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathBurnAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathBurnAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathExplosionAnimationConfig": "Explosion Death Animation",
+  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathExplosionAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathExplosionAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathExplosionAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathExplosionAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathDrownAnimationConfig": "Drown Death Animation",
+  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathDrownAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathDrownAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathDrownAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathDrownAnimationConfig.priority": "Animation Priority"
 }
