@@ -91,8 +91,6 @@ public class FirstPersonConditionRegistry {
      * - Specific animations that require both hands
      * - When holding an item in the off-hand
      * - When using a crossbow
-     * - When using a flute item
-     * - When is carring something
      */
     public static void registerDefaultConditions() {
         register(ResourceLocation.fromNamespaceAndPath(CustomPlayerAnimations.MOD_ID, "animations"), player ->

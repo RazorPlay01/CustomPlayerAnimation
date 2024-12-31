@@ -176,17 +176,17 @@ public class ClientConfig implements ConfigData {
         @ConfigEntry.Gui.Tooltip
         private float animationMoveSpeedMultiplier = 4;
         @ConfigEntry.Gui.CollapsibleObject
-        public AnimationConfig walkingAnimationConfig = new AnimationConfig();
+        public AnimationConfig walkingAnimationConfig = new AnimationConfig(true, 1, 3, 0);
         @ConfigEntry.Gui.CollapsibleObject
-        public AnimationConfig walkingBackwardsAnimationConfig = new AnimationConfig();
+        public AnimationConfig walkingBackwardsAnimationConfig = new AnimationConfig(true, 1, 3, 0);
         @ConfigEntry.Gui.CollapsibleObject
-        public AnimationConfig walkingSneakAnimationConfig = new AnimationConfig();
+        public AnimationConfig walkingSneakAnimationConfig = new AnimationConfig(true, 1, 3, 0);
         @ConfigEntry.Gui.CollapsibleObject
-        public AnimationConfig walkingSneakBackwardsAnimationConfig = new AnimationConfig();
+        public AnimationConfig walkingSneakBackwardsAnimationConfig = new AnimationConfig(true, 1, 3, 0);
         @ConfigEntry.Gui.CollapsibleObject
         public AnimationConfig runningAnimationConfig = new AnimationConfig();
         @ConfigEntry.Gui.CollapsibleObject
-        public AnimationConfig onFenceWalkAnimationConfig = new AnimationConfig();
+        public AnimationConfig onFenceWalkAnimationConfig = new AnimationConfig(true, 1, 3, 0);
     }
 
     public static class SwordAnimations {
@@ -203,7 +203,7 @@ public class ClientConfig implements ConfigData {
 
     @Getter
     public static class DeathAnimations {
-        boolean isEnabled = true;
+        boolean isEnabled = false;
         float speedMultiplier = 1;
         int fadeTime = 10;
         int priority = 0;
