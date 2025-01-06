@@ -10,9 +10,11 @@ import dev.razorplay.customplayeranimations.util.enums.AnimationsId;
 import dev.razorplay.customplayeranimations.util.enums.BodyParts;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.animal.horse.*;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.CustomModelData;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +27,13 @@ public class Util {
 
     private Util() {
         //[]
+    }
+
+    public static int getCustomModelDataId(ItemStack itemStack) {
+        return Optional.of(itemStack.getComponentsPatch())
+                .map(componentsPatch -> (Optional<CustomModelData>) componentsPatch.get(DataComponents.CUSTOM_MODEL_DATA))
+                .flatMap(optional -> optional.map(CustomModelData::value))
+                .orElse(0);
     }
 
     public static boolean isBoat(Object vehicle) {
