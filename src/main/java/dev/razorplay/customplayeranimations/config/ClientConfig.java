@@ -14,7 +14,7 @@ import java.util.List;
 @Config(name = CustomPlayerAnimations.MOD_ID)
 public class ClientConfig implements ConfigData {
     @ConfigEntry.Gui.Tooltip
-    private boolean isCustomFirstPersonEnable = true;
+    private boolean isCustomFirstPersonEnable = false;
     @ConfigEntry.Gui.Tooltip
     private List<String> animationsThatShowBothHand = List.of("bow", "trident", "climbing", "boat", "horse", "minecart", "water", "crawl");
     @ConfigEntry.Gui.Tooltip

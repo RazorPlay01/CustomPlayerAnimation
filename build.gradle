@@ -59,6 +59,7 @@ dependencies {
 
     //Player Animator
     modImplementation("dev.kosmx.player-anim:player-animation-lib-fabric:${project.player_anim}")
+    include("dev.kosmx.player-anim:player-animation-lib-fabric:${project.player_anim}")
     //modImplementation files('libs/player-animation-lib-fabric-2.0.0+1.21.1.jar')
 
     implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${project.mixin_extras_ver}"))
@@ -82,7 +83,7 @@ dependencies {
     modCompileOnly("curse.maven:supplementaries-412082:5154524") { transitive false }
     modCompileOnly("curse.maven:sword-blocking-427738:5511755")
     modCompileOnly("maven.modrinth:oldcombatmod:0.1.4+1.21-fabric,1.21")
-    modImplementation ("com.zigythebird.playeranimatorapi:playeranimatorapi-fabric-1.21:2.2.1", {
+    modImplementation("com.zigythebird.playeranimatorapi:playeranimatorapi-fabric-1.21:2.2.1", {
         exclude group: "software.bernie.geckolib"
         exclude group: "com.github.Virtuoel"
         exclude group: "mod.azure.azurelib"

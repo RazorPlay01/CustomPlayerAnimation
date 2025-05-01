@@ -58,7 +58,7 @@ public class MapRenderer {
         }
     }
 
-    private static void addVertex(VertexConsumer cons, Matrix4f matrix4f, float x, float y, float z, float u, float v, int lightmapUV) {
-        cons.addVertex(matrix4f, x, y, z).setColor(-1).setUv(u, v).setLight(lightmapUV);
+    private static void addVertex(VertexConsumer vertexConsumer, Matrix4f matrix4f, float x, float y, float z, float u, float v, int lightmapUV) {
+        vertexConsumer.addVertex(matrix4f, x, y, z).setColor(-1).setUv(u, v).setLight(lightmapUV);
     }
 }

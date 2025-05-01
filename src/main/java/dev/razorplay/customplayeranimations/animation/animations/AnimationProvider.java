@@ -2,6 +2,7 @@ package dev.razorplay.customplayeranimations.animation.animations;
 
 import dev.razorplay.customplayeranimations.animation.animations.compat.CarryOnCompatAnimation;
 import dev.razorplay.customplayeranimations.animation.animations.compat.SupplementariesCompatAnimation;
+import dev.razorplay.customplayeranimations.animation.animations.extras.*;
 import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.animation.animations.base.*;
 import dev.razorplay.customplayeranimations.animation.animations.overlay.*;
@@ -45,7 +46,17 @@ public class AnimationProvider {
             new BoatIdleAnimation(),
             new ElytraAnimation(),
             new SleepAnimation(),
-            new DeathAnimation()
+            new DeathAnimation(),
+
+            // extras
+            new PodadoraIdleStandingAnimation(),
+            new PodadoraWalkAnimation(),
+            new BoxIdleStandingAnimation(),
+            new BoxWalkAnimation(),
+            new PatinesRunAnimation(),
+            new CustomBoatTurnAnimations(),
+            new CustomBoatForwardAnimation(),
+            new CustomBoatIdleAnimation()
     );
     public static final List<ICustomAnimation> OVERLAY_ANIMATIONS = List.of(
             new EatAnimation(),
