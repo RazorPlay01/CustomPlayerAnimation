@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "customplayeranimation",
+  "version": "${version}",
+  "name": "CustomPlayerAnimation",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/customplayeranimation/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.github.razorplay01.customplayeranimation.CustomPlayerAnimations"
+    ],
+    "main": [
+      "com.github.razorplay01.customplayeranimation.CustomPlayerAnimations"
+    ]
+  },
+  "mixins": [
+    "customplayeranimation.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  },
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/class_742": [
+        "com/github/razorplay01/customplayeranimation/util/interfaces/IAnimationControl",
+        "com/github/razorplay01/customplayeranimation/util/interfaces/ICustomAnimatedPlayer"
+      ]
+    }
+  }
+}
