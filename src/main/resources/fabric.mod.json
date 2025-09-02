@@ -7,7 +7,7 @@
   "authors": [],
   "contact": {},
   "license": "All-Rights-Reserved",
-  "icon": "assets/customplayeranimation/icon.png",
+  "icon": "assets/custom_player_animations/CPA.icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
@@ -15,6 +15,9 @@
     ],
     "main": [
       "com.github.razorplay01.customplayeranimation.CustomPlayerAnimations"
+    ],
+    "modmenu": [
+      "com.github.razorplay01.customplayeranimation.config.ModMenuConfig"
     ]
   },
   "mixins": [
@@ -23,7 +26,8 @@
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
-    "minecraft": "${minecraft_version}"
+    "minecraft": "${minecraft_version}",
+    "player_animation_library": ">=${pal_version}"
   },
   "custom": {
     "loom:injected_interfaces": {

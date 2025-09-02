@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import static com.github.razorplay01.customplayeranimation.CustomPlayerAnimations.getAnimation;
 
@@ -25,6 +27,7 @@ public class AnimationContainer {
     private int animationPriority;
     private int prevAnimationPriority;
     private float animationSpeed;
+    private final Set<String> disabledBoneIds = new HashSet<>();
 
     public void disableAnimation() {
         this.setCurrentAnimation(getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()));

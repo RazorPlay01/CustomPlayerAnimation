@@ -12,21 +12,28 @@ import static com.github.razorplay01.customplayeranimation.util.Util.disableBoth
 public class CrossbowAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
+        // Handle charging (both arms disabled)
         if (context.player().isUsingItem() && context.player().getUseItem().getItem() instanceof CrossbowItem) {
             disableBothArms(context);
+            return; // Skip pose checks during charging
         }
-        if (context.playerData().getMainArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_HOLD) ||
-                context.playerData().getMainArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE)) {
-            context.player().disableBodyPartAnimationInAllContainers(context.player().getMainArm() == HumanoidArm.RIGHT ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
+        // Handle holding (disable only the arm holding the crossbow)
+        if (context.playerData().getMainArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_HOLD)) {
+            context.player().disableBodyPartAnimationInAllContainers(
+                    context.player().getMainArm() == HumanoidArm.RIGHT ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM
+            );
         }
-        if (context.playerData().getOffArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_HOLD) ||
-                context.playerData().getOffArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_CHARGE)) {
-            context.player().disableBodyPartAnimationInAllContainers(context.player().getMainArm() == HumanoidArm.RIGHT ? BodyParts.LEFT_ARM : BodyParts.RIGHT_ARM);
+        if (context.playerData().getOffArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_HOLD)) {
+            context.player().disableBodyPartAnimationInAllContainers(
+                    context.player().getMainArm() == HumanoidArm.RIGHT ? BodyParts.LEFT_ARM : BodyParts.RIGHT_ARM
+            );
         }
     }
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return true;
+        // Only play if player is holding or using a crossbow
+        return context.player().getMainHandItem().getItem() instanceof CrossbowItem ||
+                context.player().getOffhandItem().getItem() instanceof CrossbowItem;
     }
 }

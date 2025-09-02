@@ -12,7 +12,6 @@ import com.github.razorplay01.customplayeranimation.util.interfaces.ICustomAnima
 import com.github.razorplay01.customplayeranimation.util.records.AnimationContext;
 import com.mojang.authlib.GameProfile;
 import com.zigythebird.playeranim.api.PlayerAnimationAccess;
-import com.zigythebird.playeranimcore.animation.Animation;
 import com.zigythebird.playeranimcore.animation.AnimationController;
 import com.zigythebird.playeranimcore.animation.RawAnimation;
 import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractFadeModifier;
@@ -65,7 +64,8 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         this.mainAnimationContainer = new AnimationContainer(
                 (AnimationController) PlayerAnimationAccess.getPlayerAnimationLayer((AbstractClientPlayer) (Object) this, MAIN_ANIMATION_CONTAINER_LAYER_ID),
                 new HashMap<>(
-                        Map.of(Modifiers.SPEED_MODIFIER.getModifierId(), new SpeedModifier(1.0f))),
+                        Map.of(Modifiers.MIRROR_MODIFIER.getModifierId(), new MirrorModifier(),
+                                Modifiers.SPEED_MODIFIER.getModifierId(), new SpeedModifier(1.0f))),
                 getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()),
                 AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId(),
                 "",
@@ -76,10 +76,12 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         this.overlayAnimationContainer = new AnimationContainer(
                 (AnimationController) PlayerAnimationAccess.getPlayerAnimationLayer((AbstractClientPlayer) (Object) this, OVERLAY_ANIMATION_CONTAINER_LAYER_ID),
                 new HashMap<>(
-                        Map.of(Modifiers.SPEED_MODIFIER.getModifierId(), new SpeedModifier(1.0f),
+                        Map.of(Modifiers.MIRROR_MODIFIER.getModifierId(), new MirrorModifier(),
+                                Modifiers.SPEED_MODIFIER.getModifierId(), new SpeedModifier(1.0f),
                                 Modifiers.SHIELD_MODIFIER.getModifierId(), createShieldModifier((AbstractClientPlayer) (Object) this),
                                 Modifiers.HAND_SWING_MODIFIER.getModifierId(), createSwingModifier((AbstractClientPlayer) (Object) this, mainAnimationContainer),
-                                Modifiers.BOW_MODIFIER.getModifierId(), createBowModifier((AbstractClientPlayer) (Object) this))),
+                                Modifiers.BOW_MODIFIER.getModifierId(), createBowModifier((AbstractClientPlayer) (Object) this)
+                        )),
                 getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()),
                 AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId(),
                 "",
@@ -115,6 +117,8 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             return;
         this.playerData.update((AbstractClientPlayer) (Object) this);
 
+        enableAllBodyPartsInAllContainers();
+
         overlayAnimationContainer.resetAnimationProperties();
 
         this.actualAnimationContext = new AnimationContext(mainAnimationContainer, overlayAnimationContainer, specialAnimationContainer, (AbstractClientPlayer) (Object) this, playerData);
@@ -125,6 +129,8 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         checkMainHandItemForArmDisabling();
         checkOffHandItemForArmDisabling();
 
+        applyDisables();
+
         updateAnimationContainers();
 
         this.playerData.setPrevPlayerPosition(this.playerData.getPlayerPosition());
@@ -134,17 +140,17 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Override
     public AnimationContainer getMainAnimationCPA() {
-        return mainAnimationContainer;
+        return this.mainAnimationContainer;
     }
 
     @Override
     public AnimationContainer getOverlayAnimationCPA() {
-        return overlayAnimationContainer;
+        return this.overlayAnimationContainer;
     }
 
     @Override
     public AnimationContainer getSpecialAnimationCPA() {
-        return specialAnimationContainer;
+        return this.specialAnimationContainer;
     }
 
     @Override
@@ -154,7 +160,15 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Override
     public void disableBodyPartAnimation(AnimationContainer animationContainer, BodyParts bodyPart) {
-        animationContainer.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> getBoneFunc.apply(bodyPart.getPartId()).setEnabled(false));
+        animationContainer.getDisabledBoneIds().add(bodyPart.getPartId());
+    }
+
+    @Unique
+    public void enabledAllBodyPartsAnimation(AnimationContainer animationContainer) {
+        animationContainer.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
+            //[]
+        });
+        animationContainer.getDisabledBoneIds().clear();
     }
 
     @Override
@@ -201,6 +215,35 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     }
 
     @Unique
+    private void enableAllBodyPartsInAllContainers() {
+        enabledAllBodyPartsAnimation(mainAnimationContainer);
+        enabledAllBodyPartsAnimation(overlayAnimationContainer);
+        enabledAllBodyPartsAnimation(specialAnimationContainer);
+    }
+
+    @Unique
+    private void applyDisables() {
+        applyDisableToContainer(mainAnimationContainer);
+        applyDisableToContainer(overlayAnimationContainer);
+        applyDisableToContainer(specialAnimationContainer);
+    }
+
+    @Unique
+    private void applyDisableToContainer(AnimationContainer container) {
+        Set<String> disabledIds = container.getDisabledBoneIds();
+        if (disabledIds.isEmpty()) {
+            container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
+            });
+        } else {
+            container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
+                for (String boneId : disabledIds) {
+                    getBoneFunc.apply(boneId).setEnabled(false);
+                }
+            });
+        }
+    }
+
+    @Unique
     private void playAnimations() {
         // Main Animations
         for (ICustomAnimation animation : AnimationProvider.MAIN_ANIMATIONS) {
@@ -224,58 +267,38 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Unique
     private void updateAnimationContainers() {
-        updateMainAnimationContainer();
-        updateOverlayAnimationContainer();
-        updateUpHandAnimationContainer();
+        updateAnimationContainer(mainAnimationContainer);
+        updateAnimationContainer(overlayAnimationContainer);
+        updateAnimationContainer(specialAnimationContainer);
     }
 
     @Unique
-    private void updateMainAnimationContainer() {
-        if ((!Objects.equals(mainAnimationContainer.getCurrentAnimationId(), mainAnimationContainer.getPrevAnimationId()) && mainAnimationContainer.getAnimationPriority() >= mainAnimationContainer.getPrevAnimationPriority()) ||
-                !mainAnimationContainer.getAnimationController().isActive()) {
+    private void updateAnimationContainer(AnimationContainer animationContainer) {
+        if (!animationContainer.getAnimationController().isActive() &&
+                !animationContainer.getCurrentAnimationId().equals(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId())) {
+            animationContainer.setCurrentAnimation(getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()));
+            animationContainer.setCurrentAnimationId(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId());
+            animationContainer.setAnimationPriority(0);
+            animationContainer.setAnimationFadeTime(0);
+            animationContainer.setAnimationSpeed(1.0f);
+        }
 
-            playCurrentAnimation(mainAnimationContainer.getAnimationController(), mainAnimationContainer.getCurrentAnimation());
+        if ((!Objects.equals(animationContainer.getCurrentAnimationId(), animationContainer.getPrevAnimationId())
+                && animationContainer.getAnimationPriority() >= animationContainer.getPrevAnimationPriority())
+                || !animationContainer.getAnimationController().isActive()) {
 
-            mainAnimationContainer.setPrevAnimationId(mainAnimationContainer.getCurrentAnimationId());
-            mainAnimationContainer.setPrevAnimationPriority(mainAnimationContainer.getAnimationPriority());
+            playCurrentAnimation(animationContainer);
+
+            animationContainer.setPrevAnimationId(animationContainer.getCurrentAnimationId());
+            animationContainer.setPrevAnimationPriority(animationContainer.getAnimationPriority());
         }
     }
 
     @Unique
-    private void updateOverlayAnimationContainer() {
-        if ((!Objects.equals(overlayAnimationContainer.getCurrentAnimationId(), overlayAnimationContainer.getPrevAnimationId()) && overlayAnimationContainer.getAnimationPriority() >= overlayAnimationContainer.getPrevAnimationPriority()) ||
-                !overlayAnimationContainer.getAnimationController().isActive()) {
-
-            if (!overlayAnimationContainer.getPrevAnimationId().equals(overlayAnimationContainer.getCurrentAnimationId())) {
-                playCurrentAnimation(overlayAnimationContainer.getAnimationController(), overlayAnimationContainer.getCurrentAnimation());
-            } else {
-                overlayAnimationContainer.setCurrentAnimation(getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()));
-                overlayAnimationContainer.setCurrentAnimationId(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId());
-                playCurrentAnimation(overlayAnimationContainer.getAnimationController(), overlayAnimationContainer.getCurrentAnimation());
-            }
-
-            overlayAnimationContainer.setPrevAnimationId(overlayAnimationContainer.getCurrentAnimationId());
-            overlayAnimationContainer.setPrevAnimationPriority(overlayAnimationContainer.getAnimationPriority());
-        }
-    }
-
-    @Unique
-    private void updateUpHandAnimationContainer() {
-        if ((!Objects.equals(specialAnimationContainer.getCurrentAnimationId(), specialAnimationContainer.getPrevAnimationId()) && specialAnimationContainer.getAnimationPriority() >= overlayAnimationContainer.getPrevAnimationPriority()) ||
-                !specialAnimationContainer.getAnimationController().isActive()) {
-
-            playCurrentAnimation(specialAnimationContainer.getAnimationController(), specialAnimationContainer.getCurrentAnimation());
-
-            specialAnimationContainer.setPrevAnimationId(specialAnimationContainer.getCurrentAnimationId());
-            specialAnimationContainer.setPrevAnimationPriority(specialAnimationContainer.getAnimationPriority());
-        }
-    }
-
-    @Unique
-    public void playCurrentAnimation(AnimationController animationController, Animation animation) {
-        animationController.replaceAnimationWithFade(
-                AbstractFadeModifier.standardFadeIn(mainAnimationContainer.getAnimationFadeTime(), EasingType.EASE_IN_OUT_SINE),
-                RawAnimation.begin().thenPlay(animation), false
+    public void playCurrentAnimation(AnimationContainer animationContainer) {
+        animationContainer.getAnimationController().replaceAnimationWithFade(
+                AbstractFadeModifier.standardFadeIn(animationContainer.getAnimationFadeTime(), EasingType.EASE_IN_OUT_SINE),
+                RawAnimation.begin().thenPlay(animationContainer.getCurrentAnimation()), false
         );
     }
 
@@ -288,7 +311,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Unique
     private void checkOffHandItemForArmDisabling() {
-        if (!getOffhandItem().isEmpty() && isUsingItem() && (isScoping() || getMainHandItem().getItem() instanceof InstrumentItem || getMainHandItem().getItem() instanceof BrushItem)) {
+        if (!getOffhandItem().isEmpty() && isUsingItem() && (isScoping() || getOffhandItem().getItem() instanceof InstrumentItem || getOffhandItem().getItem() instanceof BrushItem)) {
             this.disableBodyPartAnimationInAllContainers(getMainArm() == HumanoidArm.RIGHT ? BodyParts.LEFT_ARM : BodyParts.RIGHT_ARM);
         }
     }

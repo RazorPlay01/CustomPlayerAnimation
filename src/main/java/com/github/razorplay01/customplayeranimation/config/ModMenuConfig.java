@@ -1,4 +1,3 @@
-/*
 package com.github.razorplay01.customplayeranimation.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
@@ -14,4 +13,4 @@ public class ModMenuConfig implements ModMenuApi {
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
         return parent -> AutoConfig.getConfigScreen(ConfigWrapper.class, parent).get();
     }
-}*/
+}

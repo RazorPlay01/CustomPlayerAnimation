@@ -14,6 +14,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.animal.horse.*;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.CustomModelData;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,12 +29,12 @@ public class Util {
         //[]
     }
 
-    /*public static float getCustomModelDataId(ItemStack itemStack) {
+    public static List<Float> getCustomModelDataId(ItemStack itemStack) {
         return Optional.of(itemStack.getComponentsPatch())
                 .map(componentsPatch -> (Optional<CustomModelData>) componentsPatch.get(DataComponents.CUSTOM_MODEL_DATA))
                 .flatMap(optional -> optional.map(CustomModelData::floats))
-                .orElse(0);
-    }*/
+                .orElse(List.of(0.0f));
+    }
 
     public static boolean isBoat(Object vehicle) {
         return vehicle instanceof Boat;
@@ -58,8 +59,8 @@ public class Util {
     }
 
     public static void disableBothArms(AnimationContext context) {
-        context.player().disableBodyPartAnimationInAllContainers(BodyParts.RIGHT_ARM);
         context.player().disableBodyPartAnimationInAllContainers(BodyParts.LEFT_ARM);
+        context.player().disableBodyPartAnimationInAllContainers(BodyParts.RIGHT_ARM);
     }
 
     public static void addModifiersToContainer(AnimationContainer container) {

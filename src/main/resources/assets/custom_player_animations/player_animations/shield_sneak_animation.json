@@ -2066,6 +2066,14 @@
 							"easing": "linear"
 						}
 					}
+				},
+				"leftItem": {
+					"rotation": {
+						"vector": [7.38859, -32.29757, -56.54562]
+					},
+					"position": {
+						"vector": [3, -2, 0]
+					}
 				}
 			}
 		}

@@ -1,6 +1,5 @@
 package com.github.razorplay01.customplayeranimation.animation.animations.base;
 
-
 import com.github.razorplay01.customplayeranimation.util.enums.AnimationsId;
 import com.github.razorplay01.customplayeranimation.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.customplayeranimation.util.records.AnimationContext;

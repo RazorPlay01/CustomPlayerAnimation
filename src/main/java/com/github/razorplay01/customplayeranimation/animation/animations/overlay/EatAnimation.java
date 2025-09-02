@@ -1,9 +1,10 @@
 package com.github.razorplay01.customplayeranimation.animation.animations.overlay;
 
 import com.github.razorplay01.customplayeranimation.util.enums.AnimationsId;
-import com.github.razorplay01.customplayeranimation.util.enums.BodyParts;
+import com.github.razorplay01.customplayeranimation.util.enums.Modifiers;
 import com.github.razorplay01.customplayeranimation.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.customplayeranimation.util.records.AnimationContext;
+import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.PotionItem;
 
@@ -20,9 +21,9 @@ public class EatAnimation implements ICustomAnimation {
             configureAnimationContainer(CONFIG.useItemAnimation.eatingAnimationsConfig, context.overlayAnimationContainer());
 
             if (context.player().getUsedItemHand().equals(context.playerData().getRightHand())) {
-                setEatingAnimation(context, BodyParts.RIGHT_ARM, false);
+                setEatingAnimation(context, false);
             } else if (context.player().getUsedItemHand().equals(context.playerData().getLeftHand())) {
-                setEatingAnimation(context, BodyParts.LEFT_ARM, true);
+                setEatingAnimation(context, true);
             }
         }
     }
@@ -34,9 +35,9 @@ public class EatAnimation implements ICustomAnimation {
                 context.player().getUseItem().getItem() instanceof PotionItem;
     }
 
-    private static void setEatingAnimation(AnimationContext context, BodyParts arm, boolean mirror) {
+    private static void setEatingAnimation(AnimationContext context, boolean mirror) {
         context.overlayAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.EAT_ANIMATION.getAnimationId()));
         context.overlayAnimationContainer().setCurrentAnimationId((mirror ? LEFT_PREFIX : RIGHT_PREFIX) + AnimationsId.EAT_ANIMATION.getAnimationId());
-        //todo: ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(mirror);
+        ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).enabled = mirror;
     }
 }

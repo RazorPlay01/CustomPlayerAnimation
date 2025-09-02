@@ -46,7 +46,7 @@ public class CustomModifiers {
 
             if (partName.equals(BodyParts.LEFT_ARM.getPartId()) || partName.equals(BodyParts.RIGHT_ARM.getPartId())) {
                 return Optional.of(new AdjustmentModifier.PartModifier(
-                        new Vec3f(pitch, 0, 0),                   //rotation
+                        new Vec3f(pitch, 0, 0),             //rotation
                         Vec3f.ZERO                                //position
                 ));
             }

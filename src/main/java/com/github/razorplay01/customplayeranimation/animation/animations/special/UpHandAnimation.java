@@ -18,7 +18,6 @@ import static com.github.razorplay01.customplayeranimation.CustomPlayerAnimation
 import static com.github.razorplay01.customplayeranimation.CustomPlayerAnimations.getAnimation;
 import static com.github.razorplay01.customplayeranimation.util.Util.*;
 
-
 public class UpHandAnimation implements ICustomAnimation {
     private static final Set<Item> UP_HAND_ITEMS = Set.of(
             Items.TORCH, Items.SOUL_TORCH, Items.REDSTONE_TORCH,
@@ -26,7 +25,6 @@ public class UpHandAnimation implements ICustomAnimation {
     );
     private static boolean lastMainHandState = false;
     private static boolean lastOffHandState = false;
-
 
     public void playAnimation(AnimationContext context) {
         if (!CONFIG.specialAnimations.upHandAnimationConfig.isEnabled()) {
@@ -73,12 +71,10 @@ public class UpHandAnimation implements ICustomAnimation {
 
     private static void playHandAnimations(HandStates states, AnimationContext context) {
         if (states.isMainHandUp) {
-            setUpHandAnimation(context,
-                    context.player().getMainArm());
+            setUpHandAnimation(context, context.player().getMainArm());
         }
         if (states.isOffHandUp) {
-            setUpHandAnimation(context,
-                    getOppositeArm(context.player().getMainArm()));
+            setUpHandAnimation(context, getOppositeArm(context.player().getMainArm()));
         }
     }
 
@@ -96,9 +92,10 @@ public class UpHandAnimation implements ICustomAnimation {
         context.specialAnimationContainer().setAnimationFadeTime(CONFIG.specialAnimations.upHandAnimationConfig.getFadeTime());
         context.specialAnimationContainer().setAnimationPriority(CONFIG.specialAnimations.upHandAnimationConfig.getPriority());
         context.specialAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.UP_HAND_ANIMATION.getAnimationId()));
-        String animationId = (arm == HumanoidArm.RIGHT ? RIGHT_PREFIX : LEFT_PREFIX) + AnimationsId.UP_HAND_ANIMATION.getAnimationId();
+        boolean isMainRightArm = arm == HumanoidArm.RIGHT;
+        String animationId = (isMainRightArm ? RIGHT_PREFIX : LEFT_PREFIX) + AnimationsId.UP_HAND_ANIMATION.getAnimationId();
         context.specialAnimationContainer().setCurrentAnimationId(animationId);
-        ((MirrorModifier) context.specialAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).enabled = arm == HumanoidArm.RIGHT;
+        ((MirrorModifier) context.specialAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).enabled = isMainRightArm;
     }
 
     private static boolean isHandUp(ItemStack itemStack) {

@@ -51,10 +51,10 @@ public class AnimationProvider {
             new ShieldAnimation(),
             new CrossbowAnimation(),
             new GenericHandSwingAnimation(),
+            new SwordAnimation(),
             new PickaxeAnimation(),
             new AxeAnimation(),
             new ShovelAnimation()
-            //new SwordAnimation()
 
             // Compat Animations
             //new SupplementariesCompatAnimation(),

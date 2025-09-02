@@ -2,8 +2,10 @@ package com.github.razorplay01.customplayeranimation.animation.animations.overla
 
 import com.github.razorplay01.customplayeranimation.util.enums.AnimationsId;
 import com.github.razorplay01.customplayeranimation.util.enums.BodyParts;
+import com.github.razorplay01.customplayeranimation.util.enums.Modifiers;
 import com.github.razorplay01.customplayeranimation.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.customplayeranimation.util.records.AnimationContext;
+import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
 import net.minecraft.world.item.TridentItem;
 
 import static com.github.razorplay01.customplayeranimation.CustomPlayerAnimations.CONFIG;
@@ -40,6 +42,6 @@ public class TridentAnimation implements ICustomAnimation {
             context.overlayAnimationContainer().setCurrentAnimationId((isRightHand ? RIGHT_PREFIX : LEFT_PREFIX) + AnimationsId.TRIDENT_ANIMATION.getAnimationId());
         }
         context.player().setYBodyRot(context.playerData().getPlayerHeadYaw() + yawOffset);
-        //todo: ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(!isRightHand);
+        ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).enabled = !isRightHand;
     }
 }

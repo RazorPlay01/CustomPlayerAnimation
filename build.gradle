@@ -10,11 +10,14 @@ base {
     archivesName = project.archives_base_name
 }
 
-
-
 repositories {
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://maven.terraformersmc.com/releases/" }
+    mavenCentral()
+    maven {
+        name = "RedlanceMinecraft"
+        url = "https://repo.redlance.org/public"
+    }
 }
 
 dependencies {
@@ -28,7 +31,9 @@ dependencies {
     modApi("me.shedaniel.cloth:cloth-config-fabric:19.0.147") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-    modCompileOnly files("run/mods/PlayerAnimationLib-1.0.4+mc1.21.7.jar")
+    //modImplementation "com.zigythebird.playeranim:PlayerAnimationLibFabric:$project.pal_version"
+    modCompileOnly files("run/mods/modmenu-15.0.0-beta.3.jar")
+    modCompileOnly files("run/mods/PlayerAnimationLib-1.0.9+dev_3+mc1.21.7.jar")
 
     compileOnly 'org.projectlombok:lombok:1.18.36'
     annotationProcessor 'org.projectlombok:lombok:1.18.36'
@@ -41,12 +46,14 @@ processResources {
     inputs.property "version", project.version
     inputs.property "minecraft_version", project.minecraft_version
     inputs.property "loader_version", project.loader_version
+    inputs.property "pal_version", project.pal_version
     filteringCharset "UTF-8"
 
     filesMatching("fabric.mod.json") {
         expand "version": project.version,
                 "minecraft_version": project.minecraft_version,
-                "loader_version": project.loader_version
+                "loader_version": project.loader_version,
+                "pal_version": project.pal_version
     }
 }
 

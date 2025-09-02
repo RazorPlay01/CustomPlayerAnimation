@@ -7,7 +7,11 @@ import com.github.razorplay01.customplayeranimation.util.records.AnimationContex
 import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TridentItem;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.component.Weapon;
 
 import static com.github.razorplay01.customplayeranimation.CustomPlayerAnimations.*;
 import static net.minecraft.world.InteractionHand.MAIN_HAND;
@@ -40,11 +44,7 @@ public class SwordAnimation implements ICustomAnimation {
         if (context.overlayAnimationContainer().getAnimationController().getCurrentAnimation() != null) {
             if (context.overlayAnimationContainer().getAnimationController().isActive() &&
                     context.overlayAnimationContainer().getAnimationController().getCurrentAnimation().animation() == getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId())) {
-                if (currentComboCount < 2) {
-                    currentComboCount++;
-                } else {
-                    currentComboCount = 0;
-                }
+                currentComboCount = (currentComboCount % 3) + 1;
             }
 
             lastSwingTick = currentTick;
@@ -67,7 +67,7 @@ public class SwordAnimation implements ICustomAnimation {
             }
 
             selectComboAnimation(context);
-            //todo: ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(context.playerData().getRightHand() != MAIN_HAND);
+            ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).enabled = (context.playerData().getRightHand() != MAIN_HAND);
         }
     }
 
@@ -91,6 +91,25 @@ public class SwordAnimation implements ICustomAnimation {
     }
 
     public static boolean isPlayerSwingingWeapon(AbstractClientPlayer player) {
-        return player.swinging && (player.getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.WEAPON) || player.getMainHandItem().getItem() instanceof TridentItem) && player.swingingArm.equals(MAIN_HAND);
+        return player.swinging &&
+                (isSword(player.getMainHandItem()) || player.getMainHandItem().getItem() instanceof TridentItem) &&
+                player.swingingArm.equals(MAIN_HAND);
+    }
+
+    public static boolean isSword(ItemStack itemStack) {
+        Weapon weapon = itemStack.get(DataComponents.WEAPON);
+        if (weapon != null) {
+            // Opcionalmente, verifica los modificadores de atributos para confirmar que es una espada
+            ItemAttributeModifiers attributes = itemStack.get(DataComponents.ATTRIBUTE_MODIFIERS);
+            if (attributes != null) {
+                for (ItemAttributeModifiers.Entry entry : attributes.modifiers()) {
+                    if (entry.attribute().equals(Attributes.ATTACK_DAMAGE)) {
+                        return true; // Es probable que sea una espada
+                    }
+                }
+            }
+            return true; // Si tiene el componente WEAPON, es una espada u otra arma cuerpo a cuerpo
+        }
+        return false;
     }
 }

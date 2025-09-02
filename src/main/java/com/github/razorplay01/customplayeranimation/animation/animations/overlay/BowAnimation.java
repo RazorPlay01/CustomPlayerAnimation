@@ -1,8 +1,10 @@
 package com.github.razorplay01.customplayeranimation.animation.animations.overlay;
 
 import com.github.razorplay01.customplayeranimation.util.enums.AnimationsId;
+import com.github.razorplay01.customplayeranimation.util.enums.Modifiers;
 import com.github.razorplay01.customplayeranimation.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.customplayeranimation.util.records.AnimationContext;
+import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.item.BowItem;
 
@@ -51,6 +53,6 @@ public class BowAnimation implements ICustomAnimation {
         } else {
             context.player().setYBodyRot(context.playerData().getPlayerHeadYaw() + 90);
         }
-        //todo: ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).setEnabled(!isRightHand);
+        ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).enabled = (!isRightHand);
     }
 }

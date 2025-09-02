@@ -21,8 +21,7 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
         return context.player().swinging &&
-                !(CONFIG.swordAnimations.isEnabled() && context.player().getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.WEAPON) ||
-                        context.player().getMainHandItem().getItem() instanceof TridentItem) &&
+                !(CONFIG.swordAnimations.isEnabled() && context.player().getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.WEAPON) || context.player().getMainHandItem().getItem() instanceof TridentItem) &&
                 !(CONFIG.toolsAnimations.axeAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem() instanceof AxeItem) &&
                 !(CONFIG.toolsAnimations.pickaxeAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.TOOL)) &&
                 !(CONFIG.toolsAnimations.shovelAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem() instanceof ShovelItem);

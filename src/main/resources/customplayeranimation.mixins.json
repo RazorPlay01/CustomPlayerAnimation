@@ -4,9 +4,15 @@
   "package": "com.github.razorplay01.customplayeranimation.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "InventoryAccessor"
   ],
   "client": [
-    "AbstractClientPlayerEntityMixin"
+    "AbstractClientPlayerEntityMixin",
+    "ItemInHandLayerMixin",
+    "LivingEntityRendererMixin",
+    "PlayerEntityRendererMixin",
+    "PlayerRendererAccesor",
+    "PlayerRenderStateMixin"
   ],
   "injectors": {
     "defaultRequire": 1
