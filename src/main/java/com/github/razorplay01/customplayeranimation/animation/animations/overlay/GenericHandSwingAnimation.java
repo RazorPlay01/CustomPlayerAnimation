@@ -19,11 +19,11 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
     // Rastrear si el brazo estaba deshabilitado en el tick anterior
     private boolean wasArmDisabled = false;
     private InteractionHand lastSwingingArm = null;
-
+    
     // Rastrear si necesitamos forzar la habilitación del brazo en el próximo tick
     private boolean needToForceEnableArm = false;
     private BodyParts armToEnable = null;
-
+    
     @Override
     public void playAnimation(AnimationContext context) {
         // Primero, verificar si necesitamos forzar la habilitación del brazo desde el tick anterior
@@ -32,7 +32,7 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
             needToForceEnableArm = false;
             armToEnable = null;
         }
-
+        
         // Si el jugador está golpeando, deshabilitar el brazo correspondiente
         if (context.player().swinging) {
             disableArmBasedOnHand(context, context.player().swingingArm);
@@ -47,7 +47,7 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
             // También forzar la habilitación inmediata
             forceEnableBodyPart(context, armToEnable);
         }
-
+        
         context.overlayAnimationContainer().setCurrentAnimationId("hand_swing" + context.overlayAnimationContainer().getCurrentAnimationId());
         context.overlayAnimationContainer().setAnimationFadeTime(0);
         context.overlayAnimationContainer().setAnimationPriority(0);
@@ -61,15 +61,17 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
                 !(CONFIG.toolsAnimations.axeAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem() instanceof AxeItem) &&
                 !(CONFIG.toolsAnimations.pickaxeAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.TOOL)) &&
                 !(CONFIG.toolsAnimations.shovelAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem() instanceof ShovelItem);
-
+        
         // También devolver true si necesitamos reactivar un brazo que estaba previamente deshabilitado
         return isSwinging || wasArmDisabled || needToForceEnableArm;
     }
 
     private static void disableArmBasedOnHand(AnimationContext context, InteractionHand hand) {
-        context.player().disableBodyPartAnimationInAllContainers(hand == context.playerData().getRightHand() ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
+        context.player().disableBodyPartAnimation(context.mainAnimationContainer(), hand == context.playerData().getRightHand() ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
+        context.player().disableBodyPartAnimation(context.overlayAnimationContainer(), hand == context.playerData().getRightHand() ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
+        context.player().disableBodyPartAnimation(context.specialAnimationContainer(), hand == context.playerData().getRightHand() ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
     }
-
+    
     /**
      * Método para forzar la reactivación de una parte del cuerpo específica
      * Esto es necesario porque el método enableAllBodyPartsInAllContainers se llama al inicio del tick
@@ -81,10 +83,10 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
         context.mainAnimationContainer().getDisabledBoneIds().remove(partIdToEnable);
         context.overlayAnimationContainer().getDisabledBoneIds().remove(partIdToEnable);
         context.specialAnimationContainer().getDisabledBoneIds().remove(partIdToEnable);
-
+        
         // Forzar un cambio de animación para asegurar que se actualice el estado del brazo
         forceAnimationChange(context);
-
+        
         // Actualizar los controladores de animación para reflejar los cambios inmediatamente
         // y asegurarse de que la parte del cuerpo esté habilitada incluso después de applyDisables()
         updateAnimationController(context.mainAnimationContainer(), partIdToEnable);
@@ -100,7 +102,7 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
         container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
             // Primero habilitar explícitamente la parte del cuerpo que queremos reactivar
             getBoneFunc.apply(partIdToEnable).setEnabled(true);
-
+            
             // Luego desactivar solo las partes que deben permanecer desactivadas
             for (String boneId : container.getDisabledBoneIds()) {
                 // Verificar que no estamos desactivando la parte que acabamos de habilitar
@@ -110,7 +112,7 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
             }
         });
     }
-
+    
     /**
      * Fuerza un cambio de animación para asegurar que se actualice el estado del brazo
      * Esto ayuda a resolver el problema cuando el brazo queda deshabilitado al dejar de golpear

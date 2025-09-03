@@ -4,7 +4,7 @@
   "version": "${version}",
   "name": "CustomPlayerAnimation",
   "description": "",
-  "authors": [],
+  "authors": ["RazorPlay01"],
   "contact": {},
   "license": "All-Rights-Reserved",
   "icon": "assets/custom_player_animations/CPA.icon.png",

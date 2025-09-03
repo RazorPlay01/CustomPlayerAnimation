@@ -11,10 +11,16 @@ import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
 import com.zigythebird.playeranimcore.math.Vec3f;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.horse.*;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.CustomModelData;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.component.Tool;
+import net.minecraft.world.item.component.Weapon;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.List;
 import java.util.Optional;
@@ -122,5 +128,49 @@ public class Util {
                 new Vec3f(xRot, 0, 0),
                 new Vec3f(0, 0, 0))
         );
+    }
+
+    public static boolean isSword(ItemStack itemStack) {
+        Weapon weapon = itemStack.get(DataComponents.WEAPON);
+        if (weapon != null) {
+            // Opcionalmente, verifica los modificadores de atributos para confirmar que es una espada
+            ItemAttributeModifiers attributes = itemStack.get(DataComponents.ATTRIBUTE_MODIFIERS);
+            if (attributes != null) {
+                for (ItemAttributeModifiers.Entry entry : attributes.modifiers()) {
+                    if (entry.attribute().equals(Attributes.ATTACK_DAMAGE)) {
+                        return true; // Es probable que sea una espada
+                    }
+                }
+            }
+            return true; // Si tiene el componente WEAPON, es una espada u otra arma cuerpo a cuerpo
+        }
+        return false;
+    }
+    public static boolean isShovel(ItemStack itemStack) {
+        Tool tool = itemStack.get(DataComponents.TOOL);
+        if (tool != null) {
+            // Usa un BlockState representativo que pertenezca a BlockTags.MINEABLE_WITH_SHOVEL
+            BlockState dirtState = Blocks.DIRT.defaultBlockState();
+            return tool.isCorrectForDrops(dirtState);
+        }
+        return false;
+    }
+    public static boolean isPickaxe(ItemStack itemStack) {
+        Tool tool = itemStack.get(DataComponents.TOOL);
+        if (tool != null) {
+            // Usa un BlockState representativo que pertenezca a BlockTags.MINEABLE_WITH_PICKAXE
+            BlockState stoneState = Blocks.STONE.defaultBlockState();
+            return tool.isCorrectForDrops(stoneState);
+        }
+        return false;
+    }
+    public static boolean isAxe(ItemStack itemStack) {
+        Tool tool = itemStack.get(DataComponents.TOOL);
+        if (tool != null) {
+            // Usa un BlockState representativo que pertenezca a BlockTags.MINEABLE_WITH_AXE
+            BlockState oakLogState = Blocks.OAK_LOG.defaultBlockState();
+            return tool.isCorrectForDrops(oakLogState);
+        }
+        return false;
     }
 }

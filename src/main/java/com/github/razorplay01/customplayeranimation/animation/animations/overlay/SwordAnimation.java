@@ -6,14 +6,11 @@ import com.github.razorplay01.customplayeranimation.util.interfaces.ICustomAnima
 import com.github.razorplay01.customplayeranimation.util.records.AnimationContext;
 import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TridentItem;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.minecraft.world.item.component.Weapon;
 
 import static com.github.razorplay01.customplayeranimation.CustomPlayerAnimations.*;
+import static com.github.razorplay01.customplayeranimation.util.Util.*;
 import static net.minecraft.world.InteractionHand.MAIN_HAND;
 
 public class SwordAnimation implements ICustomAnimation {
@@ -21,18 +18,46 @@ public class SwordAnimation implements ICustomAnimation {
     private static long lastSwingTick = 0;
     private static final int COMBO_RESET_TICKS = 50;
 
+    // Variable para rastrear si una animación está en progreso
+    private static boolean isAnimationInProgress = false;
+    private static long animationStartTime = 0;
+    private static float animationDuration = 0; // Duración de la animación en ticks (se calculará dinámicamente)
+
     @Override
     public void playAnimation(AnimationContext context) {
         if (!CONFIG.swordAnimations.isEnabled()) {
             context.overlayAnimationContainer().disableAnimation();
+            isAnimationInProgress = false;
         } else {
-            handleSwordComboAnimation(context);
+            // Si el jugador está balanceando el arma o la animación está en progreso
+            if (isPlayerSwingingWeapon(context.player())) {
+                // Iniciar una nueva animación
+                animationStartTime = context.player().level().getGameTime();
+                isAnimationInProgress = true;
+                handleSwordComboAnimation(context);
+
+                // Obtener la duración de la animación actual después de seleccionarla
+                if (context.overlayAnimationContainer().getCurrentAnimation() != null) {
+                    animationDuration = context.overlayAnimationContainer().getCurrentAnimation().length() - 3;
+                }
+            } else if (isAnimationInProgress) {
+                // Continuar la animación si no ha pasado el tiempo mínimo
+                long currentTime = context.player().level().getGameTime();
+                if (currentTime - animationStartTime < animationDuration) {
+                    handleSwordComboAnimation(context);
+                } else {
+                    // La animación ha terminado
+                    isAnimationInProgress = false;
+                }
+            }
         }
     }
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return isPlayerSwingingWeapon(context.player()) && !context.mainAnimationContainer().getCurrentAnimationId().equalsIgnoreCase(AnimationsId.SLEEP_ANIMATION.getAnimationId());
+        // Reproducir la animación si el jugador está balanceando el arma o si una animación está en progreso
+        return (isPlayerSwingingWeapon(context.player()) || isAnimationInProgress) &&
+                !context.mainAnimationContainer().getCurrentAnimationId().equalsIgnoreCase(AnimationsId.SLEEP_ANIMATION.getAnimationId());
     }
 
     private static void handleSwordComboAnimation(AnimationContext context) {
@@ -91,25 +116,10 @@ public class SwordAnimation implements ICustomAnimation {
     }
 
     public static boolean isPlayerSwingingWeapon(AbstractClientPlayer player) {
+        ItemStack itemStack = player.getMainHandItem();
+        if (isAxe(itemStack) || isPickaxe(itemStack) || isShovel(itemStack)) return false;
         return player.swinging &&
-                (isSword(player.getMainHandItem()) || player.getMainHandItem().getItem() instanceof TridentItem) &&
+                (isSword(itemStack) || itemStack.getItem() instanceof TridentItem) &&
                 player.swingingArm.equals(MAIN_HAND);
-    }
-
-    public static boolean isSword(ItemStack itemStack) {
-        Weapon weapon = itemStack.get(DataComponents.WEAPON);
-        if (weapon != null) {
-            // Opcionalmente, verifica los modificadores de atributos para confirmar que es una espada
-            ItemAttributeModifiers attributes = itemStack.get(DataComponents.ATTRIBUTE_MODIFIERS);
-            if (attributes != null) {
-                for (ItemAttributeModifiers.Entry entry : attributes.modifiers()) {
-                    if (entry.attribute().equals(Attributes.ATTACK_DAMAGE)) {
-                        return true; // Es probable que sea una espada
-                    }
-                }
-            }
-            return true; // Si tiene el componente WEAPON, es una espada u otra arma cuerpo a cuerpo
-        }
-        return false;
     }
 }
