@@ -149,7 +149,7 @@
 							"easing": "easeInOutSine"
 						},
 						"0.25": {
-							"vector": [100, 0, 0],
+							"vector": [90, 0, 0],
 							"easing": "easeInOutSine"
 						}
 					},
@@ -163,7 +163,7 @@
 							"easing": "easeInOutSine"
 						},
 						"0.25": {
-							"vector": [0, 3, 0],
+							"vector": [0, 3, 4],
 							"easing": "easeInOutSine"
 						}
 					}

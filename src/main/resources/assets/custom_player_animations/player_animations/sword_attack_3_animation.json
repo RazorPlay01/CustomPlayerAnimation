@@ -167,7 +167,7 @@
 							"easing": "easeInOutSine"
 						},
 						"0.25": {
-							"vector": [0, 3, 0],
+							"vector": [0, 3, 4],
 							"easing": "easeInOutSine"
 						}
 					}
