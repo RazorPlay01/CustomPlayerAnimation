@@ -1,34 +1,34 @@
 {
   "schemaVersion": 1,
-  "id": "customplayeranimation",
+  "id": "cpa",
   "version": "${version}",
   "name": "Custom Player Animations",
-  "description": "",
+  "description": "Improves and customizes the player's default animations.",
   "authors": [
     "RazorPlay01"
   ],
   "contributors": [
-    "JarpPlay",
-    "McVader34",
-    "Kelvin285"
+    "JarpPlay - Animations",
+    "----------------------",
+    "McVader34 - Inspiration and ideas",
+    "Kelvin285 - Inspiration and ideas"
   ],
   "contact": {
-    "homepage": "https://github.com/RazorPlay01",
-    "sources": "https://github.com/RazorPlay01"
+    "homepage": "https://github.com/RazorPlay01"
   },
   "license": "All-Rights-Reserved",
-  "icon": "assets/custom_player_animations/CPA.icon.png",
+  "icon": "assets/cpa/CPA.icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
-      "com.github.razorplay01.customplayeranimation.CustomPlayerAnimations"
+      "com.github.razorplay01.cpa.CustomPlayerAnimations"
     ],
     "modmenu": [
-      "com.github.razorplay01.customplayeranimation.config.ModMenuConfig"
+      "com.github.razorplay01.cpa.config.ModMenuConfig"
     ]
   },
   "mixins": [
-    "customplayeranimation.mixins.json"
+    "cpa.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
@@ -39,8 +39,8 @@
   "custom": {
     "loom:injected_interfaces": {
       "net/minecraft/class_742": [
-        "com/github/razorplay01/customplayeranimation/util/interfaces/IAnimationControl",
-        "com/github/razorplay01/customplayeranimation/util/interfaces/ICustomAnimatedPlayer"
+        "com/github/razorplay01/cpa/util/interfaces/IAnimationControl",
+        "com/github/razorplay01/cpa/util/interfaces/ICustomAnimatedPlayer"
       ]
     }
   }

@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.github.razorplay01.cpa.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "InventoryAccessor"
+  ],
+  "client": [
+    "AbstractClientPlayerEntityMixin",
+    "ItemInHandLayerMixin",
+    "LivingEntityRendererMixin",
+    "PlayerEntityRendererMixin",
+    "PlayerRendererAccesor",
+    "PlayerRenderStateMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
