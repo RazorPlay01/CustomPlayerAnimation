@@ -25,7 +25,7 @@ public class AxeAnimation implements ICustomAnimation {
             context.overlayAnimationContainer().disableAnimation();
             isAnimationInProgress = false;
         } else {
-            // Si el jugador está balanceando el hacha o la animación está en progreso
+            // Si el jugador está usando el hacha o la animación está en progreso
             if (context.player().swinging &&
                     isAxe(context.player().getMainHandItem()) &&
                     context.player().getMainHandItem().getItem() instanceof AxeItem &&

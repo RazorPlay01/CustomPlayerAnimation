@@ -2,18 +2,25 @@
   "schemaVersion": 1,
   "id": "customplayeranimation",
   "version": "${version}",
-  "name": "CustomPlayerAnimation",
+  "name": "Custom Player Animations",
   "description": "",
-  "authors": ["RazorPlay01"],
-  "contact": {},
+  "authors": [
+    "RazorPlay01"
+  ],
+  "contributors": [
+    "JarpPlay",
+    "McVader34",
+    "Kelvin285"
+  ],
+  "contact": {
+    "homepage": "https://github.com/RazorPlay01",
+    "sources": "https://github.com/RazorPlay01"
+  },
   "license": "All-Rights-Reserved",
   "icon": "assets/custom_player_animations/CPA.icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
-      "com.github.razorplay01.customplayeranimation.CustomPlayerAnimations"
-    ],
-    "main": [
       "com.github.razorplay01.customplayeranimation.CustomPlayerAnimations"
     ],
     "modmenu": [

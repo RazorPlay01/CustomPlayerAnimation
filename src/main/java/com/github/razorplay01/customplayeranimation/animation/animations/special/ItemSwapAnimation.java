@@ -4,27 +4,41 @@ import com.github.razorplay01.customplayeranimation.util.enums.AnimationsId;
 import com.github.razorplay01.customplayeranimation.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.customplayeranimation.util.records.AnimationContext;
 
+import net.minecraft.world.item.ItemStack;
+
 import static com.github.razorplay01.customplayeranimation.CustomPlayerAnimations.CONFIG;
 import static com.github.razorplay01.customplayeranimation.CustomPlayerAnimations.getAnimation;
 
 public class ItemSwapAnimation implements ICustomAnimation {
     public void playAnimation(AnimationContext context) {
-        if ((!context.player().getMainHandItem().isEmpty() || !context.player().getOffhandItem().isEmpty())
-                && context.playerData().getMainHandItem().getItem() != context.playerData().getOffHandItem().getItem()
-                && context.playerData().getMainHandItem().getItem() == context.player().getOffhandItem().getItem()
-                && context.playerData().getOffHandItem().getItem() == context.player().getMainHandItem().getItem()) {
+        boolean configEnabled = CONFIG.specialAnimations.itemSwapAnimationConfig.isEnabled();
+        ItemStack currentMain = context.player().getMainHandItem();
+        ItemStack currentOff = context.player().getOffhandItem();
+        ItemStack prevMain = context.playerData().getMainHandItem();
+        ItemStack prevOff = context.playerData().getOffHandItem();
+        boolean swapHappened = (!currentMain.isEmpty() || !currentOff.isEmpty())
+                && prevMain.getItem() != prevOff.getItem()
+                && prevMain.getItem() == currentOff.getItem()
+                && prevOff.getItem() == currentMain.getItem();
+        if (configEnabled && swapHappened) {
             context.specialAnimationContainer().setAnimationSpeed(CONFIG.specialAnimations.itemSwapAnimationConfig.getSpeedMultiplier());
             context.specialAnimationContainer().setAnimationFadeTime(CONFIG.specialAnimations.itemSwapAnimationConfig.getFadeTime());
             context.specialAnimationContainer().setAnimationPriority(CONFIG.specialAnimations.itemSwapAnimationConfig.getPriority());
             context.specialAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.ITEM_SWAP_ANIMATION.getAnimationId()));
             context.specialAnimationContainer().setCurrentAnimationId(AnimationsId.ITEM_SWAP_ANIMATION.getAnimationId());
+        } else if (!configEnabled) {
+            // Solo deshabilita si está deshabilitado en config y es la animación actual (raro para one-shot)
+            if (context.specialAnimationContainer().getCurrentAnimationId().equals(AnimationsId.ITEM_SWAP_ANIMATION.getAnimationId())) {
+                context.specialAnimationContainer().disableAnimation();
+            }
         }
-        context.playerData().setMainHandItem(context.player().getMainHandItem());
-        context.playerData().setOffHandItem(context.player().getOffhandItem());
+        // No deshabilita si no hay swap pero config enabled: deja que termine si está reproduciéndose
+        context.playerData().setMainHandItem(currentMain);
+        context.playerData().setOffHandItem(currentOff);
     }
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return true;
+        return true;  // Similar a uphand, lógica en play para deshabilitar si necesario.
     }
 }

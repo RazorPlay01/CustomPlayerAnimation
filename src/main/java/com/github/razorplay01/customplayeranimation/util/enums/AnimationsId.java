@@ -9,7 +9,6 @@ public enum AnimationsId {
     //Base Animation
     BLANK_LOOP_ANIMATION("blank_loop_animation"),
     //Main Animations
-    WALK_START_ANIMATION("walk_start_animation"),
     WALK_ANIMATION("walking_animation"),
     WALK_BACKWARDS_ANIMATION("walking_backwards_animation"),
     WALK_SNEAK_ANIMATION("walking_sneak_animation"),

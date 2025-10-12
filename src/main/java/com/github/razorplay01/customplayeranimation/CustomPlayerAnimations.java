@@ -11,23 +11,18 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.api.ModInitializer;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CustomPlayerAnimations implements ModInitializer, ClientModInitializer {
+public class CustomPlayerAnimations implements ClientModInitializer {
     public static final String MOD_ID = "custom_player_animations";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     public static ClientConfig CONFIG;
-    public static final ResourceLocation MAIN_ANIMATION_CONTAINER_LAYER_ID = ResourceLocation.fromNamespaceAndPath(MOD_ID, "main_animation_container");
-    public static final ResourceLocation OVERLAY_ANIMATION_CONTAINER_LAYER_ID = ResourceLocation.fromNamespaceAndPath(MOD_ID, "overlay_animation_container");
-    public static final ResourceLocation SPECIAL_ANIMATION_CONTAINER_LAYER_ID = ResourceLocation.fromNamespaceAndPath(MOD_ID, "special_animation_container");
+    public static final ResourceLocation MAIN_ANIMATION_CONTAINER_LAYER_ID = of("main_animation_container");
+    public static final ResourceLocation OVERLAY_ANIMATION_CONTAINER_LAYER_ID = of("overlay_animation_container");
+    public static final ResourceLocation SPECIAL_ANIMATION_CONTAINER_LAYER_ID = of("special_animation_container");
 
-    @Override
-    public void onInitialize() {
-        // []
-    }
 
     @Override
     public void onInitializeClient() {
@@ -54,6 +49,10 @@ public class CustomPlayerAnimations implements ModInitializer, ClientModInitiali
     }
 
     public static Animation getAnimation(String animationId) {
-        return PlayerAnimResources.getAnimation(ResourceLocation.fromNamespaceAndPath(CustomPlayerAnimations.MOD_ID, animationId));
+        return PlayerAnimResources.getAnimation(of(animationId));
+    }
+
+    public static ResourceLocation of(String path) {
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
     }
 }

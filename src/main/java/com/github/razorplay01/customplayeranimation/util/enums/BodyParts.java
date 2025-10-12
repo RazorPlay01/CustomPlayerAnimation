@@ -3,7 +3,6 @@ package com.github.razorplay01.customplayeranimation.util.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@Getter
 @AllArgsConstructor
 public enum BodyParts {
     BODY("body"),
@@ -18,5 +17,6 @@ public enum BodyParts {
     ELYTRA("elytra"),
     CAPE("cape");
 
+    @Getter
     private final String partId;
 }

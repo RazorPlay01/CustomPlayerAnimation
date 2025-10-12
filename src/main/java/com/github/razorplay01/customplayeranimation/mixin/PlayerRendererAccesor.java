@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(PlayerRenderer.class)
 public interface PlayerRendererAccesor {
     @Invoker("getArmPose")
-    public static HumanoidModel.ArmPose getArmPose(AbstractClientPlayer abstractClientPlayer, HumanoidArm humanoidArm) {
+    static HumanoidModel.ArmPose getArmPose(AbstractClientPlayer abstractClientPlayer, HumanoidArm humanoidArm) {
         throw new AssertionError();
     }
 }

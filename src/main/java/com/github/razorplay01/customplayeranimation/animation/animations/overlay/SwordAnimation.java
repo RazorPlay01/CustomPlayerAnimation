@@ -14,14 +14,14 @@ import static com.github.razorplay01.customplayeranimation.util.Util.*;
 import static net.minecraft.world.InteractionHand.MAIN_HAND;
 
 public class SwordAnimation implements ICustomAnimation {
-    private static int currentComboCount = 0;
-    private static long lastSwingTick = 0;
-    private static final int COMBO_RESET_TICKS = 50;
+    private int currentComboCount = 0;
+    private long lastSwingTick = 0;
+    private final int COMBO_RESET_TICKS = 50;
 
     // Variable para rastrear si una animación está en progreso
-    private static boolean isAnimationInProgress = false;
-    private static long animationStartTime = 0;
-    private static float animationDuration = 0; // Duración de la animación en ticks (se calculará dinámicamente)
+    private boolean isAnimationInProgress = false;
+    private long animationStartTime = 0;
+    private float animationDuration = 0; // Duración de la animación en ticks (se calculará dinámicamente)
 
     @Override
     public void playAnimation(AnimationContext context) {
@@ -38,7 +38,7 @@ public class SwordAnimation implements ICustomAnimation {
 
                 // Obtener la duración de la animación actual después de seleccionarla
                 if (context.overlayAnimationContainer().getCurrentAnimation() != null) {
-                    animationDuration = context.overlayAnimationContainer().getCurrentAnimation().length() - 3;
+                    animationDuration = context.overlayAnimationContainer().getCurrentAnimation().length() - 5;
                 }
             } else if (isAnimationInProgress) {
                 // Continuar la animación si no ha pasado el tiempo mínimo
@@ -60,7 +60,7 @@ public class SwordAnimation implements ICustomAnimation {
                 !context.mainAnimationContainer().getCurrentAnimationId().equalsIgnoreCase(AnimationsId.SLEEP_ANIMATION.getAnimationId());
     }
 
-    private static void handleSwordComboAnimation(AnimationContext context) {
+    private void handleSwordComboAnimation(AnimationContext context) {
         long currentTick = context.player().level().getGameTime();
         if (currentTick - lastSwingTick > COMBO_RESET_TICKS) {
             currentComboCount = 0;
@@ -96,7 +96,7 @@ public class SwordAnimation implements ICustomAnimation {
         }
     }
 
-    private static void selectComboAnimation(AnimationContext context) {
+    private void selectComboAnimation(AnimationContext context) {
         boolean isSneaking = context.player().isCrouching();
 
         switch (currentComboCount) {

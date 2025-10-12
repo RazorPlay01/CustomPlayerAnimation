@@ -43,6 +43,8 @@ public class PlayerData {
     private ItemStack mainHandItem = ItemStack.EMPTY;
     private ItemStack offHandItem = ItemStack.EMPTY;
     private int movementTicks;
+    private boolean prevMainHandUp = false;
+    private boolean prevOffHandUp = false;
 
     public void update(AbstractClientPlayer player) {
         if (player == null) return;
@@ -103,5 +105,13 @@ public class PlayerData {
         } else if (Math.abs(flyVectorY) > 0.375 || player.onGround()) {
             setFlychecker(0);
         }
+    }
+
+    public boolean getPrevMainHandUp() {
+        return prevMainHandUp;
+    }
+
+    public boolean getPrevOffHandUp() {
+        return prevOffHandUp;
     }
 }

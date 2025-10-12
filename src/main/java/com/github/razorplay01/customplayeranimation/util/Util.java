@@ -101,7 +101,7 @@ public class Util {
                 offsetY += offset * 0.5f;
                 offsetZ -= offset;
             }
-        } else if (partName.equals("rightArm") || partName.equals("leftArm")) {
+        } else if (partName.equals("right_arm") || partName.equals("left_arm")) {
             xRot = pitchRadians;
         } else {
             return Optional.empty();
@@ -117,8 +117,7 @@ public class Util {
         float xRot = 0;
 
         switch (partName) {
-            case "rightArm", "leftArm" -> xRot += pitchRadians * 0.25F;
-            case "body", "rightLeg", "leftLeg" -> xRot -= pitchRadians * 0.50F;
+            case "right_arm", "left_arm" -> xRot += pitchRadians * 0.5F;
             default -> {
                 return Optional.empty();
             }
@@ -146,6 +145,7 @@ public class Util {
         }
         return false;
     }
+
     public static boolean isShovel(ItemStack itemStack) {
         Tool tool = itemStack.get(DataComponents.TOOL);
         if (tool != null) {
@@ -155,6 +155,7 @@ public class Util {
         }
         return false;
     }
+
     public static boolean isPickaxe(ItemStack itemStack) {
         Tool tool = itemStack.get(DataComponents.TOOL);
         if (tool != null) {
@@ -164,6 +165,7 @@ public class Util {
         }
         return false;
     }
+
     public static boolean isAxe(ItemStack itemStack) {
         Tool tool = itemStack.get(DataComponents.TOOL);
         if (tool != null) {

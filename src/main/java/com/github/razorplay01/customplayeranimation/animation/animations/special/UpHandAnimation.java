@@ -23,27 +23,26 @@ public class UpHandAnimation implements ICustomAnimation {
             Items.TORCH, Items.SOUL_TORCH, Items.REDSTONE_TORCH,
             Items.FILLED_MAP, Items.RECOVERY_COMPASS, Items.COMPASS
     );
-    private static boolean lastMainHandState = false;
-    private static boolean lastOffHandState = false;
 
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.specialAnimations.upHandAnimationConfig.isEnabled()) {
-            context.specialAnimationContainer().disableAnimation();
+        HandStates handStates = determineHandStates(context.player());
+        handleHandStateChange(handStates, context.mainAnimationContainer(), context);
+        boolean configEnabled = CONFIG.specialAnimations.upHandAnimationConfig.isEnabled();
+        boolean shouldPlay = configEnabled && shouldPlayHandAnimation(handStates, context);
+        if (shouldPlay) {
+            playHandAnimations(handStates, context);
         } else {
-            HandStates handStates = determineHandStates(context.player());
-            handleHandStateChange(handStates, context.mainAnimationContainer());
-            if (shouldPlayHandAnimation(handStates, context)) {
-                playHandAnimations(handStates, context);
-            } else {
+            String currId = context.specialAnimationContainer().getCurrentAnimationId();
+            if (currId.contains(AnimationsId.UP_HAND_ANIMATION.getAnimationId())) {
                 context.specialAnimationContainer().disableAnimation();
             }
-            updateLastHandStates(handStates);
         }
+        updateLastHandStates(handStates, context);
     }
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return true;
+        return true;  // Siempre considera, la lógica de config está en playAnimation para poder deshabilitar si es necesario.
     }
 
     private static HandStates determineHandStates(AbstractClientPlayer player) {
@@ -53,8 +52,10 @@ public class UpHandAnimation implements ICustomAnimation {
         );
     }
 
-    private static void handleHandStateChange(HandStates currentStates, AnimationContainer mainContainer) {
-        if (currentStates.hasChanged(lastMainHandState, lastOffHandState)) {
+    private static void handleHandStateChange(HandStates currentStates, AnimationContainer mainContainer, AnimationContext context) {
+        boolean prevMain = context.playerData().getPrevMainHandUp();
+        boolean prevOff = context.playerData().getPrevOffHandUp();
+        if (currentStates.hasChanged(prevMain, prevOff)) {
             mainContainer.disableAnimation();
         }
     }
@@ -82,9 +83,9 @@ public class UpHandAnimation implements ICustomAnimation {
         return arm == HumanoidArm.RIGHT ? HumanoidArm.LEFT : HumanoidArm.RIGHT;
     }
 
-    private static void updateLastHandStates(HandStates states) {
-        lastMainHandState = states.isMainHandUp;
-        lastOffHandState = states.isOffHandUp;
+    private static void updateLastHandStates(HandStates states, AnimationContext context) {
+        context.playerData().setPrevMainHandUp(states.isMainHandUp);
+        context.playerData().setPrevOffHandUp(states.isOffHandUp);
     }
 
     private static void setUpHandAnimation(AnimationContext context, HumanoidArm arm) {
