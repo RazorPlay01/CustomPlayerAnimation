@@ -12,10 +12,10 @@ import static com.github.razorplay01.customplayeranimation.util.Util.isHorse;
 public class HorseRunningAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.mountAnimations.horseAnimationsConfig.horseRunningAnimationConfig.isEnabled()) {
+        if (!CONFIG.getMainAnimations().mountAnimations.horseAnimations.horseRunningAnimationConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
         } else {
-            configureAnimationContainer(CONFIG.mountAnimations.horseAnimationsConfig.horseRunningAnimationConfig, context.mainAnimationContainer());
+            configureAnimationContainer(CONFIG.getMainAnimations().mountAnimations.horseAnimations.horseRunningAnimationConfig, context.mainAnimationContainer());
 
             context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.HORSE_RUN_ANIMATION.getAnimationId()));
             context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.HORSE_RUN_ANIMATION.getAnimationId());

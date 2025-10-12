@@ -1,200 +1,302 @@
 {
   "text.autoconfig.custom_player_animations.title": "Custom Player Animations",
 
-  "text.autoconfig.custom_player_animations.option.client.isCustomFirstPersonEnable": "Custom First Person Mode",
-  "text.autoconfig.custom_player_animations.option.client.isCustomFirstPersonEnable.@Tooltip": "Change the first person mode. Set no for vanilla mode",
-  "text.autoconfig.custom_player_animations.option.client.animationsThatShowBothHand": "Show both hands",
-  "text.autoconfig.custom_player_animations.option.client.animationsThatShowBothHand.@Tooltip": "List of animations showing both hands when Custom First Person Mode is enabled",
-  "text.autoconfig.custom_player_animations.option.client.animationSpeedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.animationSpeedMultiplier.@Tooltip": "Changes the animation speed multiplier for all animations",
-  "text.autoconfig.custom_player_animations.option.client.upHandDisableAnimationIds": "Disable UpHandAnimation",
-  "text.autoconfig.custom_player_animations.option.client.upHandDisableAnimationIds.@Tooltip": "List of animations that have priority over UpHandAnimation",
-
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations": "Move Animations",
-
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.animationMoveSpeedMultiplier": "Animation Move Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.animationMoveSpeedMultiplier.@Tooltip": "Changes the speed multiplier of animations involving movement. Example: Walk, Run, etc...",
-
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.walkingAnimationConfig": "Walk Animation",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.walkingAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.walkingAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.walkingAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.walkingAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.walkingBackwardsAnimationConfig": "Walk Backwards Animation",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.walkingBackwardsAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.walkingBackwardsAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.walkingBackwardsAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.walkingBackwardsAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.walkingSneakAnimationConfig": "Walk Sneak Animation",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.walkingSneakAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.walkingSneakAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.walkingSneakAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.walkingSneakAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.walkingSneakBackwardsAnimationConfig": "Walk Sneak Backwards Animation",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.walkingSneakBackwardsAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.walkingSneakBackwardsAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.walkingSneakBackwardsAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.walkingSneakBackwardsAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.runningAnimationConfig": "Run Animation",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.runningAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.runningAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.runningAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.runningAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.onFenceWalkAnimationConfig": "On Fence Walk Animation",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.onFenceWalkAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.onFenceWalkAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.onFenceWalkAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.moveAnimations.onFenceWalkAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations": "Idle Animations",
-
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.idleStandingAnimationConfig": "Idle Standing Animation",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.idleStandingAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.idleStandingAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.idleStandingAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.idleStandingAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.idleSneakAnimationConfig": "Idle Sneak Animation",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.idleSneakAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.idleSneakAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.idleSneakAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.idleSneakAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.idleCreativeFlyingAnimationConfig": "Idle Creative Flying Animation",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.idleCreativeFlyingAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.idleCreativeFlyingAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.idleCreativeFlyingAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.idleCreativeFlyingAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.onFenceAnimationConfig": "On Fence Animation",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.onFenceAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.onFenceAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.onFenceAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.onFenceAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.onEdgeAnimationConfig": "On Edge Animation",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.onEdgeAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.onEdgeAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.onEdgeAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.onEdgeAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.turnAnimations": "Turn Animations",
-
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.turnAnimations.turningStandingAnimationConfig": "Turn Standing Animation",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.turnAnimations.turningStandingAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.turnAnimations.turningStandingAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.turnAnimations.turningStandingAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.turnAnimations.turningStandingAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.turnAnimations.turningSneakAnimationConfig": "Turn Sneak Animation",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.turnAnimations.turningSneakAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.turnAnimations.turningSneakAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.turnAnimations.turningSneakAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.idleAnimations.turnAnimations.turningSneakAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig": "In Water Animations",
-
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterUpAnimationConfig": "In Water Up Animation",
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterUpAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterUpAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterUpAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterUpAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterSwimAnimationConfig": "In Water Swim Animation",
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterSwimAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterSwimAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterSwimAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterSwimAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterForwardAnimationConfig": "In Water Forward Animation",
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterForwardAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterForwardAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterForwardAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterForwardAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterBackwardsAnimationConfig": "In Water Backwards Animation",
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterBackwardsAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterBackwardsAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterBackwardsAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterBackwardsAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterIdleAnimationConfig": "In Water Idle Animation",
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterIdleAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterIdleAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterIdleAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.inWaterAnimationsConfig.inWaterIdleAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation": "Use Item Animation",
-
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation.bowAnimationsConfig": "Bow Animation",
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation.bowAnimationsConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation.bowAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation.bowAnimationsConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation.bowAnimationsConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation.eatingAnimationsConfig": "Eat Animation",
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation.eatingAnimationsConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation.eatingAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation.eatingAnimationsConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation.eatingAnimationsConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation.shieldAnimationConfig": "Shield Animation",
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation.shieldAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation.shieldAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation.shieldAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation.shieldAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation.tridentAnimationConfig": "Trident Animation",
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation.tridentAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation.tridentAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation.tridentAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.useItemAnimation.tridentAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.swordAnimations": "Sword Animations",
-  "text.autoconfig.custom_player_animations.option.client.swordAnimations.isEnabled": "Is Enabled",
-
-  "text.autoconfig.custom_player_animations.option.client.swordAnimations.swordAttack1AnimationConfig": "Sword Attack Animation 1",
-  "text.autoconfig.custom_player_animations.option.client.swordAnimations.swordAttack1AnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.swordAnimations.swordAttack1AnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.swordAnimations.swordAttack1AnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.swordAnimations.swordAttack2AnimationConfig": "Sword Attack Animation 2",
-  "text.autoconfig.custom_player_animations.option.client.swordAnimations.swordAttack2AnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.swordAnimations.swordAttack2AnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.swordAnimations.swordAttack2AnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.swordAnimations.swordAttack3AnimationConfig": "Sword Attack Animation 3",
-  "text.autoconfig.custom_player_animations.option.client.swordAnimations.swordAttack3AnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.swordAnimations.swordAttack3AnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.swordAnimations.swordAttack3AnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.toolsAnimations": "Tools Animations",
-
-  "text.autoconfig.custom_player_animations.option.client.toolsAnimations.pickaxeAnimationsConfig": "Pickaxe Animation",
-  "text.autoconfig.custom_player_animations.option.client.toolsAnimations.pickaxeAnimationsConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.toolsAnimations.pickaxeAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.toolsAnimations.pickaxeAnimationsConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.toolsAnimations.pickaxeAnimationsConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.toolsAnimations.axeAnimationsConfig": "Axe Animation",
-  "text.autoconfig.custom_player_animations.option.client.toolsAnimations.axeAnimationsConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.toolsAnimations.axeAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.toolsAnimations.axeAnimationsConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.toolsAnimations.axeAnimationsConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.toolsAnimations.shovelAnimationsConfig": "Shovel Animation",
-  "text.autoconfig.custom_player_animations.option.client.toolsAnimations.shovelAnimationsConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.toolsAnimations.shovelAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.toolsAnimations.shovelAnimationsConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.toolsAnimations.shovelAnimationsConfig.priority": "Animation Priority",
-
-
+  "text.autoconfig.custom_player_animations.option.client.general": "General Settings",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations": "Main Animations",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations": "Overlay Animations",
   "text.autoconfig.custom_player_animations.option.client.specialAnimations": "Special Animations",
+
+  "text.autoconfig.custom_player_animations.option.client.general.animationSpeedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.general.animationSpeedMultiplier.@Tooltip": "Changes the animation speed multiplier for all animations",
+  "text.autoconfig.custom_player_animations.option.client.general.upHandDisableAnimationIds": "Disable UpHandAnimation",
+  "text.autoconfig.custom_player_animations.option.client.general.upHandDisableAnimationIds.@Tooltip": "List of animations that have priority over UpHandAnimation",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations": "Idle Animations",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations": "Turn Animations",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations.turningStandingAnimationConfig": "Turn Standing Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations.turningStandingAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations.turningStandingAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations.turningStandingAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations.turningStandingAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations.turningSneakAnimationConfig": "Turn Sneak Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations.turningSneakAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations.turningSneakAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations.turningSneakAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations.turningSneakAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleStandingAnimationConfig": "Idle Standing Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleStandingAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleStandingAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleStandingAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleStandingAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleSneakAnimationConfig": "Idle Sneak Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleSneakAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleSneakAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleSneakAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleSneakAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleCreativeFlyingAnimationConfig": "Idle Creative Flying Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleCreativeFlyingAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleCreativeFlyingAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleCreativeFlyingAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleCreativeFlyingAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.onFenceAnimationConfig": "On Fence Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.onFenceAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.onFenceAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.onFenceAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.onFenceAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.onEdgeAnimationConfig": "On Edge Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.onEdgeAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.onEdgeAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.onEdgeAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.onEdgeAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations": "Move Animations",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.animationMoveSpeedMultiplier": "Animation Move Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.animationMoveSpeedMultiplier.@Tooltip": "Changes the speed multiplier of animations involving movement. Example: Walk, Run, etc...",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingAnimationConfig": "Walk Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingBackwardsAnimationConfig": "Walk Backwards Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingBackwardsAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingBackwardsAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingBackwardsAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingBackwardsAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingSneakAnimationConfig": "Walk Sneak Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingSneakAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingSneakAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingSneakAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingSneakAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingSneakBackwardsAnimationConfig": "Walk Sneak Backwards Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingSneakBackwardsAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingSneakBackwardsAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingSneakBackwardsAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingSneakBackwardsAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.runningAnimationConfig": "Run Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.runningAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.runningAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.runningAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.runningAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.onFenceWalkAnimationConfig": "On Fence Walk Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.onFenceWalkAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.onFenceWalkAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.onFenceWalkAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.onFenceWalkAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations": "In Water Animations",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterUpAnimationConfig": "In Water Up Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterUpAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterUpAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterUpAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterUpAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterSwimAnimationConfig": "In Water Swim Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterSwimAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterSwimAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterSwimAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterSwimAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterForwardAnimationConfig": "In Water Forward Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterForwardAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterForwardAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterForwardAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterForwardAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterBackwardsAnimationConfig": "In Water Backwards Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterBackwardsAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterBackwardsAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterBackwardsAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterBackwardsAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterIdleAnimationConfig": "In Water Idle Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterIdleAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterIdleAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterIdleAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterIdleAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations": "Mount Animations",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations": "Horse Animations",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseIdleAnimationConfig": "Horse Idle Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseIdleAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseIdleAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseIdleAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseIdleAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningAnimationConfig": "Horse Run Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningBackwardsAnimationConfig": "Horse Run Backwards Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningBackwardsAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningBackwardsAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningBackwardsAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningBackwardsAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations": "Boat Animations",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatTurnAnimationConfig": "Boat Turn Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatTurnAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatTurnAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatTurnAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatTurnAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatForwardAnimationConfig": "Boat Forward Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatForwardAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatForwardAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatForwardAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatForwardAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatIdleAnimationConfig": "Boat Idle Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatIdleAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatIdleAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatIdleAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatIdleAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.minecartAnimationsConfig": "Minecart Animations",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.minecartAnimationsConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.minecartAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.minecartAnimationsConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.minecartAnimationsConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations": "Extra Animations",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.fallingAnimationConfig": "Falling Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.fallingAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.fallingAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.fallingAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.fallingAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.climbingAnimationsConfig": "Climbing Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.climbingAnimationsConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.climbingAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.climbingAnimationsConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.climbingAnimationsConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.crawlingAnimationsConfig": "Crawling Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.crawlingAnimationsConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.crawlingAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.crawlingAnimationsConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.crawlingAnimationsConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig": "Elytra Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig": "Sleep Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations": "Death Animations",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.speedMultiplier": "Default Death Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.fadeTime": "Default Death Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.priority": "Default Death Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathBurnAnimationConfig": "Burn Death Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathBurnAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathBurnAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathBurnAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathBurnAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathExplosionAnimationConfig": "Explosion Death Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathExplosionAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathExplosionAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathExplosionAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathExplosionAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathDrownAnimationConfig": "Drown Death Animation",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathDrownAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathDrownAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathDrownAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathDrownAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation": "Use Item Animations",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.bowAnimationsConfig": "Bow Animation",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.bowAnimationsConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.bowAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.bowAnimationsConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.bowAnimationsConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.eatingAnimationsConfig": "Eating Animation",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.eatingAnimationsConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.eatingAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.eatingAnimationsConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.eatingAnimationsConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.shieldAnimationConfig": "Shield Animation",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.shieldAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.shieldAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.shieldAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.shieldAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.tridentAnimationConfig": "Trident Animation",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.tridentAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.tridentAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.tridentAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.tridentAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations": "Sword Animations",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.isEnabled": "Is Enabled",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack1AnimationConfig": "Sword Attack 1 Animation",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack1AnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack1AnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack1AnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack2AnimationConfig": "Sword Attack 2 Animation",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack2AnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack2AnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack2AnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack3AnimationConfig": "Sword Attack 3 Animation",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack3AnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack3AnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack3AnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations": "Tools Animations",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.pickaxeAnimationsConfig": "Pickaxe Animation",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.pickaxeAnimationsConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.pickaxeAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.pickaxeAnimationsConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.pickaxeAnimationsConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.axeAnimationsConfig": "Axe Animation",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.axeAnimationsConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.axeAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.axeAnimationsConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.axeAnimationsConfig.priority": "Animation Priority",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.shovelAnimationsConfig": "Shovel Animation",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.shovelAnimationsConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.shovelAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.shovelAnimationsConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.shovelAnimationsConfig.priority": "Animation Priority",
 
   "text.autoconfig.custom_player_animations.option.client.specialAnimations.upHandAnimationConfig": "Up Hand Animation",
   "text.autoconfig.custom_player_animations.option.client.specialAnimations.upHandAnimationConfig.isEnabled": "Is Enabled",
@@ -206,107 +308,5 @@
   "text.autoconfig.custom_player_animations.option.client.specialAnimations.itemSwapAnimationConfig.isEnabled": "Is Enabled",
   "text.autoconfig.custom_player_animations.option.client.specialAnimations.itemSwapAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
   "text.autoconfig.custom_player_animations.option.client.specialAnimations.itemSwapAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.specialAnimations.itemSwapAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations": "Extra Animations",
-
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.fallingAnimationConfig": "Fall Animation",
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.fallingAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.fallingAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.fallingAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.fallingAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.climbingAnimationsConfig": "Climb Animation",
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.climbingAnimationsConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.climbingAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.climbingAnimationsConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.climbingAnimationsConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.crawlingAnimationsConfig": "Crawl Animation",
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.crawlingAnimationsConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.crawlingAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.crawlingAnimationsConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.crawlingAnimationsConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.elytraAnimationsConfig": "Elytra Animation",
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.elytraAnimationsConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.elytraAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.elytraAnimationsConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.elytraAnimationsConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.sleepingAnimationsConfig": "Sleep Animation",
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.sleepingAnimationsConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.sleepingAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.sleepingAnimationsConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.extraAnimations.sleepingAnimationsConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations": "Mount Animations",
-
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.horseAnimationsConfig": "Horse Animations",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.horseAnimationsConfig.horseIdleAnimationConfig": "Horse Idle Animation",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.horseAnimationsConfig.horseIdleAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.horseAnimationsConfig.horseIdleAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.horseAnimationsConfig.horseIdleAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.horseAnimationsConfig.horseIdleAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.horseAnimationsConfig.horseRunningAnimationConfig": "Horse Run Animation",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.horseAnimationsConfig.horseRunningAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.horseAnimationsConfig.horseRunningAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.horseAnimationsConfig.horseRunningAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.horseAnimationsConfig.horseRunningAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.horseAnimationsConfig.horseRunningBackwardsAnimationConfig": "Horse Run Backwards Animation",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.horseAnimationsConfig.horseRunningBackwardsAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.horseAnimationsConfig.horseRunningBackwardsAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.horseAnimationsConfig.horseRunningBackwardsAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.horseAnimationsConfig.horseRunningBackwardsAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.boatAnimations": "Boat Animations",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.boatAnimations.boatTurnAnimationConfig": "Boat Turn Animation",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.boatAnimations.boatTurnAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.boatAnimations.boatTurnAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.boatAnimations.boatTurnAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.boatAnimations.boatTurnAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.boatAnimations.boatForwardAnimationConfig": "Boat Forward Animation",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.boatAnimations.boatForwardAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.boatAnimations.boatForwardAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.boatAnimations.boatForwardAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.boatAnimations.boatForwardAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.boatAnimations.boatIdleAnimationConfig": "Boat Idle Animation",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.boatAnimations.boatIdleAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.boatAnimations.boatIdleAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.boatAnimations.boatIdleAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.boatAnimations.boatIdleAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.minecartAnimationsConfig": "Minecart Animations",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.minecartAnimationsConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.minecartAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.minecartAnimationsConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.mountAnimations.minecartAnimationsConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.deathAnimations": "Death Animations",
-  "text.autoconfig.custom_player_animations.option.client.deathAnimations.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.deathAnimations.speedMultiplier": "Default Death Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.deathAnimations.fadeTime": "Default Death Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.deathAnimations.priority": "Default Death Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathBurnAnimationConfig": "Burn Death Animation",
-  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathBurnAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathBurnAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathBurnAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathBurnAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathExplosionAnimationConfig": "Explosion Death Animation",
-  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathExplosionAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathExplosionAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathExplosionAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathExplosionAnimationConfig.priority": "Animation Priority",
-
-  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathDrownAnimationConfig": "Drown Death Animation",
-  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathDrownAnimationConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathDrownAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathDrownAnimationConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.custom_player_animations.option.client.deathAnimations.deathDrownAnimationConfig.priority": "Animation Priority"
+  "text.autoconfig.custom_player_animations.option.client.specialAnimations.itemSwapAnimationConfig.priority": "Animation Priority"
 }

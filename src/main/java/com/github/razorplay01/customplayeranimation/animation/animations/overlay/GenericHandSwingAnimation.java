@@ -57,10 +57,10 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
     public boolean shouldPlayAnimation(AnimationContext context) {
         // Siempre verificar para manejar la reactivación del brazo incluso cuando ya no está golpeando
         boolean isSwinging = context.player().swinging &&
-                !(CONFIG.swordAnimations.isEnabled() && context.player().getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.WEAPON) || context.player().getMainHandItem().getItem() instanceof TridentItem) &&
-                !(CONFIG.toolsAnimations.axeAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem() instanceof AxeItem) &&
-                !(CONFIG.toolsAnimations.pickaxeAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.TOOL)) &&
-                !(CONFIG.toolsAnimations.shovelAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem() instanceof ShovelItem);
+                !(CONFIG.getOverlayAnimations().swordAnimations.isEnabled() && context.player().getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.WEAPON) || context.player().getMainHandItem().getItem() instanceof TridentItem) &&
+                !(CONFIG.getOverlayAnimations().toolsAnimations.axeAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem() instanceof AxeItem) &&
+                !(CONFIG.getOverlayAnimations().toolsAnimations.pickaxeAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.TOOL)) &&
+                !(CONFIG.getOverlayAnimations().toolsAnimations.shovelAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem() instanceof ShovelItem);
         
         // También devolver true si necesitamos reactivar un brazo que estaba previamente deshabilitado
         return isSwinging || wasArmDisabled || needToForceEnableArm;

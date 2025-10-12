@@ -10,12 +10,12 @@ import static com.github.razorplay01.customplayeranimation.CustomPlayerAnimation
 public class WalkAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.moveAnimations.walkingAnimationConfig.isEnabled()) {
+        if (!CONFIG.getMainAnimations().moveAnimations.walkingAnimationConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
         } else {
-            context.mainAnimationContainer().setAnimationSpeed((float) (context.playerData().getMovementSpeed() * CONFIG.moveAnimations.getAnimationMoveSpeedMultiplier() * CONFIG.moveAnimations.walkingAnimationConfig.getSpeedMultiplier()));
-            context.mainAnimationContainer().setAnimationFadeTime(CONFIG.moveAnimations.walkingAnimationConfig.getFadeTime());
-            context.mainAnimationContainer().setAnimationPriority(CONFIG.moveAnimations.walkingAnimationConfig.getPriority());
+            context.mainAnimationContainer().setAnimationSpeed((float) (context.playerData().getMovementSpeed() * CONFIG.getMainAnimations().moveAnimations.getAnimationMoveSpeedMultiplier() * CONFIG.getMainAnimations().moveAnimations.walkingAnimationConfig.getSpeedMultiplier()));
+            context.mainAnimationContainer().setAnimationFadeTime(CONFIG.getMainAnimations().moveAnimations.walkingAnimationConfig.getFadeTime());
+            context.mainAnimationContainer().setAnimationPriority(CONFIG.getMainAnimations().moveAnimations.walkingAnimationConfig.getPriority());
 
             context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.WALK_ANIMATION.getAnimationId()));
             context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.WALK_ANIMATION.getAnimationId());

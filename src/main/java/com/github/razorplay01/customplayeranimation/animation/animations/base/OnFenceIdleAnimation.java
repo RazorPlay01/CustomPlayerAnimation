@@ -11,10 +11,10 @@ import static com.github.razorplay01.customplayeranimation.util.Util.configureAn
 public class OnFenceIdleAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.idleAnimations.onFenceAnimationConfig.isEnabled()) {
+        if (!CONFIG.getMainAnimations().idleAnimations.onFenceAnimationConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
         } else {
-            configureAnimationContainer(CONFIG.idleAnimations.onFenceAnimationConfig, context.mainAnimationContainer());
+            configureAnimationContainer(CONFIG.getMainAnimations().idleAnimations.onFenceAnimationConfig, context.mainAnimationContainer());
 
             context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.ON_FENCE_IDLE_ANIMATION.getAnimationId()));
             context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.ON_FENCE_IDLE_ANIMATION.getAnimationId());

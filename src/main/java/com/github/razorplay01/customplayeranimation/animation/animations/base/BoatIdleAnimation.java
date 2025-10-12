@@ -14,11 +14,11 @@ public class BoatIdleAnimation implements ICustomAnimation {
     public void playAnimation(AnimationContext context) {
         var vehicle = context.player().getVehicle();
         if (isBoat(vehicle)) {
-            if (!CONFIG.mountAnimations.boatAnimations.boatIdleAnimationConfig.isEnabled()) {
+            if (!CONFIG.getMainAnimations().mountAnimations.boatAnimations.boatIdleAnimationConfig.isEnabled()) {
                 context.mainAnimationContainer().disableAnimation();
                 return;
             }
-            configureAnimationContainer(CONFIG.mountAnimations.boatAnimations.boatIdleAnimationConfig, context.mainAnimationContainer());
+            configureAnimationContainer(CONFIG.getMainAnimations().mountAnimations.boatAnimations.boatIdleAnimationConfig, context.mainAnimationContainer());
 
             context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.BOAT_IDLE_ANIMATION.getAnimationId()));
             context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.BOAT_IDLE_ANIMATION.getAnimationId());

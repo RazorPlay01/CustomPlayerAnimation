@@ -11,7 +11,7 @@ import static com.github.razorplay01.customplayeranimation.util.Util.*;
 public class MountAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        configureAnimationContainer(CONFIG.mountAnimations.minecartAnimationsConfig, context.mainAnimationContainer());
+        configureAnimationContainer(CONFIG.getMainAnimations().mountAnimations.minecartAnimationsConfig, context.mainAnimationContainer());
 
         context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.MINECART_IDLE_ANIMATION.getAnimationId()));
         context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.MINECART_IDLE_ANIMATION.getAnimationId());

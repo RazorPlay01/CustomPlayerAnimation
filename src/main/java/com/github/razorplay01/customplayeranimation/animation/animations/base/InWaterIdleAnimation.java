@@ -11,10 +11,10 @@ import static com.github.razorplay01.customplayeranimation.util.Util.configureAn
 public class InWaterIdleAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.inWaterAnimationsConfig.inWaterIdleAnimationConfig.isEnabled()) {
+        if (!CONFIG.getMainAnimations().inWaterAnimations.inWaterIdleAnimationConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
         } else {
-            configureAnimationContainer(CONFIG.inWaterAnimationsConfig.inWaterIdleAnimationConfig, context.mainAnimationContainer());
+            configureAnimationContainer(CONFIG.getMainAnimations().inWaterAnimations.inWaterIdleAnimationConfig, context.mainAnimationContainer());
 
             context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.IN_WATER_IDLE_ANIMATION.getAnimationId()));
             context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.IN_WATER_IDLE_ANIMATION.getAnimationId());

@@ -21,7 +21,7 @@ public class PickaxeAnimation implements ICustomAnimation {
 
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.toolsAnimations.pickaxeAnimationsConfig.isEnabled()) {
+        if (!CONFIG.getOverlayAnimations().toolsAnimations.pickaxeAnimationsConfig.isEnabled()) {
             context.overlayAnimationContainer().disableAnimation();
             isAnimationInProgress = false;
         } else {
@@ -40,7 +40,7 @@ public class PickaxeAnimation implements ICustomAnimation {
                 animationStartTime = context.player().level().getGameTime();
                 isAnimationInProgress = true;
 
-                configureAnimationContainer(CONFIG.toolsAnimations.pickaxeAnimationsConfig, context.overlayAnimationContainer());
+                configureAnimationContainer(CONFIG.getOverlayAnimations().toolsAnimations.pickaxeAnimationsConfig, context.overlayAnimationContainer());
                 context.overlayAnimationContainer().setCurrentAnimation(context.player().isCrouching() ? getAnimation(AnimationsId.PICKAXE_SNEAK_ANIMATION.getAnimationId()) : getAnimation(AnimationsId.PICKAXE_ANIMATION.getAnimationId()));
                 context.overlayAnimationContainer().setCurrentAnimationId(context.player().isCrouching() ? AnimationsId.PICKAXE_SNEAK_ANIMATION.getAnimationId() : AnimationsId.PICKAXE_ANIMATION.getAnimationId());
                 ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).enabled = (context.playerData().getRightHand() != MAIN_HAND);
@@ -48,7 +48,7 @@ public class PickaxeAnimation implements ICustomAnimation {
                 // Continuar la animación si no ha pasado el tiempo mínimo
                 long currentTime = context.player().level().getGameTime();
                 if (currentTime - animationStartTime < animationDuration) {
-                    configureAnimationContainer(CONFIG.toolsAnimations.pickaxeAnimationsConfig, context.overlayAnimationContainer());
+                    configureAnimationContainer(CONFIG.getOverlayAnimations().toolsAnimations.pickaxeAnimationsConfig, context.overlayAnimationContainer());
                     context.overlayAnimationContainer().setCurrentAnimation(context.player().isCrouching() ? getAnimation(AnimationsId.PICKAXE_SNEAK_ANIMATION.getAnimationId()) : getAnimation(AnimationsId.PICKAXE_ANIMATION.getAnimationId()));
                     context.overlayAnimationContainer().setCurrentAnimationId(context.player().isCrouching() ? AnimationsId.PICKAXE_SNEAK_ANIMATION.getAnimationId() : AnimationsId.PICKAXE_ANIMATION.getAnimationId());
                     ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).enabled = (context.playerData().getRightHand() != MAIN_HAND);

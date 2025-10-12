@@ -11,10 +11,10 @@ import static com.github.razorplay01.customplayeranimation.util.Util.configureAn
 public class ElytraAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.extraAnimations.elytraAnimationsConfig.isEnabled()) {
+        if (!CONFIG.getMainAnimations().extraAnimations.elytraAnimationsConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
         } else {
-            configureAnimationContainer(CONFIG.extraAnimations.elytraAnimationsConfig, context.mainAnimationContainer());
+            configureAnimationContainer(CONFIG.getMainAnimations().extraAnimations.elytraAnimationsConfig, context.mainAnimationContainer());
 
             context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.ELYTRA_ANIMATION.getAnimationId()));
             context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.ELYTRA_ANIMATION.getAnimationId());

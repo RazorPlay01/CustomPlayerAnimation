@@ -11,10 +11,10 @@ import static com.github.razorplay01.customplayeranimation.util.Util.configureAn
 public class InWaterForwardAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.inWaterAnimationsConfig.inWaterForwardAnimationConfig.isEnabled()) {
+        if (!CONFIG.getMainAnimations().inWaterAnimations.inWaterForwardAnimationConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
         } else {
-            configureAnimationContainer(CONFIG.inWaterAnimationsConfig.inWaterForwardAnimationConfig, context.mainAnimationContainer());
+            configureAnimationContainer(CONFIG.getMainAnimations().inWaterAnimations.inWaterForwardAnimationConfig, context.mainAnimationContainer());
 
             context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.IN_WATER_FORWARD_ANIMATION.getAnimationId()));
             context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.IN_WATER_FORWARD_ANIMATION.getAnimationId());

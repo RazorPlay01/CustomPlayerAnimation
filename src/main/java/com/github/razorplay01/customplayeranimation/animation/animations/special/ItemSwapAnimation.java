@@ -11,7 +11,7 @@ import static com.github.razorplay01.customplayeranimation.CustomPlayerAnimation
 
 public class ItemSwapAnimation implements ICustomAnimation {
     public void playAnimation(AnimationContext context) {
-        boolean configEnabled = CONFIG.specialAnimations.itemSwapAnimationConfig.isEnabled();
+        boolean configEnabled = CONFIG.getSpecialAnimations().itemSwapAnimationConfig.isEnabled();
         ItemStack currentMain = context.player().getMainHandItem();
         ItemStack currentOff = context.player().getOffhandItem();
         ItemStack prevMain = context.playerData().getMainHandItem();
@@ -21,9 +21,9 @@ public class ItemSwapAnimation implements ICustomAnimation {
                 && prevMain.getItem() == currentOff.getItem()
                 && prevOff.getItem() == currentMain.getItem();
         if (configEnabled && swapHappened) {
-            context.specialAnimationContainer().setAnimationSpeed(CONFIG.specialAnimations.itemSwapAnimationConfig.getSpeedMultiplier());
-            context.specialAnimationContainer().setAnimationFadeTime(CONFIG.specialAnimations.itemSwapAnimationConfig.getFadeTime());
-            context.specialAnimationContainer().setAnimationPriority(CONFIG.specialAnimations.itemSwapAnimationConfig.getPriority());
+            context.specialAnimationContainer().setAnimationSpeed(CONFIG.getSpecialAnimations().itemSwapAnimationConfig.getSpeedMultiplier());
+            context.specialAnimationContainer().setAnimationFadeTime(CONFIG.getSpecialAnimations().itemSwapAnimationConfig.getFadeTime());
+            context.specialAnimationContainer().setAnimationPriority(CONFIG.getSpecialAnimations().itemSwapAnimationConfig.getPriority());
             context.specialAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.ITEM_SWAP_ANIMATION.getAnimationId()));
             context.specialAnimationContainer().setCurrentAnimationId(AnimationsId.ITEM_SWAP_ANIMATION.getAnimationId());
         } else if (!configEnabled) {

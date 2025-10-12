@@ -15,14 +15,14 @@ import static com.github.razorplay01.customplayeranimation.util.Util.*;
 public class BowAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.useItemAnimation.bowAnimationsConfig.isEnabled()) {
+        if (!CONFIG.getOverlayAnimations().useItemAnimation.bowAnimationsConfig.isEnabled()) {
             context.overlayAnimationContainer().disableAnimation();
             if (context.playerData().getMainArmPose().equals(HumanoidModel.ArmPose.BOW_AND_ARROW) ||
                     context.playerData().getOffArmPose().equals(HumanoidModel.ArmPose.BOW_AND_ARROW)) {
                 disableBothArms(context);
             }
         } else {
-            configureAnimationContainer(CONFIG.useItemAnimation.bowAnimationsConfig, context.overlayAnimationContainer());
+            configureAnimationContainer(CONFIG.getOverlayAnimations().useItemAnimation.bowAnimationsConfig, context.overlayAnimationContainer());
 
             if (context.player().getUsedItemHand().equals(context.playerData().getRightHand())) {
                 setBowAnimationForHand(context, true);

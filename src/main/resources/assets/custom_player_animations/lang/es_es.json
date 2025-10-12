@@ -1,0 +1,312 @@
+{
+  "text.autoconfig.custom_player_animations.title": "Custom Player Animations",
+
+  "text.autoconfig.custom_player_animations.option.client.general": "Configuración General",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations": "Animaciones Principales",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations": "Animaciones de Superposición",
+  "text.autoconfig.custom_player_animations.option.client.specialAnimations": "Animaciones Especiales",
+
+  "text.autoconfig.custom_player_animations.option.client.general.animationSpeedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.general.animationSpeedMultiplier.@Tooltip": "Modifica el multiplicador de velocidad para todas las animaciones",
+  "text.autoconfig.custom_player_animations.option.client.general.upHandDisableAnimationIds": "Desactivar Animación de Mano Levantada",
+  "text.autoconfig.custom_player_animations.option.client.general.upHandDisableAnimationIds.@Tooltip": "Lista de animaciones que tienen prioridad sobre la animación de mano levantada",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations": "Animaciones de Reposo",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations": "Animaciones de Giro",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations.turningStandingAnimationConfig": "Animación de Giro de Pie",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations.turningStandingAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations.turningStandingAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations.turningStandingAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations.turningStandingAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations.turningSneakAnimationConfig": "Animación de Giro Agachado",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations.turningSneakAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations.turningSneakAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations.turningSneakAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.turnAnimations.turningSneakAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleStandingAnimationConfig": "Animación de Reposo de Pie",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleStandingAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleStandingAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleStandingAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleStandingAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleSneakAnimationConfig": "Animación de Reposo Agachado",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleSneakAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleSneakAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleSneakAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleSneakAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleCreativeFlyingAnimationConfig": "Animación de Reposo en Vuelo Creativo",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleCreativeFlyingAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleCreativeFlyingAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleCreativeFlyingAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.idleCreativeFlyingAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.onFenceAnimationConfig": "Animación en Valla",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.onFenceAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.onFenceAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.onFenceAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.onFenceAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.onEdgeAnimationConfig": "Animación en Borde",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.onEdgeAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.onEdgeAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.onEdgeAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.idleAnimations.onEdgeAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations": "Animaciones de Movimiento",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.animationMoveSpeedMultiplier": "Multiplicador de Velocidad de Movimiento",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.animationMoveSpeedMultiplier.@Tooltip": "Modifica el multiplicador de velocidad para animaciones que involucran movimiento. Ejemplo: Caminar, Correr, etc.",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingAnimationConfig": "Animación de Caminar",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingBackwardsAnimationConfig": "Animación de Caminar hacia Atrás",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingBackwardsAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingBackwardsAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingBackwardsAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingBackwardsAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingSneakAnimationConfig": "Animación de Caminar Agachado",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingSneakAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingSneakAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingSneakAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingSneakAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingSneakBackwardsAnimationConfig": "Animación de Caminar Agachado hacia Atrás",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingSneakBackwardsAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingSneakBackwardsAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingSneakBackwardsAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.walkingSneakBackwardsAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.runningAnimationConfig": "Animación de Correr",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.runningAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.runningAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.runningAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.runningAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.onFenceWalkAnimationConfig": "Animación de Caminar en Valla",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.onFenceWalkAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.onFenceWalkAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.onFenceWalkAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.moveAnimations.onFenceWalkAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations": "Animaciones en el Agua",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterUpAnimationConfig": "Animación de Subir en el Agua",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterUpAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterUpAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterUpAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterUpAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterSwimAnimationConfig": "Animación de Nadar en el Agua",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterSwimAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterSwimAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterSwimAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterSwimAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterForwardAnimationConfig": "Animación de Avanzar en el Agua",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterForwardAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterForwardAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterForwardAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterForwardAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterBackwardsAnimationConfig": "Animación de Retroceder en el Agua",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterBackwardsAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterBackwardsAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterBackwardsAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterBackwardsAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterIdleAnimationConfig": "Animación de Reposo en el Agua",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterIdleAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterIdleAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterIdleAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.inWaterAnimations.inWaterIdleAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations": "Animaciones de Montura",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations": "Animaciones de Caballo",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseIdleAnimationConfig": "Animación de Reposo en Caballo",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseIdleAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseIdleAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseIdleAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseIdleAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningAnimationConfig": "Animación de Correr en Caballo",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningBackwardsAnimationConfig": "Animación de Correr hacia Atrás en Caballo",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningBackwardsAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningBackwardsAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningBackwardsAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningBackwardsAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations": "Animaciones de Barco",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatTurnAnimationConfig": "Animación de Girar en Barco",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatTurnAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatTurnAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatTurnAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatTurnAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatForwardAnimationConfig": "Animación de Avanzar en Barco",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatForwardAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatForwardAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatForwardAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatForwardAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatIdleAnimationConfig": "Animación de Reposo en Barco",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatIdleAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatIdleAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatIdleAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.boatAnimations.boatIdleAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.minecartAnimationsConfig": "Animaciones de Vagoneta",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.minecartAnimationsConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.minecartAnimationsConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.minecartAnimationsConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.mountAnimations.minecartAnimationsConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations": "Animaciones Extras",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.fallingAnimationConfig": "Animación de Caída",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.fallingAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.fallingAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.fallingAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.fallingAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.climbingAnimationsConfig": "Animación de Escalar",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.climbingAnimationsConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.climbingAnimationsConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.climbingAnimationsConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.climbingAnimationsConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.crawlingAnimationsConfig": "Animación de Gatear",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.crawlingAnimationsConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.crawlingAnimationsConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.crawlingAnimationsConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.crawlingAnimationsConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig": "Animación de Élitros",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig": "Animación de Dormir",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations": "Animaciones de Muerte",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.speedMultiplier": "Multiplicador de Velocidad por Defecto para Animaciones de Muerte",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.fadeTime": "Tiempo de Transición por Defecto para Animaciones de Muerte",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.priority": "Prioridad por Defecto para Animaciones de Muerte",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathBurnAnimationConfig": "Animación de Muerte por Quemadura",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathBurnAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathBurnAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathBurnAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathBurnAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathExplosionAnimationConfig": "Animación de Muerte por Explosión",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathExplosionAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathExplosionAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathExplosionAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathExplosionAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathDrownAnimationConfig": "Animación de Muerte por Ahogamiento",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathDrownAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathDrownAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathDrownAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.mainAnimations.deathAnimations.deathDrownAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation": "Animaciones de Uso de Objetos",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.bowAnimationsConfig": "Animación de Arco",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.bowAnimationsConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.bowAnimationsConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.bowAnimationsConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.bowAnimationsConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.eatingAnimationsConfig": "Animación de Comer",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.eatingAnimationsConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.eatingAnimationsConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.eatingAnimationsConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.eatingAnimationsConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.shieldAnimationConfig": "Animación de Escudo",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.shieldAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.shieldAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.shieldAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.shieldAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.tridentAnimationConfig": "Animación de Tridente",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.tridentAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.tridentAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.tridentAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.useItemAnimation.tridentAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations": "Animaciones de Espada",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.isEnabled": "Está Activada",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack1AnimationConfig": "Animación de Ataque con Espada 1",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack1AnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack1AnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack1AnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack2AnimationConfig": "Animación de Ataque con Espada 2",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack2AnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack2AnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack2AnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack3AnimationConfig": "Animación de Ataque con Espada 3",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack3AnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack3AnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.swordAnimations.swordAttack3AnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations": "Animaciones de Herramientas",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.pickaxeAnimationsConfig": "Animación de Pico",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.pickaxeAnimationsConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.pickaxeAnimationsConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.pickaxeAnimationsConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.pickaxeAnimationsConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.axeAnimationsConfig": "Animación de Hacha",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.axeAnimationsConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.axeAnimationsConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.axeAnimationsConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.axeAnimationsConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.shovelAnimationsConfig": "Animación de Pala",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.shovelAnimationsConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.shovelAnimationsConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.shovelAnimationsConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.overlayAnimations.toolsAnimations.shovelAnimationsConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.specialAnimations.upHandAnimationConfig": "Animación de Mano Levantada",
+  "text.autoconfig.custom_player_animations.option.client.specialAnimations.upHandAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.specialAnimations.upHandAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.specialAnimations.upHandAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.specialAnimations.upHandAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.custom_player_animations.option.client.specialAnimations.itemSwapAnimationConfig": "Animación de Intercambio de Objetos",
+  "text.autoconfig.custom_player_animations.option.client.specialAnimations.itemSwapAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.custom_player_animations.option.client.specialAnimations.itemSwapAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.custom_player_animations.option.client.specialAnimations.itemSwapAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.custom_player_animations.option.client.specialAnimations.itemSwapAnimationConfig.priority": "Prioridad de Animación"
+}

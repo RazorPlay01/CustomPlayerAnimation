@@ -9,12 +9,12 @@ import static com.github.razorplay01.customplayeranimation.CustomPlayerAnimation
 
 public class RunAnimation implements ICustomAnimation {
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.moveAnimations.runningAnimationConfig.isEnabled()) {
+        if (!CONFIG.getMainAnimations().moveAnimations.runningAnimationConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
         } else {
-            context.mainAnimationContainer().setAnimationSpeed((float) (context.playerData().getMovementSpeed() * CONFIG.moveAnimations.getAnimationMoveSpeedMultiplier() * CONFIG.moveAnimations.runningAnimationConfig.getSpeedMultiplier()));
-            context.mainAnimationContainer().setAnimationFadeTime(CONFIG.moveAnimations.runningAnimationConfig.getFadeTime());
-            context.mainAnimationContainer().setAnimationPriority(CONFIG.moveAnimations.runningAnimationConfig.getPriority());
+            context.mainAnimationContainer().setAnimationSpeed((float) (context.playerData().getMovementSpeed() * CONFIG.getMainAnimations().moveAnimations.getAnimationMoveSpeedMultiplier() * CONFIG.getMainAnimations().moveAnimations.runningAnimationConfig.getSpeedMultiplier()));
+            context.mainAnimationContainer().setAnimationFadeTime(CONFIG.getMainAnimations().moveAnimations.runningAnimationConfig.getFadeTime());
+            context.mainAnimationContainer().setAnimationPriority(CONFIG.getMainAnimations().moveAnimations.runningAnimationConfig.getPriority());
 
             context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.RUN_ANIMATION.getAnimationId()));
             context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.RUN_ANIMATION.getAnimationId());

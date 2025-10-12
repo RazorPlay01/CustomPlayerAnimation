@@ -12,10 +12,10 @@ import static com.github.razorplay01.customplayeranimation.util.Util.isHorse;
 public class HorseRunningBackwardsAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.mountAnimations.horseAnimationsConfig.horseRunningBackwardsAnimationConfig.isEnabled()) {
+        if (!CONFIG.getMainAnimations().mountAnimations.horseAnimations.horseRunningBackwardsAnimationConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
         } else {
-            configureAnimationContainer(CONFIG.mountAnimations.horseAnimationsConfig.horseRunningBackwardsAnimationConfig, context.mainAnimationContainer());
+            configureAnimationContainer(CONFIG.getMainAnimations().mountAnimations.horseAnimations.horseRunningBackwardsAnimationConfig, context.mainAnimationContainer());
 
             context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.HORSE_IDLE_ANIMATION.getAnimationId()));
             context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.HORSE_IDLE_ANIMATION.getAnimationId());

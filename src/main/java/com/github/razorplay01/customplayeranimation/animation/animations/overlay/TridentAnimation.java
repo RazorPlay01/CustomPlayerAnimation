@@ -15,11 +15,11 @@ import static com.github.razorplay01.customplayeranimation.util.Util.*;
 public class TridentAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.useItemAnimation.tridentAnimationConfig.isEnabled()) {
+        if (!CONFIG.getOverlayAnimations().useItemAnimation.tridentAnimationConfig.isEnabled()) {
             context.overlayAnimationContainer().disableAnimation();
             context.player().disableActiveArm(context.mainAnimationContainer());
         } else {
-            configureAnimationContainer(CONFIG.useItemAnimation.tridentAnimationConfig, context.overlayAnimationContainer());
+            configureAnimationContainer(CONFIG.getOverlayAnimations().useItemAnimation.tridentAnimationConfig, context.overlayAnimationContainer());
 
             if (context.player().getUsedItemHand().equals(context.playerData().getRightHand())) {
                 setTridentAnimation(context, true, 55);

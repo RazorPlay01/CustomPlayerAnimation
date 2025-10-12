@@ -6,21 +6,20 @@ import com.github.razorplay01.customplayeranimation.util.records.AnimationContex
 
 import static com.github.razorplay01.customplayeranimation.CustomPlayerAnimations.CONFIG;
 import static com.github.razorplay01.customplayeranimation.CustomPlayerAnimations.getAnimation;
-import static java.lang.Math.abs;
 
 public class TurnSneakAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.idleAnimations.turnAnimations.turningSneakAnimationConfig.isEnabled()) {
+        if (!CONFIG.getMainAnimations().idleAnimations.turnAnimations.turningSneakAnimationConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
         } else {
             if ((((float) 1 / 2) * context.playerData().getBodyYawDelta()) > 1.5 || (((float) 1 / 2) * context.playerData().getBodyYawDelta()) < -1.5) {
-                context.mainAnimationContainer().setAnimationSpeed(CONFIG.idleAnimations.turnAnimations.turningSneakAnimationConfig.getSpeedMultiplier());
+                context.mainAnimationContainer().setAnimationSpeed(CONFIG.getMainAnimations().idleAnimations.turnAnimations.turningSneakAnimationConfig.getSpeedMultiplier());
             } else {
-                context.mainAnimationContainer().setAnimationSpeed(abs((((float) 1 / 2) * context.playerData().getBodyYawDelta()) * CONFIG.idleAnimations.turnAnimations.turningSneakAnimationConfig.getSpeedMultiplier()));
+                context.mainAnimationContainer().setAnimationSpeed(Math.abs((((float) 1 / 2) * context.playerData().getBodyYawDelta()) * CONFIG.getMainAnimations().idleAnimations.turnAnimations.turningSneakAnimationConfig.getSpeedMultiplier()));
             }
-            context.mainAnimationContainer().setAnimationFadeTime(CONFIG.idleAnimations.turnAnimations.turningSneakAnimationConfig.getFadeTime());
-            context.mainAnimationContainer().setAnimationPriority(CONFIG.idleAnimations.turnAnimations.turningSneakAnimationConfig.getPriority());
+            context.mainAnimationContainer().setAnimationFadeTime(CONFIG.getMainAnimations().idleAnimations.turnAnimations.turningSneakAnimationConfig.getFadeTime());
+            context.mainAnimationContainer().setAnimationPriority(CONFIG.getMainAnimations().idleAnimations.turnAnimations.turningSneakAnimationConfig.getPriority());
 
             context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.WALK_SNEAK_ANIMATION.getAnimationId()));
             context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.WALK_SNEAK_ANIMATION.getAnimationId());

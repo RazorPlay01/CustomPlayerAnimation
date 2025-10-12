@@ -25,7 +25,7 @@ public class SwordAnimation implements ICustomAnimation {
 
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.swordAnimations.isEnabled()) {
+        if (!CONFIG.getOverlayAnimations().swordAnimations.isEnabled()) {
             context.overlayAnimationContainer().disableAnimation();
             isAnimationInProgress = false;
         } else {
@@ -75,19 +75,19 @@ public class SwordAnimation implements ICustomAnimation {
             lastSwingTick = currentTick;
             switch (currentComboCount) {
                 case 2 -> {
-                    context.overlayAnimationContainer().setAnimationSpeed(CONFIG.swordAnimations.swordAttack2AnimationConfig.getSpeedMultiplier());
-                    context.overlayAnimationContainer().setAnimationFadeTime(CONFIG.swordAnimations.swordAttack2AnimationConfig.getFadeTime());
-                    context.overlayAnimationContainer().setAnimationPriority(CONFIG.swordAnimations.swordAttack2AnimationConfig.getPriority());
+                    context.overlayAnimationContainer().setAnimationSpeed(CONFIG.getOverlayAnimations().swordAnimations.swordAttack2AnimationConfig.getSpeedMultiplier());
+                    context.overlayAnimationContainer().setAnimationFadeTime(CONFIG.getOverlayAnimations().swordAnimations.swordAttack2AnimationConfig.getFadeTime());
+                    context.overlayAnimationContainer().setAnimationPriority(CONFIG.getOverlayAnimations().swordAnimations.swordAttack2AnimationConfig.getPriority());
                 }
                 case 3 -> {
-                    context.overlayAnimationContainer().setAnimationSpeed(CONFIG.swordAnimations.swordAttack3AnimationConfig.getSpeedMultiplier());
-                    context.overlayAnimationContainer().setAnimationFadeTime(CONFIG.swordAnimations.swordAttack3AnimationConfig.getFadeTime());
-                    context.overlayAnimationContainer().setAnimationPriority(CONFIG.swordAnimations.swordAttack3AnimationConfig.getPriority());
+                    context.overlayAnimationContainer().setAnimationSpeed(CONFIG.getOverlayAnimations().swordAnimations.swordAttack3AnimationConfig.getSpeedMultiplier());
+                    context.overlayAnimationContainer().setAnimationFadeTime(CONFIG.getOverlayAnimations().swordAnimations.swordAttack3AnimationConfig.getFadeTime());
+                    context.overlayAnimationContainer().setAnimationPriority(CONFIG.getOverlayAnimations().swordAnimations.swordAttack3AnimationConfig.getPriority());
                 }
                 default -> {
-                    context.overlayAnimationContainer().setAnimationSpeed(CONFIG.swordAnimations.swordAttack1AnimationConfig.getSpeedMultiplier());
-                    context.overlayAnimationContainer().setAnimationFadeTime(CONFIG.swordAnimations.swordAttack1AnimationConfig.getFadeTime());
-                    context.overlayAnimationContainer().setAnimationPriority(CONFIG.swordAnimations.swordAttack1AnimationConfig.getPriority());
+                    context.overlayAnimationContainer().setAnimationSpeed(CONFIG.getOverlayAnimations().swordAnimations.swordAttack1AnimationConfig.getSpeedMultiplier());
+                    context.overlayAnimationContainer().setAnimationFadeTime(CONFIG.getOverlayAnimations().swordAnimations.swordAttack1AnimationConfig.getFadeTime());
+                    context.overlayAnimationContainer().setAnimationPriority(CONFIG.getOverlayAnimations().swordAnimations.swordAttack1AnimationConfig.getPriority());
                 }
             }
 

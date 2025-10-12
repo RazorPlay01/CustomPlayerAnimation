@@ -25,11 +25,11 @@ public class BoatForwardAnimation implements ICustomAnimation {
     private static void handleBoatAnimation(AnimationContext context) {
         Boat boat = (Boat) context.player().getVehicle();
 
-        if (!CONFIG.mountAnimations.boatAnimations.boatForwardAnimationConfig.isEnabled()) {
+        if (!CONFIG.getMainAnimations().mountAnimations.boatAnimations.boatForwardAnimationConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
             return;
         }
-        configureAnimationContainer(CONFIG.mountAnimations.boatAnimations.boatForwardAnimationConfig, context.mainAnimationContainer());
+        configureAnimationContainer(CONFIG.getMainAnimations().mountAnimations.boatAnimations.boatForwardAnimationConfig, context.mainAnimationContainer());
 
         boolean isLeftPaddleMoving = boat.getPaddleState(0);
         boolean isRightPaddleMoving = boat.getPaddleState(1);

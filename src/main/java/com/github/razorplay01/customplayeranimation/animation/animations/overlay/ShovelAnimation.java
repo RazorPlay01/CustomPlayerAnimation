@@ -20,7 +20,7 @@ public class ShovelAnimation implements ICustomAnimation {
 
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.toolsAnimations.shovelAnimationsConfig.isEnabled()) {
+        if (!CONFIG.getOverlayAnimations().toolsAnimations.shovelAnimationsConfig.isEnabled()) {
             context.overlayAnimationContainer().disableAnimation();
             isAnimationInProgress = false;
         } else {
@@ -40,7 +40,7 @@ public class ShovelAnimation implements ICustomAnimation {
                         getAnimation(AnimationsId.SHOVEL_ANIMATION.getAnimationId());
                 animationDuration = animation.length() - 4;
 
-                configureAnimationContainer(CONFIG.toolsAnimations.shovelAnimationsConfig, context.overlayAnimationContainer());
+                configureAnimationContainer(CONFIG.getOverlayAnimations().toolsAnimations.shovelAnimationsConfig, context.overlayAnimationContainer());
                 context.overlayAnimationContainer().setCurrentAnimation(context.player().isCrouching() ? getAnimation(AnimationsId.SHOVEL_SNEAK_ANIMATION.getAnimationId()) : getAnimation(AnimationsId.SHOVEL_ANIMATION.getAnimationId()));
                 context.overlayAnimationContainer().setCurrentAnimationId(context.player().isCrouching() ? AnimationsId.SHOVEL_SNEAK_ANIMATION.getAnimationId() : AnimationsId.SHOVEL_ANIMATION.getAnimationId());
                 ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).enabled = (context.playerData().getRightHand() != MAIN_HAND);
@@ -48,7 +48,7 @@ public class ShovelAnimation implements ICustomAnimation {
                 // Continuar la animación si no ha pasado el tiempo mínimo
                 long currentTime = context.player().level().getGameTime();
                 if (currentTime - animationStartTime < animationDuration) {
-                    configureAnimationContainer(CONFIG.toolsAnimations.shovelAnimationsConfig, context.overlayAnimationContainer());
+                    configureAnimationContainer(CONFIG.getOverlayAnimations().toolsAnimations.shovelAnimationsConfig, context.overlayAnimationContainer());
                     context.overlayAnimationContainer().setCurrentAnimation(context.player().isCrouching() ? getAnimation(AnimationsId.SHOVEL_SNEAK_ANIMATION.getAnimationId()) : getAnimation(AnimationsId.SHOVEL_ANIMATION.getAnimationId()));
                     context.overlayAnimationContainer().setCurrentAnimationId(context.player().isCrouching() ? AnimationsId.SHOVEL_SNEAK_ANIMATION.getAnimationId() : AnimationsId.SHOVEL_ANIMATION.getAnimationId());
                     ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).enabled = (context.playerData().getRightHand() != MAIN_HAND);

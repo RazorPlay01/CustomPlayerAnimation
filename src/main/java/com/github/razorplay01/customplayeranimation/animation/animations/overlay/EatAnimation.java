@@ -15,10 +15,10 @@ import static com.github.razorplay01.customplayeranimation.util.Util.*;
 public class EatAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.useItemAnimation.eatingAnimationsConfig.isEnabled()) {
+        if (!CONFIG.getOverlayAnimations().useItemAnimation.eatingAnimationsConfig.isEnabled()) {
             context.overlayAnimationContainer().disableAnimation();
         } else {
-            configureAnimationContainer(CONFIG.useItemAnimation.eatingAnimationsConfig, context.overlayAnimationContainer());
+            configureAnimationContainer(CONFIG.getOverlayAnimations().useItemAnimation.eatingAnimationsConfig, context.overlayAnimationContainer());
 
             if (context.player().getUsedItemHand().equals(context.playerData().getRightHand())) {
                 setEatingAnimation(context, false);

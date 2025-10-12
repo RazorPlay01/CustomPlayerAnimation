@@ -11,7 +11,7 @@ import static com.github.razorplay01.customplayeranimation.util.Util.configureAn
 public class SleepAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.extraAnimations.sleepingAnimationsConfig.isEnabled()) {
+        if (!CONFIG.getMainAnimations().extraAnimations.sleepingAnimationsConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
             context.overlayAnimationContainer().disableAnimation();
             context.specialAnimationContainer().disableAnimation();
@@ -20,7 +20,7 @@ public class SleepAnimation implements ICustomAnimation {
             context.overlayAnimationContainer().disableAnimation();
             context.specialAnimationContainer().disableAnimation();
 
-            configureAnimationContainer(CONFIG.extraAnimations.sleepingAnimationsConfig, context.mainAnimationContainer());
+            configureAnimationContainer(CONFIG.getMainAnimations().extraAnimations.sleepingAnimationsConfig, context.mainAnimationContainer());
 
             context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.SLEEP_ANIMATION.getAnimationId()));
             context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.SLEEP_ANIMATION.getAnimationId());

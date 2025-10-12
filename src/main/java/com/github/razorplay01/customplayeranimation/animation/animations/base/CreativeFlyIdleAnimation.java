@@ -22,10 +22,10 @@ public class CreativeFlyIdleAnimation implements ICustomAnimation {
     }
 
     private static void playFlyIdleCreativeAnimation(AnimationContext context) {
-        if (!CONFIG.idleAnimations.idleCreativeFlyingAnimationConfig.isEnabled()) {
+        if (!CONFIG.getMainAnimations().idleAnimations.idleCreativeFlyingAnimationConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
         } else {
-            configureAnimationContainer(CONFIG.idleAnimations.idleCreativeFlyingAnimationConfig, context.mainAnimationContainer());
+            configureAnimationContainer(CONFIG.getMainAnimations().idleAnimations.idleCreativeFlyingAnimationConfig, context.mainAnimationContainer());
 
             context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.IDLE_CREATIVE_FLY_ANIMATION.getAnimationId()));
             context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.IDLE_CREATIVE_FLY_ANIMATION.getAnimationId());

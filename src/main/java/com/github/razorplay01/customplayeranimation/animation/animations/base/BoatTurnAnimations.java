@@ -15,12 +15,12 @@ public class BoatTurnAnimations implements ICustomAnimation {
     public void playAnimation(AnimationContext context) {
         var vehicle = context.player().getVehicle();
         if (isBoat(vehicle)) {
-            if (!CONFIG.mountAnimations.boatAnimations.boatTurnAnimationConfig.isEnabled()) {
+            if (!CONFIG.getMainAnimations().mountAnimations.boatAnimations.boatTurnAnimationConfig.isEnabled()) {
                 context.mainAnimationContainer().disableAnimation();
                 return;
             }
 
-            configureAnimationContainer(CONFIG.mountAnimations.boatAnimations.boatTurnAnimationConfig, context.mainAnimationContainer());
+            configureAnimationContainer(CONFIG.getMainAnimations().mountAnimations.boatAnimations.boatTurnAnimationConfig, context.mainAnimationContainer());
 
             playBoatTurnAnimation(context, (Boat) vehicle);
         }

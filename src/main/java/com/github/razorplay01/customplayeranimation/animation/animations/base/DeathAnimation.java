@@ -12,7 +12,7 @@ import static com.github.razorplay01.customplayeranimation.CustomPlayerAnimation
 public class DeathAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.deathAnimations.isEnabled()) {
+        if (!CONFIG.getMainAnimations().deathAnimations.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
         } else {
             // Determina la animación según la causa de la muerte
@@ -27,24 +27,24 @@ public class DeathAnimation implements ICustomAnimation {
     private static void configureAnimationContainer(AnimationContext context, String animationId) {
         switch (animationId) {
             case "death_burn" -> {
-                context.mainAnimationContainer().setAnimationSpeed(CONFIG.deathAnimations.deathBurnAnimationConfig.getSpeedMultiplier());
-                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.deathAnimations.deathBurnAnimationConfig.getFadeTime());
-                context.mainAnimationContainer().setAnimationPriority(CONFIG.deathAnimations.deathBurnAnimationConfig.getPriority());
+                context.mainAnimationContainer().setAnimationSpeed(CONFIG.getMainAnimations().deathAnimations.deathBurnAnimationConfig.getSpeedMultiplier());
+                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.getMainAnimations().deathAnimations.deathBurnAnimationConfig.getFadeTime());
+                context.mainAnimationContainer().setAnimationPriority(CONFIG.getMainAnimations().deathAnimations.deathBurnAnimationConfig.getPriority());
             }
             case "death_explosion" -> {
-                context.mainAnimationContainer().setAnimationSpeed(CONFIG.deathAnimations.deathExplosionAnimationConfig.getSpeedMultiplier());
-                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.deathAnimations.deathExplosionAnimationConfig.getFadeTime());
-                context.mainAnimationContainer().setAnimationPriority(CONFIG.deathAnimations.deathExplosionAnimationConfig.getPriority());
+                context.mainAnimationContainer().setAnimationSpeed(CONFIG.getMainAnimations().deathAnimations.deathExplosionAnimationConfig.getSpeedMultiplier());
+                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.getMainAnimations().deathAnimations.deathExplosionAnimationConfig.getFadeTime());
+                context.mainAnimationContainer().setAnimationPriority(CONFIG.getMainAnimations().deathAnimations.deathExplosionAnimationConfig.getPriority());
             }
             case "death_drown" -> {
-                context.mainAnimationContainer().setAnimationSpeed(CONFIG.deathAnimations.deathDrownAnimationConfig.getSpeedMultiplier());
-                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.deathAnimations.deathDrownAnimationConfig.getFadeTime());
-                context.mainAnimationContainer().setAnimationPriority(CONFIG.deathAnimations.deathDrownAnimationConfig.getPriority());
+                context.mainAnimationContainer().setAnimationSpeed(CONFIG.getMainAnimations().deathAnimations.deathDrownAnimationConfig.getSpeedMultiplier());
+                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.getMainAnimations().deathAnimations.deathDrownAnimationConfig.getFadeTime());
+                context.mainAnimationContainer().setAnimationPriority(CONFIG.getMainAnimations().deathAnimations.deathDrownAnimationConfig.getPriority());
             }
             default -> {
-                context.mainAnimationContainer().setAnimationSpeed(CONFIG.deathAnimations.getSpeedMultiplier());
-                context.mainAnimationContainer().setAnimationSpeed(CONFIG.deathAnimations.getFadeTime());
-                context.mainAnimationContainer().setAnimationSpeed(CONFIG.deathAnimations.getPriority());
+                context.mainAnimationContainer().setAnimationSpeed(CONFIG.getMainAnimations().deathAnimations.getSpeedMultiplier());
+                context.mainAnimationContainer().setAnimationSpeed(CONFIG.getMainAnimations().deathAnimations.getFadeTime());
+                context.mainAnimationContainer().setAnimationSpeed(CONFIG.getMainAnimations().deathAnimations.getPriority());
             }
         }
     }

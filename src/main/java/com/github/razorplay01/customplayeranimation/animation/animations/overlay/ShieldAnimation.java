@@ -14,11 +14,11 @@ import static com.github.razorplay01.customplayeranimation.util.Util.*;
 public class ShieldAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.useItemAnimation.shieldAnimationConfig.isEnabled()) {
+        if (!CONFIG.getOverlayAnimations().useItemAnimation.shieldAnimationConfig.isEnabled()) {
             context.overlayAnimationContainer().disableAnimation();
             context.player().disableActiveArm(context.mainAnimationContainer());
         } else {
-            configureAnimationContainer(CONFIG.useItemAnimation.shieldAnimationConfig, context.overlayAnimationContainer());
+            configureAnimationContainer(CONFIG.getOverlayAnimations().useItemAnimation.shieldAnimationConfig, context.overlayAnimationContainer());
 
             if (context.player().getUsedItemHand().equals(context.playerData().getRightHand())) {
                 setShieldAnimation(context, true);

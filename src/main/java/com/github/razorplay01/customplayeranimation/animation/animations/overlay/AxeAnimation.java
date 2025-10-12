@@ -21,7 +21,7 @@ public class AxeAnimation implements ICustomAnimation {
 
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.toolsAnimations.axeAnimationsConfig.isEnabled()) {
+        if (!CONFIG.getOverlayAnimations().toolsAnimations.axeAnimationsConfig.isEnabled()) {
             context.overlayAnimationContainer().disableAnimation();
             isAnimationInProgress = false;
         } else {
@@ -41,7 +41,7 @@ public class AxeAnimation implements ICustomAnimation {
                         getAnimation(AnimationsId.AXE_ANIMATION.getAnimationId());
                 animationDuration = animation.length() - 3;
 
-                configureAnimationContainer(CONFIG.toolsAnimations.axeAnimationsConfig, context.overlayAnimationContainer());
+                configureAnimationContainer(CONFIG.getOverlayAnimations().toolsAnimations.axeAnimationsConfig, context.overlayAnimationContainer());
                 context.overlayAnimationContainer().setCurrentAnimation(context.player().isCrouching() ? getAnimation(AnimationsId.AXE_SNEAK_ANIMATION.getAnimationId()) : getAnimation(AnimationsId.AXE_ANIMATION.getAnimationId()));
                 context.overlayAnimationContainer().setCurrentAnimationId(context.player().isCrouching() ? AnimationsId.AXE_SNEAK_ANIMATION.getAnimationId() : AnimationsId.AXE_ANIMATION.getAnimationId());
                 ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).enabled = (context.playerData().getRightHand() != MAIN_HAND);
@@ -49,7 +49,7 @@ public class AxeAnimation implements ICustomAnimation {
                 // Continuar la animación si no ha pasado el tiempo mínimo
                 long currentTime = context.player().level().getGameTime();
                 if (currentTime - animationStartTime < animationDuration) {
-                    configureAnimationContainer(CONFIG.toolsAnimations.axeAnimationsConfig, context.overlayAnimationContainer());
+                    configureAnimationContainer(CONFIG.getOverlayAnimations().toolsAnimations.axeAnimationsConfig, context.overlayAnimationContainer());
                     context.overlayAnimationContainer().setCurrentAnimation(context.player().isCrouching() ? getAnimation(AnimationsId.AXE_SNEAK_ANIMATION.getAnimationId()) : getAnimation(AnimationsId.AXE_ANIMATION.getAnimationId()));
                     context.overlayAnimationContainer().setCurrentAnimationId(context.player().isCrouching() ? AnimationsId.AXE_SNEAK_ANIMATION.getAnimationId() : AnimationsId.AXE_ANIMATION.getAnimationId());
                     ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).enabled = (context.playerData().getRightHand() != MAIN_HAND);

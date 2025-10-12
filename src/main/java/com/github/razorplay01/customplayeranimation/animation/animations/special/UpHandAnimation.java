@@ -27,7 +27,7 @@ public class UpHandAnimation implements ICustomAnimation {
     public void playAnimation(AnimationContext context) {
         HandStates handStates = determineHandStates(context.player());
         handleHandStateChange(handStates, context.mainAnimationContainer(), context);
-        boolean configEnabled = CONFIG.specialAnimations.upHandAnimationConfig.isEnabled();
+        boolean configEnabled = CONFIG.getSpecialAnimations().upHandAnimationConfig.isEnabled();
         boolean shouldPlay = configEnabled && shouldPlayHandAnimation(handStates, context);
         if (shouldPlay) {
             playHandAnimations(handStates, context);
@@ -66,8 +66,8 @@ public class UpHandAnimation implements ICustomAnimation {
     }
 
     private static boolean isBlockingAnimation(AnimationContainer overlay, AnimationContainer main) {
-        return containsAnyAnimation(overlay, CONFIG.getUpHandDisableAnimationIds()) ||
-                containsAnyAnimation(main, CONFIG.getUpHandDisableAnimationIds());
+        return containsAnyAnimation(overlay, CONFIG.getGeneral().getUpHandDisableAnimationIds()) ||
+                containsAnyAnimation(main, CONFIG.getGeneral().getUpHandDisableAnimationIds());
     }
 
     private static void playHandAnimations(HandStates states, AnimationContext context) {
@@ -89,9 +89,9 @@ public class UpHandAnimation implements ICustomAnimation {
     }
 
     private static void setUpHandAnimation(AnimationContext context, HumanoidArm arm) {
-        context.specialAnimationContainer().setAnimationSpeed(CONFIG.specialAnimations.upHandAnimationConfig.getSpeedMultiplier());
-        context.specialAnimationContainer().setAnimationFadeTime(CONFIG.specialAnimations.upHandAnimationConfig.getFadeTime());
-        context.specialAnimationContainer().setAnimationPriority(CONFIG.specialAnimations.upHandAnimationConfig.getPriority());
+        context.specialAnimationContainer().setAnimationSpeed(CONFIG.getSpecialAnimations().upHandAnimationConfig.getSpeedMultiplier());
+        context.specialAnimationContainer().setAnimationFadeTime(CONFIG.getSpecialAnimations().upHandAnimationConfig.getFadeTime());
+        context.specialAnimationContainer().setAnimationPriority(CONFIG.getSpecialAnimations().upHandAnimationConfig.getPriority());
         context.specialAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.UP_HAND_ANIMATION.getAnimationId()));
         boolean isMainRightArm = arm == HumanoidArm.RIGHT;
         String animationId = (isMainRightArm ? RIGHT_PREFIX : LEFT_PREFIX) + AnimationsId.UP_HAND_ANIMATION.getAnimationId();

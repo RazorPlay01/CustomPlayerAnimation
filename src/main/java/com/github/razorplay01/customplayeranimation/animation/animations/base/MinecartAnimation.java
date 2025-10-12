@@ -12,10 +12,10 @@ import static com.github.razorplay01.customplayeranimation.util.Util.configureAn
 public class MinecartAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.mountAnimations.minecartAnimationsConfig.isEnabled()) {
+        if (!CONFIG.getMainAnimations().mountAnimations.minecartAnimationsConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
         } else {
-            configureAnimationContainer(CONFIG.mountAnimations.minecartAnimationsConfig, context.mainAnimationContainer());
+            configureAnimationContainer(CONFIG.getMainAnimations().mountAnimations.minecartAnimationsConfig, context.mainAnimationContainer());
 
             context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.MINECART_IDLE_ANIMATION.getAnimationId()));
             context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.MINECART_IDLE_ANIMATION.getAnimationId());

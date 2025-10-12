@@ -11,7 +11,7 @@ import static com.github.razorplay01.customplayeranimation.util.Util.configureAn
 public class TurnRigthAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.idleAnimations.turnAnimations.turningStandingAnimationConfig.isEnabled()) {
+        if (!CONFIG.getMainAnimations().idleAnimations.turnAnimations.turningStandingAnimationConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
             return;
         }
@@ -25,7 +25,7 @@ public class TurnRigthAnimation implements ICustomAnimation {
     }
 
     private static void handleTurningAnimation(AnimationContext context) {
-        configureAnimationContainer(CONFIG.idleAnimations.turnAnimations.turningStandingAnimationConfig, context.mainAnimationContainer());
+        configureAnimationContainer(CONFIG.getMainAnimations().idleAnimations.turnAnimations.turningStandingAnimationConfig, context.mainAnimationContainer());
         context.mainAnimationContainer().setAnimationSpeed(calculateAnimationSpeed(context));
 
         context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.TURN_RIGHT_ANIMATION.getAnimationId()));
@@ -35,7 +35,7 @@ public class TurnRigthAnimation implements ICustomAnimation {
     private static float calculateAnimationSpeed(AnimationContext context) {
         float bodyYawDelta = context.playerData().getBodyYawDelta();
         float halfBodyYawDelta = (float) 1 / 2 * bodyYawDelta;
-        float speedMultiplier = CONFIG.idleAnimations.turnAnimations.turningStandingAnimationConfig.getSpeedMultiplier();
+        float speedMultiplier = CONFIG.getMainAnimations().idleAnimations.turnAnimations.turningStandingAnimationConfig.getSpeedMultiplier();
 
         if (halfBodyYawDelta > 2 || halfBodyYawDelta < -2) {
             return speedMultiplier;

@@ -12,10 +12,10 @@ import static com.github.razorplay01.customplayeranimation.util.Util.isHorse;
 public class HorseIdleAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.mountAnimations.horseAnimationsConfig.horseIdleAnimationConfig.isEnabled()) {
+        if (!CONFIG.getMainAnimations().mountAnimations.horseAnimations.horseIdleAnimationConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
         } else {
-            configureAnimationContainer(CONFIG.mountAnimations.horseAnimationsConfig.horseIdleAnimationConfig, context.mainAnimationContainer());
+            configureAnimationContainer(CONFIG.getMainAnimations().mountAnimations.horseAnimations.horseIdleAnimationConfig, context.mainAnimationContainer());
 
             context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.HORSE_IDLE_ANIMATION.getAnimationId()));
             context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.HORSE_IDLE_ANIMATION.getAnimationId());

@@ -9,12 +9,12 @@ import static com.github.razorplay01.customplayeranimation.CustomPlayerAnimation
 
 public class OnFenceWalkAnimation implements ICustomAnimation {
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.moveAnimations.onFenceWalkAnimationConfig.isEnabled()) {
+        if (!CONFIG.getMainAnimations().moveAnimations.onFenceWalkAnimationConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
         } else {
-            context.mainAnimationContainer().setAnimationSpeed((float) context.playerData().getMovementSpeed() * CONFIG.moveAnimations.getAnimationMoveSpeedMultiplier() * CONFIG.moveAnimations.onFenceWalkAnimationConfig.getSpeedMultiplier());
-            context.mainAnimationContainer().setAnimationFadeTime(CONFIG.moveAnimations.onFenceWalkAnimationConfig.getFadeTime());
-            context.mainAnimationContainer().setAnimationPriority(CONFIG.moveAnimations.onFenceWalkAnimationConfig.getPriority());
+            context.mainAnimationContainer().setAnimationSpeed((float) context.playerData().getMovementSpeed() * CONFIG.getMainAnimations().moveAnimations.getAnimationMoveSpeedMultiplier() * CONFIG.getMainAnimations().moveAnimations.onFenceWalkAnimationConfig.getSpeedMultiplier());
+            context.mainAnimationContainer().setAnimationFadeTime(CONFIG.getMainAnimations().moveAnimations.onFenceWalkAnimationConfig.getFadeTime());
+            context.mainAnimationContainer().setAnimationPriority(CONFIG.getMainAnimations().moveAnimations.onFenceWalkAnimationConfig.getPriority());
 
             context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.ON_FENCE_WALK_ANIMATION.getAnimationId()));
             context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.ON_FENCE_WALK_ANIMATION.getAnimationId());

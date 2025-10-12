@@ -17,7 +17,7 @@ import static java.lang.Math.toDegrees;
 public class ClimbAnimations implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        if (!CONFIG.extraAnimations.climbingAnimationsConfig.isEnabled()) {
+        if (!CONFIG.getMainAnimations().extraAnimations.climbingAnimationsConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
             return;
         }
@@ -88,7 +88,7 @@ public class ClimbAnimations implements ICustomAnimation {
     }
 
     private static void configureAnimationContainer(AnimationContext context) {
-        var config = CONFIG.extraAnimations.climbingAnimationsConfig;
+        var config = CONFIG.getMainAnimations().extraAnimations.climbingAnimationsConfig;
         var animationContainer = context.mainAnimationContainer();
 
         animationContainer.setAnimationSpeed(config.getSpeedMultiplier());
