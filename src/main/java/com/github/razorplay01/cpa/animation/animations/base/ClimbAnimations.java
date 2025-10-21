@@ -39,7 +39,7 @@ public class ClimbAnimations implements ICustomAnimation {
     }
 
     private static Block getPlayerBlock(AnimationContext context) {
-        return context.player().clientLevel.getBlockState(context.player().blockPosition()).getBlock();
+        return context.player().level().getBlockState(context.player().blockPosition()).getBlock();
     }
 
     private static boolean isLadderOrVine(Block block) {
@@ -116,7 +116,7 @@ public class ClimbAnimations implements ICustomAnimation {
 
     private static void setBodyRotationInLeadderAndVineBlocks(AnimationContext context) {
         if (!(context.player().getUseItem().getItem() instanceof BowItem)) {
-            String blockStateString = String.valueOf(context.player().clientLevel.getBlockState(context.player().blockPosition()));
+            String blockStateString = String.valueOf(context.player().level().getBlockState(context.player().blockPosition()));
             context.playerData().setPlayerBodyYaw(context.player().getVisualRotationYInDegrees());
             context.playerData().setPlayerHeadYaw(context.player().getYHeadRot());
             if (blockStateString.contains("facing=north") || blockStateString.contains("south=true")) {

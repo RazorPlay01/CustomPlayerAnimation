@@ -89,14 +89,16 @@ publishMods {
     curseforge {
         projectId = "1364067"
         accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
-        minecraftVersions.add("1.21.8")
+        minecraftVersions.add("1.21.9")
+        minecraftVersions.add("1.21.10")
         requires("fabric-api")
         requires("player-animation-library")
     }
     modrinth {
         projectId = "EhthJpjM"
         accessToken = providers.environmentVariable("MODRINTH_TOKEN")
-        minecraftVersions.add("1.21.8")
+        minecraftVersions.add("1.21.9")
+        minecraftVersions.add("1.21.10")
         requires("fabric-api")
         requires("player-animation-library")
     }

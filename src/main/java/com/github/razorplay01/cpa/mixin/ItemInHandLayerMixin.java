@@ -1,6 +1,7 @@
 package com.github.razorplay01.cpa.mixin;
 
 import com.github.razorplay01.cpa.util.MapRenderer;
+import com.github.razorplay01.cpa.util.interfaces.ExtendedItemStackRenderState;
 import com.github.razorplay01.cpa.util.interfaces.HumanoidRenderStateAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -8,11 +9,14 @@ import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
-import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
@@ -32,18 +36,29 @@ public abstract class ItemInHandLayerMixin<S extends ArmedEntityRenderState, M e
         super(renderLayerParent);
     }
 
-    @Inject(method = "renderArmWithItem", at = @At("HEAD"), cancellable = true)
-    private void renderArmWithItem(S armedEntityRenderState, ItemStackRenderState itemStackRenderState, HumanoidArm humanoidArm, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
-        if (!(armedEntityRenderState instanceof PlayerRenderState playerRenderState)) return;
+    @Inject(method = "submitArmWithItem(Lnet/minecraft/client/renderer/entity/state/ArmedEntityRenderState;Lnet/minecraft/client/renderer/item/ItemStackRenderState;Lnet/minecraft/world/entity/HumanoidArm;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;I)V", at = @At("HEAD"), cancellable = true)
+    private void renderArmWithItem(S armedEntityRenderState, ItemStackRenderState itemStackRenderState, HumanoidArm humanoidArm, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, CallbackInfo ci) {
+        if (!(armedEntityRenderState instanceof AvatarRenderState playerRenderState)) return;
         LivingEntity livingEntity = ((HumanoidRenderStateAccessor) playerRenderState).getLivingEntity();
-        if (!(livingEntity instanceof Player)) {
+        if (!(livingEntity instanceof Player player)) {
             return;
         }
-        this.onRenderItem(livingEntity, this.getParentModel(), humanoidArm, poseStack, multiBufferSource, i, ci);
+        ItemStack itemStack = null;
+        if (itemStackRenderState instanceof ExtendedItemStackRenderState ext && ext.getItemStack() != null) {
+            itemStack = ext.getItemStack();
+        } else {
+            return;
+        }
+        this.onRenderItem(player, this.getParentModel(), itemStack,
+                humanoidArm, poseStack, submitNodeCollector, armedEntityRenderState, i, ci);
     }
 
     @Unique
-    public void onRenderItem(LivingEntity entity, EntityModel<?> model, HumanoidArm arm, PoseStack matrices, MultiBufferSource vertexConsumers, int light, CallbackInfo info) {
+    public void onRenderItem(LivingEntity entity, EntityModel<?> model, ItemStack itemStack, HumanoidArm arm,
+                             PoseStack poseStack,
+                             SubmitNodeCollector submitNodeCollector,
+                             LivingEntityRenderState livingEntityRenderState,
+                             int light, CallbackInfo info) {
         if (!(model instanceof HumanoidModel<?> humanoid)) {
             return;
         }
@@ -55,7 +70,7 @@ public abstract class ItemInHandLayerMixin<S extends ArmedEntityRenderState, M e
         ItemStack heldItem = isMainHand ? entity.getMainHandItem() : entity.getOffhandItem();
 
         if (heldItem.getItem().equals(Items.FILLED_MAP)) {
-            renderMapInHand(humanoid, arm, matrices, vertexConsumers, light, heldItem);
+            renderMapInHand(entity, humanoid, itemStack, arm, poseStack, submitNodeCollector, livingEntityRenderState, light, info);
             info.cancel();
         }
     }
@@ -67,19 +82,22 @@ public abstract class ItemInHandLayerMixin<S extends ArmedEntityRenderState, M e
     }
 
     @Unique
-    private void renderMapInHand(HumanoidModel<?> humanoid, HumanoidArm arm, PoseStack matrices,
-                                 MultiBufferSource vertexConsumers, int light, ItemStack itemStack) {
-        matrices.pushPose();
-        humanoid.translateToHand(arm, matrices);
+    private void renderMapInHand(LivingEntity entity, HumanoidModel<?> humanoid, ItemStack itemStack, HumanoidArm arm,
+                                 PoseStack poseStack,
+                                 SubmitNodeCollector submitNodeCollector,
+                                 LivingEntityRenderState livingEntityRenderState,
+                                 int light, CallbackInfo info) {
+        poseStack.pushPose();
+        humanoid.translateToHand((HumanoidRenderState) livingEntityRenderState, arm, poseStack);
 
-        matrices.mulPose(Axis.XP.rotationDegrees(-90.0f));
-        matrices.mulPose(Axis.YP.rotationDegrees(200.0f));
+        poseStack.mulPose(Axis.XP.rotationDegrees(-90.0f));
+        poseStack.mulPose(Axis.YP.rotationDegrees(200.0f));
 
         boolean isLeftHand = arm == HumanoidArm.LEFT;
-        matrices.translate((isLeftHand ? -1 : 1) / 16.0f, 0.125, -0.625);
+        poseStack.translate((isLeftHand ? -1 : 1) / 16.0f, 0.125, -0.625);
 
-        MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack);
+        MapRenderer.renderFirstPersonMap(poseStack, submitNodeCollector, light, itemStack, !entity.getOffhandItem().isEmpty(), entity.getMainArm() == HumanoidArm.LEFT);
 
-        matrices.popPose();
+        poseStack.popPose();
     }
 }

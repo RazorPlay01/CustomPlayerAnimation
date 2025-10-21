@@ -8,11 +8,12 @@
   ],
   "client": [
     "AbstractClientPlayerEntityMixin",
+    "HumanoidRenderStateMixin",
     "ItemInHandLayerMixin",
+    "ItemStackRenderStateMixin",
     "LivingEntityRendererMixin",
     "PlayerEntityRendererMixin",
-    "PlayerRendererAccesor",
-    "HumanoidRenderStateMixin"
+    "PlayerRendererAccesor"
   ],
   "injectors": {
     "defaultRequire": 1
