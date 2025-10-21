@@ -1,6 +1,6 @@
 package com.github.razorplay01.cpa.mixin;
 
-import com.github.razorplay01.cpa.util.interfaces.PlayerRenderStateAccessor;
+import com.github.razorplay01.cpa.util.interfaces.HumanoidRenderStateAccessor;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.entity.state.PlayerRenderState;
@@ -21,6 +21,6 @@ public abstract class PlayerEntityRendererMixin {
     }
     @Inject(method = "extractRenderState(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/client/renderer/entity/state/PlayerRenderState;F)V", at = @At("RETURN"))
     private void onExtractRenderState(AbstractClientPlayer abstractClientPlayer, net.minecraft.client.renderer.entity.state.PlayerRenderState playerRenderState, float f, CallbackInfo ci) {
-        ((PlayerRenderStateAccessor) playerRenderState).setPlayer(abstractClientPlayer);
+        ((HumanoidRenderStateAccessor) playerRenderState).setLivingEntity(abstractClientPlayer);
     }
 }

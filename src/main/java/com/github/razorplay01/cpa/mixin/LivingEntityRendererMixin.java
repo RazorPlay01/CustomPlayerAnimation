@@ -1,6 +1,6 @@
 package com.github.razorplay01.cpa.mixin;
 
-import com.github.razorplay01.cpa.util.interfaces.PlayerRenderStateAccessor;
+import com.github.razorplay01.cpa.util.interfaces.HumanoidRenderStateAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import net.minecraft.client.model.EntityModel;
@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import org.joml.Quaternionfc;
@@ -32,7 +33,9 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extend
             )
     )
     private boolean disableDeathRotationForPlayer(PoseStack instance, Quaternionfc quaternionfc, S livingEntityRenderState) {
-        LivingEntity livingEntity = ((PlayerRenderStateAccessor) livingEntityRenderState).getPlayer();
-        return !(livingEntity instanceof Player && CONFIG.getMainAnimations().deathAnimations.isEnabled());
+        if (!(livingEntityRenderState instanceof PlayerRenderState playerRenderState)) return false;
+        LivingEntity livingEntity = ((HumanoidRenderStateAccessor) playerRenderState).getLivingEntity();
+        if (!(livingEntity instanceof Player)) return false;
+        return CONFIG.getMainAnimations().deathAnimations.isEnabled();
     }
 }

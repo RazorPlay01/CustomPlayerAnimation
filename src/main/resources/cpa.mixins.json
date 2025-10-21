@@ -12,7 +12,7 @@
     "LivingEntityRendererMixin",
     "PlayerEntityRendererMixin",
     "PlayerRendererAccesor",
-    "PlayerRenderStateMixin"
+    "HumanoidRenderStateMixin"
   ],
   "injectors": {
     "defaultRequire": 1

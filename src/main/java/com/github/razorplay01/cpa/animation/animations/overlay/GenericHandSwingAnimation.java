@@ -83,10 +83,10 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
         context.mainAnimationContainer().getDisabledBoneIds().remove(partIdToEnable);
         context.overlayAnimationContainer().getDisabledBoneIds().remove(partIdToEnable);
         context.specialAnimationContainer().getDisabledBoneIds().remove(partIdToEnable);
-        
+
         // Forzar un cambio de animación para asegurar que se actualice el estado del brazo
         forceAnimationChange(context);
-        
+
         // Actualizar los controladores de animación para reflejar los cambios inmediatamente
         // y asegurarse de que la parte del cuerpo esté habilitada incluso después de applyDisables()
         updateAnimationController(context.mainAnimationContainer(), partIdToEnable);
@@ -119,10 +119,24 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
      * Guarda las animaciones actuales, aplica una animación en blanco y luego restaura las originales
      */
     private void forceAnimationChange(AnimationContext context) {
-        // Guardar las animaciones actuales de cada contenedor
-        Animation currentMainAnimation = context.mainAnimationContainer().getAnimationController().getCurrentAnimation().animation();
-        Animation currentOverlayAnimation = context.overlayAnimationContainer().getAnimationController().getCurrentAnimation().animation();
-        Animation currentSpecialAnimation = context.specialAnimationContainer().getAnimationController().getCurrentAnimation().animation();
+        // Guardar las animaciones actuales de cada contenedor, con chequeo de null
+        Animation currentMainAnimation = null;
+        var mainQueued = context.mainAnimationContainer().getAnimationController().getCurrentAnimation();
+        if (mainQueued != null) {
+            currentMainAnimation = mainQueued.animation();
+        }
+
+        Animation currentOverlayAnimation = null;
+        var overlayQueued = context.overlayAnimationContainer().getAnimationController().getCurrentAnimation();
+        if (overlayQueued != null) {
+            currentOverlayAnimation = overlayQueued.animation();
+        }
+
+        Animation currentSpecialAnimation = null;
+        var specialQueued = context.specialAnimationContainer().getAnimationController().getCurrentAnimation();
+        if (specialQueued != null) {
+            currentSpecialAnimation = specialQueued.animation();
+        }
 
         // Crear una animación en blanco para resetear el estado
         RawAnimation blankAnimation =
@@ -145,7 +159,7 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
         );
 
         // Restaurar las animaciones originales después de un breve retraso
-        // Solo restaurar si la animación original no era nula
+        // Solo restaurar si la animación original no era null
         if (currentMainAnimation != null) {
             context.mainAnimationContainer().getAnimationController().replaceAnimationWithFade(
                     AbstractFadeModifier.standardFadeIn(2, EasingType.EASE_IN_OUT_SINE),

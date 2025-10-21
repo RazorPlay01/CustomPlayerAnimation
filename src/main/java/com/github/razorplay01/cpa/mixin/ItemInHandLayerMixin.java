@@ -1,7 +1,7 @@
 package com.github.razorplay01.cpa.mixin;
 
 import com.github.razorplay01.cpa.util.MapRenderer;
-import com.github.razorplay01.cpa.util.interfaces.PlayerRenderStateAccessor;
+import com.github.razorplay01.cpa.util.interfaces.HumanoidRenderStateAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.model.ArmedModel;
@@ -12,9 +12,11 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
+import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,8 +34,12 @@ public abstract class ItemInHandLayerMixin<S extends ArmedEntityRenderState, M e
 
     @Inject(method = "renderArmWithItem", at = @At("HEAD"), cancellable = true)
     private void renderArmWithItem(S armedEntityRenderState, ItemStackRenderState itemStackRenderState, HumanoidArm humanoidArm, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
-        LivingEntity livingEntity = ((PlayerRenderStateAccessor) armedEntityRenderState).getPlayer();
-        onRenderItem(livingEntity, this.getParentModel(), humanoidArm, poseStack, multiBufferSource, i, ci);
+        if (!(armedEntityRenderState instanceof PlayerRenderState playerRenderState)) return;
+        LivingEntity livingEntity = ((HumanoidRenderStateAccessor) playerRenderState).getLivingEntity();
+        if (!(livingEntity instanceof Player)) {
+            return;
+        }
+        this.onRenderItem(livingEntity, this.getParentModel(), humanoidArm, poseStack, multiBufferSource, i, ci);
     }
 
     @Unique
