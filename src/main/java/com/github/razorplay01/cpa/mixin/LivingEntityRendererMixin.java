@@ -33,9 +33,8 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extend
             )
     )
     private boolean disableDeathRotationForPlayer(PoseStack instance, Quaternionfc quaternionfc, S livingEntityRenderState) {
-        if (!(livingEntityRenderState instanceof PlayerRenderState playerRenderState)) return false;
-        LivingEntity livingEntity = ((HumanoidRenderStateAccessor) playerRenderState).getLivingEntity();
-        if (!(livingEntity instanceof Player)) return false;
+        if (!(livingEntityRenderState instanceof PlayerRenderState playerRenderState)) return true;
+        if (!(((HumanoidRenderStateAccessor) playerRenderState).getLivingEntity() instanceof Player)) return true;
         return CONFIG.getMainAnimations().deathAnimations.isEnabled();
     }
 }
