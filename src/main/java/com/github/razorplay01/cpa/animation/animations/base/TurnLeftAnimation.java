@@ -22,9 +22,9 @@ public class TurnLeftAnimation implements ICustomAnimation {
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
         return context.playerData().getBodyYawDelta() != 0 &&
-                !context.player().isCrouching() &&
+                !context.avatar().isCrouching() &&
                 context.playerData().getBodyYawDelta() < 0 &&
-                !context.player().isPassenger();
+                !context.avatar().isPassenger();
     }
 
     private static void handleTurningAnimation(AnimationContext context) {

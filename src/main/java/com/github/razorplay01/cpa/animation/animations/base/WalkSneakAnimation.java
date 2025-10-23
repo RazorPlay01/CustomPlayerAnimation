@@ -23,7 +23,7 @@ public class WalkSneakAnimation implements ICustomAnimation {
     public boolean shouldPlayAnimation(AnimationContext context) {
         return context.playerData().getMovementSpeed() > 0
                 && !context.playerData().isMovingBackwards()
-                && context.player().isCrouching() && !context.player().isPassenger();
+                && context.avatar().isCrouching() && !context.avatar().isPassenger();
     }
 
     private static void configureWalkSneakAnimation(AnimationContext context) {

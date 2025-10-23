@@ -23,6 +23,6 @@ public class InWaterSwimAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return context.player().isUnderWater() && context.player().isVisuallySwimming();
+        return context.avatar().isUnderWater() && context.avatar().isVisuallySwimming();
     }
 }

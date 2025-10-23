@@ -6,6 +6,7 @@ import lombok.Setter;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Avatar;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.*;
@@ -46,7 +47,7 @@ public class PlayerData {
     private boolean prevMainHandUp = false;
     private boolean prevOffHandUp = false;
 
-    public void update(AbstractClientPlayer player) {
+    public void update(Avatar player) {
         if (player == null) return;
         updateHandOrientation(player.getMainArm());
         updatePlayerPosition(player.getYHeadRot(), player.getVisualRotationYInDegrees(), player.position());
@@ -56,8 +57,8 @@ public class PlayerData {
         updateMovementTicks(player);
     }
 
-    private void updateMovementTicks(AbstractClientPlayer player) {
-        if (getMovementSpeed() > 0 && !isMovingBackwards() && !player.isCrouching() && !player.isPassenger()) {
+    private void updateMovementTicks(Avatar avatar) {
+        if (getMovementSpeed() > 0 && !isMovingBackwards() && !avatar.isCrouching() && !avatar.isPassenger()) {
             setMovementTicks(getMovementTicks() + 1);
         } else {
             setMovementTicks(0);
@@ -92,17 +93,17 @@ public class PlayerData {
         setMovingBackwards(movementVector.length() > 0 && movementVector.dot(lookVector) < 0);
     }
 
-    private void updateEnvironmentInfo(AbstractClientPlayer player) {
-        Block standingBlock = player.level().getBlockState(player.blockPosition().below()).getBlock();
-        setOnFence((standingBlock instanceof FenceBlock || standingBlock instanceof WallBlock || standingBlock instanceof IronBarsBlock) && player.onGround());
-        setOnEdge(standingBlock instanceof AirBlock && player.onGround());
+    private void updateEnvironmentInfo(Avatar avatar) {
+        Block standingBlock = avatar.level().getBlockState(avatar.blockPosition().below()).getBlock();
+        setOnFence((standingBlock instanceof FenceBlock || standingBlock instanceof WallBlock || standingBlock instanceof IronBarsBlock) && avatar.onGround());
+        setOnEdge(standingBlock instanceof AirBlock && avatar.onGround());
     }
 
-    private void updateFlyChecker(AbstractClientPlayer player) {
+    private void updateFlyChecker(Avatar avatar) {
         double flyVectorY = Math.round(getVectorY() * 1000.0) / 1000.0;
-        if ((flyVectorY == 0.0 || Math.abs(flyVectorY) == 0.375) && !player.onGround() && !player.isUnderWater()) {
+        if ((flyVectorY == 0.0 || Math.abs(flyVectorY) == 0.375) && !avatar.onGround() && !avatar.isUnderWater()) {
             setFlychecker(getFlychecker() + 1);
-        } else if (Math.abs(flyVectorY) > 0.375 || player.onGround()) {
+        } else if (Math.abs(flyVectorY) > 0.375 || avatar.onGround()) {
             setFlychecker(0);
         }
     }

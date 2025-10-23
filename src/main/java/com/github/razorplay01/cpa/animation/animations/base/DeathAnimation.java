@@ -51,11 +51,11 @@ public class DeathAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return context.player().getHealth() <= 0;
+        return context.avatar().getHealth() <= 0;
     }
 
     private String getDeathAnimationId(AnimationContext context) {
-        DamageSource lastDamageSource = context.player().getLastDamageSource();
+        DamageSource lastDamageSource = context.avatar().getLastDamageSource();
         if (lastDamageSource != null) {
             if (lastDamageSource.is(DamageTypes.IN_FIRE) || lastDamageSource.is(DamageTypes.ON_FIRE) || lastDamageSource.is(DamageTypes.CAMPFIRE)) {
                 return AnimationsId.DEATH_BURN_ANIMATION.getAnimationId();

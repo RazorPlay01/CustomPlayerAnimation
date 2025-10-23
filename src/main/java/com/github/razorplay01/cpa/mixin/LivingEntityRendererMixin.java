@@ -10,8 +10,8 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.world.entity.Avatar;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import org.joml.Quaternionfc;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -33,9 +33,8 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extend
             )
     )
     private boolean disableDeathRotationForPlayer(PoseStack instance, Quaternionfc quaternionfc, S livingEntityRenderState) {
-        if (!(livingEntityRenderState instanceof AvatarRenderState playerRenderState)) return false;
-        LivingEntity livingEntity = ((HumanoidRenderStateAccessor) playerRenderState).getLivingEntity();
-        if (!(livingEntity instanceof Player)) return false;
+        if (!(livingEntityRenderState instanceof AvatarRenderState playerRenderState)) return true;
+        if (!(((HumanoidRenderStateAccessor) playerRenderState).getLivingEntity() instanceof Avatar)) return true;
         return CONFIG.getMainAnimations().deathAnimations.isEnabled();
     }
 }

@@ -25,8 +25,8 @@ public class OnFenceWalkAnimation implements ICustomAnimation {
     public boolean shouldPlayAnimation(AnimationContext context) {
         return context.playerData().getMovementSpeed() > 0
                 && !context.playerData().isMovingBackwards() &&
-                !context.player().isCrouching()
+                !context.avatar().isCrouching()
                 && context.playerData().isOnFence()
-                && !context.player().isPassenger();
+                && !context.avatar().isPassenger();
     }
 }

@@ -6,6 +6,7 @@ import com.zigythebird.playeranimcore.animation.layered.modifier.AdjustmentModif
 import com.zigythebird.playeranimcore.api.firstPerson.FirstPersonMode;
 import com.zigythebird.playeranimcore.math.Vec3f;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.world.entity.Avatar;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ShieldItem;
@@ -19,13 +20,13 @@ public class CustomModifiers {
         // []
     }
 
-    public static AdjustmentModifier createBowModifier(AbstractClientPlayer player) {
+    public static AdjustmentModifier createBowModifier(Avatar avatar) {
         return new AdjustmentModifier(partName -> {
-            boolean isUsingBow = player.isUsingItem() && player.getUseItem().getItem() instanceof BowItem;
+            boolean isUsingBow = avatar.isUsingItem() && avatar.getUseItem().getItem() instanceof BowItem;
             if (!isUsingBow) return Optional.empty();
-            boolean isRight = (player.getMainArm() != HumanoidArm.RIGHT || !(player.getOffhandItem().getItem() instanceof BowItem)) && (player.getMainArm() != HumanoidArm.LEFT || !(player.getMainHandItem().getItem() instanceof BowItem));
+            boolean isRight = (avatar.getMainArm() != HumanoidArm.RIGHT || !(avatar.getOffhandItem().getItem() instanceof BowItem)) && (avatar.getMainArm() != HumanoidArm.LEFT || !(avatar.getMainHandItem().getItem() instanceof BowItem));
 
-            float pitch = (float) Math.toRadians(player.getXRot());
+            float pitch = (float) Math.toRadians(avatar.getXRot());
             if (partName.equals(BodyParts.RIGHT_ARM.getPartId()) || partName.equals(BodyParts.LEFT_ARM.getPartId())) {
                 return Optional.of(new AdjustmentModifier.PartModifier(
                         new Vec3f(0, 0, isRight ? -pitch : pitch),
@@ -36,12 +37,12 @@ public class CustomModifiers {
         });
     }
 
-    public static AdjustmentModifier createShieldModifier(AbstractClientPlayer player) {
+    public static AdjustmentModifier createShieldModifier(Avatar avatar) {
         return new AdjustmentModifier(partName -> {
-            boolean isUsingShield = player.isUsingItem() && player.getUseItem().getItem() instanceof ShieldItem;
+            boolean isUsingShield = avatar.isUsingItem() && avatar.getUseItem().getItem() instanceof ShieldItem;
             if (!isUsingShield) return Optional.empty();
 
-            float limitedPitch = Math.clamp(player.getXRot(), -45, 45);
+            float limitedPitch = Math.clamp(avatar.getXRot(), -45, 45);
             float pitch = (float) Math.toRadians(limitedPitch) * 0.5f;
 
             if (partName.equals(BodyParts.LEFT_ARM.getPartId()) || partName.equals(BodyParts.RIGHT_ARM.getPartId())) {
@@ -54,13 +55,13 @@ public class CustomModifiers {
         });
     }
 
-    public static AdjustmentModifier createSwingModifier(AbstractClientPlayer player, AnimationContainer animationContainer) {
+    public static AdjustmentModifier createSwingModifier(Avatar avatar, AnimationContainer animationContainer) {
         return new AdjustmentModifier(partName -> {
-            if (!isSwingingSwordOrTools(player, animationContainer)) {
+            if (!isSwingingSwordOrTools(avatar, animationContainer)) {
                 return Optional.empty();
             }
 
-            float pitchRadians = (float) Math.toRadians(player.getXRot());
+            float pitchRadians = (float) Math.toRadians(avatar.getXRot());
             if (FirstPersonMode.isFirstPersonPass()) {
                 return handleFirstPersonPass(partName, pitchRadians);
             } else {

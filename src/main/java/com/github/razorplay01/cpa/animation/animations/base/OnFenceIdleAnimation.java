@@ -23,6 +23,6 @@ public class OnFenceIdleAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return context.playerData().getMovementSpeed() == 0 && context.playerData().getBodyYawDelta() == 0 && !context.player().isCrouching() && context.playerData().isOnFence() && !context.player().isPassenger();
+        return context.playerData().getMovementSpeed() == 0 && context.playerData().getBodyYawDelta() == 0 && !context.avatar().isCrouching() && context.playerData().isOnFence() && !context.avatar().isPassenger();
     }
 }

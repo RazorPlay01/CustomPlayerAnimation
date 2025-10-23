@@ -23,6 +23,6 @@ public class InWaterIdleAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return (context.player().isUnderWater() || context.player().isInLava()) && !context.player().onGround() && !context.player().isVisuallySwimming();
+        return (context.avatar().isUnderWater() || context.avatar().isInLava()) && !context.avatar().onGround() && !context.avatar().isVisuallySwimming();
     }
 }

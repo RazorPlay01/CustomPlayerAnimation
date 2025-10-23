@@ -24,7 +24,7 @@ public class MinecartAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        var vehicle = context.player().getVehicle();
-        return context.player().isPassenger() && vehicle instanceof Minecart;
+        var vehicle = context.avatar().getVehicle();
+        return context.avatar().isPassenger() && vehicle instanceof Minecart;
     }
 }

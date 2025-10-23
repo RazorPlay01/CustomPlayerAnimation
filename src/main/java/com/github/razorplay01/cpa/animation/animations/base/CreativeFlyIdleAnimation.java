@@ -3,6 +3,7 @@ package com.github.razorplay01.cpa.animation.animations.base;
 import com.github.razorplay01.cpa.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.util.records.AnimationContext;
+import net.minecraft.world.entity.player.Player;
 
 import static com.github.razorplay01.cpa.CustomPlayerAnimations.CONFIG;
 import static com.github.razorplay01.cpa.CustomPlayerAnimations.getAnimation;
@@ -16,9 +17,10 @@ public class CreativeFlyIdleAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
+        if (!(context.avatar() instanceof Player player)) return false;
         return context.playerData().getFlychecker() > 10 &&
-                !context.player().isPassenger() &&
-                context.player().isCreative();
+                !player.isPassenger() &&
+                player.isCreative();
     }
 
     private static void playFlyIdleCreativeAnimation(AnimationContext context) {

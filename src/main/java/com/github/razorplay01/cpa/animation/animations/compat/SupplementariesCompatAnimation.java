@@ -17,16 +17,16 @@ import static dev.razorplay.customplayeranimations.util.Util.disableBothArms;
 public class SupplementariesCompatAnimation implements ICustomAnimation {
     public void playAnimation(AnimationContext context) {
         if (!FirstPersonConditionRegistry.hasCondition(ResourceLocation.fromNamespaceAndPath(CustomPlayerAnimations.MOD_ID, "flute_item"))) {
-            FirstPersonConditionRegistry.register(ResourceLocation.fromNamespaceAndPath(CustomPlayerAnimations.MOD_ID, "flute_item"), player ->
-                    context.player().getUseItem().getItem() instanceof FluteItem
+            FirstPersonConditionRegistry.register(ResourceLocation.fromNamespaceAndPath(CustomPlayerAnimations.MOD_ID, "flute_item"), avatar ->
+                    context.avatar().getUseItem().getItem() instanceof FluteItem
             );
         }
-        if (context.player().isUsingItem()) {
-            if (checkFluteItem(context.player().getUseItem().getItem())) {
+        if (context.avatar().isUsingItem()) {
+            if (checkFluteItem(context.avatar().getUseItem().getItem())) {
                 disableBothArms(context);
             }
-            if (checkSlingShotItem(context.player().getUseItem().getItem()) || checkBubbleBlowerItem(context.player().getUseItem().getItem())) {
-                context.player().disableActiveArm(context.mainAnimationContainer());
+            if (checkSlingShotItem(context.avatar().getUseItem().getItem()) || checkBubbleBlowerItem(context.avatar().getUseItem().getItem())) {
+                context.avatar().disableActiveArm(context.mainAnimationContainer());
             }
         }
     }

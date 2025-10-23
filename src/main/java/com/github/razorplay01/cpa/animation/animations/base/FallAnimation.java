@@ -24,7 +24,7 @@ public class FallAnimation implements ICustomAnimation {
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
         return context.playerData().getVectorY() < -0.6 &&
-                !context.player().isPassenger() &&
-                !context.player().onGround();
+                !context.avatar().isPassenger() &&
+                !context.avatar().onGround();
     }
 }

@@ -13,7 +13,7 @@ import static com.github.razorplay01.cpa.util.Util.isBoat;
 public class BoatTurnAnimations implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        var vehicle = context.player().getVehicle();
+        var vehicle = context.avatar().getVehicle();
         if (isBoat(vehicle)) {
             if (!CONFIG.getMainAnimations().mountAnimations.boatAnimations.boatTurnAnimationConfig.isEnabled()) {
                 context.mainAnimationContainer().disableAnimation();
@@ -27,7 +27,7 @@ public class BoatTurnAnimations implements ICustomAnimation {
     }
 
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return context.player().isPassenger() && context.playerData().getMovementSpeed() > 0 && !context.playerData().isMovingBackwards();
+        return context.avatar().isPassenger() && context.playerData().getMovementSpeed() > 0 && !context.playerData().isMovingBackwards();
     }
 
     private static void playBoatTurnAnimation(AnimationContext context, Boat boat) {

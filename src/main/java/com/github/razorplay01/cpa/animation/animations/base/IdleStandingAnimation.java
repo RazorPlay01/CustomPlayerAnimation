@@ -25,7 +25,7 @@ public class IdleStandingAnimation implements ICustomAnimation {
     public boolean shouldPlayAnimation(AnimationContext context) {
         return context.playerData().getMovementSpeed() == 0 &&
                 context.playerData().getBodyYawDelta() == 0 &&
-                !context.player().isCrouching() &&
-                !context.player().isPassenger();
+                !context.avatar().isCrouching() &&
+                !context.avatar().isPassenger();
     }
 }

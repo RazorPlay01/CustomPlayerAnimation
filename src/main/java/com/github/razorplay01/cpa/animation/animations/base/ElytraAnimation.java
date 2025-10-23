@@ -23,6 +23,6 @@ public class ElytraAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return context.player().isFallFlying() && !context.player().isPassenger();
+        return context.avatar().isFallFlying() && !context.avatar().isPassenger();
     }
 }

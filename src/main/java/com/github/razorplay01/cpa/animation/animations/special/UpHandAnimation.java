@@ -7,6 +7,7 @@ import com.github.razorplay01.cpa.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.util.records.AnimationContext;
 import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.world.entity.Avatar;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -25,7 +26,7 @@ public class UpHandAnimation implements ICustomAnimation {
     );
 
     public void playAnimation(AnimationContext context) {
-        HandStates handStates = determineHandStates(context.player());
+        HandStates handStates = determineHandStates(context.avatar());
         handleHandStateChange(handStates, context.mainAnimationContainer(), context);
         boolean configEnabled = CONFIG.getSpecialAnimations().upHandAnimationConfig.isEnabled();
         boolean shouldPlay = configEnabled && shouldPlayHandAnimation(handStates, context);
@@ -45,10 +46,10 @@ public class UpHandAnimation implements ICustomAnimation {
         return true;  // Siempre considera, la lógica de config está en playAnimation para poder deshabilitar si es necesario.
     }
 
-    private static HandStates determineHandStates(AbstractClientPlayer player) {
+    private static HandStates determineHandStates(Avatar avatar) {
         return new HandStates(
-                isHandUp(player.getMainHandItem()),
-                isHandUp(player.getOffhandItem())
+                isHandUp(avatar.getMainHandItem()),
+                isHandUp(avatar.getOffhandItem())
         );
     }
 
@@ -72,10 +73,10 @@ public class UpHandAnimation implements ICustomAnimation {
 
     private static void playHandAnimations(HandStates states, AnimationContext context) {
         if (states.isMainHandUp) {
-            setUpHandAnimation(context, context.player().getMainArm());
+            setUpHandAnimation(context, context.avatar().getMainArm());
         }
         if (states.isOffHandUp) {
-            setUpHandAnimation(context, getOppositeArm(context.player().getMainArm()));
+            setUpHandAnimation(context, getOppositeArm(context.avatar().getMainArm()));
         }
     }
 

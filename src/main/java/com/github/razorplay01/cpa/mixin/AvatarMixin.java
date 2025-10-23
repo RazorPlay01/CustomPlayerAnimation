@@ -10,7 +10,6 @@ import com.github.razorplay01.cpa.util.interfaces.IAnimationControl;
 import com.github.razorplay01.cpa.util.interfaces.ICustomAnimatedPlayer;
 import com.github.razorplay01.cpa.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.util.records.AnimationContext;
-import com.mojang.authlib.GameProfile;
 import com.zigythebird.playeranim.api.PlayerAnimationAccess;
 import com.zigythebird.playeranimcore.animation.AnimationController;
 import com.zigythebird.playeranimcore.animation.RawAnimation;
@@ -19,12 +18,14 @@ import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
 import com.zigythebird.playeranimcore.animation.layered.modifier.SpeedModifier;
 import com.zigythebird.playeranimcore.easing.EasingType;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.world.entity.Avatar;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import org.spongepowered.asm.mixin.Intrinsic;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -38,8 +39,8 @@ import static com.github.razorplay01.cpa.util.CustomModifiers.*;
 import static com.github.razorplay01.cpa.util.Util.addModifiersToContainer;
 import static net.minecraft.world.InteractionHand.MAIN_HAND;
 
-@Mixin(AbstractClientPlayer.class)
-public abstract class AbstractClientPlayerEntityMixin extends Player implements IAnimationControl, ICustomAnimatedPlayer {
+@Mixin(Avatar.class)
+public abstract class AvatarMixin extends LivingEntity implements IAnimationControl, ICustomAnimatedPlayer {
     @Unique
     private AnimationContainer mainAnimationContainer;
 
@@ -55,14 +56,14 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     @Unique
     private AnimationContext actualAnimationContext;
 
-    protected AbstractClientPlayerEntityMixin(Level level, GameProfile gameProfile) {
-        super(level, gameProfile);
+    protected AvatarMixin(EntityType<? extends LivingEntity> entityType, Level level) {
+        super(entityType, level);
     }
 
     @Inject(method = "<init>", at = @At(value = "TAIL"))
-    private void init(ClientLevel clientLevel, GameProfile gameProfile, CallbackInfo ci) {
+    private void init(EntityType entityType, Level level, CallbackInfo ci) {
         this.mainAnimationContainer = new AnimationContainer(
-                (AnimationController) PlayerAnimationAccess.getPlayerAnimationLayer((AbstractClientPlayer) (Object) this, MAIN_ANIMATION_CONTAINER_LAYER_ID),
+                (AnimationController) PlayerAnimationAccess.getPlayerAnimationLayer((Avatar) (Object) this, MAIN_ANIMATION_CONTAINER_LAYER_ID),
                 new HashMap<>(
                         Map.of(Modifiers.MIRROR_MODIFIER.getModifierId(), new MirrorModifier(),
                                 Modifiers.SPEED_MODIFIER.getModifierId(), new SpeedModifier(1.0f))),
@@ -74,13 +75,13 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
                 0,
                 0);
         this.overlayAnimationContainer = new AnimationContainer(
-                (AnimationController) PlayerAnimationAccess.getPlayerAnimationLayer((AbstractClientPlayer) (Object) this, OVERLAY_ANIMATION_CONTAINER_LAYER_ID),
+                (AnimationController) PlayerAnimationAccess.getPlayerAnimationLayer((Avatar) (Object) this, OVERLAY_ANIMATION_CONTAINER_LAYER_ID),
                 new HashMap<>(
                         Map.of(Modifiers.MIRROR_MODIFIER.getModifierId(), new MirrorModifier(),
                                 Modifiers.SPEED_MODIFIER.getModifierId(), new SpeedModifier(1.0f),
-                                Modifiers.SHIELD_MODIFIER.getModifierId(), createShieldModifier((AbstractClientPlayer) (Object) this),
-                                Modifiers.HAND_SWING_MODIFIER.getModifierId(), createSwingModifier((AbstractClientPlayer) (Object) this, mainAnimationContainer),
-                                Modifiers.BOW_MODIFIER.getModifierId(), createBowModifier((AbstractClientPlayer) (Object) this)
+                                Modifiers.SHIELD_MODIFIER.getModifierId(), createShieldModifier((Avatar) (Object) this),
+                                Modifiers.HAND_SWING_MODIFIER.getModifierId(), createSwingModifier((Avatar) (Object) this, mainAnimationContainer),
+                                Modifiers.BOW_MODIFIER.getModifierId(), createBowModifier((Avatar) (Object) this)
                         )),
                 getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()),
                 AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId(),
@@ -90,7 +91,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
                 0,
                 0);
         this.specialAnimationContainer = new AnimationContainer(
-                (AnimationController) PlayerAnimationAccess.getPlayerAnimationLayer((AbstractClientPlayer) (Object) this, SPECIAL_ANIMATION_CONTAINER_LAYER_ID),
+                (AnimationController) PlayerAnimationAccess.getPlayerAnimationLayer((Avatar) (Object) this, SPECIAL_ANIMATION_CONTAINER_LAYER_ID),
                 new HashMap<>(
                         Map.of(Modifiers.MIRROR_MODIFIER.getModifierId(), new MirrorModifier(),
                                 Modifiers.SPEED_MODIFIER.getModifierId(), new SpeedModifier(1.0f))),
@@ -111,17 +112,19 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
         addModifiersToContainer(specialAnimationContainer);
     }
 
-    @Inject(method = "tick", at = @At("TAIL"))
-    public void tick(CallbackInfo ci) {
+    @Intrinsic
+    @Override
+    public void tick() {
+        super.tick();
         if (mainAnimationContainer == null || overlayAnimationContainer == null || specialAnimationContainer == null)
             return;
-        this.playerData.update((AbstractClientPlayer) (Object) this);
+        this.playerData.update((Avatar) (Object) this);
 
         enableAllBodyPartsInAllContainers();
 
         overlayAnimationContainer.resetAnimationProperties();
 
-        this.actualAnimationContext = new AnimationContext(mainAnimationContainer, overlayAnimationContainer, specialAnimationContainer, (AbstractClientPlayer) (Object) this, playerData);
+        this.actualAnimationContext = new AnimationContext(mainAnimationContainer, overlayAnimationContainer, specialAnimationContainer, (Avatar) (Object) this, playerData, this, this);
 
         playAnimations();
         updateAnimationSpeeds();
@@ -180,10 +183,10 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Override
     public void disableActiveArm(AnimationContainer animationContainer) {
-        if (actualAnimationContext.player().getUsedItemHand().equals(MAIN_HAND)) {
-            this.disableBodyPartAnimation(animationContainer, actualAnimationContext.player().getMainArm() == HumanoidArm.RIGHT ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
+        if (actualAnimationContext.avatar().getUsedItemHand().equals(MAIN_HAND)) {
+            this.disableBodyPartAnimation(animationContainer, actualAnimationContext.avatar().getMainArm() == HumanoidArm.RIGHT ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
         } else {
-            this.disableBodyPartAnimation(animationContainer, actualAnimationContext.player().getMainArm() == HumanoidArm.RIGHT ? BodyParts.LEFT_ARM : BodyParts.RIGHT_ARM);
+            this.disableBodyPartAnimation(animationContainer, actualAnimationContext.avatar().getMainArm() == HumanoidArm.RIGHT ? BodyParts.LEFT_ARM : BodyParts.RIGHT_ARM);
         }
     }
 
@@ -304,14 +307,16 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Unique
     private void checkMainHandItemForArmDisabling() {
-        if (!getMainHandItem().isEmpty() && isUsingItem() && (isScoping() || getMainHandItem().getItem() instanceof InstrumentItem || getMainHandItem().getItem() instanceof BrushItem)) {
+        if (!getMainHandItem().isEmpty() && isUsingItem() &&
+                (((Player) (Object) this).isScoping() || getMainHandItem().getItem() instanceof InstrumentItem || getMainHandItem().getItem() instanceof BrushItem)) {
             this.disableBodyPartAnimationInAllContainers(getMainArm() == HumanoidArm.RIGHT ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
         }
     }
 
     @Unique
     private void checkOffHandItemForArmDisabling() {
-        if (!getOffhandItem().isEmpty() && isUsingItem() && (isScoping() || getOffhandItem().getItem() instanceof InstrumentItem || getOffhandItem().getItem() instanceof BrushItem)) {
+        if (!getOffhandItem().isEmpty() && isUsingItem() &&
+                (((Player) (Object) this).isScoping() || getOffhandItem().getItem() instanceof InstrumentItem || getOffhandItem().getItem() instanceof BrushItem)) {
             this.disableBodyPartAnimationInAllContainers(getMainArm() == HumanoidArm.RIGHT ? BodyParts.LEFT_ARM : BodyParts.RIGHT_ARM);
         }
     }

@@ -23,6 +23,6 @@ public class OnEdgeIdleAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return context.playerData().getMovementSpeed() == 0 && context.playerData().getBodyYawDelta() == 0 && !context.player().isCrouching() && context.playerData().isOnEdge() && !context.player().isPassenger();
+        return context.playerData().getMovementSpeed() == 0 && context.playerData().getBodyYawDelta() == 0 && !context.avatar().isCrouching() && context.playerData().isOnEdge() && !context.avatar().isPassenger();
     }
 }

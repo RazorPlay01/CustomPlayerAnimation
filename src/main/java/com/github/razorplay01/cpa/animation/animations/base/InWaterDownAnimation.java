@@ -23,6 +23,6 @@ public class InWaterDownAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return (context.player().isUnderWater() || context.player().isInLava()) && !context.player().onGround() && !context.player().isVisuallySwimming() && context.player().isCrouching();
+        return (context.avatar().isUnderWater() || context.avatar().isInLava()) && !context.avatar().onGround() && !context.avatar().isVisuallySwimming() && context.avatar().isCrouching();
     }
 }

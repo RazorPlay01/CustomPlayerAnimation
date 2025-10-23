@@ -16,13 +16,13 @@ public class ShieldAnimation implements ICustomAnimation {
     public void playAnimation(AnimationContext context) {
         if (!CONFIG.getOverlayAnimations().useItemAnimation.shieldAnimationConfig.isEnabled()) {
             context.overlayAnimationContainer().disableAnimation();
-            context.player().disableActiveArm(context.mainAnimationContainer());
+            context.iAnimationControl().disableActiveArm(context.mainAnimationContainer());
         } else {
             configureAnimationContainer(CONFIG.getOverlayAnimations().useItemAnimation.shieldAnimationConfig, context.overlayAnimationContainer());
 
-            if (context.player().getUsedItemHand().equals(context.playerData().getRightHand())) {
+            if (context.avatar().getUsedItemHand().equals(context.playerData().getRightHand())) {
                 setShieldAnimation(context, true);
-            } else if (context.player().getUsedItemHand().equals(context.playerData().getLeftHand())) {
+            } else if (context.avatar().getUsedItemHand().equals(context.playerData().getLeftHand())) {
                 setShieldAnimation(context, false);
             }
         }
@@ -30,12 +30,12 @@ public class ShieldAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return context.player().isUsingItem() &&
-                context.player().getUseItem().getItem() instanceof ShieldItem;
+        return context.avatar().isUsingItem() &&
+                context.avatar().getUseItem().getItem() instanceof ShieldItem;
     }
 
     private static void setShieldAnimation(AnimationContext context, boolean isRightHand) {
-        if (context.player().isCrouching()) {
+        if (context.avatar().isCrouching()) {
             context.overlayAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.SHIELD_SNEAK_ANIMATION.getAnimationId()));
             context.overlayAnimationContainer().setCurrentAnimationId((isRightHand ? RIGHT_PREFIX : LEFT_PREFIX) + AnimationsId.SHIELD_SNEAK_ANIMATION.getAnimationId());
         } else {

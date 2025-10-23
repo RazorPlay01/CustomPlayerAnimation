@@ -11,7 +11,7 @@ public class JumpAnimation {
     }
 
     public static void playAnimation(AnimationContext context) {
-        if (!context.player().onGround() && context.playerData().isPrevOnGround() && context.playerData().getVectorY() > 0) {
+        if (!context.avatar().onGround() && context.playerData().isPrevOnGround() && context.playerData().getVectorY() > 0) {
             context.mainAnimationContainer().setAnimationSpeed(0.2f);
             context.mainAnimationContainer().setAnimationFadeTime(3);
             context.mainAnimationContainer().setAnimationPriority(0);

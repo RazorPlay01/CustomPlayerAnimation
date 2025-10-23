@@ -23,6 +23,6 @@ public class InWaterUpAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return (context.player().isUnderWater() || context.player().isInLava()) && !context.player().onGround() && !context.player().isVisuallySwimming() && context.playerData().getVectorY() > 0;
+        return (context.avatar().isUnderWater() || context.avatar().isInLava()) && !context.avatar().onGround() && !context.avatar().isVisuallySwimming() && context.playerData().getVectorY() > 0;
     }
 }

@@ -24,7 +24,7 @@ public class HorseIdleAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        var vehicle = context.player().getVehicle();
-        return context.player().isPassenger() && isHorse(vehicle) && context.playerData().getMovementSpeed() == 0;
+        var vehicle = context.avatar().getVehicle();
+        return context.avatar().isPassenger() && isHorse(vehicle) && context.playerData().getMovementSpeed() == 0;
     }
 }

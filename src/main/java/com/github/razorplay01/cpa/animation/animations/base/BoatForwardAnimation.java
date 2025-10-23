@@ -18,12 +18,12 @@ public class BoatForwardAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        var vehicle = context.player().getVehicle();
-        return context.player().isPassenger() && isBoat(vehicle);
+        var vehicle = context.avatar().getVehicle();
+        return context.avatar().isPassenger() && isBoat(vehicle);
     }
 
     private static void handleBoatAnimation(AnimationContext context) {
-        Boat boat = (Boat) context.player().getVehicle();
+        Boat boat = (Boat) context.avatar().getVehicle();
 
         if (!CONFIG.getMainAnimations().mountAnimations.boatAnimations.boatForwardAnimationConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();

@@ -7,7 +7,7 @@
     "InventoryAccessor"
   ],
   "client": [
-    "AbstractClientPlayerEntityMixin",
+    "AvatarMixin",
     "HumanoidRenderStateMixin",
     "ItemInHandLayerMixin",
     "ItemStackRenderStateMixin",

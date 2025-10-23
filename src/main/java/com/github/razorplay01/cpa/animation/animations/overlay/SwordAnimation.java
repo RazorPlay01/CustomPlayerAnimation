@@ -5,49 +5,53 @@ import com.github.razorplay01.cpa.util.enums.Modifiers;
 import com.github.razorplay01.cpa.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.util.records.AnimationContext;
 import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
-import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.world.entity.Avatar;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TridentItem;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 import static com.github.razorplay01.cpa.CustomPlayerAnimations.*;
 import static com.github.razorplay01.cpa.util.Util.*;
 import static net.minecraft.world.InteractionHand.MAIN_HAND;
 
 public class SwordAnimation implements ICustomAnimation {
-    private int currentComboCount = 0;
-    private long lastSwingTick = 0;
+    private final Map<UUID, Integer> comboCounts = new HashMap<>();
+    private final Map<UUID, Long> lastSwingTicks = new HashMap<>();
     private final int COMBO_RESET_TICKS = 50;
 
-    // Variable para rastrear si una animación está en progreso
-    private boolean isAnimationInProgress = false;
-    private long animationStartTime = 0;
-    private float animationDuration = 0; // Duración de la animación en ticks (se calculará dinámicamente)
+    private final Map<UUID, Boolean> animationsInProgress = new HashMap<>();
+    private final Map<UUID, Long> animationStartTimes = new HashMap<>();
+    private final Map<UUID, Float> animationDurations = new HashMap<>();
 
     @Override
     public void playAnimation(AnimationContext context) {
+        UUID uuid = context.avatar().getUUID();
         if (!CONFIG.getOverlayAnimations().swordAnimations.isEnabled()) {
             context.overlayAnimationContainer().disableAnimation();
-            isAnimationInProgress = false;
+            animationsInProgress.put(uuid, false);
         } else {
             // Si el jugador está balanceando el arma o la animación está en progreso
-            if (isPlayerSwingingWeapon(context.player())) {
+            if (isPlayerSwingingWeapon(context.avatar())) {
                 // Iniciar una nueva animación
-                animationStartTime = context.player().level().getGameTime();
-                isAnimationInProgress = true;
+                animationStartTimes.put(uuid, context.avatar().level().getGameTime());
+                animationsInProgress.put(uuid, true);
                 handleSwordComboAnimation(context);
 
                 // Obtener la duración de la animación actual después de seleccionarla
                 if (context.overlayAnimationContainer().getCurrentAnimation() != null) {
-                    animationDuration = context.overlayAnimationContainer().getCurrentAnimation().length() - 5;
+                    animationDurations.put(uuid, context.overlayAnimationContainer().getCurrentAnimation().length() - 5);
                 }
-            } else if (isAnimationInProgress) {
+            } else if (Boolean.TRUE.equals(animationsInProgress.getOrDefault(uuid, false))) {
                 // Continuar la animación si no ha pasado el tiempo mínimo
-                long currentTime = context.player().level().getGameTime();
-                if (currentTime - animationStartTime < animationDuration) {
+                long currentTime = context.avatar().level().getGameTime();
+                if (currentTime - animationStartTimes.getOrDefault(uuid, 0L) < animationDurations.getOrDefault(uuid, 0f)) {
                     handleSwordComboAnimation(context);
                 } else {
                     // La animación ha terminado
-                    isAnimationInProgress = false;
+                    animationsInProgress.put(uuid, false);
                 }
             }
         }
@@ -55,25 +59,32 @@ public class SwordAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
+        UUID uuid = context.avatar().getUUID();
         // Reproducir la animación si el jugador está balanceando el arma o si una animación está en progreso
-        return (isPlayerSwingingWeapon(context.player()) || isAnimationInProgress) &&
+        return (isPlayerSwingingWeapon(context.avatar()) || Boolean.TRUE.equals(animationsInProgress.getOrDefault(uuid, false))) &&
                 !context.mainAnimationContainer().getCurrentAnimationId().equalsIgnoreCase(AnimationsId.SLEEP_ANIMATION.getAnimationId());
     }
 
     private void handleSwordComboAnimation(AnimationContext context) {
-        long currentTick = context.player().level().getGameTime();
-        if (currentTick - lastSwingTick > COMBO_RESET_TICKS) {
-            currentComboCount = 0;
+        UUID uuid = context.avatar().getUUID();
+        long currentTick = context.avatar().level().getGameTime();
+
+        comboCounts.putIfAbsent(uuid, 0);
+        lastSwingTicks.putIfAbsent(uuid, 0L);
+
+        if (currentTick - lastSwingTicks.get(uuid) > COMBO_RESET_TICKS) {
+            comboCounts.put(uuid, 0);
         }
 
         if (context.overlayAnimationContainer().getAnimationController().getCurrentAnimation() != null) {
             if (context.overlayAnimationContainer().getAnimationController().isActive() &&
                     context.overlayAnimationContainer().getAnimationController().getCurrentAnimation().animation() == getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId())) {
-                currentComboCount = (currentComboCount % 3) + 1;
+                comboCounts.compute(uuid, (k, currentCount) -> (currentCount % 3) + 1);
             }
 
-            lastSwingTick = currentTick;
-            switch (currentComboCount) {
+            lastSwingTicks.put(uuid, currentTick);
+            int currentCombo = comboCounts.get(uuid);
+            switch (currentCombo) {
                 case 2 -> {
                     context.overlayAnimationContainer().setAnimationSpeed(CONFIG.getOverlayAnimations().swordAnimations.swordAttack2AnimationConfig.getSpeedMultiplier());
                     context.overlayAnimationContainer().setAnimationFadeTime(CONFIG.getOverlayAnimations().swordAnimations.swordAttack2AnimationConfig.getFadeTime());
@@ -97,9 +108,12 @@ public class SwordAnimation implements ICustomAnimation {
     }
 
     private void selectComboAnimation(AnimationContext context) {
-        boolean isSneaking = context.player().isCrouching();
+        boolean isSneaking = context.avatar().isCrouching();
 
-        switch (currentComboCount) {
+        UUID uuid = context.avatar().getUUID();
+        int currentCombo = comboCounts.getOrDefault(uuid, 1);
+
+        switch (currentCombo) {
             case 1 -> {
                 context.overlayAnimationContainer().setCurrentAnimation(isSneaking ? getAnimation(AnimationsId.SWORD_ATTACK_1_SNEAK_ANIMATION.getAnimationId()) : getAnimation(AnimationsId.SWORD_ATTACK_1_ANIMATION.getAnimationId()));
                 context.overlayAnimationContainer().setCurrentAnimationId(isSneaking ? AnimationsId.SWORD_ATTACK_1_SNEAK_ANIMATION.getAnimationId() : AnimationsId.SWORD_ATTACK_1_ANIMATION.getAnimationId());
@@ -115,11 +129,11 @@ public class SwordAnimation implements ICustomAnimation {
         }
     }
 
-    public static boolean isPlayerSwingingWeapon(AbstractClientPlayer player) {
-        ItemStack itemStack = player.getMainHandItem();
+    public static boolean isPlayerSwingingWeapon(Avatar avatar) {
+        ItemStack itemStack = avatar.getMainHandItem();
         if (isAxe(itemStack) || isPickaxe(itemStack) || isShovel(itemStack)) return false;
-        return player.swinging &&
+        return avatar.swinging &&
                 (isSword(itemStack) || itemStack.getItem() instanceof TridentItem) &&
-                player.swingingArm.equals(MAIN_HAND);
+                avatar.swingingArm.equals(MAIN_HAND);
     }
 }

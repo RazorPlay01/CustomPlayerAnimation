@@ -34,11 +34,11 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
         }
         
         // Si el jugador está golpeando, deshabilitar el brazo correspondiente
-        if (context.player().swinging) {
-            disableArmBasedOnHand(context, context.player().swingingArm);
+        if (context.avatar().swinging) {
+            disableArmBasedOnHand(context, context.avatar().swingingArm);
             wasArmDisabled = true;
-            lastSwingingArm = context.player().swingingArm;
-        } else if (wasArmDisabled && !context.player().swinging) {
+            lastSwingingArm = context.avatar().swingingArm;
+        } else if (wasArmDisabled && !context.avatar().swinging) {
             // Si el jugador ya no está golpeando pero el brazo estaba deshabilitado
             wasArmDisabled = false;
             // Programar la reactivación del brazo para el próximo tick
@@ -56,20 +56,20 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
         // Siempre verificar para manejar la reactivación del brazo incluso cuando ya no está golpeando
-        boolean isSwinging = context.player().swinging &&
-                !(CONFIG.getOverlayAnimations().swordAnimations.isEnabled() && context.player().getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.WEAPON) || context.player().getMainHandItem().getItem() instanceof TridentItem) &&
-                !(CONFIG.getOverlayAnimations().toolsAnimations.axeAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem() instanceof AxeItem) &&
-                !(CONFIG.getOverlayAnimations().toolsAnimations.pickaxeAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.TOOL)) &&
-                !(CONFIG.getOverlayAnimations().toolsAnimations.shovelAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem() instanceof ShovelItem);
+        boolean isSwinging = context.avatar().swinging &&
+                !(CONFIG.getOverlayAnimations().swordAnimations.isEnabled() && context.avatar().getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.WEAPON) || context.avatar().getMainHandItem().getItem() instanceof TridentItem) &&
+                !(CONFIG.getOverlayAnimations().toolsAnimations.axeAnimationsConfig.isEnabled() && context.avatar().getMainHandItem().getItem() instanceof AxeItem) &&
+                !(CONFIG.getOverlayAnimations().toolsAnimations.pickaxeAnimationsConfig.isEnabled() && context.avatar().getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.TOOL)) &&
+                !(CONFIG.getOverlayAnimations().toolsAnimations.shovelAnimationsConfig.isEnabled() && context.avatar().getMainHandItem().getItem() instanceof ShovelItem);
         
         // También devolver true si necesitamos reactivar un brazo que estaba previamente deshabilitado
         return isSwinging || wasArmDisabled || needToForceEnableArm;
     }
 
     private static void disableArmBasedOnHand(AnimationContext context, InteractionHand hand) {
-        context.player().disableBodyPartAnimation(context.mainAnimationContainer(), hand == context.playerData().getRightHand() ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
-        context.player().disableBodyPartAnimation(context.overlayAnimationContainer(), hand == context.playerData().getRightHand() ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
-        context.player().disableBodyPartAnimation(context.specialAnimationContainer(), hand == context.playerData().getRightHand() ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
+        context.iAnimationControl().disableBodyPartAnimation(context.mainAnimationContainer(), hand == context.playerData().getRightHand() ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
+        context.iAnimationControl().disableBodyPartAnimation(context.overlayAnimationContainer(), hand == context.playerData().getRightHand() ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
+        context.iAnimationControl().disableBodyPartAnimation(context.specialAnimationContainer(), hand == context.playerData().getRightHand() ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM);
     }
     
     /**

@@ -34,6 +34,6 @@ public class CrawlAnimations implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return context.player().isVisuallyCrawling() && !context.player().isPassenger();
+        return context.avatar().isVisuallyCrawling() && !context.avatar().isPassenger();
     }
 }

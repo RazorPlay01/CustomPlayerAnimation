@@ -89,6 +89,7 @@ publishMods {
     curseforge {
         projectId = "1364067"
         accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        projectSlug = "cpa"
         minecraftVersions.add("1.21.9")
         minecraftVersions.add("1.21.10")
         requires("fabric-api")
@@ -106,5 +107,14 @@ publishMods {
         repository = "RazorPlay01/CPA"
         accessToken = providers.environmentVariable("GITHUB_TOKEN")
         commitish = "main"
+    }
+    discord {
+        username = "CPA info"
+        style {
+            look = "MODERN"
+            thumbnailUrl = "https://github.com/RazorPlay01/CPA/blob/main/assets/CPA.icon.png?raw=true"
+            color = "#4f0382"
+        }
+        webhookUrl = providers.environmentVariable("DISCORD_WEBHOOK")
     }
 }

@@ -23,6 +23,6 @@ public class InWaterBackwardsAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return (context.player().isUnderWater() || context.player().isInLava()) && !context.player().onGround() && !context.player().isVisuallySwimming() && (context.playerData().getMovementSpeed() > 0 && context.playerData().isMovingBackwards());
+        return (context.avatar().isUnderWater() || context.avatar().isInLava()) && !context.avatar().onGround() && !context.avatar().isVisuallySwimming() && (context.playerData().getMovementSpeed() > 0 && context.playerData().isMovingBackwards());
     }
 }

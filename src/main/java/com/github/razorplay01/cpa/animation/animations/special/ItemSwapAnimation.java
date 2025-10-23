@@ -12,8 +12,8 @@ import static com.github.razorplay01.cpa.CustomPlayerAnimations.getAnimation;
 public class ItemSwapAnimation implements ICustomAnimation {
     public void playAnimation(AnimationContext context) {
         boolean configEnabled = CONFIG.getSpecialAnimations().itemSwapAnimationConfig.isEnabled();
-        ItemStack currentMain = context.player().getMainHandItem();
-        ItemStack currentOff = context.player().getOffhandItem();
+        ItemStack currentMain = context.avatar().getMainHandItem();
+        ItemStack currentOff = context.avatar().getOffhandItem();
         ItemStack prevMain = context.playerData().getMainHandItem();
         ItemStack prevOff = context.playerData().getOffHandItem();
         boolean swapHappened = (!currentMain.isEmpty() || !currentOff.isEmpty())

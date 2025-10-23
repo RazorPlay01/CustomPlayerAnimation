@@ -24,9 +24,9 @@ public class BowAnimation implements ICustomAnimation {
         } else {
             configureAnimationContainer(CONFIG.getOverlayAnimations().useItemAnimation.bowAnimationsConfig, context.overlayAnimationContainer());
 
-            if (context.player().getUsedItemHand().equals(context.playerData().getRightHand())) {
+            if (context.avatar().getUsedItemHand().equals(context.playerData().getRightHand())) {
                 setBowAnimationForHand(context, true);
-            } else if (context.player().getUsedItemHand().equals(context.playerData().getLeftHand())) {
+            } else if (context.avatar().getUsedItemHand().equals(context.playerData().getLeftHand())) {
                 setBowAnimationForHand(context, false);
             }
         }
@@ -34,12 +34,12 @@ public class BowAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return context.player().isUsingItem() &&
-                context.player().getUseItem().getItem() instanceof BowItem;
+        return context.avatar().isUsingItem() &&
+                context.avatar().getUseItem().getItem() instanceof BowItem;
     }
 
     private static void setBowAnimationForHand(AnimationContext context, boolean isRightHand) {
-        if (context.player().isCrouching()) {
+        if (context.avatar().isCrouching()) {
             context.overlayAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.BOW_SNEAK_ANIMATION.getAnimationId()));
             context.overlayAnimationContainer().setCurrentAnimationId((isRightHand ? RIGHT_PREFIX : LEFT_PREFIX) + AnimationsId.BOW_SNEAK_ANIMATION.getAnimationId());
             context.overlayAnimationContainer().setAnimationFadeTime(1);
@@ -49,9 +49,9 @@ public class BowAnimation implements ICustomAnimation {
         }
 
         if (isRightHand) {
-            context.player().setYBodyRot(context.playerData().getPlayerHeadYaw() - 90);
+            context.avatar().setYBodyRot(context.playerData().getPlayerHeadYaw() - 90);
         } else {
-            context.player().setYBodyRot(context.playerData().getPlayerHeadYaw() + 90);
+            context.avatar().setYBodyRot(context.playerData().getPlayerHeadYaw() + 90);
         }
         ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).enabled = (!isRightHand);
     }

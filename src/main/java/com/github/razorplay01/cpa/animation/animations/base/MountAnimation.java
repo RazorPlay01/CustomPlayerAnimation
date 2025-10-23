@@ -19,7 +19,7 @@ public class MountAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        var vehicle = context.player().getVehicle();
-        return context.player().isPassenger() && !isHorse(vehicle) && !isBoat(vehicle);
+        var vehicle = context.avatar().getVehicle();
+        return context.avatar().isPassenger() && !isHorse(vehicle) && !isBoat(vehicle);
     }
 }

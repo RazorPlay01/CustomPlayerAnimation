@@ -29,6 +29,6 @@ public class SleepAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return context.player().isSleeping() && !context.player().isPassenger();
+        return context.avatar().isSleeping() && !context.avatar().isPassenger();
     }
 }

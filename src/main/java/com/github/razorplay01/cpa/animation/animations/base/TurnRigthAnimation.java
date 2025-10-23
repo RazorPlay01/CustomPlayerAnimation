@@ -21,7 +21,7 @@ public class TurnRigthAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return context.playerData().getBodyYawDelta() != 0 && !context.player().isCrouching() && context.playerData().getBodyYawDelta() > 0 && !context.player().isPassenger();
+        return context.playerData().getBodyYawDelta() != 0 && !context.avatar().isCrouching() && context.playerData().getBodyYawDelta() > 0 && !context.avatar().isPassenger();
     }
 
     private static void handleTurningAnimation(AnimationContext context) {

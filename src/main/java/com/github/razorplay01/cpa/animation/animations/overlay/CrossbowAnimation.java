@@ -45,7 +45,7 @@ public class CrossbowAnimation implements ICustomAnimation {
         }
 
         // Handle charging (both arms disabled)
-        if (context.player().isUsingItem() && context.player().getUseItem().getItem() instanceof CrossbowItem) {
+        if (context.avatar().isUsingItem() && context.avatar().getUseItem().getItem() instanceof CrossbowItem) {
             disableBothArms(context);
             wasMainArmDisabled = true;
             wasOffArmDisabled = true;
@@ -53,13 +53,13 @@ public class CrossbowAnimation implements ICustomAnimation {
         }
 
         // Track current items
-        ItemStack currentMainHandItem = context.player().getMainHandItem();
-        ItemStack currentOffHandItem = context.player().getOffhandItem();
+        ItemStack currentMainHandItem = context.avatar().getMainHandItem();
+        ItemStack currentOffHandItem = context.avatar().getOffhandItem();
 
         // Handle holding (disable only the arm holding the crossbow)
         if (context.playerData().getMainArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_HOLD)) {
-            context.player().disableBodyPartAnimationInAllContainers(
-                    context.player().getMainArm() == HumanoidArm.RIGHT ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM
+            context.iAnimationControl().disableBodyPartAnimationInAllContainers(
+                    context.avatar().getMainArm() == HumanoidArm.RIGHT ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM
             );
             wasMainArmDisabled = true;
         } else if (wasMainArmDisabled &&
@@ -69,14 +69,14 @@ public class CrossbowAnimation implements ICustomAnimation {
             wasMainArmDisabled = false;
             // Programar la reactivación del brazo principal para el próximo tick
             needToForceEnableMainArm = true;
-            mainArmToEnable = context.player().getMainArm() == HumanoidArm.RIGHT ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM;
+            mainArmToEnable = context.avatar().getMainArm() == HumanoidArm.RIGHT ? BodyParts.RIGHT_ARM : BodyParts.LEFT_ARM;
             // También forzar la habilitación inmediata
             forceEnableBodyPart(context, mainArmToEnable);
         }
 
         if (context.playerData().getOffArmPose().equals(HumanoidModel.ArmPose.CROSSBOW_HOLD)) {
-            context.player().disableBodyPartAnimationInAllContainers(
-                    context.player().getMainArm() == HumanoidArm.RIGHT ? BodyParts.LEFT_ARM : BodyParts.RIGHT_ARM
+            context.iAnimationControl().disableBodyPartAnimationInAllContainers(
+                    context.avatar().getMainArm() == HumanoidArm.RIGHT ? BodyParts.LEFT_ARM : BodyParts.RIGHT_ARM
             );
             wasOffArmDisabled = true;
         } else if (wasOffArmDisabled &&
@@ -86,7 +86,7 @@ public class CrossbowAnimation implements ICustomAnimation {
             wasOffArmDisabled = false;
             // Programar la reactivación del brazo secundario para el próximo tick
             needToForceEnableOffArm = true;
-            offArmToEnable = context.player().getMainArm() == HumanoidArm.RIGHT ? BodyParts.LEFT_ARM : BodyParts.RIGHT_ARM;
+            offArmToEnable = context.avatar().getMainArm() == HumanoidArm.RIGHT ? BodyParts.LEFT_ARM : BodyParts.RIGHT_ARM;
             // También forzar la habilitación inmediata
             forceEnableBodyPart(context, offArmToEnable);
         }
@@ -99,8 +99,8 @@ public class CrossbowAnimation implements ICustomAnimation {
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
         // Always check to handle arm re-enabling even when not holding crossbow anymore
-        boolean holdingCrossbow = context.player().getMainHandItem().getItem() instanceof CrossbowItem ||
-                context.player().getOffhandItem().getItem() instanceof CrossbowItem;
+        boolean holdingCrossbow = context.avatar().getMainHandItem().getItem() instanceof CrossbowItem ||
+                context.avatar().getOffhandItem().getItem() instanceof CrossbowItem;
 
         // Also return true if we need to re-enable arms that were previously disabled
         return holdingCrossbow || wasMainArmDisabled || wasOffArmDisabled;

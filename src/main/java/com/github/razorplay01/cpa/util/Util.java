@@ -9,8 +9,8 @@ import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractModifie
 import com.zigythebird.playeranimcore.animation.layered.modifier.AdjustmentModifier;
 import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
 import com.zigythebird.playeranimcore.math.Vec3f;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.entity.Avatar;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.horse.*;
 import net.minecraft.world.entity.vehicle.Boat;
@@ -65,8 +65,8 @@ public class Util {
     }
 
     public static void disableBothArms(AnimationContext context) {
-        context.player().disableBodyPartAnimationInAllContainers(BodyParts.LEFT_ARM);
-        context.player().disableBodyPartAnimationInAllContainers(BodyParts.RIGHT_ARM);
+        context.iAnimationControl().disableBodyPartAnimationInAllContainers(BodyParts.LEFT_ARM);
+        context.iAnimationControl().disableBodyPartAnimationInAllContainers(BodyParts.RIGHT_ARM);
     }
 
     public static void addModifiersToContainer(AnimationContainer container) {
@@ -78,14 +78,14 @@ public class Util {
         }
     }
 
-    public static boolean isSwingingSwordOrTools(AbstractClientPlayer player, AnimationContainer animationContainer) {
-        return player.swinging &&
-                (player.getMainHandItem().getItem() instanceof ShovelItem ||
-                        player.getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.TOOL) ||
-                        player.getMainHandItem().getItem() instanceof AxeItem ||
-                        player.getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.WEAPON) ||
-                        player.getMainHandItem().getItem() instanceof TridentItem) &&
-                player.swingingArm.equals(MAIN_HAND) &&
+    public static boolean isSwingingSwordOrTools(Avatar avatar, AnimationContainer animationContainer) {
+        return avatar.swinging &&
+                (avatar.getMainHandItem().getItem() instanceof ShovelItem ||
+                        avatar.getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.TOOL) ||
+                        avatar.getMainHandItem().getItem() instanceof AxeItem ||
+                        avatar.getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.WEAPON) ||
+                        avatar.getMainHandItem().getItem() instanceof TridentItem) &&
+                avatar.swingingArm.equals(MAIN_HAND) &&
                 !animationContainer.getCurrentAnimationId().equalsIgnoreCase(AnimationsId.SLEEP_ANIMATION.getAnimationId());
     }
 

@@ -20,9 +20,9 @@ public class EatAnimation implements ICustomAnimation {
         } else {
             configureAnimationContainer(CONFIG.getOverlayAnimations().useItemAnimation.eatingAnimationsConfig, context.overlayAnimationContainer());
 
-            if (context.player().getUsedItemHand().equals(context.playerData().getRightHand())) {
+            if (context.avatar().getUsedItemHand().equals(context.playerData().getRightHand())) {
                 setEatingAnimation(context, false);
-            } else if (context.player().getUsedItemHand().equals(context.playerData().getLeftHand())) {
+            } else if (context.avatar().getUsedItemHand().equals(context.playerData().getLeftHand())) {
                 setEatingAnimation(context, true);
             }
         }
@@ -30,9 +30,9 @@ public class EatAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return context.player().isUsingItem() &&
-                context.player().getUseItem().getItem().components().get(DataComponents.FOOD) != null ||
-                context.player().getUseItem().getItem() instanceof PotionItem;
+        return context.avatar().isUsingItem() &&
+                context.avatar().getUseItem().getItem().components().get(DataComponents.FOOD) != null ||
+                context.avatar().getUseItem().getItem() instanceof PotionItem;
     }
 
     private static void setEatingAnimation(AnimationContext context, boolean mirror) {

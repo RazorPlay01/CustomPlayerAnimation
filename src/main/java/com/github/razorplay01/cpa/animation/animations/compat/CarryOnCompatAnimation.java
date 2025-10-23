@@ -6,7 +6,7 @@ import dev.razorplay.customplayeranimations.util.FirstPersonConditionRegistry;
 import dev.razorplay.customplayeranimations.util.interfaces.ICustomAnimation;
 import dev.razorplay.customplayeranimations.util.records.AnimationContext;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.avatar.AbstractClientPlayer;
 import net.minecraft.resources.ResourceLocation;
 import tschipp.carryon.common.carry.CarryOnData;
 import tschipp.carryon.common.carry.CarryOnDataManager;
@@ -19,7 +19,7 @@ public class CarryOnCompatAnimation implements ICustomAnimation {
         if (!FirstPersonConditionRegistry.hasCondition(ResourceLocation.fromNamespaceAndPath(CustomPlayerAnimations.MOD_ID, "carry_on"))) {
             FirstPersonConditionRegistry.register(ResourceLocation.fromNamespaceAndPath(CustomPlayerAnimations.MOD_ID, "carry_on"), CarryOnCompatAnimation::check);
         }
-        if (check(context.player())) {
+        if (check(context.avatar())) {
             disableBothArms(context);
         }
     }
@@ -29,9 +29,9 @@ public class CarryOnCompatAnimation implements ICustomAnimation {
         return FabricLoader.getInstance().isModLoaded("carryon");
     }
 
-    public static boolean check(AbstractClientPlayer player) {
-        CarryOnData carry = CarryOnDataManager.getCarryData(player);
-        return carry.isCarrying() && !player.isSwimming() && !player.isFallFlying();
+    public static boolean check(AbstractClientPlayer avatar) {
+        CarryOnData carry = CarryOnDataManager.getCarryData(avatar);
+        return carry.isCarrying() && !avatar.isSwimming() && !avatar.isFallFlying();
     }
 }
 */

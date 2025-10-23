@@ -24,6 +24,6 @@ public class WalkSneakBackwardsAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return context.playerData().getMovementSpeed() > 0 && context.playerData().isMovingBackwards() && context.player().isCrouching() && !context.player().isPassenger();
+        return context.playerData().getMovementSpeed() > 0 && context.playerData().isMovingBackwards() && context.avatar().isCrouching() && !context.avatar().isPassenger();
     }
 }

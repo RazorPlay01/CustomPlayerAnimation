@@ -12,7 +12,7 @@ import static com.github.razorplay01.cpa.util.Util.isBoat;
 public class BoatIdleAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
-        var vehicle = context.player().getVehicle();
+        var vehicle = context.avatar().getVehicle();
         if (isBoat(vehicle)) {
             if (!CONFIG.getMainAnimations().mountAnimations.boatAnimations.boatIdleAnimationConfig.isEnabled()) {
                 context.mainAnimationContainer().disableAnimation();
@@ -27,6 +27,6 @@ public class BoatIdleAnimation implements ICustomAnimation {
 
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
-        return context.player().isPassenger() && context.playerData().getMovementSpeed() == 0 || context.playerData().isMovingBackwards();
+        return context.avatar().isPassenger() && context.playerData().getMovementSpeed() == 0 || context.playerData().isMovingBackwards();
     }
 }
