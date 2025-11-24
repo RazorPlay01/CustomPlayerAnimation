@@ -54,6 +54,7 @@ jobs:
             neoforge-create-${{ runner.os }}-
 
       - name: Build with Gradle
+        timeout-minutes: 120
         run: ./gradlew buildAndCollect --no-daemon
 
       - name: Upload artifacts
