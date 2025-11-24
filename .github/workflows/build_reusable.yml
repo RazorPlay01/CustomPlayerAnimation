@@ -10,6 +10,7 @@ jobs:
   build:
     name: Build Project
     runs-on: ubuntu-latest
+    timeout-minutes: 120
     outputs:
       artifact-name: ${{ steps.upload.outputs.artifact-name }}
 
@@ -39,6 +40,18 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+
+      - name: Cache NeoForge/Create artifacts
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/create/
+            ~/.cache/neoforge/
+            versions/**/build/create/
+            versions/**/build/neoforge/
+          key: neoforge-create-${{ runner.os }}-${{ hashFiles('versions/**/build.gradle', 'gradle.properties') }}
+          restore-keys: |
+            neoforge-create-${{ runner.os }}-
 
       - name: Build with Gradle
         run: ./gradlew buildAndCollect --no-daemon
