@@ -1,0 +1,312 @@
+{
+  "text.autoconfig.cpa.title": "Custom Player Animations",
+
+  "text.autoconfig.cpa.option.client.general": "General Settings",
+  "text.autoconfig.cpa.option.client.mainAnimations": "Main Animations",
+  "text.autoconfig.cpa.option.client.overlayAnimations": "Overlay Animations",
+  "text.autoconfig.cpa.option.client.specialAnimations": "Special Animations",
+
+  "text.autoconfig.cpa.option.client.general.animationSpeedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.general.animationSpeedMultiplier.@Tooltip": "Changes the animation speed multiplier for all animations",
+  "text.autoconfig.cpa.option.client.general.upHandDisableAnimationIds": "Disable UpHandAnimation",
+  "text.autoconfig.cpa.option.client.general.upHandDisableAnimationIds.@Tooltip": "List of animations that have priority over UpHandAnimation",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations": "Idle Animations",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.turnAnimations": "Turn Animations",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.turnAnimations.turningStandingAnimationConfig": "Turn Standing Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.turnAnimations.turningStandingAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.turnAnimations.turningStandingAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.turnAnimations.turningStandingAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.turnAnimations.turningStandingAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.turnAnimations.turningSneakAnimationConfig": "Turn Sneak Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.turnAnimations.turningSneakAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.turnAnimations.turningSneakAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.turnAnimations.turningSneakAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.turnAnimations.turningSneakAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.idleStandingAnimationConfig": "Idle Standing Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.idleStandingAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.idleStandingAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.idleStandingAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.idleStandingAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.idleSneakAnimationConfig": "Idle Sneak Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.idleSneakAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.idleSneakAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.idleSneakAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.idleSneakAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.idleCreativeFlyingAnimationConfig": "Idle Creative Flying Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.idleCreativeFlyingAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.idleCreativeFlyingAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.idleCreativeFlyingAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.idleCreativeFlyingAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.onFenceAnimationConfig": "On Fence Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.onFenceAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.onFenceAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.onFenceAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.onFenceAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.onEdgeAnimationConfig": "On Edge Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.onEdgeAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.onEdgeAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.onEdgeAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.onEdgeAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations": "Move Animations",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.animationMoveSpeedMultiplier": "Animation Move Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.animationMoveSpeedMultiplier.@Tooltip": "Changes the speed multiplier of animations involving movement. Example: Walk, Run, etc...",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingAnimationConfig": "Walk Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingBackwardsAnimationConfig": "Walk Backwards Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingBackwardsAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingBackwardsAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingBackwardsAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingBackwardsAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingSneakAnimationConfig": "Walk Sneak Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingSneakAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingSneakAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingSneakAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingSneakAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingSneakBackwardsAnimationConfig": "Walk Sneak Backwards Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingSneakBackwardsAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingSneakBackwardsAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingSneakBackwardsAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingSneakBackwardsAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.runningAnimationConfig": "Run Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.runningAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.runningAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.runningAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.runningAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.onFenceWalkAnimationConfig": "On Fence Walk Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.onFenceWalkAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.onFenceWalkAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.onFenceWalkAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.onFenceWalkAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations": "In Water Animations",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterUpAnimationConfig": "In Water Up Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterUpAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterUpAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterUpAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterUpAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterSwimAnimationConfig": "In Water Swim Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterSwimAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterSwimAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterSwimAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterSwimAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterForwardAnimationConfig": "In Water Forward Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterForwardAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterForwardAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterForwardAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterForwardAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterBackwardsAnimationConfig": "In Water Backwards Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterBackwardsAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterBackwardsAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterBackwardsAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterBackwardsAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterIdleAnimationConfig": "In Water Idle Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterIdleAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterIdleAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterIdleAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.inWaterAnimations.inWaterIdleAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations": "Mount Animations",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.horseAnimations": "Horse Animations",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.horseAnimations.horseIdleAnimationConfig": "Horse Idle Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.horseAnimations.horseIdleAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.horseAnimations.horseIdleAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.horseAnimations.horseIdleAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.horseAnimations.horseIdleAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningAnimationConfig": "Horse Run Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningBackwardsAnimationConfig": "Horse Run Backwards Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningBackwardsAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningBackwardsAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningBackwardsAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.horseAnimations.horseRunningBackwardsAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.boatAnimations": "Boat Animations",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.boatAnimations.boatTurnAnimationConfig": "Boat Turn Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.boatAnimations.boatTurnAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.boatAnimations.boatTurnAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.boatAnimations.boatTurnAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.boatAnimations.boatTurnAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.boatAnimations.boatForwardAnimationConfig": "Boat Forward Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.boatAnimations.boatForwardAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.boatAnimations.boatForwardAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.boatAnimations.boatForwardAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.boatAnimations.boatForwardAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.boatAnimations.boatIdleAnimationConfig": "Boat Idle Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.boatAnimations.boatIdleAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.boatAnimations.boatIdleAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.boatAnimations.boatIdleAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.boatAnimations.boatIdleAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.minecartAnimationsConfig": "Minecart Animations",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.minecartAnimationsConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.minecartAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.minecartAnimationsConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.mountAnimations.minecartAnimationsConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations": "Extra Animations",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.fallingAnimationConfig": "Falling Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.fallingAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.fallingAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.fallingAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.fallingAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.climbingAnimationsConfig": "Climbing Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.climbingAnimationsConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.climbingAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.climbingAnimationsConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.climbingAnimationsConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.crawlingAnimationsConfig": "Crawling Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.crawlingAnimationsConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.crawlingAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.crawlingAnimationsConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.crawlingAnimationsConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig": "Elytra Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig": "Sleep Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations": "Death Animations",
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.speedMultiplier": "Default Death Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.fadeTime": "Default Death Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.priority": "Default Death Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathBurnAnimationConfig": "Burn Death Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathBurnAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathBurnAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathBurnAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathBurnAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathExplosionAnimationConfig": "Explosion Death Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathExplosionAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathExplosionAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathExplosionAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathExplosionAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathDrownAnimationConfig": "Drown Death Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathDrownAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathDrownAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathDrownAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathDrownAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation": "Use Item Animations",
+
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.bowAnimationsConfig": "Bow Animation",
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.bowAnimationsConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.bowAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.bowAnimationsConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.bowAnimationsConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.eatingAnimationsConfig": "Eating Animation",
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.eatingAnimationsConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.eatingAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.eatingAnimationsConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.eatingAnimationsConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.shieldAnimationConfig": "Shield Animation",
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.shieldAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.shieldAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.shieldAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.shieldAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.tridentAnimationConfig": "Trident Animation",
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.tridentAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.tridentAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.tridentAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.tridentAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.overlayAnimations.swordAnimations": "Sword Animations",
+  "text.autoconfig.cpa.option.client.overlayAnimations.swordAnimations.isEnabled": "Is Enabled",
+
+  "text.autoconfig.cpa.option.client.overlayAnimations.swordAnimations.swordAttack1AnimationConfig": "Sword Attack 1 Animation",
+  "text.autoconfig.cpa.option.client.overlayAnimations.swordAnimations.swordAttack1AnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.overlayAnimations.swordAnimations.swordAttack1AnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.overlayAnimations.swordAnimations.swordAttack1AnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.overlayAnimations.swordAnimations.swordAttack2AnimationConfig": "Sword Attack 2 Animation",
+  "text.autoconfig.cpa.option.client.overlayAnimations.swordAnimations.swordAttack2AnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.overlayAnimations.swordAnimations.swordAttack2AnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.overlayAnimations.swordAnimations.swordAttack2AnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.overlayAnimations.swordAnimations.swordAttack3AnimationConfig": "Sword Attack 3 Animation",
+  "text.autoconfig.cpa.option.client.overlayAnimations.swordAnimations.swordAttack3AnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.overlayAnimations.swordAnimations.swordAttack3AnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.overlayAnimations.swordAnimations.swordAttack3AnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations": "Tools Animations",
+
+  "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.pickaxeAnimationsConfig": "Pickaxe Animation",
+  "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.pickaxeAnimationsConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.pickaxeAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.pickaxeAnimationsConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.pickaxeAnimationsConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.axeAnimationsConfig": "Axe Animation",
+  "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.axeAnimationsConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.axeAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.axeAnimationsConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.axeAnimationsConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.shovelAnimationsConfig": "Shovel Animation",
+  "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.shovelAnimationsConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.shovelAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.shovelAnimationsConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.shovelAnimationsConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.specialAnimations.upHandAnimationConfig": "Up Hand Animation",
+  "text.autoconfig.cpa.option.client.specialAnimations.upHandAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.specialAnimations.upHandAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.specialAnimations.upHandAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.specialAnimations.upHandAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.specialAnimations.itemSwapAnimationConfig": "Item Swap Animation",
+  "text.autoconfig.cpa.option.client.specialAnimations.itemSwapAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.specialAnimations.itemSwapAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.specialAnimations.itemSwapAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.specialAnimations.itemSwapAnimationConfig.priority": "Animation Priority"
+}
