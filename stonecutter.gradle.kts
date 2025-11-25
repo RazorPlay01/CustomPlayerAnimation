@@ -7,6 +7,12 @@ plugins {
 	alias(libs.plugins.mod.publish.plugin).apply(false)
 }
 
+configurations.all {
+	resolutionStrategy {
+		force("net.neoforged:AutoRenamingTool:2.0.17:all")
+	}
+}
+
 stonecutter active file(".sc_active_version")
 
 for (version in stonecutter.versions.map { it.version }.distinct()) tasks.register("publish$version") {
