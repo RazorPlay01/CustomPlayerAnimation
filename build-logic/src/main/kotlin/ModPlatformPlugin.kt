@@ -213,11 +213,12 @@ abstract class ModPlatformPlugin @Inject constructor() : Plugin<Project> {
 		extensions.configure<ModPublishExtension>("publishMods") {
 			val mrStaging = envTrue("TEST_PUBLISHING_WITH_MR_STAGING")
 
-			val modrinthAccessToken = env("MODRINTH_API_TOKEN")
-			val curseforgeAccessToken = env("CURSEFORGE_API_TOKEN")
-			if (!envTrue("ENABLE_PUBLISHING")) {
+			val modrinthAccessToken = providers.environmentVariable("MODRINTH_TOKEN").orNull
+			val curseforgeAccessToken = providers.environmentVariable("CURSEFORGE_TOKEN").orNull
+			val discordWebhook = providers.environmentVariable("DISCORD_WEBHOOK").orNull
+			/*if (!envTrue("ENABLE_PUBLISHING")) {
 				dryRun = true
-			}
+			}*/
 
 			val jarTask = tasks.named(ext.jarTask.get()).map { it as Jar }
 			val srcJarTask = tasks.named(ext.sourcesJarTask.get()).map { it as Jar }
@@ -235,6 +236,23 @@ abstract class ModPlatformPlugin @Inject constructor() : Plugin<Project> {
 
 			modrinth(deps, currentVersion, additionalVersions, mrStaging, modrinthAccessToken)
 			if (!mrStaging) curseforge(deps, currentVersion, additionalVersions, false, curseforgeAccessToken)
+			github {
+				repository = "RazorPlay01/CPA"
+				accessToken = providers.environmentVariable("GITHUB_TOKEN")
+				commitish = "main"
+			}
+			discordWebhook?.let { webhook ->
+				discord {
+					username = "CPA info"
+					webhookUrl = webhook
+
+					style {
+						look = "MODERN"
+						color = "#4f0382"
+						thumbnailUrl = "https://github.com/RazorPlay01/CPA/blob/main/assets/CPA.icon.png?raw=true"
+					}
+				}
+			}
 		}
 	}
 
@@ -270,6 +288,7 @@ abstract class ModPlatformPlugin @Inject constructor() : Plugin<Project> {
 		acesssToken: String?
 	) = curseforge {
 		projectId = project.prop("publish.curseforge")
+		projectSlug = "cpa"
 		accessToken = acesssToken
 		minecraftVersions.addAll(listOf(currentVersion) + additionalVersions)
 
