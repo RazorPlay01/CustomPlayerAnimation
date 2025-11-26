@@ -1,4 +1,3 @@
-🌱 Changelog:
-Port to stonecutter
-- Minecraft version 1.21.8+
-- Loaders: fabric, neoforge
+# 5.0.0-beta.0
+- Added required dependencies
+- Added new value animationFadeTimeMultiplier to modificate global fade
