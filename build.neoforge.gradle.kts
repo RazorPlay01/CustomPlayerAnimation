@@ -21,7 +21,7 @@ platform {
 		required("player_animation_library") {
 			modrinth = "ha1mEyJS"
 			curseforge = "1283899"
-			slug("player_animation_library")
+			slug("player-animation-library")
 			versionRange = ">=${prop("deps.player_animation_library")}"
 		}
 	}
