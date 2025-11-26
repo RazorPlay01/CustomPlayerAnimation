@@ -246,6 +246,16 @@ abstract class ModPlatformPlugin @Inject constructor() : Plugin<Project> {
 					username = "CPA info"
 					webhookUrl = webhook
 
+					val versionHeader = "**CPA $fullVersion**\n" +
+						"Minecraft `$currentVersion` • `${loader.replaceFirstChar { it.uppercase() }}`\n\n"
+
+					val originalChangelog = rootProject.file("CHANGELOG.md")
+						.takeIf { it.exists() }
+						?.readText()
+						?: "No changelog provided."
+
+					changelog.set(versionHeader + originalChangelog)
+
 					style {
 						look = "MODERN"
 						color = "#4f0382"

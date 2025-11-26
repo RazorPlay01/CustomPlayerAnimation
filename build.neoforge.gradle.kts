@@ -12,6 +12,18 @@ platform {
 		required("neoforge") {
 			forgeVersionRange = "[1,)"
 		}
+		required("cloth-config") {
+			modrinth = "9s6osm5g"
+			curseforge = "348521"
+			slug("cloth-config")
+			versionRange = ">=${prop("deps.cloth-config")}"
+		}
+		required("player-animation-library") {
+			modrinth = "ha1mEyJS"
+			curseforge = "1283899"
+			slug("player-animation-library")
+			versionRange = ">=${prop("deps.player-animation-library")}"
+		}
 	}
 }
 
