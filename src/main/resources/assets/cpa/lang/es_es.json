@@ -6,8 +6,10 @@
   "text.autoconfig.cpa.option.client.overlayAnimations": "Animaciones de Superposición",
   "text.autoconfig.cpa.option.client.specialAnimations": "Animaciones Especiales",
 
-  "text.autoconfig.cpa.option.client.general.animationSpeedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.cpa.option.client.general.animationSpeedMultiplier": "Multiplicador de Velocidad de Animación Global",
   "text.autoconfig.cpa.option.client.general.animationSpeedMultiplier.@Tooltip": "Modifica el multiplicador de velocidad para todas las animaciones",
+  "text.autoconfig.cpa.option.client.general.animationFadeTimeMultiplier": "Multiplicador del tiempo de Transición Global",
+  "text.autoconfig.cpa.option.client.general.animationFadeTimeMultiplier.@Tooltip": "Modifica el multiplicador de tiempo de transición para todas las animaciones",
   "text.autoconfig.cpa.option.client.general.upHandDisableAnimationIds": "Desactivar Animación de Mano Levantada",
   "text.autoconfig.cpa.option.client.general.upHandDisableAnimationIds.@Tooltip": "Lista de animaciones que tienen prioridad sobre la animación de mano levantada",
 

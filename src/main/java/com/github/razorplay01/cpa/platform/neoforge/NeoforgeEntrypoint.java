@@ -1,7 +1,7 @@
 package com.github.razorplay01.cpa.platform.neoforge;
 
 //? neoforge {
-
+/*
 import com.github.razorplay01.cpa.ModTemplate;
 import com.github.razorplay01.cpa.platform.common.config.ConfigWrapper;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -23,4 +23,4 @@ public class NeoforgeEntrypoint {
 		ModTemplate.onInitialize();
 	}
 }
-//?}
+*///?}

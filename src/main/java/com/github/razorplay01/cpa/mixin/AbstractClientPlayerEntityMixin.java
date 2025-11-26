@@ -298,7 +298,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 	@Unique
 	public void playCurrentAnimation(AnimationContainer animationContainer) {
 		animationContainer.getAnimationController().replaceAnimationWithFade(
-				AbstractFadeModifier.standardFadeIn(animationContainer.getAnimationFadeTime(), EasingType.EASE_IN_OUT_SINE),
+				AbstractFadeModifier.standardFadeIn((int) (animationContainer.getAnimationFadeTime() * CONFIG.getGeneral().getAnimationFadeTimeMultiplier()), EasingType.EASE_IN_OUT_SINE),
 				RawAnimation.begin().thenPlay(animationContainer.getCurrentAnimation()), false
 		);
 	}

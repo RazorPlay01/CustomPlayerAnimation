@@ -18,11 +18,11 @@ platform {
 			slug("cloth-config")
 			versionRange = ">=${prop("deps.cloth-config")}"
 		}
-		required("player-animation-library") {
+		required("player_animation_library") {
 			modrinth = "ha1mEyJS"
 			curseforge = "1283899"
-			slug("player-animation-library")
-			versionRange = ">=${prop("deps.player-animation-library")}"
+			slug("player_animation_library")
+			versionRange = ">=${prop("deps.player_animation_library")}"
 		}
 	}
 }
@@ -69,7 +69,7 @@ repositories {
 
 dependencies {
 	api("me.shedaniel.cloth:cloth-config-neoforge:${prop("deps.cloth-config")}")
-	implementation ("com.zigythebird.playeranim:PlayerAnimationLibNeo:${prop("deps.player-animation-library")}")
+	implementation ("com.zigythebird.playeranim:PlayerAnimationLibNeo:${prop("deps.player_animation_library")}")
 	runtimeOnly("org.javassist:javassist:3.30.2-GA")
 
 	compileOnly("org.projectlombok:lombok:1.18.36")

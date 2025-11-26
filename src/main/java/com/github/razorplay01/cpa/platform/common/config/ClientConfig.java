@@ -52,6 +52,8 @@ public class ClientConfig implements ConfigData {
 		@ConfigEntry.Gui.Tooltip
 		private float animationSpeedMultiplier = 1;
 		@ConfigEntry.Gui.Tooltip
+		private float animationFadeTimeMultiplier = 1;
+		@ConfigEntry.Gui.Tooltip
 		private List<String> upHandDisableAnimationIds = List.of("bow", "trident", "water", "boat_forward", "boat_turn", "climbing", "sleep", "crawl");
 	}
 

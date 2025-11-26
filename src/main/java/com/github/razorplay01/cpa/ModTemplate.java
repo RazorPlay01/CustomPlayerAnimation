@@ -17,15 +17,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 //? fabric {
-/*import com.github.razorplay01.cpa.platform.fabric.FabricPlatform;
-*///?} neoforge {
-import com.github.razorplay01.cpa.platform.neoforge.NeoforgePlatform;
- //?}
+import com.github.razorplay01.cpa.platform.fabric.FabricPlatform;
+//?} neoforge {
+/*import com.github.razorplay01.cpa.platform.neoforge.NeoforgePlatform;
+ *///?}
 
 @SuppressWarnings("LoggingSimilarMessage")
 public class ModTemplate {
 	public static final String MOD_ID = /*$ mod_id*/ "cpa";
-	public static final String MOD_VERSION = /*$ mod_version*/ "5.0.0";
+	public static final String MOD_VERSION = /*$ mod_version*/ "5.0.1";
 	public static final String MOD_FRIENDLY_NAME = /*$ mod_name*/ "Custom Player Animations";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
@@ -70,10 +70,10 @@ public class ModTemplate {
 
 	private static Platform createPlatformInstance() {
 		//? fabric {
-		/*return new FabricPlatform();
-		*///?} neoforge {
-		return new NeoforgePlatform();
-		 //?}
+		return new FabricPlatform();
+		//?} neoforge {
+		/*return new NeoforgePlatform();
+		 *///?}
 	}
 
 	public static Animation getAnimation(String animationId) {

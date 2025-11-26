@@ -8,6 +8,8 @@
 
   "text.autoconfig.cpa.option.client.general.animationSpeedMultiplier": "Animation Speed Multiplier",
   "text.autoconfig.cpa.option.client.general.animationSpeedMultiplier.@Tooltip": "Changes the animation speed multiplier for all animations",
+  "text.autoconfig.cpa.option.client.general.animationFadeTimeMultiplier": "Animation Fade Time Multiplier",
+  "text.autoconfig.cpa.option.client.general.animationFadeTimeMultiplier.@Tooltip": "Changes the animation fade time multiplier for all animations",
   "text.autoconfig.cpa.option.client.general.upHandDisableAnimationIds": "Disable UpHandAnimation",
   "text.autoconfig.cpa.option.client.general.upHandDisableAnimationIds.@Tooltip": "List of animations that have priority over UpHandAnimation",
 

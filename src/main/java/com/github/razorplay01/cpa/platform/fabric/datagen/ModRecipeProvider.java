@@ -1,7 +1,7 @@
 package com.github.razorplay01.cpa.platform.fabric.datagen;
 
 //? fabric {
-/*
+
 import com.github.razorplay01.cpa.ModTemplate;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
@@ -26,12 +26,12 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 	}
 
 	//? if 1.21.1 {
-	/^@Override
+	/*@Override
 	public void buildRecipes(RecipeOutput recipeOutput) {
 		IntRecipeProvider provider = new IntRecipeProvider(this.output, this.registriesFuture);
 		provider.buildRecipes(recipeOutput);
 	}
-	^///? } else {
+	*///? } else {
 	@Override
 	protected @NotNull RecipeProvider createRecipeProvider(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
 		return new IntRecipeProvider(provider, recipeOutput);
@@ -47,7 +47,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 	static class IntRecipeProvider extends RecipeProvider {
 
 		//? if 1.21.1 {
-		/^public IntRecipeProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> completableFuture) {
+		/*public IntRecipeProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> completableFuture) {
 			super(packOutput, completableFuture);
 		}
 
@@ -56,7 +56,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 			buildLavaChickenRecipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.COOKED_CHICKEN))
 					.save(recipeOutput, "lava_chicken_recipe");
 		}
-		^///? } else {
+		*///? } else {
 		protected IntRecipeProvider(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
 			super(provider, recipeOutput);
 		}
@@ -77,4 +77,4 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 		}
 	}
 }
-*///?}
+//?}

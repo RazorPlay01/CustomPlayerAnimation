@@ -19,11 +19,11 @@ platform {
 			slug("cloth-config")
 			versionRange = ">=${prop("deps.cloth-config")}"
 		}
-		required("player-animation-library") {
+		required("player_animation_library") {
 			modrinth = "ha1mEyJS"
 			curseforge = "1283899"
-			slug("player-animation-library")
-			versionRange = ">=${prop("deps.player-animation-library")}"
+			slug("player_animation_library")
+			versionRange = ">=${prop("deps.player_animation_library")}"
 		}
 		required("fabricloader") {
 			versionRange = ">=${libs.fabric.loader.get().version}"
@@ -77,7 +77,7 @@ dependencies {
 	modImplementation("net.fabricmc.fabric-api:fabric-api:${prop("deps.fabric-api")}")
 	modImplementation("com.terraformersmc:modmenu:${prop("deps.modmenu")}")
 	modApi("me.shedaniel.cloth:cloth-config-fabric:${prop("deps.cloth-config")}")
-	modImplementation("com.zigythebird.playeranim:PlayerAnimationLibFabric:${prop("deps.player-animation-library")}")
+	modImplementation("com.zigythebird.playeranim:PlayerAnimationLibFabric:${prop("deps.player_animation_library")}")
 
 	compileOnly("org.projectlombok:lombok:1.18.36")
 	annotationProcessor("org.projectlombok:lombok:1.18.36")

@@ -1,7 +1,7 @@
 package com.github.razorplay01.cpa.platform.fabric;
 
 //? fabric {
-/*
+
 import com.github.razorplay01.cpa.platform.Platform;
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -17,4 +17,4 @@ public class FabricPlatform implements Platform {
 		return ModLoader.FABRIC;
 	}
 }
-*///?}
+//?}
