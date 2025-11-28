@@ -53,8 +53,6 @@ public class ClientConfig implements ConfigData {
 		private float animationSpeedMultiplier = 1;
 		@ConfigEntry.Gui.Tooltip
 		private float animationFadeTimeMultiplier = 1;
-		@ConfigEntry.Gui.Tooltip
-		private List<String> upHandDisableAnimationIds = List.of("bow", "trident", "water", "boat_forward", "boat_turn", "climbing", "sleep", "crawl");
 	}
 
 	public static class MainAnimations {
@@ -88,9 +86,19 @@ public class ClientConfig implements ConfigData {
 		public ToolsAnimations toolsAnimations = new ToolsAnimations();
 	}
 
+	@Getter
 	public static class SpecialAnimations {
 		@ConfigEntry.Gui.CollapsibleObject
 		public AnimationConfig upHandAnimationConfig = new AnimationConfig();
+		@ConfigEntry.Gui.Tooltip
+		private List<String> upHandDisableAnimationIds = List.of(
+				"bow", "trident", "water", "boat_forward",
+				"boat_turn", "climbing", "sleep", "crawl");
+		@ConfigEntry.Gui.Tooltip
+		public List<String> upHandItemIds = List.of(
+				"minecraft:torch", "minecraft:soul_torch", "minecraft:redstone_torch",
+				"minecraft:filled_map", "minecraft:recovery_compass", "minecraft:compass"
+		);
 
 		@ConfigEntry.Gui.CollapsibleObject
 		public AnimationConfig itemSwapAnimationConfig = new AnimationConfig(true, 1.5f, 0, 1);

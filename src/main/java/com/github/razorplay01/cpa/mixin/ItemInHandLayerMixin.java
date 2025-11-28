@@ -24,8 +24,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 //? if <=1.21.8 {
 /*import net.minecraft.client.renderer.entity.state.PlayerRenderState;
-import net.minecraft.client.renderer.MultiBufferSource;
-*///?} else {
+import net.minecraft.client.renderer.MultiBufferSource;*/
+//?} else {
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ExtendedItemStackRenderState;
@@ -90,8 +90,8 @@ public abstract class ItemInHandLayerMixin<S extends ArmedEntityRenderState, M e
 		MapRenderer.renderFirstPersonMap(matrices, vertexConsumers, light, itemStack);
 
 		matrices.popPose();
-	}
-	*///?} else {
+	}*/
+	//?} else {
 	@Inject(method = "submitArmWithItem(Lnet/minecraft/client/renderer/entity/state/ArmedEntityRenderState;Lnet/minecraft/client/renderer/item/ItemStackRenderState;Lnet/minecraft/world/entity/HumanoidArm;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;I)V", at = @At("HEAD"), cancellable = true)
 	private void renderArmWithItem(S armedEntityRenderState, ItemStackRenderState itemStackRenderState, HumanoidArm humanoidArm, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, CallbackInfo ci) {
 		if (!(armedEntityRenderState instanceof AvatarRenderState playerRenderState)) return;
@@ -105,7 +105,6 @@ public abstract class ItemInHandLayerMixin<S extends ArmedEntityRenderState, M e
 		} else {
 			return;
 		}
-		System.out.println("onRenderItem");
 		this.onRenderItem(player, this.getParentModel(), itemStack,
 				humanoidArm, poseStack, submitNodeCollector, armedEntityRenderState, i, ci);
 	}
@@ -127,7 +126,6 @@ public abstract class ItemInHandLayerMixin<S extends ArmedEntityRenderState, M e
 		ItemStack heldItem = isMainHand ? entity.getMainHandItem() : entity.getOffhandItem();
 
 		if (heldItem.getItem().equals(Items.FILLED_MAP)) {
-			System.out.println("renderMap");
 			renderMapInHand(entity, humanoid, itemStack, arm, poseStack, submitNodeCollector, livingEntityRenderState, light);
 			info.cancel();
 		}

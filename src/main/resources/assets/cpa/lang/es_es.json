@@ -10,8 +10,10 @@
   "text.autoconfig.cpa.option.client.general.animationSpeedMultiplier.@Tooltip": "Modifica el multiplicador de velocidad para todas las animaciones",
   "text.autoconfig.cpa.option.client.general.animationFadeTimeMultiplier": "Multiplicador del tiempo de Transición Global",
   "text.autoconfig.cpa.option.client.general.animationFadeTimeMultiplier.@Tooltip": "Modifica el multiplicador de tiempo de transición para todas las animaciones",
-  "text.autoconfig.cpa.option.client.general.upHandDisableAnimationIds": "Desactivar Animación de Mano Levantada",
-  "text.autoconfig.cpa.option.client.general.upHandDisableAnimationIds.@Tooltip": "Lista de animaciones que tienen prioridad sobre la animación de mano levantada",
+  "text.autoconfig.cpa.option.client.specialAnimations.upHandDisableAnimationIds": "Desactivar Animación de Mano Levantada",
+  "text.autoconfig.cpa.option.client.specialAnimations.upHandDisableAnimationIds.@Tooltip": "Lista de animaciones que tienen prioridad sobre la animación de mano levantada",
+  "text.autoconfig.cpa.option.client.specialAnimations.upHandItemIds": "Animación de Mano Levantada Items",
+  "text.autoconfig.cpa.option.client.specialAnimations.upHandItemIds.@Tooltip": "Lista de items que aplican la animación de mano levantada",
 
   "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations": "Animaciones de Reposo",
 

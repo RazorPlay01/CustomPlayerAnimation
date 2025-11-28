@@ -10,8 +10,10 @@
   "text.autoconfig.cpa.option.client.general.animationSpeedMultiplier.@Tooltip": "Changes the animation speed multiplier for all animations",
   "text.autoconfig.cpa.option.client.general.animationFadeTimeMultiplier": "Animation Fade Time Multiplier",
   "text.autoconfig.cpa.option.client.general.animationFadeTimeMultiplier.@Tooltip": "Changes the animation fade time multiplier for all animations",
-  "text.autoconfig.cpa.option.client.general.upHandDisableAnimationIds": "Disable UpHandAnimation",
-  "text.autoconfig.cpa.option.client.general.upHandDisableAnimationIds.@Tooltip": "List of animations that have priority over UpHandAnimation",
+  "text.autoconfig.cpa.option.client.specialAnimations.upHandDisableAnimationIds": "Disable UpHandAnimation",
+  "text.autoconfig.cpa.option.client.specialAnimations.upHandDisableAnimationIds.@Tooltip": "List of animations that have priority over UpHandAnimation",
+  "text.autoconfig.cpa.option.client.specialAnimations.upHandItemIds": "UpHandAnimation Items",
+  "text.autoconfig.cpa.option.client.specialAnimations.upHandItemIds.@Tooltip": "List of items can use UpHandAnimation",
 
   "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations": "Idle Animations",
 
