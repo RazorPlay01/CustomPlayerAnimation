@@ -24,6 +24,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 //? if <=1.21.8 {
 /*import net.minecraft.client.renderer.entity.state.PlayerRenderState;
+import net.minecraft.client.renderer.MultiBufferSource;
 *///?} else {
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.SubmitNodeCollector;
