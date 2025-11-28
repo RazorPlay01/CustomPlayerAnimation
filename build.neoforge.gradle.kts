@@ -90,6 +90,7 @@ tasks.named<ProcessResources>("processResources") {
 	val clientMixins = mutableListOf(
 		"AbstractClientPlayerEntityMixin",
 		"HumanoidRenderStateMixin",
+		"InventoryAccessor",
 		"ItemInHandLayerMixin",
 		"ItemStackRenderStateMixin",
 		"LivingEntityRendererMixin",

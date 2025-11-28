@@ -7,7 +7,6 @@ import com.mojang.math.Axis;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
@@ -105,6 +104,7 @@ public abstract class ItemInHandLayerMixin<S extends ArmedEntityRenderState, M e
 		} else {
 			return;
 		}
+		System.out.println("onRenderItem");
 		this.onRenderItem(player, this.getParentModel(), itemStack,
 				humanoidArm, poseStack, submitNodeCollector, armedEntityRenderState, i, ci);
 	}
@@ -126,7 +126,8 @@ public abstract class ItemInHandLayerMixin<S extends ArmedEntityRenderState, M e
 		ItemStack heldItem = isMainHand ? entity.getMainHandItem() : entity.getOffhandItem();
 
 		if (heldItem.getItem().equals(Items.FILLED_MAP)) {
-			renderMapInHand(entity, humanoid, itemStack, arm, poseStack, submitNodeCollector, livingEntityRenderState, light, info);
+			System.out.println("renderMap");
+			renderMapInHand(entity, humanoid, itemStack, arm, poseStack, submitNodeCollector, livingEntityRenderState, light);
 			info.cancel();
 		}
 	}
@@ -142,7 +143,7 @@ public abstract class ItemInHandLayerMixin<S extends ArmedEntityRenderState, M e
 								 PoseStack poseStack,
 								 SubmitNodeCollector submitNodeCollector,
 								 net.minecraft.client.renderer.entity.state.LivingEntityRenderState livingEntityRenderState,
-								 int light, CallbackInfo info) {
+								 int light) {
 		poseStack.pushPose();
 		humanoid.translateToHand((HumanoidRenderState) livingEntityRenderState, arm, poseStack);
 

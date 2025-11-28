@@ -79,18 +79,18 @@ public class MapRenderer {
 
 			poseStack.translate(-0.1, -1.2, 0.0);
 			poseStack.scale(0.0098125f, 0.0098125f, 0.0098125f);
-		} else { // The values are now much better than they were before, but it could still be perfected.
+		} else {
 			if (leftHanded) {
 				poseStack.mulPose(YP.rotationDegrees(154.5f));
 				poseStack.mulPose(ZP.rotationDegrees(166.5f));
 				poseStack.scale(0.38f, 0.38f, 0.38f);
-				// positive x = move right
+
 				poseStack.translate(+0.585, -1.225, +0.15);
 			} else {
 				poseStack.mulPose(YP.rotationDegrees(155.0f));
 				poseStack.mulPose(ZP.rotationDegrees(213.5f));
 				poseStack.scale(0.38f, 0.38f, 0.38f);
-				// negative x = move left
+
 				poseStack.translate(-0.955, -1.8, 0.0);
 			}
 
