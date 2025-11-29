@@ -208,6 +208,12 @@
   "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig.fadeTime": "Tiempo de Transición de Animación",
   "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig.priority": "Prioridad de Animación",
 
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.jumpingAnimationsConfig": "Animación de Salto",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.jumpingAnimationsConfig.isEnabled": "Está Activada",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.jumpingAnimationsConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.jumpingAnimationsConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.jumpingAnimationsConfig.priority": "Prioridad de Animación",
+
   "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig": "Animación de Dormir",
   "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig.isEnabled": "Está Activada",
   "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
@@ -216,9 +222,12 @@
 
   "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations": "Animaciones de Muerte",
   "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.isEnabled": "Está Activada",
-  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.speedMultiplier": "Multiplicador de Velocidad por Defecto para Animaciones de Muerte",
-  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.fadeTime": "Tiempo de Transición por Defecto para Animaciones de Muerte",
-  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.priority": "Prioridad por Defecto para Animaciones de Muerte",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathAnimationConfig": "Animaciones de Muerte por Defecto",
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathAnimationConfig.speedMultiplier": "Multiplicador de Velocidad por Defecto para Animaciones de Muerte",
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathAnimationConfig.fadeTime": "Tiempo de Transición por Defecto para Animaciones de Muerte",
+  "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathAnimationConfig.priority": "Prioridad por Defecto para Animaciones de Muerte",
 
   "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathBurnAnimationConfig": "Animación de Muerte por Quemadura",
   "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathBurnAnimationConfig.isEnabled": "Está Activada",

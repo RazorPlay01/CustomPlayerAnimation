@@ -221,14 +221,17 @@ public class ClientConfig implements ConfigData {
 
 		@ConfigEntry.Gui.CollapsibleObject
 		public AnimationConfig sleepingAnimationsConfig = new AnimationConfig();
+
+		@ConfigEntry.Gui.CollapsibleObject
+		public AnimationConfig jumpingAnimationsConfig = new AnimationConfig(false,0.5f,2,0);
 	}
 
 	@Getter
 	public static class DeathAnimations {
 		boolean isEnabled = false;
-		float speedMultiplier = 1;
-		int fadeTime = 10;
-		int priority = 0;
+
+		@ConfigEntry.Gui.CollapsibleObject
+		public AnimationConfig deathAnimationConfig = new AnimationConfig();
 
 		@ConfigEntry.Gui.CollapsibleObject
 		public AnimationConfig deathBurnAnimationConfig = new AnimationConfig();

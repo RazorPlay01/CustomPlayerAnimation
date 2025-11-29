@@ -1,5 +1,6 @@
 package com.github.razorplay01.cpa.platform.common.animation.animations.base;
 
+import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
@@ -7,64 +8,59 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
-import static com.github.razorplay01.cpa.ModTemplate.getAnimation;
+import static com.github.razorplay01.cpa.platform.common.util.Util.configureAnimationContainer;
 
 public class DeathAnimation implements ICustomAnimation {
-    @Override
-    public void playAnimation(AnimationContext context) {
-        if (!CONFIG.getMainAnimations().deathAnimations.isEnabled()) {
-            context.mainAnimationContainer().disableAnimation();
-        } else {
-            // Determina la animación según la causa de la muerte
-            String animationId = getDeathAnimationId(context);
-            configureAnimationContainer(context, animationId);
+	@Override
+	public void playAnimation(AnimationContext context) {
+		if (!CONFIG.getMainAnimations().deathAnimations.isEnabled()) {
+			context.mainAnimationContainer().disableAnimation();
+		} else {
+			AnimationsId animationId = getDeathAnimationId(context);
 
-            context.mainAnimationContainer().setCurrentAnimation(getAnimation(animationId));
-            context.mainAnimationContainer().setCurrentAnimationId(animationId);
-        }
-    }
+			configureAnimations(context, animationId);
 
-    private static void configureAnimationContainer(AnimationContext context, String animationId) {
-        switch (animationId) {
-            case "death_burn" -> {
-                context.mainAnimationContainer().setAnimationSpeed(CONFIG.getMainAnimations().deathAnimations.deathBurnAnimationConfig.getSpeedMultiplier());
-                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.getMainAnimations().deathAnimations.deathBurnAnimationConfig.getFadeTime());
-                context.mainAnimationContainer().setAnimationPriority(CONFIG.getMainAnimations().deathAnimations.deathBurnAnimationConfig.getPriority());
-            }
-            case "death_explosion" -> {
-                context.mainAnimationContainer().setAnimationSpeed(CONFIG.getMainAnimations().deathAnimations.deathExplosionAnimationConfig.getSpeedMultiplier());
-                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.getMainAnimations().deathAnimations.deathExplosionAnimationConfig.getFadeTime());
-                context.mainAnimationContainer().setAnimationPriority(CONFIG.getMainAnimations().deathAnimations.deathExplosionAnimationConfig.getPriority());
-            }
-            case "death_drown" -> {
-                context.mainAnimationContainer().setAnimationSpeed(CONFIG.getMainAnimations().deathAnimations.deathDrownAnimationConfig.getSpeedMultiplier());
-                context.mainAnimationContainer().setAnimationFadeTime(CONFIG.getMainAnimations().deathAnimations.deathDrownAnimationConfig.getFadeTime());
-                context.mainAnimationContainer().setAnimationPriority(CONFIG.getMainAnimations().deathAnimations.deathDrownAnimationConfig.getPriority());
-            }
-            default -> {
-                context.mainAnimationContainer().setAnimationSpeed(CONFIG.getMainAnimations().deathAnimations.getSpeedMultiplier());
-                context.mainAnimationContainer().setAnimationSpeed(CONFIG.getMainAnimations().deathAnimations.getFadeTime());
-                context.mainAnimationContainer().setAnimationSpeed(CONFIG.getMainAnimations().deathAnimations.getPriority());
-            }
-        }
-    }
+			AnimationContainer.setAnimation(context.mainAnimationContainer(), animationId);
+		}
+	}
 
-    @Override
-    public boolean shouldPlayAnimation(AnimationContext context) {
-        return context.player().getHealth() <= 0;
-    }
+	private static void configureAnimations(AnimationContext context, AnimationsId animationId) {
+		switch (animationId) {
+			case DEATH_BURN_ANIMATION ->
+					configureAnimationContainer(CONFIG.getMainAnimations().deathAnimations.deathBurnAnimationConfig, context.mainAnimationContainer());
+			case DEATH_EXPLOSION_ANIMATION ->
+					configureAnimationContainer(CONFIG.getMainAnimations().deathAnimations.deathExplosionAnimationConfig, context.mainAnimationContainer());
+			case DEATH_DROWN_ANIMATION ->
+					configureAnimationContainer(CONFIG.getMainAnimations().deathAnimations.deathDrownAnimationConfig, context.mainAnimationContainer());
+			default ->
+					configureAnimationContainer(CONFIG.getMainAnimations().deathAnimations.deathAnimationConfig, context.mainAnimationContainer());
+		}
+	}
 
-    private String getDeathAnimationId(AnimationContext context) {
-        DamageSource lastDamageSource = context.player().getLastDamageSource();
-        if (lastDamageSource != null) {
-            if (lastDamageSource.is(DamageTypes.IN_FIRE) || lastDamageSource.is(DamageTypes.ON_FIRE) || lastDamageSource.is(DamageTypes.CAMPFIRE)) {
-                return AnimationsId.DEATH_BURN_ANIMATION.getAnimationId();
-            } else if (lastDamageSource.is(DamageTypes.EXPLOSION) || lastDamageSource.is(DamageTypes.PLAYER_EXPLOSION)) {
-                return AnimationsId.DEATH_EXPLOSION_ANIMATION.getAnimationId();
-            } else if (lastDamageSource.is(DamageTypes.DROWN)) {
-                return AnimationsId.DEATH_DROWN_ANIMATION.getAnimationId();
-            }
-        }
-        return AnimationsId.DEATH_DEFAULT_ANIMATION.getAnimationId();
-    }
+	@Override
+	public boolean shouldPlayAnimation(AnimationContext context) {
+		return context.player().getHealth() <= 0;
+	}
+
+	private AnimationsId getDeathAnimationId(AnimationContext context) {
+		DamageSource lastDamageSource = context.player().getLastDamageSource();
+
+		if (lastDamageSource == null) {
+			return AnimationsId.DEATH_DEFAULT_ANIMATION;
+		}
+
+		if (lastDamageSource.is(DamageTypes.IN_FIRE) || lastDamageSource.is(DamageTypes.ON_FIRE) || lastDamageSource.is(DamageTypes.CAMPFIRE)) {
+			return getAnimationIfEnabled(CONFIG.getMainAnimations().deathAnimations.deathBurnAnimationConfig.isEnabled(), AnimationsId.DEATH_BURN_ANIMATION);
+		} else if (lastDamageSource.is(DamageTypes.EXPLOSION) || lastDamageSource.is(DamageTypes.PLAYER_EXPLOSION)) {
+			return getAnimationIfEnabled(CONFIG.getMainAnimations().deathAnimations.deathExplosionAnimationConfig.isEnabled(), AnimationsId.DEATH_EXPLOSION_ANIMATION);
+		} else if (lastDamageSource.is(DamageTypes.DROWN)) {
+			return getAnimationIfEnabled(CONFIG.getMainAnimations().deathAnimations.deathDrownAnimationConfig.isEnabled(), AnimationsId.DEATH_DROWN_ANIMATION);
+		}
+
+		return AnimationsId.DEATH_DEFAULT_ANIMATION;
+	}
+
+	private AnimationsId getAnimationIfEnabled(boolean isEnabled, AnimationsId specificAnimationId) {
+		return isEnabled ? specificAnimationId : AnimationsId.DEATH_DEFAULT_ANIMATION;
+	}
 }

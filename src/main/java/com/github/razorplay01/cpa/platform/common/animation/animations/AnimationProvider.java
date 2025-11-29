@@ -23,6 +23,7 @@ public class AnimationProvider {
 			new WalkSneakAnimation(),
 			new WalkSneakBackwardsAnimation(),
 			new CreativeFlyIdleAnimation(),
+			new JumpAnimation(),
 			new FallAnimation(),
 			new ClimbAnimations(),
 			new CrawlAnimations(),

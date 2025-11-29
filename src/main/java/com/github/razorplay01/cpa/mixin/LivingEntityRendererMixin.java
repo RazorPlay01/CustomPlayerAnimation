@@ -60,7 +60,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extend
 	private boolean disableDeathRotationForPlayer(PoseStack instance, Quaternionfc quaternionfc, S livingEntityRenderState) {
 		if (!(livingEntityRenderState instanceof AvatarRenderState playerRenderState)) return true;
 		if (!(((HumanoidRenderStateAccessor) playerRenderState).getLivingEntity() instanceof Avatar)) return true;
-		return CONFIG.getMainAnimations().deathAnimations.isEnabled();
+		return !CONFIG.getMainAnimations().deathAnimations.isEnabled();
 	}
 
 	@Inject(method = "extractRenderState(Lnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;F)V", at = @At("HEAD"))
