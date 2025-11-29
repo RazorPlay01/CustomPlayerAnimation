@@ -1,11 +1,11 @@
 package com.github.razorplay01.cpa.platform.common.animation.animations.base;
 
+import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
-import static com.github.razorplay01.cpa.ModTemplate.getAnimation;
 
 public class WalkAnimation implements ICustomAnimation {
     @Override
@@ -17,8 +17,7 @@ public class WalkAnimation implements ICustomAnimation {
             context.mainAnimationContainer().setAnimationFadeTime(CONFIG.getMainAnimations().moveAnimations.walkingAnimationConfig.getFadeTime());
             context.mainAnimationContainer().setAnimationPriority(CONFIG.getMainAnimations().moveAnimations.walkingAnimationConfig.getPriority());
 
-            context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.WALK_ANIMATION.getAnimationId()));
-            context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.WALK_ANIMATION.getAnimationId());
+			AnimationContainer.setAnimation(context.mainAnimationContainer(), AnimationsId.WALK_ANIMATION);
         }
     }
 

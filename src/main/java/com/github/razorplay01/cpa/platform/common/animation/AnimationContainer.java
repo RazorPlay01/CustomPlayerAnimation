@@ -40,4 +40,25 @@ public class AnimationContainer {
 		this.setAnimationSpeed(1);
 		this.setAnimationPriority(0);
 	}
+
+	public static void setAnimation(AnimationContainer animationContainer, AnimationsId animationId) {
+		animationContainer.setCurrentAnimation(animationId);
+		animationContainer.setCurrentAnimationId(animationId);
+	}
+
+	public void setCurrentAnimation(Animation animation) {
+		this.currentAnimation = animation;
+	}
+
+	public void setCurrentAnimation(AnimationsId animationId) {
+		this.setCurrentAnimation(getAnimation(animationId.getAnimationId()));
+	}
+
+	public void setCurrentAnimationId(String animation) {
+		this.currentAnimationId = animation;
+	}
+
+	public void setCurrentAnimationId(AnimationsId animationId) {
+		this.setCurrentAnimationId(animationId.getAnimationId());
+	}
 }
