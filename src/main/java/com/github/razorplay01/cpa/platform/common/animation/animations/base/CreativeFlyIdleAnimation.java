@@ -1,12 +1,12 @@
 package com.github.razorplay01.cpa.platform.common.animation.animations.base;
 
+import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
 import net.minecraft.world.entity.player.Player;
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
-import static com.github.razorplay01.cpa.ModTemplate.getAnimation;
 import static com.github.razorplay01.cpa.platform.common.util.Util.configureAnimationContainer;
 
 public class CreativeFlyIdleAnimation implements ICustomAnimation {
@@ -29,8 +29,7 @@ public class CreativeFlyIdleAnimation implements ICustomAnimation {
         } else {
             configureAnimationContainer(CONFIG.getMainAnimations().idleAnimations.idleCreativeFlyingAnimationConfig, context.mainAnimationContainer());
 
-            context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.IDLE_CREATIVE_FLY_ANIMATION.getAnimationId()));
-            context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.IDLE_CREATIVE_FLY_ANIMATION.getAnimationId());
+			AnimationContainer.setAnimation(context.mainAnimationContainer(), AnimationsId.IDLE_CREATIVE_FLY_ANIMATION);
         }
     }
 }

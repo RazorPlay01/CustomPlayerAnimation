@@ -1,12 +1,12 @@
 package com.github.razorplay01.cpa.platform.common.animation.animations.base;
 
+import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
 import net.minecraft.world.entity.vehicle.Boat;
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
-import static com.github.razorplay01.cpa.ModTemplate.getAnimation;
 import static com.github.razorplay01.cpa.platform.common.util.Util.configureAnimationContainer;
 import static com.github.razorplay01.cpa.platform.common.util.Util.isBoat;
 
@@ -35,11 +35,9 @@ public class BoatTurnAnimations implements ICustomAnimation {
         boolean isRightPaddleMoving = boat.getPaddleState(1);
 
         if (isLeftPaddleMoving) {
-            context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.BOAT_TURN_LEFT_ANIMATION.getAnimationId()));
-            context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.BOAT_TURN_LEFT_ANIMATION.getAnimationId());
+			AnimationContainer.setAnimation(context.mainAnimationContainer(), AnimationsId.BOAT_TURN_LEFT_ANIMATION);
         } else if (isRightPaddleMoving) {
-            context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.BOAT_TURN_RIGHT_ANIMATION.getAnimationId()));
-            context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.BOAT_TURN_RIGHT_ANIMATION.getAnimationId());
+			AnimationContainer.setAnimation(context.mainAnimationContainer(), AnimationsId.BOAT_TURN_RIGHT_ANIMATION);
         }
     }
 }

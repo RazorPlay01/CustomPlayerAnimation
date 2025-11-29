@@ -1,11 +1,11 @@
 package com.github.razorplay01.cpa.platform.common.animation.animations.base;
 
+import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
-import static com.github.razorplay01.cpa.ModTemplate.getAnimation;
 import static com.github.razorplay01.cpa.platform.common.util.Util.configureAnimationContainer;
 import static com.github.razorplay01.cpa.platform.common.util.Util.isHorse;
 
@@ -17,8 +17,7 @@ public class HorseRunningBackwardsAnimation implements ICustomAnimation {
         } else {
             configureAnimationContainer(CONFIG.getMainAnimations().mountAnimations.horseAnimations.horseRunningBackwardsAnimationConfig, context.mainAnimationContainer());
 
-            context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.HORSE_IDLE_ANIMATION.getAnimationId()));
-            context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.HORSE_IDLE_ANIMATION.getAnimationId());
+			AnimationContainer.setAnimation(context.mainAnimationContainer(), AnimationsId.HORSE_IDLE_ANIMATION);
         }
     }
 

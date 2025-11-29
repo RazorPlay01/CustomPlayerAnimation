@@ -1,11 +1,11 @@
 package com.github.razorplay01.cpa.platform.common.animation.animations.base;
 
+import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
-import static com.github.razorplay01.cpa.ModTemplate.getAnimation;
 
 public class WalkSneakAnimation implements ICustomAnimation {
     @Override
@@ -16,7 +16,7 @@ public class WalkSneakAnimation implements ICustomAnimation {
         }
 
         configureWalkSneakAnimation(context);
-        setWalkSneakAnimation(context);
+		AnimationContainer.setAnimation(context.mainAnimationContainer(), AnimationsId.WALK_SNEAK_ANIMATION);
     }
 
     @Override
@@ -39,10 +39,5 @@ public class WalkSneakAnimation implements ICustomAnimation {
         return (float) (5 * context.playerData().getMovementSpeed()
                 * CONFIG.getMainAnimations().moveAnimations.getAnimationMoveSpeedMultiplier()
                 * CONFIG.getMainAnimations().moveAnimations.walkingSneakAnimationConfig.getSpeedMultiplier());
-    }
-
-    private static void setWalkSneakAnimation(AnimationContext context) {
-        context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.WALK_SNEAK_ANIMATION.getAnimationId()));
-        context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.WALK_SNEAK_ANIMATION.getAnimationId());
     }
 }

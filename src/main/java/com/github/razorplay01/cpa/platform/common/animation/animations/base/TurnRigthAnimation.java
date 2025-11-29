@@ -1,11 +1,11 @@
 package com.github.razorplay01.cpa.platform.common.animation.animations.base;
 
+import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
-import static com.github.razorplay01.cpa.ModTemplate.getAnimation;
 import static com.github.razorplay01.cpa.platform.common.util.Util.configureAnimationContainer;
 
 public class TurnRigthAnimation implements ICustomAnimation {
@@ -28,8 +28,7 @@ public class TurnRigthAnimation implements ICustomAnimation {
         configureAnimationContainer(CONFIG.getMainAnimations().idleAnimations.turnAnimations.turningStandingAnimationConfig, context.mainAnimationContainer());
         context.mainAnimationContainer().setAnimationSpeed(calculateAnimationSpeed(context));
 
-        context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.TURN_RIGHT_ANIMATION.getAnimationId()));
-        context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.TURN_RIGHT_ANIMATION.getAnimationId());
+		AnimationContainer.setAnimation(context.mainAnimationContainer(), AnimationsId.TURN_RIGHT_ANIMATION);
     }
 
     private static float calculateAnimationSpeed(AnimationContext context) {

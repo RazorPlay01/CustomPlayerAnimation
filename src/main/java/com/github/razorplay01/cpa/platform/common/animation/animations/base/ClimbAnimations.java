@@ -1,6 +1,7 @@
 package com.github.razorplay01.cpa.platform.common.animation.animations.base;
 
 import com.github.razorplay01.cpa.mixin.InventoryAccessor;
+import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
@@ -19,7 +20,6 @@ import net.minecraft.world.level.block.WeepingVinesBlock;
 import net.minecraft.world.level.block.WeepingVinesPlantBlock;
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
-import static com.github.razorplay01.cpa.ModTemplate.getAnimation;
 import static java.lang.Math.atan2;
 import static java.lang.Math.toDegrees;
 
@@ -117,14 +117,11 @@ public class ClimbAnimations implements ICustomAnimation {
         double verticalSpeed = playerData.getVectorY();
 
         if (verticalSpeed > 0) {
-            context.mainAnimationContainer().setCurrentAnimation(isCrouching ? getAnimation(AnimationsId.CLIMB_SNEAK_ANIMATION.getAnimationId()) : getAnimation(AnimationsId.CLIMB_ANIMATION.getAnimationId()));
-            context.mainAnimationContainer().setCurrentAnimationId(isCrouching ? AnimationsId.CLIMB_SNEAK_ANIMATION.getAnimationId() : AnimationsId.CLIMB_ANIMATION.getAnimationId());
+			AnimationContainer.setAnimation(context.mainAnimationContainer(), AnimationsId.CLIMB_SNEAK_ANIMATION);
         } else if (verticalSpeed < 0) {
-            context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.CLIMB_BACKWARDS_ANIMATION.getAnimationId()));
-            context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.CLIMB_BACKWARDS_ANIMATION.getAnimationId());
+			AnimationContainer.setAnimation(context.mainAnimationContainer(), AnimationsId.CLIMB_BACKWARDS_ANIMATION);
         } else {
-            context.mainAnimationContainer().setCurrentAnimation(isCrouching ? getAnimation(AnimationsId.CLIMB_IDLE_SNEAK_ANIMATION.getAnimationId()) : getAnimation(AnimationsId.CLIMB_IDLE_ANIMATION.getAnimationId()));
-            context.mainAnimationContainer().setCurrentAnimationId(isCrouching ? AnimationsId.CLIMB_IDLE_SNEAK_ANIMATION.getAnimationId() : AnimationsId.CLIMB_IDLE_ANIMATION.getAnimationId());
+			AnimationContainer.setAnimation(context.mainAnimationContainer(), AnimationsId.CLIMB_IDLE_SNEAK_ANIMATION);
         }
     }
 

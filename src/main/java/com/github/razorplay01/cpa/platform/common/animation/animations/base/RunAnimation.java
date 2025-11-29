@@ -1,11 +1,11 @@
 package com.github.razorplay01.cpa.platform.common.animation.animations.base;
 
+import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
-import static com.github.razorplay01.cpa.ModTemplate.getAnimation;
 
 public class RunAnimation implements ICustomAnimation {
     public void playAnimation(AnimationContext context) {
@@ -16,8 +16,7 @@ public class RunAnimation implements ICustomAnimation {
             context.mainAnimationContainer().setAnimationFadeTime(CONFIG.getMainAnimations().moveAnimations.runningAnimationConfig.getFadeTime());
             context.mainAnimationContainer().setAnimationPriority(CONFIG.getMainAnimations().moveAnimations.runningAnimationConfig.getPriority());
 
-            context.mainAnimationContainer().setCurrentAnimation(getAnimation(AnimationsId.RUN_ANIMATION.getAnimationId()));
-            context.mainAnimationContainer().setCurrentAnimationId(AnimationsId.RUN_ANIMATION.getAnimationId());
+			AnimationContainer.setAnimation(context.mainAnimationContainer(), AnimationsId.RUN_ANIMATION);
         }
     }
 
