@@ -63,7 +63,7 @@ public abstract class ClientMannequinMixin extends Mannequin implements IAnimati
 	@Unique
 	private AnimationContext actualAnimationContext;
 
-	public ClientMannequinMixin(EntityType<Mannequin> entityType, Level level) {
+	protected ClientMannequinMixin(EntityType<Mannequin> entityType, Level level) {
 		super(entityType, level);
 	}
 

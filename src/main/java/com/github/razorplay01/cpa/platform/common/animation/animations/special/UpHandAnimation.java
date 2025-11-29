@@ -51,8 +51,8 @@ public class UpHandAnimation implements ICustomAnimation {
 
 	private static HandStates determineHandStates(
 			//? if <= 1.21.8 {
-			//AbstractClientPlayer player
-			//?} else {
+			/*AbstractClientPlayer player
+			*///?} else {
 			net.minecraft.world.entity.Avatar player
 			//?}
 			) {
