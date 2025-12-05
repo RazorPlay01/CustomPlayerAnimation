@@ -12,7 +12,7 @@ platform {
 		required("neoforge") {
 			forgeVersionRange = "[1,)"
 		}
-		required("cloth-config") {
+		required("cloth_config") {
 			modrinth = "9s6osm5g"
 			curseforge = "348521"
 			slug("cloth-config")
