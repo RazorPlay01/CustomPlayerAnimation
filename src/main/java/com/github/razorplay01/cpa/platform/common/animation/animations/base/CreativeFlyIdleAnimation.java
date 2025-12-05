@@ -18,7 +18,7 @@ public class CreativeFlyIdleAnimation implements ICustomAnimation {
     @Override
     public boolean shouldPlayAnimation(AnimationContext context) {
 		if (!(context.player() instanceof Player player)) return false;
-		return context.playerData().getFlychecker() > 10 &&
+		return player.getAbilities().flying &&
 				!player.isPassenger() &&
 				player.isCreative();
     }
