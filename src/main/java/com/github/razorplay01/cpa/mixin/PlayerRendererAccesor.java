@@ -7,14 +7,15 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 //? if <=1.21.8 {
 /*import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-*///?} else {
+*///?}
+//? if > 1.21.8 {
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.world.entity.Avatar;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.InteractionHand;
 //?}
 
-//? if <=1.21.8 {
+//? if >= 1.21.2 && <=1.21.8 {
 /*@Mixin(PlayerRenderer.class)
 public interface PlayerRendererAccesor {
 	@Invoker("getArmPose")
@@ -22,7 +23,8 @@ public interface PlayerRendererAccesor {
 		throw new AssertionError();
 	}
 }
-*///?} else {
+*///?}
+//? if > 1.21.8 {
 @Mixin(AvatarRenderer.class)
 public interface PlayerRendererAccesor {
 	@Invoker("getArmPose")

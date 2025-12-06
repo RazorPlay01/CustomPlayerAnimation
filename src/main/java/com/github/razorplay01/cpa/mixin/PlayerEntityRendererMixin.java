@@ -5,13 +5,15 @@ import com.github.razorplay01.cpa.platform.common.util.interfaces.IAnimationCont
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.entity.HumanoidArm;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-//? if <=1.21.8 {
+//? if >= 1.21.2 && <=1.21.8 {
 /*import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.entity.state.PlayerRenderState;
-*///?} else {
+*///?}
+//? if > 1.21.8 {
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.world.entity.Avatar;
 import net.minecraft.client.entity.ClientAvatarEntity;
@@ -22,7 +24,25 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.world.InteractionHand;
 		//?}
 
-//? if <=1.21.8 {
+//? if < 1.21.2 {
+/*@Mixin(net.minecraft.client.renderer.entity.player.PlayerRenderer.class)
+public abstract class PlayerEntityRendererMixin {
+
+	@Shadow
+	private static net.minecraft.client.model.HumanoidModel.ArmPose getArmPose(AbstractClientPlayer player, net.minecraft.world.InteractionHand hand) {
+		return null;
+	}
+
+	@Inject(method = {"setModelProperties"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/player/PlayerRenderer;getArmPose(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/client/model/HumanoidModel$ArmPose;", shift = At.Shift.BY, by = 2)})
+	private void setModelPose(AbstractClientPlayer player, CallbackInfo ci) {
+		((IAnimationControl) player).setMainArmPose(getArmPose(player, net.minecraft.world.InteractionHand.MAIN_HAND));
+		((IAnimationControl) player).setOffArmPose(getArmPose(player, net.minecraft.world.InteractionHand.OFF_HAND));
+	}
+}
+
+*///?}
+
+//? if >= 1.21.2 && <=1.21.8 {
 /*@Mixin(PlayerRenderer.class)
 public abstract class PlayerEntityRendererMixin {
 	@Inject(method = "extractRenderState(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/client/renderer/entity/state/PlayerRenderState;F)V",
@@ -37,8 +57,9 @@ public abstract class PlayerEntityRendererMixin {
 	private void onExtractRenderState(AbstractClientPlayer abstractClientPlayer, PlayerRenderState playerRenderState, float f, CallbackInfo ci) {
 		((HumanoidRenderStateAccessor) playerRenderState).setLivingEntity(abstractClientPlayer);
 	}
-	}
-*///?} else {
+}
+*///?}
+//? if > 1.21.8 {
 @Mixin(AvatarRenderer.class)
 public abstract class PlayerEntityRendererMixin<AvatarlikeEntity extends Avatar & ClientAvatarEntity> extends LivingEntityRenderer<AvatarlikeEntity, AvatarRenderState, PlayerModel> {
 	protected PlayerEntityRendererMixin(EntityRendererProvider.Context context, PlayerModel entityModel, float f) {

@@ -1,4 +1,5 @@
 package com.github.razorplay01.cpa.mixin;
+//? if >= 1.21.2 {
 
 import com.github.razorplay01.cpa.platform.common.util.interfaces.HumanoidRenderStateAccessor;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
@@ -21,3 +22,4 @@ public class HumanoidRenderStateMixin implements HumanoidRenderStateAccessor {
         return entity;
     }
 }
+//?}

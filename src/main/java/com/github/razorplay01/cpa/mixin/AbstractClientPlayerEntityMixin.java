@@ -21,6 +21,7 @@ import com.zigythebird.playeranimcore.easing.EasingType;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -56,9 +57,17 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 	@Unique
 	private AnimationContext actualAnimationContext;
 
+	//? if < 1.21.2 {
+	/*protected AbstractClientPlayerEntityMixin(Level level, BlockPos blockPos, float f, GameProfile gameProfile) {
+		super(level, blockPos, f, gameProfile);
+	}
+	*///?}
+
+	//? if >= 1.21.2 {
 	protected AbstractClientPlayerEntityMixin(Level level, GameProfile gameProfile) {
 		super(level, gameProfile);
 	}
+	//?}
 
 	@Inject(method = "<init>", at = @At(value = "TAIL"))
 	private void init(ClientLevel clientLevel, GameProfile gameProfile, CallbackInfo ci) {

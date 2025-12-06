@@ -4,7 +4,6 @@ import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
 import com.github.razorplay01.cpa.platform.common.config.ClientConfig;
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.platform.common.util.enums.BodyParts;
-import com.github.razorplay01.cpa.platform.common.util.interfaces.IAnimationControl;
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
 import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractModifier;
 import com.zigythebird.playeranimcore.animation.layered.modifier.AdjustmentModifier;
@@ -19,9 +18,11 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.CustomModelData;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.component.Tool;
-import net.minecraft.world.item.component.Weapon;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+//? if >= 1.21.2 {
+import net.minecraft.world.item.component.Weapon;
+//?}
 
 import java.util.List;
 import java.util.Optional;
@@ -36,12 +37,22 @@ public class Util {
 		//[]
 	}
 
+	//? if <= 1.21.1 {
+	/*public static int getCustomModelDataId(ItemStack itemStack) {
+		return Optional.of(itemStack.getComponentsPatch())
+				.map(componentsPatch -> (Optional<CustomModelData>) componentsPatch.get(DataComponents.CUSTOM_MODEL_DATA))
+				.flatMap(optional -> optional.map(CustomModelData::value))
+				.orElse(0);
+	}
+	*///?}
+	//? if >= 1.21.2 {
 	public static List<Float> getCustomModelDataId(ItemStack itemStack) {
 		return Optional.of(itemStack.getComponentsPatch())
 				.map(componentsPatch -> (Optional<CustomModelData>) componentsPatch.get(DataComponents.CUSTOM_MODEL_DATA))
 				.flatMap(optional -> optional.map(CustomModelData::floats))
 				.orElse(List.of(0.0f));
 	}
+	//?}
 
 	public static boolean isBoat(Object vehicle) {
 		return vehicle instanceof Boat;
@@ -84,7 +95,15 @@ public class Util {
 				(player.getMainHandItem().getItem() instanceof ShovelItem ||
 						player.getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.TOOL) ||
 						player.getMainHandItem().getItem() instanceof AxeItem ||
+
+						//? if <= 1.21.1 {
+						/*player.getMainHandItem().getItem() instanceof net.minecraft.world.item.SwordItem ||
+						*///?}
+						//? if >= 1.21.2 {
 						player.getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.WEAPON) ||
+						//?}
+
+
 						player.getMainHandItem().getItem() instanceof TridentItem) &&
 				player.swingingArm.equals(MAIN_HAND) &&
 				!animationContainer.getCurrentAnimationId().equalsIgnoreCase(AnimationsId.SLEEP_ANIMATION.getAnimationId());
@@ -131,6 +150,10 @@ public class Util {
 	}
 
 	public static boolean isSword(ItemStack itemStack) {
+		//? if <= 1.21.1 {
+		/*return itemStack.getItem() instanceof net.minecraft.world.item.SwordItem;
+		*///?}
+		//? if >= 1.21.2 {
 		Weapon weapon = itemStack.get(DataComponents.WEAPON);
 		if (weapon != null) {
 			// Opcionalmente, verifica los modificadores de atributos para confirmar que es una espada
@@ -145,6 +168,7 @@ public class Util {
 			return true; // Si tiene el componente WEAPON, es una espada u otra arma cuerpo a cuerpo
 		}
 		return false;
+		//?}
 	}
 
 	public static boolean isShovel(ItemStack itemStack) {

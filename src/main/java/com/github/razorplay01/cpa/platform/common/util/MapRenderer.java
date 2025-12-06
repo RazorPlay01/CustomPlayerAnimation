@@ -6,7 +6,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.state.MapRenderState;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -14,6 +13,9 @@ import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.saveddata.maps.MapId;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import org.joml.Matrix4f;
+//? if >= 1.21.2 {
+import net.minecraft.client.renderer.state.MapRenderState;
+//?}
 
 import static com.mojang.math.Axis.YP;
 import static com.mojang.math.Axis.ZP;
@@ -56,9 +58,14 @@ public class MapRenderer {
 		addVertex(vertexConsumer, matrix4f, -7.0f, 135.0f, 0.0f, 0, 1, light);
 
 		if (mapState != null) {
+			//? if <= 1.21.1 {
+			/^client.gameRenderer.getMapRenderer().render(matrices, vertexConsumers, mapid, mapState, false, light);
+			^///?}
+			//? if >= 1.21.2 {
 			MapRenderState mapRenderState = new MapRenderState();
 			client.getMapRenderer().extractRenderState(mapid, mapState, mapRenderState);
 			client.getMapRenderer().render(mapRenderState, matrices, vertexConsumers, false, light);
+			//?}
 		}
 	}
 

@@ -1,6 +1,5 @@
 package com.github.razorplay01.cpa.platform.common.animation.animations.base;
 
-import com.github.razorplay01.cpa.mixin.InventoryAccessor;
 import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
@@ -87,11 +86,18 @@ public class ClimbAnimations implements ICustomAnimation {
         }
     }
 
+	//? if <= 1.21.1 {
+	/*private static boolean hasLeatherBoots(AnimationContext context) {
+		return String.valueOf(context.player().getArmorSlots()).contains("leather_boots");
+	}
+	*///?}
+	//? if >= 1.21.2 {
     private static boolean hasLeatherBoots(AnimationContext context) {
 		if (!(context.player() instanceof Player player)) return false;
-        ItemStack itemStack = ((InventoryAccessor) player.getInventory()).getEquipment().get(EquipmentSlot.FEET);
+        ItemStack itemStack = ((com.github.razorplay01.cpa.mixin.InventoryAccessor) player.getInventory()).getEquipment().get(EquipmentSlot.FEET);
         return String.valueOf(itemStack.getItemName()).contains("leather_boots");
     }
+	//?}
 
     public static void playClimbAnimation(AnimationContext context) {
         if (!context.player().onClimbable()) {

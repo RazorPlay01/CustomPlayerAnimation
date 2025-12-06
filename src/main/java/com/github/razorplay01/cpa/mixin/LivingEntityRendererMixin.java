@@ -9,17 +9,20 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
-import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
-import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import org.joml.Quaternionfc;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-//? if <=1.21.8 {
+//? if >= 1.21.2 {
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
+//?}
+//? if >= 1.21.2 && <=1.21.8 {
 /*import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.world.entity.player.Player;
-*///?} else {
+*///?}
+//? if > 1.21.8 {
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.world.entity.Avatar;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -28,13 +31,34 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
 
+//? if < 1.21.2 {
+/*@Mixin(LivingEntityRenderer.class)
+public abstract class LivingEntityRendererMixin<T extends LivingEntity> {
+
+	@WrapWithCondition(
+			method = "setupRotations",
+			at = @At(
+					value = "INVOKE",
+					target = "Lcom/mojang/blaze3d/vertex/PoseStack;mulPose(Lorg/joml/Quaternionf;)V",
+					ordinal = 1
+			)
+	)
+	private boolean disableDeathRotationForPlayer(PoseStack instance, org.joml.Quaternionf quaternionf, T livingEntity) {
+		if (!(livingEntity instanceof net.minecraft.world.entity.player.Player)) return true;
+		return !CONFIG.getMainAnimations().deathAnimations.isEnabled();
+	}
+*///?}
+
+
+//? if >= 1.21.2 {
 @Mixin(LivingEntityRenderer.class)
 public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extends LivingEntityRenderState, M extends EntityModel<? super S>> extends EntityRenderer<T, S> implements RenderLayerParent<S, M> {
 	protected LivingEntityRendererMixin(EntityRendererProvider.Context context) {
 		super(context);
 	}
+//?}
 
-	//? if <=1.21.8 {
+	//? if >= 1.21.2 && <=1.21.8 {
 	/*@WrapWithCondition(
 			method = "setupRotations(Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;FF)V",
 			at = @At(
@@ -48,7 +72,8 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extend
 		if (!(((HumanoidRenderStateAccessor) playerRenderState).getLivingEntity() instanceof Player)) return true;
 		return !CONFIG.getMainAnimations().deathAnimations.isEnabled();
 	}
-*///?} else {
+*///?}
+//? if > 1.21.8 {
 	@WrapWithCondition(
 			method = "setupRotations(Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;FF)V",
 			at = @At(

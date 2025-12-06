@@ -128,12 +128,24 @@ public class UpHandAnimation implements ICustomAnimation {
 					} else {
 						id = ResourceLocation.fromNamespaceAndPath("minecraft", idStr.toLowerCase());
 					}
+
+
+					//? if <= 1.21.1 {
+					/*if (id != null) {
+						Item item = BuiltInRegistries.ITEM.get(id);
+						if (item != Items.AIR) {
+							return item;
+						}
+					}
+					*///?}
+					//? if >= 1.21.2 {
 					if (id != null && BuiltInRegistries.ITEM.get(id).isPresent()) {
 						Item item = BuiltInRegistries.ITEM.get(id).get().value();
 						if (item != Items.AIR) {
 							return item;
 						}
 					}
+					//?}
 
 					return null;
 				})

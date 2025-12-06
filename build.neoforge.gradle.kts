@@ -89,14 +89,17 @@ tasks.named<ProcessResources>("processResources") {
 	// Lista base de mixins client
 	val clientMixins = mutableListOf(
 		"AbstractClientPlayerEntityMixin",
-		"HumanoidRenderStateMixin",
-		"InventoryAccessor",
 		"ItemInHandLayerMixin",
-		"ItemStackRenderStateMixin",
 		"LivingEntityRendererMixin",
-		"PlayerEntityRendererMixin",
-		"PlayerRendererAccesor"
+		"PlayerEntityRendererMixin"
 	)
+
+	if (stonecutter.compare(mcVersion, "1.21.2") >= 0) {
+		clientMixins.add("InventoryAccessor")
+		clientMixins.add("HumanoidRenderStateMixin")
+		clientMixins.add("PlayerRendererAccesor")
+		clientMixins.add("ItemStackRenderStateMixin")
+	}
 
 	// Añadimos el mixin solo en 1.21.9+
 	if (stonecutter.compare(mcVersion, "1.21.9") >= 0) {
