@@ -4,7 +4,11 @@ import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
-import net.minecraft.world.entity.vehicle.Boat;
+//? if <= 1.21.10 {
+/*import net.minecraft.world.entity.vehicle.Boat;
+*///?}else{
+import net.minecraft.world.entity.vehicle.boat.Boat;
+//?}
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
 import static com.github.razorplay01.cpa.platform.common.util.Util.configureAnimationContainer;

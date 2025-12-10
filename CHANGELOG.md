@@ -1,3 +1,2 @@
-# 5.1.0
-- Added support for Minecraft 1.21.1
-- Minor bugs have been fixed
+# 5.2.0-beta.1
+- Direct port to Minecraft 1.21.11

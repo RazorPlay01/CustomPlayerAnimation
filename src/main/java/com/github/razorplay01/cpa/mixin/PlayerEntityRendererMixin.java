@@ -18,11 +18,15 @@ import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.world.entity.Avatar;
 import net.minecraft.client.entity.ClientAvatarEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.world.InteractionHand;
-		//?}
+//?}
+//? if <= 1.21.10 {
+/*import net.minecraft.client.model.PlayerModel;
+*///?}else{
+import net.minecraft.client.model.player.PlayerModel;
+//?}
 
 //? if < 1.21.2 {
 /*@Mixin(net.minecraft.client.renderer.entity.player.PlayerRenderer.class)

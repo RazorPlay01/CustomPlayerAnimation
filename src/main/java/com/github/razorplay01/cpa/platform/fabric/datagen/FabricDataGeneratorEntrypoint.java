@@ -1,7 +1,7 @@
 package com.github.razorplay01.cpa.platform.fabric.datagen;
 
 //? fabric {
-import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
+/*import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 
@@ -14,4 +14,4 @@ public class FabricDataGeneratorEntrypoint implements DataGeneratorEntrypoint {
 	}
 
 }
-//?}
+*///?}

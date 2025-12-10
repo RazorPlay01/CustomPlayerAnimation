@@ -12,8 +12,6 @@ import com.zigythebird.playeranimcore.math.Vec3f;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.horse.*;
-import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.CustomModelData;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
@@ -22,6 +20,13 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >= 1.21.2 {
 import net.minecraft.world.item.component.Weapon;
+//?}
+//? if <= 1.21.10 {
+/*import net.minecraft.world.entity.animal.horse.*;
+import net.minecraft.world.entity.vehicle.Boat;
+*///?}else{
+import net.minecraft.world.entity.vehicle.boat.Boat;
+import net.minecraft.world.entity.animal.equine.*;
 //?}
 
 import java.util.List;
@@ -98,7 +103,7 @@ public class Util {
 
 						//? if <= 1.21.1 {
 						/*player.getMainHandItem().getItem() instanceof net.minecraft.world.item.SwordItem ||
-						*///?}
+						 *///?}
 						//? if >= 1.21.2 {
 						player.getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.WEAPON) ||
 						//?}
@@ -152,7 +157,7 @@ public class Util {
 	public static boolean isSword(ItemStack itemStack) {
 		//? if <= 1.21.1 {
 		/*return itemStack.getItem() instanceof net.minecraft.world.item.SwordItem;
-		*///?}
+		 *///?}
 		//? if >= 1.21.2 {
 		Weapon weapon = itemStack.get(DataComponents.WEAPON);
 		if (weapon != null) {

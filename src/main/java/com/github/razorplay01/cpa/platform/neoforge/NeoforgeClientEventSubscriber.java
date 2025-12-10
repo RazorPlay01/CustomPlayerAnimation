@@ -1,7 +1,7 @@
 package com.github.razorplay01.cpa.platform.neoforge;
 
 //? neoforge {
-/*
+
 import com.github.razorplay01.cpa.ModTemplate;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -15,4 +15,4 @@ public class NeoforgeClientEventSubscriber {
 		ModTemplate.onInitializeClient();
 	}
 }
-*///?}
+//?}

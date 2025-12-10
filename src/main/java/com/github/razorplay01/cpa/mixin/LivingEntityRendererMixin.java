@@ -93,10 +93,19 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extend
 										net.minecraft.client.renderer.entity.state.LivingEntityRenderState livingEntityRenderState, float f,
 										CallbackInfo ci) {
 		if (livingEntityRenderState instanceof ArmedEntityRenderState armed) {
-			((ExtendedItemStackRenderState) armed.leftHandItem)
+
+
+			//? if <=1.21.10 {
+			/*((ExtendedItemStackRenderState) armed.leftHandItem)
 					.setItemStack(livingEntity.getItemHeldByArm(HumanoidArm.LEFT));
 			((ExtendedItemStackRenderState) armed.rightHandItem)
 					.setItemStack(livingEntity.getItemHeldByArm(HumanoidArm.RIGHT));
+			*///?} else {
+			((ExtendedItemStackRenderState) armed.leftHandItemState)
+					.setItemStack(livingEntity.getItemHeldByArm(HumanoidArm.LEFT));
+			((ExtendedItemStackRenderState) armed.rightHandItemState)
+					.setItemStack(livingEntity.getItemHeldByArm(HumanoidArm.RIGHT));
+			//?}
 		}
 	}
 	//?}

@@ -12,27 +12,31 @@ import com.zigythebird.playeranimcore.enums.PlayState;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
-import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 //? fabric {
-import com.github.razorplay01.cpa.platform.fabric.FabricPlatform;
-//?} neoforge {
-/*import com.github.razorplay01.cpa.platform.neoforge.NeoforgePlatform;
- *///?}
+/*import com.github.razorplay01.cpa.platform.fabric.FabricPlatform;
+*///?} neoforge {
+import com.github.razorplay01.cpa.platform.neoforge.NeoforgePlatform;
+//?}
+
+//? if <= 1.21.10 {
+/*import net.minecraft.resources.ResourceLocation;
+*///?}
 
 @SuppressWarnings("LoggingSimilarMessage")
 public class ModTemplate {
 	public static final String MOD_ID = /*$ mod_id*/ "cpa";
-	public static final String MOD_VERSION = /*$ mod_version*/ "5.0.0";
+	public static final String MOD_VERSION = /*$ mod_version*/ "5.1.0";
 	public static final String MOD_FRIENDLY_NAME = /*$ mod_name*/ "Custom Player Animations";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	public static ClientConfig CONFIG;
-	public static final ResourceLocation MAIN_ANIMATION_CONTAINER_LAYER_ID = of("main_animation_container");
-	public static final ResourceLocation OVERLAY_ANIMATION_CONTAINER_LAYER_ID = of("overlay_animation_container");
-	public static final ResourceLocation SPECIAL_ANIMATION_CONTAINER_LAYER_ID = of("special_animation_container");
+
+	public static final /*? if <=1.21.10 {*//*ResourceLocation*//*?} else {*/ net.minecraft.resources.Identifier/*?}*/ MAIN_ANIMATION_CONTAINER_LAYER_ID = of("main_animation_container");
+	public static final /*? if <=1.21.10 {*//*ResourceLocation*//*?} else {*/ net.minecraft.resources.Identifier/*?}*/ OVERLAY_ANIMATION_CONTAINER_LAYER_ID = of("overlay_animation_container");
+	public static final /*? if <=1.21.10 {*//*ResourceLocation*//*?} else {*/ net.minecraft.resources.Identifier/*?}*/ SPECIAL_ANIMATION_CONTAINER_LAYER_ID = of("special_animation_container");
 
 	private static final Platform PLATFORM = createPlatformInstance();
 
@@ -70,17 +74,17 @@ public class ModTemplate {
 
 	private static Platform createPlatformInstance() {
 		//? fabric {
-		return new FabricPlatform();
-		//?} neoforge {
-		/*return new NeoforgePlatform();
-		 *///?}
+		/*return new FabricPlatform();
+		 *///?} neoforge {
+		return new NeoforgePlatform();
+		//?}
 	}
 
 	public static Animation getAnimation(String animationId) {
 		return PlayerAnimResources.getAnimation(of(animationId));
 	}
 
-	public static ResourceLocation of(String path) {
-		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+	public static /*? if <=1.21.10 {*//*ResourceLocation*//*?} else {*/ net.minecraft.resources.Identifier/*?}*/ of(String path) {
+		return /*? if <=1.21.10 {*//*ResourceLocation*//*?} else {*/ net.minecraft.resources.Identifier/*?}*/.fromNamespaceAndPath(MOD_ID, path);
 	}
 }
