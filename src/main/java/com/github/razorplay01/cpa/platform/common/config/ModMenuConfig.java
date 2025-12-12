@@ -1,7 +1,7 @@
 package com.github.razorplay01.cpa.platform.common.config;
 
 //? fabric {
-/*
+
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -16,4 +16,4 @@ public class ModMenuConfig implements ModMenuApi {
 		return parent -> AutoConfig.getConfigScreen(ConfigWrapper.class, parent).get();
 	}
 }
-*///?}
+//?}

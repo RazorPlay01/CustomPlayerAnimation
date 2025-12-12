@@ -208,11 +208,32 @@
   "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig.fadeTime": "Animation Fade Time",
   "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig.priority": "Animation Priority",
 
-  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.jumpingAnimationsConfig": "Jumping Animation",
-  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.jumpingAnimationsConfig.isEnabled": "Is Enabled",
-  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.jumpingAnimationsConfig.speedMultiplier": "Animation Speed Multiplier",
-  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.jumpingAnimationsConfig.fadeTime": "Animation Fade Time",
-  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.jumpingAnimationsConfig.priority": "Animation Priority",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig": "Jumping Animations",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.isEnabled": "Is Enabled",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpIdleAnimationConfig": "Jump Idle Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpIdleAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpIdleAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpIdleAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpIdleAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpWalkingAnimationConfig": "Jump Walking Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpWalkingAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpWalkingAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpWalkingAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpWalkingAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpBackwardsAnimationConfig": "Jump Backwards Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpBackwardsAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpBackwardsAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpBackwardsAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpBackwardsAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpRunningAnimationConfig": "Jump Running Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpRunningAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpRunningAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpRunningAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpRunningAnimationConfig.priority": "Animation Priority",
 
   "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig": "Sleep Animation",
   "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig.isEnabled": "Is Enabled",

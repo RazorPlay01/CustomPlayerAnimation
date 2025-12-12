@@ -21,8 +21,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 //? if <= 1.21.10 {
-/*import net.minecraft.resources.ResourceLocation;
-*///?}
+import net.minecraft.resources.ResourceLocation;
+//?}
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
 import static com.github.razorplay01.cpa.ModTemplate.getAnimation;
@@ -123,11 +123,11 @@ public class UpHandAnimation implements ICustomAnimation {
 	public static Set<Item> getUpHandItems() {
 		return CONFIG.getSpecialAnimations().upHandItemIds.stream()
 				.map(idStr -> {
-					/*? if <=1.21.10 {*//*ResourceLocation*//*?} else {*/ net.minecraft.resources.Identifier/*?}*/ id;
+					/*? if <=1.21.10 {*/ResourceLocation/*?} else {*/ /*net.minecraft.resources.Identifier*//*?}*/ id;
 					if (idStr.contains(":")) {
-						id = /*? if <=1.21.10 {*//*ResourceLocation*//*?} else {*/ net.minecraft.resources.Identifier/*?}*/.tryParse(idStr);
+						id = /*? if <=1.21.10 {*/ResourceLocation/*?} else {*/ /*net.minecraft.resources.Identifier*//*?}*/.tryParse(idStr);
 					} else {
-						id = /*? if <=1.21.10 {*//*ResourceLocation*//*?} else {*/ net.minecraft.resources.Identifier/*?}*/.fromNamespaceAndPath("minecraft", idStr.toLowerCase());
+						id = /*? if <=1.21.10 {*/ResourceLocation/*?} else {*/ /*net.minecraft.resources.Identifier*//*?}*/.fromNamespaceAndPath("minecraft", idStr.toLowerCase());
 					}
 
 

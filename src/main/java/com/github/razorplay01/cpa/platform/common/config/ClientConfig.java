@@ -73,6 +73,9 @@ public class ClientConfig implements ConfigData {
 
 		@ConfigEntry.Gui.CollapsibleObject
 		public DeathAnimations deathAnimations = new DeathAnimations();
+
+		@ConfigEntry.Gui.CollapsibleObject
+		public JumAnimations jumpingAnimationsConfig = new JumAnimations();
 	}
 
 	public static class OverlayAnimations {
@@ -221,9 +224,23 @@ public class ClientConfig implements ConfigData {
 
 		@ConfigEntry.Gui.CollapsibleObject
 		public AnimationConfig sleepingAnimationsConfig = new AnimationConfig();
+	}
+
+	@Getter
+	public static class JumAnimations {
+		boolean isEnabled = false;
 
 		@ConfigEntry.Gui.CollapsibleObject
-		public AnimationConfig jumpingAnimationsConfig = new AnimationConfig(false,0.5f,2,0);
+		public AnimationConfig jumpIdleAnimationConfig  = new AnimationConfig(false,0.5f,2,0);
+
+		@ConfigEntry.Gui.CollapsibleObject
+		public AnimationConfig jumpBackwardsAnimationConfig  = new AnimationConfig(false,0.5f,2,0);
+
+		@ConfigEntry.Gui.CollapsibleObject
+		public AnimationConfig jumpRunningAnimationConfig  = new AnimationConfig(false,0.5f,2,0);
+
+		@ConfigEntry.Gui.CollapsibleObject
+		public AnimationConfig jumpWalkingAnimationConfig  = new AnimationConfig(false,0.5f,2,0);
 	}
 
 	@Getter

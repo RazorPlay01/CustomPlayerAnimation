@@ -208,11 +208,32 @@
   "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig.fadeTime": "Tiempo de Transición de Animación",
   "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.elytraAnimationsConfig.priority": "Prioridad de Animación",
 
-  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.jumpingAnimationsConfig": "Animación de Salto",
-  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.jumpingAnimationsConfig.isEnabled": "Está Activada",
-  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.jumpingAnimationsConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
-  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.jumpingAnimationsConfig.fadeTime": "Tiempo de Transición de Animación",
-  "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.jumpingAnimationsConfig.priority": "Prioridad de Animación",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig": "Animaciones de Salto",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.isEnabled": "Está Activada",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpIdleAnimationConfig": "Jump Idle Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpIdleAnimationConfig.isEnabled": "Está Activada",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpIdleAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpIdleAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpIdleAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpWalkingAnimationConfig": "Jump Walking Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpWalkingAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpWalkingAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpWalkingAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpWalkingAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpBackwardsAnimationConfig": "Jump Backwards Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpBackwardsAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpBackwardsAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpBackwardsAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpBackwardsAnimationConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpRunningAnimationConfig": "Jump Running Animation",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpRunningAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpRunningAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpRunningAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
+  "text.autoconfig.cpa.option.client.mainAnimations.jumpingAnimationsConfig.jumpRunningAnimationConfig.priority": "Prioridad de Animación",
 
   "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig": "Animación de Dormir",
   "text.autoconfig.cpa.option.client.mainAnimations.extraAnimations.sleepingAnimationsConfig.isEnabled": "Está Activada",

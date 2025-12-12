@@ -1,6 +1,7 @@
 package com.github.razorplay01.cpa.platform.common.animation.animations.base;
 
 import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
+import com.github.razorplay01.cpa.platform.common.config.ClientConfig;
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
@@ -50,17 +51,17 @@ public class DeathAnimation implements ICustomAnimation {
 		}
 
 		if (lastDamageSource.is(DamageTypes.IN_FIRE) || lastDamageSource.is(DamageTypes.ON_FIRE) || lastDamageSource.is(DamageTypes.CAMPFIRE)) {
-			return getAnimationIfEnabled(CONFIG.getMainAnimations().deathAnimations.deathBurnAnimationConfig.isEnabled(), AnimationsId.DEATH_BURN_ANIMATION);
+			return getAnimationIfEnabled(CONFIG.getMainAnimations().deathAnimations.deathBurnAnimationConfig, AnimationsId.DEATH_BURN_ANIMATION);
 		} else if (lastDamageSource.is(DamageTypes.EXPLOSION) || lastDamageSource.is(DamageTypes.PLAYER_EXPLOSION)) {
-			return getAnimationIfEnabled(CONFIG.getMainAnimations().deathAnimations.deathExplosionAnimationConfig.isEnabled(), AnimationsId.DEATH_EXPLOSION_ANIMATION);
+			return getAnimationIfEnabled(CONFIG.getMainAnimations().deathAnimations.deathExplosionAnimationConfig, AnimationsId.DEATH_EXPLOSION_ANIMATION);
 		} else if (lastDamageSource.is(DamageTypes.DROWN)) {
-			return getAnimationIfEnabled(CONFIG.getMainAnimations().deathAnimations.deathDrownAnimationConfig.isEnabled(), AnimationsId.DEATH_DROWN_ANIMATION);
+			return getAnimationIfEnabled(CONFIG.getMainAnimations().deathAnimations.deathDrownAnimationConfig, AnimationsId.DEATH_DROWN_ANIMATION);
 		}
 
 		return AnimationsId.DEATH_DEFAULT_ANIMATION;
 	}
 
-	private AnimationsId getAnimationIfEnabled(boolean isEnabled, AnimationsId specificAnimationId) {
-		return isEnabled ? specificAnimationId : AnimationsId.DEATH_DEFAULT_ANIMATION;
+	private AnimationsId getAnimationIfEnabled(ClientConfig.AnimationConfig animationConfig, AnimationsId specificAnimationId) {
+		return animationConfig.isEnabled() ? specificAnimationId : AnimationsId.DEATH_DEFAULT_ANIMATION;
 	}
 }

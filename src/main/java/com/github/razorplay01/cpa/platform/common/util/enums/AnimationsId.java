@@ -45,7 +45,10 @@ public enum AnimationsId {
 	ON_FENCE_WALK_ANIMATION("on_fence_walk_animation"),
 	ON_FENCE_IDLE_ANIMATION("on_fence_idle_animation"),
 	ON_EDGE_IDLE_ANIMATION("on_edge_idle_animation"),
-	JUMP_ANIMATION("jump_animation"),
+	JUMP_IDLE_ANIMATION("jump_idle_animation"),
+	JUMP_BACKWARDS_ANIMATION("jump_backwards_animation"),
+	JUMP_RUNNING_ANIMATION("jump_running_animation"),
+	JUMP_WALKING_ANIMATION("jump_walking_animation"),
 	//Overlay Animations
 	EAT_ANIMATION("eating_animation"),
 	PICKAXE_ANIMATION("pickaxe_animation"),
