@@ -4,7 +4,6 @@ package com.github.razorplay01.cpa.platform.common.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
-import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
@@ -13,7 +12,12 @@ public class ModMenuConfig implements ModMenuApi {
 
 	@Override
 	public ConfigScreenFactory<?> getModConfigScreenFactory() {
-		return parent -> AutoConfig.getConfigScreen(ConfigWrapper.class, parent).get();
+		//? if < 1.21.11 {
+		return parent -> me.shedaniel.autoconfig.AutoConfig.getConfigScreen(ConfigWrapper.class, parent).get();
+		//?}
+		//? if >= 1.21.11 {
+		/*return parent -> me.shedaniel.autoconfig.AutoConfigClient.getConfigScreen(ConfigWrapper.class, parent).get();
+		*///?}
 	}
 }
 //?}
