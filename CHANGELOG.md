@@ -1,2 +1,2 @@
-# 5.2.0
-- The code necessary for implementing various jump animations using resource packs has been added: [Jump Idle, Jump Walking, Jump Running, Jump Backwards]
+# 5.2.1
+- A bug in the new version of Cloth Config that was causing crashes has been fixed.
