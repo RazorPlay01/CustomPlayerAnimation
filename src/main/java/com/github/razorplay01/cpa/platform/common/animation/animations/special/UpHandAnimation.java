@@ -1,15 +1,11 @@
 package com.github.razorplay01.cpa.platform.common.animation.animations.special;
 
-import com.github.razorplay01.cpa.ModTemplate;
 import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
-import com.github.razorplay01.cpa.platform.common.config.ClientConfig;
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.platform.common.util.enums.Modifiers;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.ItemStack;
 import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
 import net.minecraft.world.entity.HumanoidArm;
@@ -20,13 +16,13 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-//? if <= 1.21.10 {
-import net.minecraft.resources.ResourceLocation;
-//?}
-
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
 import static com.github.razorplay01.cpa.ModTemplate.getAnimation;
 import static com.github.razorplay01.cpa.platform.common.util.Util.*;
+
+//? if <= 1.21.10 {
+/*import net.minecraft.resources.ResourceLocation;
+*///?}
 
 public class UpHandAnimation implements ICustomAnimation {
 	public void playAnimation(AnimationContext context) {
@@ -52,7 +48,7 @@ public class UpHandAnimation implements ICustomAnimation {
 
 	private static HandStates determineHandStates(
 			//? if <= 1.21.8 {
-			/*AbstractClientPlayer player
+			/*net.minecraft.client.player.AbstractClientPlayer player
 			*///?} else {
 			net.minecraft.world.entity.Avatar player
 			//?}
@@ -123,11 +119,11 @@ public class UpHandAnimation implements ICustomAnimation {
 	public static Set<Item> getUpHandItems() {
 		return CONFIG.getSpecialAnimations().upHandItemIds.stream()
 				.map(idStr -> {
-					/*? if <=1.21.10 {*/ResourceLocation/*?} else {*/ /*net.minecraft.resources.Identifier*//*?}*/ id;
+					/*? if <=1.21.10 {*//*ResourceLocation*//*?} else {*/ net.minecraft.resources.Identifier/*?}*/ id;
 					if (idStr.contains(":")) {
-						id = /*? if <=1.21.10 {*/ResourceLocation/*?} else {*/ /*net.minecraft.resources.Identifier*//*?}*/.tryParse(idStr);
+						id = /*? if <=1.21.10 {*//*ResourceLocation*//*?} else {*/ net.minecraft.resources.Identifier/*?}*/.tryParse(idStr);
 					} else {
-						id = /*? if <=1.21.10 {*/ResourceLocation/*?} else {*/ /*net.minecraft.resources.Identifier*//*?}*/.fromNamespaceAndPath("minecraft", idStr.toLowerCase());
+						id = /*? if <=1.21.10 {*//*ResourceLocation*//*?} else {*/ net.minecraft.resources.Identifier/*?}*/.fromNamespaceAndPath("minecraft", idStr.toLowerCase());
 					}
 
 

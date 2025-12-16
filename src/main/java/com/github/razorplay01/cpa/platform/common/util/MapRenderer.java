@@ -15,14 +15,14 @@ import org.joml.Matrix4f;
 import net.minecraft.client.renderer.state.MapRenderState;
 //?}
 //? if < 1.21.11 {
-import net.minecraft.resources.ResourceLocation;
+/*import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.renderer.RenderType;
-//?}
+*///?}
 //? if >= 1.21.11 {
-/*import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
-*///?}
+//?}
 
 import static com.mojang.math.Axis.YP;
 import static com.mojang.math.Axis.ZP;
@@ -34,18 +34,18 @@ public class MapRenderer {
 	}
 
 	//? if < 1.21.11 {
-	private static final RenderType MAP_BACKGROUND = RenderType
+	/*private static final RenderType MAP_BACKGROUND = RenderType
 			.text(ResourceLocation.withDefaultNamespace("textures/map/map_background.png"));
 	private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderType
 			.text(ResourceLocation.withDefaultNamespace("textures/map/map_background_checkerboard.png"));
-	//?}
+	*///?}
 
 	//? if >= 1.21.11 {
-	/*private static final RenderType MAP_BACKGROUND = RenderTypes
+	private static final RenderType MAP_BACKGROUND = RenderTypes
 			.text(Identifier.withDefaultNamespace("textures/map/map_background.png"));
 	private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderTypes
 			.text(Identifier.withDefaultNamespace("textures/map/map_background_checkerboard.png"));
-	*///?}
+	//?}
 
 	//? if <=1.21.8 {
 	/*public static void renderFirstPersonMap(PoseStack matrices, MultiBufferSource vertexConsumers, int light, ItemStack stack) {

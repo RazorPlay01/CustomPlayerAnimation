@@ -38,6 +38,10 @@ public class ClientConfig implements ConfigData {
 		float speedMultiplier = 1;
 		int fadeTime = 10;
 		int priority = 0;
+
+		public AnimationConfig(boolean isEnabled) {
+			this.isEnabled = isEnabled;
+		}
 	}
 
 	@Getter
@@ -84,6 +88,11 @@ public class ClientConfig implements ConfigData {
 
 		@ConfigEntry.Gui.CollapsibleObject
 		public SwordAnimations swordAnimations = new SwordAnimations();
+
+		//? if >= 1.21.11 {
+		@ConfigEntry.Gui.CollapsibleObject
+		public SpearAnimations spearAnimations = new SpearAnimations();
+		//?}
 
 		@ConfigEntry.Gui.CollapsibleObject
 		public ToolsAnimations toolsAnimations = new ToolsAnimations();
@@ -231,16 +240,16 @@ public class ClientConfig implements ConfigData {
 		boolean isEnabled = false;
 
 		@ConfigEntry.Gui.CollapsibleObject
-		public AnimationConfig jumpIdleAnimationConfig  = new AnimationConfig(false,0.5f,2,0);
+		public AnimationConfig jumpIdleAnimationConfig = new AnimationConfig(false, 0.5f, 2, 0);
 
 		@ConfigEntry.Gui.CollapsibleObject
-		public AnimationConfig jumpBackwardsAnimationConfig  = new AnimationConfig(false,0.5f,2,0);
+		public AnimationConfig jumpBackwardsAnimationConfig = new AnimationConfig(false, 0.5f, 2, 0);
 
 		@ConfigEntry.Gui.CollapsibleObject
-		public AnimationConfig jumpRunningAnimationConfig  = new AnimationConfig(false,0.5f,2,0);
+		public AnimationConfig jumpRunningAnimationConfig = new AnimationConfig(false, 0.5f, 2, 0);
 
 		@ConfigEntry.Gui.CollapsibleObject
-		public AnimationConfig jumpWalkingAnimationConfig  = new AnimationConfig(false,0.5f,2,0);
+		public AnimationConfig jumpWalkingAnimationConfig = new AnimationConfig(false, 0.5f, 2, 0);
 	}
 
 	@Getter
@@ -272,6 +281,18 @@ public class ClientConfig implements ConfigData {
 
 		@ConfigEntry.Gui.CollapsibleObject
 		public AnimationConfig tridentAnimationConfig = new AnimationConfig();
+	}
+
+	public static class SpearAnimations {
+		@Getter
+		@ConfigEntry.Gui.CollapsibleObject
+		boolean isEnabled = false;
+
+		@ConfigEntry.Gui.CollapsibleObject
+		public AnimationConfig spearJabAnimationConfig = new AnimationConfig(false);
+
+		@ConfigEntry.Gui.CollapsibleObject
+		public AnimationConfig spearChargeAnimationConfig = new AnimationConfig(false);
 	}
 
 	public static class SwordAnimations {

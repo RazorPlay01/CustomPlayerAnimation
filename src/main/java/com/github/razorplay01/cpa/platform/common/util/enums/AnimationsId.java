@@ -62,6 +62,8 @@ public enum AnimationsId {
 	SHIELD_ANIMATION("shield_animation"),
 	SHIELD_SNEAK_ANIMATION("shield_sneak_animation"),
 	TRIDENT_ANIMATION("trident_animation"),
+	SPEAR_CHARGE("spear_charge_animation"),
+	SPEAR_JAB("spear_jab_animation"),
 	// Sword Animations
 	SWORD_ATTACK_1_ANIMATION("sword_attack_1_animation"),
 	SWORD_ATTACK_1_SNEAK_ANIMATION("sword_attack_1_sneak_animation"),

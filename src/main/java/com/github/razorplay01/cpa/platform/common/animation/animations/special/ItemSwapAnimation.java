@@ -7,9 +7,7 @@ import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
 import net.minecraft.world.item.ItemStack;
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
-import static com.github.razorplay01.cpa.ModTemplate.getAnimation;
 import static com.github.razorplay01.cpa.platform.common.util.Util.configureAnimationContainer;
-
 
 public class ItemSwapAnimation implements ICustomAnimation {
     public void playAnimation(AnimationContext context) {

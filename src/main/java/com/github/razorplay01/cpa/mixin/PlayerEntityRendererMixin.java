@@ -23,10 +23,10 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.world.InteractionHand;
 //?}
 //? if <= 1.21.10 {
-import net.minecraft.client.model.PlayerModel;
-//?}else{
-/*import net.minecraft.client.model.player.PlayerModel;
-*///?}
+/*import net.minecraft.client.model.PlayerModel;
+*///?}else{
+import net.minecraft.client.model.player.PlayerModel;
+//?}
 
 //? if < 1.21.2 {
 /*@Mixin(net.minecraft.client.renderer.entity.player.PlayerRenderer.class)

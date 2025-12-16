@@ -1,2 +1,3 @@
-# 5.2.1
-- A bug in the new version of Cloth Config that was causing crashes has been fixed.
+# 5.3.0
+- A bug causing crashes related to PAL first-person view has been fixed.
+- The necessary code for spear animations has been added via resource packs.

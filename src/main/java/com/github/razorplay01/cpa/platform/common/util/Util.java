@@ -22,12 +22,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.component.Weapon;
 //?}
 //? if <= 1.21.10 {
-import net.minecraft.world.entity.animal.horse.*;
+/*import net.minecraft.world.entity.animal.horse.*;
 import net.minecraft.world.entity.vehicle.Boat;
-//?}else{
-/*import net.minecraft.world.entity.vehicle.boat.Boat;
+*///?}else{
+import net.minecraft.world.entity.vehicle.boat.Boat;
 import net.minecraft.world.entity.animal.equine.*;
-*///?}
+//?}
 
 import java.util.List;
 import java.util.Optional;
@@ -153,6 +153,12 @@ public class Util {
 				new Vec3f(0, 0, 0))
 		);
 	}
+
+	/*? if >= 1.21.11 {*/
+	public static boolean isSpear(ItemStack itemStack) {
+		return itemStack.get(DataComponents.KINETIC_WEAPON) != null && !(itemStack.getItem() instanceof TridentItem);
+	}
+	/*?}*/
 
 	public static boolean isSword(ItemStack itemStack) {
 		//? if <= 1.21.1 {

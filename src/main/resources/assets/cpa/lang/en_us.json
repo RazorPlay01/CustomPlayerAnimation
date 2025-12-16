@@ -312,6 +312,21 @@
   "text.autoconfig.cpa.option.client.overlayAnimations.swordAnimations.swordAttack3AnimationConfig.fadeTime": "Animation Fade Time",
   "text.autoconfig.cpa.option.client.overlayAnimations.swordAnimations.swordAttack3AnimationConfig.priority": "Animation Priority",
 
+  "text.autoconfig.cpa.option.client.overlayAnimations.spearAnimations": "Spear Animations",
+  "text.autoconfig.cpa.option.client.overlayAnimations.spearAnimations.isEnabled": "Is Enabled",
+
+  "text.autoconfig.cpa.option.client.overlayAnimations.spearAnimations.spearJabAnimationConfig": "Spear Jab Animation",
+  "text.autoconfig.cpa.option.client.overlayAnimations.spearAnimations.spearJabAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.overlayAnimations.spearAnimations.spearJabAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.overlayAnimations.spearAnimations.spearJabAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.overlayAnimations.spearAnimations.spearJabAnimationConfig.priority": "Animation Priority",
+
+  "text.autoconfig.cpa.option.client.overlayAnimations.spearAnimations.spearChargeAnimationConfig": "Spear Charge Animation",
+  "text.autoconfig.cpa.option.client.overlayAnimations.spearAnimations.spearChargeAnimationConfig.isEnabled": "Is Enabled",
+  "text.autoconfig.cpa.option.client.overlayAnimations.spearAnimations.spearChargeAnimationConfig.speedMultiplier": "Animation Speed Multiplier",
+  "text.autoconfig.cpa.option.client.overlayAnimations.spearAnimations.spearChargeAnimationConfig.fadeTime": "Animation Fade Time",
+  "text.autoconfig.cpa.option.client.overlayAnimations.spearAnimations.spearChargeAnimationConfig.priority": "Animation Priority",
+
   "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations": "Tools Animations",
 
   "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.pickaxeAnimationsConfig": "Pickaxe Animation",
