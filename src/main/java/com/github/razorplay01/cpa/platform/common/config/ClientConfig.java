@@ -108,7 +108,7 @@ public class ClientConfig implements ConfigData {
 				"boat_turn", "climbing", "sleep", "crawl");
 		@ConfigEntry.Gui.Tooltip
 		public List<String> upHandItemIds = List.of(
-				"minecraft:torch", "minecraft:soul_torch", "minecraft:redstone_torch",
+				"minecraft:torch", "minecraft:soul_torch", "minecraft:copper_torch", "minecraft:redstone_torch",
 				"minecraft:filled_map", "minecraft:recovery_compass", "minecraft:compass"
 		);
 
