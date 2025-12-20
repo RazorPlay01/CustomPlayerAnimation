@@ -5,45 +5,42 @@ import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
 //? if <= 1.21.10 {
-/*import net.minecraft.world.entity.vehicle.Boat;
-*///?}else{
-import net.minecraft.world.entity.vehicle.boat.Boat;
-//?}
+import net.minecraft.world.entity.vehicle.Boat;
+ //?}else{
+/*import net.minecraft.world.entity.vehicle.boat.Boat;
+*///?}
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
 import static com.github.razorplay01.cpa.platform.common.util.Util.configureAnimationContainer;
 import static com.github.razorplay01.cpa.platform.common.util.Util.isBoat;
 
 public class BoatForwardAnimation implements ICustomAnimation {
-    @Override
-    public void playAnimation(AnimationContext context) {
-        handleBoatAnimation(context);
-    }
+	@Override
+	public void playAnimation(AnimationContext context) {
+		handleBoatAnimation(context);
+	}
 
-    @Override
-    public boolean shouldPlayAnimation(AnimationContext context) {
-        var vehicle = context.player().getVehicle();
-        return context.player().isPassenger() && isBoat(vehicle);
-    }
+	private static void handleBoatAnimation(AnimationContext context) {
+		if (!CONFIG.getMainAnimations().mountAnimations.boatAnimations.boatForwardAnimationConfig.isEnabled()) {
+			context.mainAnimationContainer().disableAnimation();
+			return;
+		}
+		configureAnimationContainer(CONFIG.getMainAnimations().mountAnimations.boatAnimations.boatForwardAnimationConfig, context.mainAnimationContainer());
+		AnimationContainer.setAnimation(context.mainAnimationContainer(), AnimationsId.BOAT_FORWARD_ANIMATION);
+	}
 
-    private static void handleBoatAnimation(AnimationContext context) {
-        Boat boat = (Boat) context.player().getVehicle();
-
-        if (!CONFIG.getMainAnimations().mountAnimations.boatAnimations.boatForwardAnimationConfig.isEnabled()) {
-            context.mainAnimationContainer().disableAnimation();
-            return;
-        }
-        configureAnimationContainer(CONFIG.getMainAnimations().mountAnimations.boatAnimations.boatForwardAnimationConfig, context.mainAnimationContainer());
-
-        boolean isLeftPaddleMoving = boat.getPaddleState(0);
-        boolean isRightPaddleMoving = boat.getPaddleState(1);
-
-        if (shouldPlayAnimation(context, isLeftPaddleMoving, isRightPaddleMoving)) {
-			AnimationContainer.setAnimation(context.mainAnimationContainer(), AnimationsId.BOAT_FORWARD_ANIMATION);
-        }
-    }
-
-    private static boolean shouldPlayAnimation(AnimationContext context, boolean isLeftPaddleMoving, boolean isRightPaddleMoving) {
-        return context.playerData().getMovementSpeed() > 0 && !context.playerData().isMovingBackwards() && isLeftPaddleMoving && isRightPaddleMoving;
-    }
+	@Override
+	public boolean shouldPlayAnimation(AnimationContext context) {
+		var vehicle = context.player().getVehicle();
+		if (!(context.player().isPassenger() && isBoat(vehicle))) {
+			return false;
+		}
+		Boat boat = (Boat) vehicle;
+		boolean isLeftPaddleMoving = boat.getPaddleState(0);
+		boolean isRightPaddleMoving = boat.getPaddleState(1);
+		return context.playerData().getMovementSpeed() > 0
+				&& !context.playerData().isMovingBackwards()
+				&& isLeftPaddleMoving
+				&& isRightPaddleMoving;
+	}
 }

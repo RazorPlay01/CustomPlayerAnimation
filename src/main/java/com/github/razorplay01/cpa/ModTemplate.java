@@ -22,8 +22,8 @@ import com.github.razorplay01.cpa.platform.fabric.FabricPlatform;
 *///?}
 
 //? if <= 1.21.10 {
-/*import net.minecraft.resources.ResourceLocation;
-*///?}
+import net.minecraft.resources.ResourceLocation;
+//?}
 
 @SuppressWarnings("LoggingSimilarMessage")
 public class ModTemplate {
@@ -34,9 +34,9 @@ public class ModTemplate {
 
 	public static ClientConfig CONFIG;
 
-	public static final /*? if <=1.21.10 {*//*ResourceLocation*//*?} else {*/ net.minecraft.resources.Identifier/*?}*/ MAIN_ANIMATION_CONTAINER_LAYER_ID = of("main_animation_container");
-	public static final /*? if <=1.21.10 {*//*ResourceLocation*//*?} else {*/ net.minecraft.resources.Identifier/*?}*/ OVERLAY_ANIMATION_CONTAINER_LAYER_ID = of("overlay_animation_container");
-	public static final /*? if <=1.21.10 {*//*ResourceLocation*//*?} else {*/ net.minecraft.resources.Identifier/*?}*/ SPECIAL_ANIMATION_CONTAINER_LAYER_ID = of("special_animation_container");
+	public static final /*? if <=1.21.10 {*/ResourceLocation/*?} else {*/ /*net.minecraft.resources.Identifier*//*?}*/ MAIN_ANIMATION_CONTAINER_LAYER_ID = of("main_animation_container");
+	public static final /*? if <=1.21.10 {*/ResourceLocation/*?} else {*/ /*net.minecraft.resources.Identifier*//*?}*/ OVERLAY_ANIMATION_CONTAINER_LAYER_ID = of("overlay_animation_container");
+	public static final /*? if <=1.21.10 {*/ResourceLocation/*?} else {*/ /*net.minecraft.resources.Identifier*//*?}*/ SPECIAL_ANIMATION_CONTAINER_LAYER_ID = of("special_animation_container");
 
 	private static final Platform PLATFORM = createPlatformInstance();
 
@@ -84,7 +84,7 @@ public class ModTemplate {
 		return PlayerAnimResources.getAnimation(of(animationId));
 	}
 
-	public static /*? if <=1.21.10 {*//*ResourceLocation*//*?} else {*/ net.minecraft.resources.Identifier/*?}*/ of(String path) {
-		return /*? if <=1.21.10 {*//*ResourceLocation*//*?} else {*/ net.minecraft.resources.Identifier/*?}*/.fromNamespaceAndPath(MOD_ID, path);
+	public static /*? if <=1.21.10 {*/ResourceLocation/*?} else {*/ /*net.minecraft.resources.Identifier*//*?}*/ of(String path) {
+		return /*? if <=1.21.10 {*/ResourceLocation/*?} else {*/ /*net.minecraft.resources.Identifier*//*?}*/.fromNamespaceAndPath(MOD_ID, path);
 	}
 }
