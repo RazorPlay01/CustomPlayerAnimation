@@ -15,6 +15,19 @@
   "text.autoconfig.cpa.option.client.specialAnimations.upHandItemIds": "UpHandAnimation Items",
   "text.autoconfig.cpa.option.client.specialAnimations.upHandItemIds.@Tooltip": "List of items can use UpHandAnimation",
 
+  "text.autoconfig.cpa.option.client.general.enableLeanEffect": "Enable Lean Effect",
+  "text.autoconfig.cpa.option.client.general.enableLeanEffect.@Tooltip": "Enables or disables the camera lean effect based on player movement.",
+  "text.autoconfig.cpa.option.client.general.invertLeanDirection": "Invert Lean Direction",
+  "text.autoconfig.cpa.option.client.general.invertLeanDirection.@Tooltip": "Inverts the direction in which the camera leans (useful if you prefer the opposite effect).",
+  "text.autoconfig.cpa.option.client.general.leanForwardIntensity": "Lean Forward Intensity",
+  "text.autoconfig.cpa.option.client.general.leanForwardIntensity.@Tooltip": "Controls the strength of the lean effect when moving forward.",
+  "text.autoconfig.cpa.option.client.general.leanSideIntensity": "Lean Side Intensity",
+  "text.autoconfig.cpa.option.client.general.leanSideIntensity.@Tooltip": "Controls the strength of the lean effect when moving sideways (strafing).",
+  "text.autoconfig.cpa.option.client.general.maxLeanForward": "Maximum Lean Forward",
+  "text.autoconfig.cpa.option.client.general.maxLeanForward.@Tooltip": "Sets the maximum angle for forward leaning.",
+  "text.autoconfig.cpa.option.client.general.maxLeanSide": "Maximum Lean Side",
+  "text.autoconfig.cpa.option.client.general.maxLeanSide.@Tooltip": "Sets the maximum angle for sideways leaning.",
+
   "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations": "Idle Animations",
 
   "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.turnAnimations": "Turn Animations",

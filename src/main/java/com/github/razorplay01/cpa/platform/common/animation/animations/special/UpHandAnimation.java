@@ -48,10 +48,10 @@ public class UpHandAnimation implements ICustomAnimation {
 
 	private static HandStates determineHandStates(
 			//? if <= 1.21.8 {
-			/*net.minecraft.client.player.AbstractClientPlayer player
-			*///?} else {
-			net.minecraft.world.entity.Avatar player
-			//?}
+			net.minecraft.client.player.AbstractClientPlayer player
+			//?} else {
+			/*net.minecraft.world.entity.Avatar player
+			*///?}
 			) {
 		return new HandStates(
 				isHandUp(player.getMainHandItem()),
@@ -128,21 +128,21 @@ public class UpHandAnimation implements ICustomAnimation {
 
 
 					//? if <= 1.21.1 {
-					/*if (id != null) {
+					if (id != null) {
 						Item item = BuiltInRegistries.ITEM.get(id);
 						if (item != Items.AIR) {
 							return item;
 						}
 					}
-					*///?}
+					//?}
 					//? if >= 1.21.2 {
-					if (id != null && BuiltInRegistries.ITEM.get(id).isPresent()) {
+					/*if (id != null && BuiltInRegistries.ITEM.get(id).isPresent()) {
 						Item item = BuiltInRegistries.ITEM.get(id).get().value();
 						if (item != Items.AIR) {
 							return item;
 						}
 					}
-					//?}
+					*///?}
 
 					return null;
 				})

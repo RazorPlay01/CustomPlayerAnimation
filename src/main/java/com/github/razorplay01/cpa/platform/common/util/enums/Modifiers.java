@@ -11,7 +11,8 @@ public enum Modifiers {
 	FIRST_PERSON_MODIFIER("FirstPersonModifier"),
 	BOW_MODIFIER("BowModifier"),
 	SHIELD_MODIFIER("ShieldModifier"),
-	HAND_SWING_MODIFIER("HandSwingModifier");
+	HAND_SWING_MODIFIER("HandSwingModifier"),
+	ADJUSTMENT_MODIFIER("AdjustmentModifier");
 
 	private final String modifierId;
 }

@@ -1,2 +1,2 @@
-# 5.3.1
-- Fix boat animations
+# 5.4.0
+- Added LeanEffect fully customizable from the mod's general settings

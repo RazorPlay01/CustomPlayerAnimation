@@ -54,9 +54,22 @@ public class ClientConfig implements ConfigData {
 	@Getter
 	public static class General {
 		@ConfigEntry.Gui.Tooltip
-		private float animationSpeedMultiplier = 1;
+		public float animationSpeedMultiplier = 1;
 		@ConfigEntry.Gui.Tooltip
-		private float animationFadeTimeMultiplier = 1;
+		public float animationFadeTimeMultiplier = 1;
+
+		@ConfigEntry.Gui.Tooltip
+		public boolean enableLeanEffect = true;
+		@ConfigEntry.Gui.Tooltip
+		public boolean invertLeanDirection = false;
+		@ConfigEntry.Gui.Tooltip
+		public float leanForwardIntensity = 1.5f;
+		@ConfigEntry.Gui.Tooltip
+		public float leanSideIntensity = 1.5f;
+		@ConfigEntry.Gui.Tooltip
+		public float maxLeanForward = 2.5f;
+		@ConfigEntry.Gui.Tooltip
+		public float maxLeanSide = 2.5f;
 	}
 
 	public static class MainAnimations {
@@ -103,7 +116,7 @@ public class ClientConfig implements ConfigData {
 		@ConfigEntry.Gui.CollapsibleObject
 		public AnimationConfig upHandAnimationConfig = new AnimationConfig();
 		@ConfigEntry.Gui.Tooltip
-		private List<String> upHandDisableAnimationIds = List.of(
+		public List<String> upHandDisableAnimationIds = List.of(
 				"bow", "trident", "water", "boat_forward",
 				"boat_turn", "climbing", "sleep", "crawl");
 		@ConfigEntry.Gui.Tooltip
@@ -147,7 +160,7 @@ public class ClientConfig implements ConfigData {
 	public static class MoveAnimations {
 		@Getter
 		@ConfigEntry.Gui.Tooltip
-		private float animationMoveSpeedMultiplier = 4;
+		public float animationMoveSpeedMultiplier = 4;
 
 		@ConfigEntry.Gui.CollapsibleObject
 		public AnimationConfig walkingAnimationConfig = new AnimationConfig(true, 1, 3, 0);

@@ -15,6 +15,19 @@
   "text.autoconfig.cpa.option.client.specialAnimations.upHandItemIds": "Animación de Mano Levantada Items",
   "text.autoconfig.cpa.option.client.specialAnimations.upHandItemIds.@Tooltip": "Lista de items que aplican la animación de mano levantada",
 
+  "text.autoconfig.cpa.option.client.general.enableLeanEffect": "Habilitar efecto de inclinación",
+  "text.autoconfig.cpa.option.client.general.enableLeanEffect.@Tooltip": "Activa o desactiva el efecto de inclinación de la cámara basado en el movimiento del jugador.",
+  "text.autoconfig.cpa.option.client.general.invertLeanDirection": "Invertir dirección de inclinación",
+  "text.autoconfig.cpa.option.client.general.invertLeanDirection.@Tooltip": "Invierte la dirección en la que la cámara se inclina (útil si prefieres el efecto opuesto).",
+  "text.autoconfig.cpa.option.client.general.leanForwardIntensity": "Intensidad de inclinación hacia adelante",
+  "text.autoconfig.cpa.option.client.general.leanForwardIntensity.@Tooltip": "Controla la fuerza del efecto de inclinación cuando el jugador se mueve hacia adelante.",
+  "text.autoconfig.cpa.option.client.general.leanSideIntensity": "Intensidad de inclinación lateral",
+  "text.autoconfig.cpa.option.client.general.leanSideIntensity.@Tooltip": "Controla la fuerza del efecto de inclinación cuando el jugador se mueve de lado (strafing).",
+  "text.autoconfig.cpa.option.client.general.maxLeanForward": "Inclinación máxima hacia adelante",
+  "text.autoconfig.cpa.option.client.general.maxLeanForward.@Tooltip": "Establece el ángulo máximo de inclinación hacia adelante.",
+  "text.autoconfig.cpa.option.client.general.maxLeanSide": "Inclinación máxima lateral",
+  "text.autoconfig.cpa.option.client.general.maxLeanSide.@Tooltip": "Establece el ángulo máximo de inclinación lateral.",
+
   "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations": "Animaciones de Reposo",
 
   "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.turnAnimations": "Animaciones de Giro",

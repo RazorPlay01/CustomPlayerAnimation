@@ -1,22 +1,26 @@
 package com.github.razorplay01.cpa.platform.common.util;
 
 import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
+import com.github.razorplay01.cpa.platform.common.config.ClientConfig;
 import com.github.razorplay01.cpa.platform.common.util.enums.BodyParts;
+import com.github.razorplay01.cpa.platform.common.util.interfaces.IAnimationControl;
 import com.zigythebird.playeranimcore.animation.layered.modifier.AdjustmentModifier;
-import com.zigythebird.playeranimcore.api.firstPerson.FirstPersonMode;
 import com.zigythebird.playeranimcore.math.Vec3f;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Optional;
 
+import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
 import static com.github.razorplay01.cpa.platform.common.util.Util.*;
 
 //? if <= 1.21.8 {
-//import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.player.AbstractClientPlayer;
 //?} else {
-import net.minecraft.world.entity.Avatar;
+//import net.minecraft.world.entity.Avatar;
 //?}
 
 public class CustomModifiers {
@@ -24,7 +28,63 @@ public class CustomModifiers {
 		// []
 	}
 
-	public static AdjustmentModifier createBowModifier(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ Avatar player/*?}*/) {
+	public static AdjustmentModifier createLeanModifier(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*Avatar player*//*?}*/) {
+		return new AdjustmentModifier(partName -> {
+			if (!"body".equals(partName)) {
+				return Optional.empty();
+			}
+
+			ClientConfig.General config = CONFIG.getGeneral();
+
+			if (!config.isEnableLeanEffect()) {
+				return Optional.empty();
+			}
+
+			PlayerData data = ((IAnimationControl) player).getAnimationContext().playerData();
+
+			Vec3 velocity = player.getDeltaMovement();
+
+			float bodyYawRad = (float) Math.toRadians(player.yBodyRot);
+
+			float forwardVel = (float) (velocity.z * Math.cos(bodyYawRad) - velocity.x * Math.sin(bodyYawRad));
+			float sideVel    = (float) (velocity.z * Math.sin(bodyYawRad) + velocity.x * Math.cos(bodyYawRad));
+
+			// Aplicar inversión si está activada
+			if (config.isInvertLeanDirection()) {
+				forwardVel = -forwardVel;
+				sideVel    = -sideVel;
+			}
+
+			// Intensidades independientes
+			float leanForward = forwardVel * config.getLeanForwardIntensity();
+			float leanSide    = sideVel    * config.getLeanSideIntensity();
+
+			// Multiplicador adicional del PlayerData (opcional, se mantiene)
+			leanForward *= data.getLeanMultiplier();
+			leanSide    *= data.getLeanMultiplier();
+
+			// Clamps independientes
+			leanForward = Mth.clamp(leanForward, -config.getMaxLeanForward(), config.getMaxLeanForward());
+			leanSide    = Mth.clamp(leanSide, -config.getMaxLeanSide(), config.getMaxLeanSide());
+
+			// Desactivar en situaciones especiales
+			if (player.isFallFlying() || player.getVehicle() != null ||
+					player.isVisuallySwimming() || player.isAutoSpinAttack()) {
+				return Optional.of(new AdjustmentModifier.PartModifier(
+						Vec3f.ZERO,
+						Vec3f.ZERO
+				));
+			}
+
+			// Aplicar rotación: X = lean forward, Z = lean side (negativo para dirección correcta)
+			return Optional.of(new AdjustmentModifier.PartModifier(
+					new Vec3f(leanForward, 0.0f, -leanSide),
+					Vec3f.ZERO
+			));
+		});
+	}
+
+	public static AdjustmentModifier createBowModifier(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*Avatar player*//*?}*/) {
 		return new AdjustmentModifier(partName -> {
 			boolean isUsingBow = player.isUsingItem() && player.getUseItem().getItem() instanceof BowItem;
 			if (!isUsingBow) return Optional.empty();
@@ -41,7 +101,7 @@ public class CustomModifiers {
 		});
 	}
 
-	public static AdjustmentModifier createShieldModifier(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ Avatar player/*?}*/) {
+	public static AdjustmentModifier createShieldModifier(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*Avatar player*//*?}*/) {
 		return new AdjustmentModifier(partName -> {
 			boolean isUsingShield = player.isUsingItem() && player.getUseItem().getItem() instanceof ShieldItem;
 			if (!isUsingShield) return Optional.empty();
@@ -59,7 +119,7 @@ public class CustomModifiers {
 		});
 	}
 
-	public static AdjustmentModifier createSwingModifier(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ Avatar player/*?}*/, AnimationContainer animationContainer) {
+	public static AdjustmentModifier createSwingModifier(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*Avatar player*//*?}*/, AnimationContainer animationContainer) {
 		return new AdjustmentModifier(partName -> {
 			if (!isSwingingSwordOrTools(player, animationContainer)) {
 				return Optional.empty();

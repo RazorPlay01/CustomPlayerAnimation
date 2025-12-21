@@ -14,14 +14,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 *///?}
 //? if > 1.21.8 {
-import net.minecraft.client.renderer.entity.player.AvatarRenderer;
+/*import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.world.entity.Avatar;
 import net.minecraft.client.entity.ClientAvatarEntity;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.world.InteractionHand;
-//?}
+*///?}
 //? if <= 1.21.10 {
 import net.minecraft.client.model.PlayerModel;
 //?}else{
@@ -29,7 +29,7 @@ import net.minecraft.client.model.PlayerModel;
 *///?}
 
 //? if < 1.21.2 {
-/*@Mixin(net.minecraft.client.renderer.entity.player.PlayerRenderer.class)
+@Mixin(net.minecraft.client.renderer.entity.player.PlayerRenderer.class)
 public abstract class PlayerEntityRendererMixin {
 
 	@Shadow
@@ -44,7 +44,7 @@ public abstract class PlayerEntityRendererMixin {
 	}
 }
 
-*///?}
+//?}
 
 //? if >= 1.21.2 && <=1.21.8 {
 /*@Mixin(PlayerRenderer.class)
@@ -64,7 +64,7 @@ public abstract class PlayerEntityRendererMixin {
 }
 *///?}
 //? if > 1.21.8 {
-@Mixin(AvatarRenderer.class)
+/*@Mixin(AvatarRenderer.class)
 public abstract class PlayerEntityRendererMixin<AvatarlikeEntity extends Avatar & ClientAvatarEntity> extends LivingEntityRenderer<AvatarlikeEntity, AvatarRenderState, PlayerModel> {
 	protected PlayerEntityRendererMixin(EntityRendererProvider.Context context, PlayerModel entityModel, float f) {
 		super(context, entityModel, f);
@@ -88,4 +88,4 @@ public abstract class PlayerEntityRendererMixin<AvatarlikeEntity extends Avatar 
 		((HumanoidRenderStateAccessor) avatarRenderState).setLivingEntity(avatar);
 	}
 }
-		//?}
+		*///?}
