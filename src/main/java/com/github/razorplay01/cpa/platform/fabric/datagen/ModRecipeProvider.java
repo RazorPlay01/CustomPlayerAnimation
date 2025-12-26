@@ -27,17 +27,17 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 	}
 
 	//? if 1.21.1 {
-	@Override
+	/*@Override
 	public void buildRecipes(RecipeOutput recipeOutput) {
 		IntRecipeProvider provider = new IntRecipeProvider(this.output, this.registriesFuture);
 		provider.buildRecipes(recipeOutput);
 	}
-	//? } else {
-	/*@Override
+	*///? } else {
+	@Override
 	protected @NotNull RecipeProvider createRecipeProvider(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
 		return new IntRecipeProvider(provider, recipeOutput);
 	}
-	*///? }
+	//? }
 
 
 	@Override
@@ -48,7 +48,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 	static class IntRecipeProvider extends RecipeProvider {
 
 		//? if 1.21.1 {
-		public IntRecipeProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> completableFuture) {
+		/*public IntRecipeProvider(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> completableFuture) {
 			super(packOutput, completableFuture);
 		}
 
@@ -57,8 +57,8 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 			buildLavaChickenRecipe(ShapelessRecipeBuilder.shapeless(RecipeCategory.FOOD, Items.COOKED_CHICKEN))
 					.save(recipeOutput, "lava_chicken_recipe");
 		}
-		//? } else {
-		/*protected IntRecipeProvider(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
+		*///? } else {
+		protected IntRecipeProvider(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
 			super(provider, recipeOutput);
 		}
 
@@ -68,7 +68,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
 			buildLavaChickenRecipe(ShapelessRecipeBuilder.shapeless(itemLookup, RecipeCategory.FOOD, Items.COOKED_CHICKEN))
 					.save(output, "lava_chicken_recipe");
 		}
-		*///? }
+		//? }
 
 		private ShapelessRecipeBuilder buildLavaChickenRecipe(ShapelessRecipeBuilder builder) {
 			return builder.requires(Items.LAVA_BUCKET)

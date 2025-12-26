@@ -18,6 +18,11 @@ public class ClientConfig implements ConfigData {
 	@ConfigEntry.Gui.CollapsibleObject
 	private General general = new General();
 
+	@Getter
+	@ConfigEntry.Category("lean_effect")
+	@ConfigEntry.Gui.CollapsibleObject
+	private final LeanEffect lean_effect = new LeanEffect();
+
 	@ConfigEntry.Category("main_animations")
 	@ConfigEntry.Gui.CollapsibleObject
 	private MainAnimations mainAnimations = new MainAnimations();
@@ -58,7 +63,7 @@ public class ClientConfig implements ConfigData {
 		@ConfigEntry.Gui.Tooltip
 		public float animationFadeTimeMultiplier = 1;
 
-		@ConfigEntry.Gui.Tooltip
+		/*@ConfigEntry.Gui.Tooltip
 		public boolean enableLeanEffect = true;
 		@ConfigEntry.Gui.Tooltip
 		public boolean invertLeanDirection = false;
@@ -69,7 +74,7 @@ public class ClientConfig implements ConfigData {
 		@ConfigEntry.Gui.Tooltip
 		public float maxLeanForward = 2.5f;
 		@ConfigEntry.Gui.Tooltip
-		public float maxLeanSide = 2.5f;
+		public float maxLeanSide = 2.5f;*/
 	}
 
 	public static class MainAnimations {
@@ -103,9 +108,9 @@ public class ClientConfig implements ConfigData {
 		public SwordAnimations swordAnimations = new SwordAnimations();
 
 		//? if >= 1.21.11 {
-		/*@ConfigEntry.Gui.CollapsibleObject
+		@ConfigEntry.Gui.CollapsibleObject
 		public SpearAnimations spearAnimations = new SpearAnimations();
-		*///?}
+		//?}
 
 		@ConfigEntry.Gui.CollapsibleObject
 		public ToolsAnimations toolsAnimations = new ToolsAnimations();
@@ -335,5 +340,26 @@ public class ClientConfig implements ConfigData {
 		@Getter
 		@ConfigEntry.Gui.CollapsibleObject
 		public AnimationConfig shovelAnimationsConfig = new AnimationConfig();
+	}
+
+	public static class LeanEffect {
+		@Getter private boolean enableLeanEffect = true;
+		@Getter private boolean invertLeanDirection = false;
+		@Getter private float leanSmoothingFactor = 0.2f;
+
+		@Getter private float leanForwardIntensity = 1.0f;
+		@Getter private float leanSideIntensity = 1.0f;
+
+		@Getter private float maxLeanForward = 2.0f;
+		@Getter private float maxLeanSide = 2.0f;
+
+		// === NUEVAS OPCIONES PARA LEAN BASADO EN MIRADA ===
+		@Getter private boolean enableLookLean = true;
+
+		@Getter private boolean enablePitchLean = true;                     // Si true, el pitch afecta al lean forward/back
+		@Getter private float pitchLeanIntensity = 0.2f;                   // Cuánto afecta mirar arriba/abajo (positivo = mirar abajo inclina adelante)
+
+		@Getter private boolean enableYawLean = false;                      // Si true, la diferencia yaw (cabeza vs cuerpo) afecta al lean lateral
+		@Getter private float yawLeanIntensity = 0.2f;                     // Cuánto afecta girar la cabeza a los lados
 	}
 }

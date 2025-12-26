@@ -1,5 +1,5 @@
 //? if >= 1.21.11 {
-/*package com.github.razorplay01.cpa.platform.common.animation.animations.overlay;
+package com.github.razorplay01.cpa.platform.common.animation.animations.overlay;
 
 import com.github.razorplay01.cpa.platform.common.util.Util;
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
@@ -133,4 +133,4 @@ public class SpearAnimation implements ICustomAnimation {
 		}
 	}
 }
-*///?}
+//?}

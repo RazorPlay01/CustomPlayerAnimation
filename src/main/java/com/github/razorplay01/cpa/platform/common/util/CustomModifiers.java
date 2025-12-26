@@ -18,9 +18,9 @@ import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
 import static com.github.razorplay01.cpa.platform.common.util.Util.*;
 
 //? if <= 1.21.8 {
-import net.minecraft.client.player.AbstractClientPlayer;
-//?} else {
-//import net.minecraft.world.entity.Avatar;
+/*import net.minecraft.client.player.AbstractClientPlayer;
+*///?} else {
+import net.minecraft.world.entity.Avatar;
 //?}
 
 public class CustomModifiers {
@@ -28,46 +28,71 @@ public class CustomModifiers {
 		// []
 	}
 
-	public static AdjustmentModifier createLeanModifier(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*Avatar player*//*?}*/) {
+	public static AdjustmentModifier createLeanModifier(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ Avatar player/*?}*/) {
 		return new AdjustmentModifier(partName -> {
 			if (!"body".equals(partName)) {
 				return Optional.empty();
 			}
 
-			ClientConfig.General config = CONFIG.getGeneral();
+			ClientConfig.LeanEffect leanConfig = CONFIG.getLean_effect();
 
-			if (!config.isEnableLeanEffect()) {
+			if (!leanConfig.isEnableLeanEffect()) {
 				return Optional.empty();
 			}
 
 			PlayerData data = ((IAnimationControl) player).getAnimationContext().playerData();
 
-			Vec3 velocity = player.getDeltaMovement();
+			// Velocidad desde posición
+			Vec3 velocity = new Vec3(data.getVectorX(), data.getVectorY(), data.getVectorZ());
 
 			float bodyYawRad = (float) Math.toRadians(player.yBodyRot);
 
 			float forwardVel = (float) (velocity.z * Math.cos(bodyYawRad) - velocity.x * Math.sin(bodyYawRad));
 			float sideVel    = (float) (velocity.z * Math.sin(bodyYawRad) + velocity.x * Math.cos(bodyYawRad));
 
-			// Aplicar inversión si está activada
-			if (config.isInvertLeanDirection()) {
+			if (leanConfig.isInvertLeanDirection()) {
 				forwardVel = -forwardVel;
 				sideVel    = -sideVel;
 			}
 
-			// Intensidades independientes
-			float leanForward = forwardVel * config.getLeanForwardIntensity();
-			float leanSide    = sideVel    * config.getLeanSideIntensity();
+			// Lean target (sin lerp aún)
+			float targetLeanForward = forwardVel * leanConfig.getLeanForwardIntensity();
+			float targetLeanSide    = sideVel    * leanConfig.getLeanSideIntensity();
 
-			// Multiplicador adicional del PlayerData (opcional, se mantiene)
+			// === NUEVO: Suavizado con lerp ===
+			float smoothing = leanConfig.getLeanSmoothingFactor();  // Ej: 0.2f para suave
+			float leanForward = Mth.lerp(smoothing, data.getPrevLeanForward(), targetLeanForward);
+			float leanSide    = Mth.lerp(smoothing, data.getPrevLeanSide(), targetLeanSide);
+
+			// Actualiza prev para el próximo tick
+			data.setPrevLeanForward(leanForward);
+			data.setPrevLeanSide(leanSide);
+
+			// === Lean por mirada (si activado) ===
+			if (leanConfig.isEnableLookLean()) {
+				if (leanConfig.isEnablePitchLean()) {
+					float pitchDegrees = player.getXRot();
+					float pitchFactor = pitchDegrees / 90.0f;
+					leanForward += pitchFactor * leanConfig.getPitchLeanIntensity();
+				}
+				if (leanConfig.isEnableYawLean()) {
+					float headYaw = player.getYHeadRot();
+					float bodyYaw = player.yBodyRot;
+					float yawDiff = Mth.wrapDegrees(headYaw - bodyYaw);
+					float yawFactor = Mth.clamp(yawDiff / 90.0f, -1.0f, 1.0f);
+					leanSide += yawFactor * leanConfig.getYawLeanIntensity();
+				}
+			}
+
+			// Multiplicador general
 			leanForward *= data.getLeanMultiplier();
 			leanSide    *= data.getLeanMultiplier();
 
-			// Clamps independientes
-			leanForward = Mth.clamp(leanForward, -config.getMaxLeanForward(), config.getMaxLeanForward());
-			leanSide    = Mth.clamp(leanSide, -config.getMaxLeanSide(), config.getMaxLeanSide());
+			// Clamps
+			leanForward = Mth.clamp(leanForward, -leanConfig.getMaxLeanForward(), leanConfig.getMaxLeanForward());
+			leanSide    = Mth.clamp(leanSide, -leanConfig.getMaxLeanSide(), leanConfig.getMaxLeanSide());
 
-			// Desactivar en situaciones especiales
+			// Desactivar en especiales
 			if (player.isFallFlying() || player.getVehicle() != null ||
 					player.isVisuallySwimming() || player.isAutoSpinAttack()) {
 				return Optional.of(new AdjustmentModifier.PartModifier(
@@ -76,7 +101,6 @@ public class CustomModifiers {
 				));
 			}
 
-			// Aplicar rotación: X = lean forward, Z = lean side (negativo para dirección correcta)
 			return Optional.of(new AdjustmentModifier.PartModifier(
 					new Vec3f(leanForward, 0.0f, -leanSide),
 					Vec3f.ZERO
@@ -84,7 +108,7 @@ public class CustomModifiers {
 		});
 	}
 
-	public static AdjustmentModifier createBowModifier(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*Avatar player*//*?}*/) {
+	public static AdjustmentModifier createBowModifier(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ Avatar player/*?}*/) {
 		return new AdjustmentModifier(partName -> {
 			boolean isUsingBow = player.isUsingItem() && player.getUseItem().getItem() instanceof BowItem;
 			if (!isUsingBow) return Optional.empty();
@@ -101,7 +125,7 @@ public class CustomModifiers {
 		});
 	}
 
-	public static AdjustmentModifier createShieldModifier(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*Avatar player*//*?}*/) {
+	public static AdjustmentModifier createShieldModifier(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ Avatar player/*?}*/) {
 		return new AdjustmentModifier(partName -> {
 			boolean isUsingShield = player.isUsingItem() && player.getUseItem().getItem() instanceof ShieldItem;
 			if (!isUsingShield) return Optional.empty();
@@ -119,7 +143,7 @@ public class CustomModifiers {
 		});
 	}
 
-	public static AdjustmentModifier createSwingModifier(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*Avatar player*//*?}*/, AnimationContainer animationContainer) {
+	public static AdjustmentModifier createSwingModifier(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ Avatar player/*?}*/, AnimationContainer animationContainer) {
 		return new AdjustmentModifier(partName -> {
 			if (!isSwingingSwordOrTools(player, animationContainer)) {
 				return Optional.empty();

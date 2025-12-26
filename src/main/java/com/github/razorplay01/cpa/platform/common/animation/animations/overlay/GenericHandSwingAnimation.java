@@ -64,11 +64,11 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
 				!(CONFIG.getOverlayAnimations().swordAnimations.isEnabled() &&
 
 						//? if < 1.21.2 {
-						context.player().getMainHandItem().getItem() instanceof net.minecraft.world.item.SwordItem ||
-						//?}
-						//? if >= 1.21.2 {
-						/*context.player().getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.WEAPON) ||
+						/*context.player().getMainHandItem().getItem() instanceof net.minecraft.world.item.SwordItem ||
 						*///?}
+						//? if >= 1.21.2 {
+						context.player().getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.WEAPON) ||
+						//?}
 
 						 context.player().getMainHandItem().getItem() instanceof TridentItem) &&
 				!(CONFIG.getOverlayAnimations().toolsAnimations.axeAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem() instanceof AxeItem) &&

@@ -57,8 +57,10 @@ public class PlayerData {
 	private float realSquash = 0.0f;
 	private float prevY = 0.0f;
 	private int jumpTicks = 0;
+	private float prevLeanForward = 0.0f;
+	private float prevLeanSide = 0.0f;
 
-	public void update(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*net.minecraft.world.entity.Avatar player*//*?}*/) {
+	public void update(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ net.minecraft.world.entity.Avatar player/*?}*/) {
 		if (player == null) return;
 		updateHandOrientation(player.getMainArm());
 		updatePlayerPosition(player.getYHeadRot(), player.getVisualRotationYInDegrees(), player.position());
@@ -67,9 +69,12 @@ public class PlayerData {
 		updateFlyChecker(player);
 		updateMovementTicks(player);
 		updateLean(player);
+
+		setPrevPlayerPosition(getPlayerPosition());
+		setPrevPlayerBodyYaw(getPlayerBodyYaw());
 	}
 
-	private void updateMovementTicks(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*net.minecraft.world.entity.Avatar player*//*?}*/) {
+	private void updateMovementTicks(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ net.minecraft.world.entity.Avatar player/*?}*/) {
 		if (getMovementSpeed() > 0 && !isMovingBackwards() && !player.isCrouching() && !player.isPassenger()) {
 			setMovementTicks(getMovementTicks() + 1);
 		} else {
@@ -105,13 +110,13 @@ public class PlayerData {
 		setMovingBackwards(movementVector.length() > 0 && movementVector.dot(lookVector) < 0);
 	}
 
-	private void updateEnvironmentInfo(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*net.minecraft.world.entity.Avatar player*//*?}*/) {
+	private void updateEnvironmentInfo(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ net.minecraft.world.entity.Avatar player/*?}*/) {
 		Block standingBlock = player.level().getBlockState(player.blockPosition().below()).getBlock();
 		setOnFence((standingBlock instanceof FenceBlock || standingBlock instanceof WallBlock || standingBlock instanceof IronBarsBlock) && player.onGround());
 		setOnEdge(standingBlock instanceof AirBlock && player.onGround());
 	}
 
-	private void updateFlyChecker(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*net.minecraft.world.entity.Avatar player*//*?}*/) {
+	private void updateFlyChecker(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ net.minecraft.world.entity.Avatar player/*?}*/) {
 		double flyVectorY = Math.round(getVectorY() * 1000.0) / 1000.0;
 		if ((flyVectorY == 0.0 || Math.abs(flyVectorY) == 0.375) && !player.onGround() && !player.isUnderWater()) {
 			setFlychecker(getFlychecker() + 1);
@@ -120,9 +125,9 @@ public class PlayerData {
 		}
 	}
 
-	private void updateLean(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*net.minecraft.world.entity.Avatar player*//*?}*/) {
+	private void updateLean(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ net.minecraft.world.entity.Avatar player/*?}*/) {
 		// Multiplicador de intensidad del lean según estado
-		double speed = player.getDeltaMovement().horizontalDistance();
+		double speed = getMovementSpeed();
 
 		if (player.isCrouching()) {
 			realLeanMultiplier = Mth.lerp(0.2f, realLeanMultiplier, 0.6f);  // Menos lean al agacharte

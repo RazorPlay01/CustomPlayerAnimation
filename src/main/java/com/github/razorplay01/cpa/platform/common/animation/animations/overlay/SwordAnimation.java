@@ -130,9 +130,9 @@ public class SwordAnimation implements ICustomAnimation {
         }
     }
 
-    public static boolean isPlayerSwingingWeapon(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*net.minecraft.world.entity.Avatar player*//*?}*/) {
+    public static boolean isPlayerSwingingWeapon(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ net.minecraft.world.entity.Avatar player/*?}*/) {
         ItemStack itemStack = player.getMainHandItem();
-        if (isAxe(itemStack) || isPickaxe(itemStack) || isShovel(itemStack)/*? if >=1.21.11 {*/ /*|| isSpear(itemStack)*//*?}*/) return false;
+        if (isAxe(itemStack) || isPickaxe(itemStack) || isShovel(itemStack)/*? if >=1.21.11 {*/ || isSpear(itemStack)/*?}*/) return false;
         return player.swinging &&
                 (isSword(itemStack) || itemStack.getItem() instanceof TridentItem) &&
 				player.swingingArm.equals(MAIN_HAND);

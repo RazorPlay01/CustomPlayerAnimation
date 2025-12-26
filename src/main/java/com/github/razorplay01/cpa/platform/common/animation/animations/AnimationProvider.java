@@ -54,8 +54,8 @@ public class AnimationProvider {
 			new GenericHandSwingAnimation(),
 			new SwordAnimation(),
 			//? if >= 1.21.11 {
-			/*new SpearAnimation(),
-			*///?}
+			new SpearAnimation(),
+			//?}
 			new PickaxeAnimation(),
 			new AxeAnimation(),
 			new ShovelAnimation()
