@@ -65,12 +65,15 @@ repositories {
 	maven("https://maven.shedaniel.me/")
 	maven("https://maven.terraformersmc.com/releases/")
 	maven("https://repo.redlance.org/public")
+	maven("https://api.modrinth.com/maven")
 }
 
 dependencies {
 	api("me.shedaniel.cloth:cloth-config-neoforge:${prop("deps.cloth-config")}")
 	implementation ("com.zigythebird.playeranim:PlayerAnimationLibNeo:${prop("deps.player_animation_library")}")
 	runtimeOnly("org.javassist:javassist:3.30.2-GA")
+	//implementation ("maven.modrinth:supplementaries:${prop("deps.supplementaries_version")}")
+	implementation ("maven.modrinth:carry-on:${prop("deps.carryon_version")}")
 
 	compileOnly("org.projectlombok:lombok:1.18.36")
 	annotationProcessor("org.projectlombok:lombok:1.18.36")

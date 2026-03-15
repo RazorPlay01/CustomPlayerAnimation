@@ -32,6 +32,7 @@ import net.minecraft.world.entity.animal.equine.*;
 import java.util.List;
 import java.util.Optional;
 
+import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
 import static net.minecraft.world.InteractionHand.MAIN_HAND;
 
 public class Util {
@@ -58,6 +59,31 @@ public class Util {
 				.orElse(List.of(0.0f));
 	}
 	//?}
+
+	public static double getPlayerScale(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ net.minecraft.world.entity.Avatar player/*?}*/) {
+		return player.getAttribute(Attributes.SCALE).getBaseValue();
+	}
+
+	/**
+	 * Calcula el multiplicador de velocidad basado en la escala del jugador.
+	 *
+	 * @param player         El jugador
+	 * CONFIG.getMainAnimations().moveAnimations.animationMoveSpeedScaleMultiplier Valor configurable por el usuario que define cuánto
+	 *                       afecta la escala a la velocidad de animación:
+	 *                       0.0 = la escala NO afecta la animación
+	 *                       0.5 = la escala afecta parcialmente
+	 *                       1.0 = la escala afecta completamente (por defecto)
+	 *                       2.0 = la escala afecta el doble de lo normal
+	 */
+	public static double getScaleSpeedMultiplier(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ net.minecraft.world.entity.Avatar player/*?}*/) {
+		double scale = getPlayerScale(player);
+		if (scale <= 0) scale = 1.0;
+
+		// Interpolar entre 1.0 (sin efecto) y 1/scale (efecto completo)
+		// influence = 0 → retorna 1.0
+		// influence = 1 → retorna 1/scale
+		return 1.0 + (1.0 / scale - 1.0) * CONFIG.getMainAnimations().moveAnimations.animationMoveSpeedScaleMultiplier;
+	}
 
 	public static boolean isBoat(Object vehicle) {
 		return vehicle instanceof Boat;

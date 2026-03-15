@@ -92,6 +92,9 @@
   "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.animationMoveSpeedMultiplier": "Animation Move Speed Multiplier",
   "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.animationMoveSpeedMultiplier.@Tooltip": "Changes the speed multiplier of animations involving movement. Example: Walk, Run, etc...",
 
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.animationMoveSpeedScaleMultiplier": "Animation Move Speed Scale Multiplier",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.animationMoveSpeedScaleMultiplier.@Tooltip": "Determines how much the player's scale affects the speed of movement animations. 0.0 = no effect, 1.0 = full effect (default), values above 1.0 = exaggerated effect. Example: A smaller player will have faster animations and a larger player will have slower animations.",
+
   "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingAnimationConfig": "Walk Animation",
   "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingAnimationConfig.isEnabled": "Is Enabled",
   "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingAnimationConfig.speedMultiplier": "Animation Speed Multiplier",

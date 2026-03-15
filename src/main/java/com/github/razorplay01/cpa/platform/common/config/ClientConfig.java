@@ -166,6 +166,9 @@ public class ClientConfig implements ConfigData {
 		@Getter
 		@ConfigEntry.Gui.Tooltip
 		public float animationMoveSpeedMultiplier = 4;
+		@Getter
+		@ConfigEntry.Gui.Tooltip
+		public float animationMoveSpeedScaleMultiplier = 1;
 
 		@ConfigEntry.Gui.CollapsibleObject
 		public AnimationConfig walkingAnimationConfig = new AnimationConfig(true, 1, 3, 0);

@@ -92,6 +92,9 @@
   "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.animationMoveSpeedMultiplier": "Multiplicador de Velocidad de Movimiento",
   "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.animationMoveSpeedMultiplier.@Tooltip": "Modifica el multiplicador de velocidad para animaciones que involucran movimiento. Ejemplo: Caminar, Correr, etc.",
 
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.animationMoveSpeedScaleMultiplier": "Multiplicador de Escala en Velocidad de Animación",
+  "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.animationMoveSpeedScaleMultiplier.@Tooltip": "Determina cuánto afecta la escala del jugador a la velocidad de las animaciones de movimiento. 0.0 = sin efecto, 1.0 = efecto completo (por defecto), valores superiores a 1.0 = efecto exagerado. Ejemplo: Un jugador más pequeño tendrá animaciones más rápidas y un jugador más grande tendrá animaciones más lentas.",
+
   "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingAnimationConfig": "Animación de Caminar",
   "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingAnimationConfig.isEnabled": "Está Activada",
   "text.autoconfig.cpa.option.client.mainAnimations.moveAnimations.walkingAnimationConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",

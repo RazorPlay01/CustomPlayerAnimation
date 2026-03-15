@@ -64,6 +64,7 @@ repositories {
 	maven("https://maven.shedaniel.me/")
 	maven("https://maven.terraformersmc.com/releases/")
 	maven("https://repo.redlance.org/public")
+	maven("https://api.modrinth.com/maven")
 }
 
 dependencies {
@@ -78,7 +79,8 @@ dependencies {
 	modImplementation("com.terraformersmc:modmenu:${prop("deps.modmenu")}")
 	modApi("me.shedaniel.cloth:cloth-config-fabric:${prop("deps.cloth-config")}")
 	modImplementation("com.zigythebird.playeranim:PlayerAnimationLibFabric:${prop("deps.player_animation_library")}")
-
+	//modImplementation("maven.modrinth:supplementaries:${prop("deps.supplementaries_version")}")
+	modImplementation("maven.modrinth:carry-on:${prop("deps.carryon_version")}")
 	compileOnly("org.projectlombok:lombok:1.18.36")
 	annotationProcessor("org.projectlombok:lombok:1.18.36")
 

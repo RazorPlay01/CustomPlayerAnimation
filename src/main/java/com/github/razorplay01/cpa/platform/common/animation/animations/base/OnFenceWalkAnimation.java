@@ -1,6 +1,7 @@
 package com.github.razorplay01.cpa.platform.common.animation.animations.base;
 
 import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
+import com.github.razorplay01.cpa.platform.common.util.Util;
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
@@ -12,7 +13,11 @@ public class OnFenceWalkAnimation implements ICustomAnimation {
         if (!CONFIG.getMainAnimations().moveAnimations.onFenceWalkAnimationConfig.isEnabled()) {
             context.mainAnimationContainer().disableAnimation();
         } else {
-            context.mainAnimationContainer().setAnimationSpeed((float) context.playerData().getMovementSpeed() * CONFIG.getMainAnimations().moveAnimations.getAnimationMoveSpeedMultiplier() * CONFIG.getMainAnimations().moveAnimations.onFenceWalkAnimationConfig.getSpeedMultiplier());
+			double baseSpeed = context.playerData().getMovementSpeed()
+					* CONFIG.getMainAnimations().moveAnimations.getAnimationMoveSpeedMultiplier()
+					* CONFIG.getMainAnimations().moveAnimations.onFenceWalkAnimationConfig.getSpeedMultiplier();
+			double scaleMultiplier = Util.getScaleSpeedMultiplier(context.player());
+			context.mainAnimationContainer().setAnimationSpeed((float) (baseSpeed * scaleMultiplier));
             context.mainAnimationContainer().setAnimationFadeTime(CONFIG.getMainAnimations().moveAnimations.onFenceWalkAnimationConfig.getFadeTime());
             context.mainAnimationContainer().setAnimationPriority(CONFIG.getMainAnimations().moveAnimations.onFenceWalkAnimationConfig.getPriority());
 

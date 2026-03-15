@@ -1,6 +1,7 @@
 package com.github.razorplay01.cpa.platform.common.animation.animations;
 
 import com.github.razorplay01.cpa.platform.common.animation.animations.base.*;
+import com.github.razorplay01.cpa.platform.common.animation.animations.compat.CarryOnCompatAnimation;
 import com.github.razorplay01.cpa.platform.common.animation.animations.overlay.*;
 import com.github.razorplay01.cpa.platform.common.animation.animations.special.*;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
@@ -58,11 +59,11 @@ public class AnimationProvider {
 			//?}
 			new PickaxeAnimation(),
 			new AxeAnimation(),
-			new ShovelAnimation()
+			new ShovelAnimation(),
 
 			// Compat Animations
 			//new SupplementariesCompatAnimation(),
-			//new CarryOnCompatAnimation()
+			new CarryOnCompatAnimation()
 	);
 	public static final List<ICustomAnimation> SPECIAL_ANIMATIONS = List.of(
 			new UpHandAnimation(),

@@ -19,11 +19,11 @@ import org.slf4j.LoggerFactory;
 import com.github.razorplay01.cpa.platform.fabric.FabricPlatform;
 //?} neoforge {
 /*import com.github.razorplay01.cpa.platform.neoforge.NeoforgePlatform;
-*///?}
+ *///?}
 
 //? if <= 1.21.10 {
 /*import net.minecraft.resources.ResourceLocation;
-*///?}
+ *///?}
 
 @SuppressWarnings("LoggingSimilarMessage")
 public class ModTemplate {
@@ -68,16 +68,16 @@ public class ModTemplate {
 		);
 	}
 
-	static Platform xplat() {
+	public static Platform xplat() {
 		return PLATFORM;
 	}
 
 	private static Platform createPlatformInstance() {
 		//? fabric {
 		return new FabricPlatform();
-		 //?} neoforge {
+		//?} neoforge {
 		/*return new NeoforgePlatform();
-		*///?}
+		 *///?}
 	}
 
 	public static Animation getAnimation(String animationId) {
