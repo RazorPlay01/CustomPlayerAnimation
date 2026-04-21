@@ -21,16 +21,13 @@
   "icon": "assets/icon.png",
   "license": "${license}",
   "environment": "*",
-  "accessWidener": "${id}.accesswidener",
+  "accessWidener": "aw/${minecraft}.accesswidener",
   "entrypoints": {
     "main": [
       "${group}.${id}.platform.fabric.FabricEntrypoint"
     ],
     "client": [
       "${group}.${id}.platform.fabric.FabricClientEntrypoint"
-    ],
-    "fabric-datagen": [
-      "${group}.${id}.platform.fabric.datagen.FabricDataGeneratorEntrypoint"
     ],
     "modmenu": [
       "${group}.${id}.platform.common.config.ModMenuConfig"

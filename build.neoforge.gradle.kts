@@ -5,7 +5,7 @@ plugins {
 
 platform {
 	loader = "neoforge"
-	/*dependencies {
+	dependencies {
 		required("minecraft") {
 			forgeVersionRange = "[${prop("deps.minecraft")},)"
 		}
@@ -16,19 +16,20 @@ platform {
 			modrinth = "9s6osm5g"
 			curseforge = "348521"
 			slug("cloth-config")
-			//forgeVersionRange = "[${prop("deps.cloth-config")},)"
+			forgeVersionRange = "[${prop("deps.cloth-config")},)"
 		}
 		required("player_animation_library") {
 			modrinth = "ha1mEyJS"
 			curseforge = "1283899"
 			slug("player-animation-library")
-			//forgeVersionRange = "[${prop("deps.player_animation_library")},)"
+			forgeVersionRange = "[${prop("deps.player_animation_library")},)"
 		}
-	}*/
+	}
 }
 
 neoForge {
 	version = property("deps.neoforge") as String
+	accessTransformers.from(rootProject.file("src/main/resources/aw/${stonecutter.current.version}.cfg"))
 	validateAccessTransformers = true
 
 	if (hasProperty("deps.parchment")) parchment {
@@ -61,17 +62,9 @@ neoForge {
 
 repositories {
 	mavenCentral()
-	maven("https://libraries.minecraft.net") {
-		name = "Minecraft Libraries"
-	}
-	maven("https://maven.neoforged.net/releases/") {
-		name = "NeoForged Releases"
-	}
-	maven("https://maven.terraformersmc.com/") { name = "Terraformers" }
-	maven("https://maven.shedaniel.me/")
-	maven("https://maven.terraformersmc.com/releases/")
-	maven("https://repo.redlance.org/public")
-	maven("https://api.modrinth.com/maven")
+	strictMaven("https://api.modrinth.com/maven", "maven.modrinth") { name = "Modrinth" }
+	strictMaven("https://repo.redlance.org/public")
+	strictMaven("https://maven.shedaniel.me/")
 }
 
 dependencies {
@@ -84,61 +77,33 @@ dependencies {
 			force("org.slf4j:slf4j-api:2.0.13")
 		}
 	}
+
+	implementation(libs.moulberry.mixinconstraints)
+	jarJar(libs.moulberry.mixinconstraints)
+
+	compileOnly("org.projectlombok:lombok:1.18.44")
+	annotationProcessor("org.projectlombok:lombok:1.18.44")
+
+	testCompileOnly("org.projectlombok:lombok:1.18.44")
+	testAnnotationProcessor("org.projectlombok:lombok:1.18.44")
+
 	api("me.shedaniel.cloth:cloth-config-neoforge:${prop("deps.cloth-config")}")
+	compileOnly("maven.modrinth:carry-on:${prop("deps.carryon_version")}")
 	implementation ("com.zigythebird.playeranim:PlayerAnimationLibNeo:${prop("deps.player_animation_library")}")
-	runtimeOnly("org.javassist:javassist:3.30.2-GA")
-	//implementation ("maven.modrinth:supplementaries:${prop("deps.supplementaries_version")}")
-	implementation ("maven.modrinth:carry-on:${prop("deps.carryon_version")}")
-
-	compileOnly("org.projectlombok:lombok:1.18.36")
-	annotationProcessor("org.projectlombok:lombok:1.18.36")
-
-	testCompileOnly("org.projectlombok:lombok:1.18.36")
-	testAnnotationProcessor("org.projectlombok:lombok:1.18.36")
+	//runtimeOnly("org.javassist:javassist:3.30.2-GA")
 }
 
 tasks.named("createMinecraftArtifacts") {
 	dependsOn(tasks.named("stonecutterGenerate"))
 }
 
-tasks.named<ProcessResources>("processResources") {
-	val mcVersion = stonecutter.current.version.split("-")[0]  // e.g., "1.21.9"
-
-	// Lista base de mixins client
-	val clientMixins = mutableListOf(
-		"AbstractClientPlayerEntityMixin",
-		"ItemInHandLayerMixin",
-		"LivingEntityRendererMixin",
-		"PlayerEntityRendererMixin"
-	)
-
-	if (stonecutter.compare(mcVersion, "1.21.2") >= 0) {
-		clientMixins.add("InventoryAccessor")
-		clientMixins.add("HumanoidRenderStateMixin")
-		clientMixins.add("PlayerRendererAccesor")
-		clientMixins.add("ItemStackRenderStateMixin")
+stonecutter {
+	replacements.string(current.parsed >= "1.21.11") {
+		replace("ResourceLocation", "Identifier")
+		replace("location()", "identifier()")
 	}
-
-	// Añadimos el mixin solo en 1.21.9+
-	if (stonecutter.compare(mcVersion, "1.21.9") >= 0) {
-		clientMixins.add("ClientMannequinMixin")
+	replacements.string(current.parsed < "1.21.11") {
+		replace("Identifier", "ResourceLocation")
+		replace("identifier()", "location()")
 	}
-
-	// ← ESTO ES LO NUEVO: Generamos el array COMPLETO como string (con corchetes y comas perfectas)
-	val clientArrayString = clientMixins.joinToString(", ") { "\"$it\"" }  // ["mixin1", "mixin2", ...]
-	val clientFull = "[\n    $clientArrayString\n  ]"
-
-	// Mapa con el placeholder
-	val placeholders = mapOf(
-		"client_array" to clientFull
-	)
-
-	// Expandimos el JSON con esto
-	filesMatching("cpa.mixins.json") {
-		expand(placeholders)
-	}
-
-	// Para cache de Gradle
-	inputs.property("mcVersion", mcVersion)
-	inputs.property("clientArray", clientFull)
 }

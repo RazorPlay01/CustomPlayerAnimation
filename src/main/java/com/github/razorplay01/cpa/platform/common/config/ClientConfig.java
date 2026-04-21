@@ -108,9 +108,9 @@ public class ClientConfig implements ConfigData {
 		public SwordAnimations swordAnimations = new SwordAnimations();
 
 		//? if >= 1.21.11 {
-		@ConfigEntry.Gui.CollapsibleObject
+		/*@ConfigEntry.Gui.CollapsibleObject
 		public SpearAnimations spearAnimations = new SpearAnimations();
-		//?}
+		*///?}
 
 		@ConfigEntry.Gui.CollapsibleObject
 		public ToolsAnimations toolsAnimations = new ToolsAnimations();

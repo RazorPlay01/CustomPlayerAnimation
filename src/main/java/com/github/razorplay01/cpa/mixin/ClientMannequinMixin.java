@@ -2,7 +2,7 @@ package com.github.razorplay01.cpa.mixin;
 
 //? if >=1.21.9 {
 
-import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
+/*import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
 import com.github.razorplay01.cpa.platform.common.animation.animations.AnimationProvider;
 import com.github.razorplay01.cpa.platform.common.util.PlayerData;
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
@@ -328,4 +328,4 @@ public abstract class ClientMannequinMixin extends Mannequin implements IAnimati
 		}
 	}
 }
-//?}
+*///?}

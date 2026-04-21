@@ -1,18 +1,22 @@
 plugins {
 	id("mod-platform")
-	id("fabric-loom")
+	id("net.fabricmc.fabric-loom-remap")
 }
 
 platform {
 	loader = "fabric"
 	dependencies {
 		required("minecraft") {
-			versionRange = prop("deps.minecraft")
+			versionRange = ">=${prop("deps.minecraft")}"
 		}
 		required("fabric-api") {
 			slug("fabric-api")
 			versionRange = ">=${prop("deps.fabric-api")}"
 		}
+		required("fabricloader") {
+			versionRange = ">=${libs.fabric.loader.get().version}"
+		}
+		optional("modmenu") {}
 		required("cloth-config") {
 			modrinth = "9s6osm5g"
 			curseforge = "348521"
@@ -25,15 +29,11 @@ platform {
 			slug("player-animation-library")
 			versionRange = ">=${prop("deps.player_animation_library")}"
 		}
-		required("fabricloader") {
-			versionRange = ">=${libs.fabric.loader.get().version}"
-		}
-		optional("modmenu") {}
 	}
 }
 
 loom {
-	accessWidenerPath = rootProject.file("src/main/resources/${prop("mod.id")}.accesswidener")
+	accessWidenerPath = rootProject.file("src/main/resources/aw/${stonecutter.current.version}.accesswidener")
 	runs.named("client") {
 		client()
 		ideConfigGenerated(true)
@@ -52,7 +52,7 @@ loom {
 }
 
 fabricApi {
-	configureDataGeneration() {
+	configureDataGeneration {
 		outputDirectory =
 			file("${rootDir}/versions/datagen/${stonecutter.current.version.split("-")[0]}/src/main/generated")
 		client = true
@@ -60,11 +60,11 @@ fabricApi {
 }
 
 repositories {
-	maven("https://maven.terraformersmc.com/") { name = "Terraformers" }
-	maven("https://maven.shedaniel.me/")
-	maven("https://maven.terraformersmc.com/releases/")
-	maven("https://repo.redlance.org/public")
-	maven("https://api.modrinth.com/maven")
+	mavenCentral()
+	strictMaven("https://maven.terraformersmc.com/", "com.terraformersmc") { name = "TerraformersMC" }
+	strictMaven("https://api.modrinth.com/maven", "maven.modrinth") { name = "Modrinth" }
+	strictMaven("https://repo.redlance.org/public")
+	strictMaven("https://maven.shedaniel.me/")
 }
 
 dependencies {
@@ -75,57 +75,29 @@ dependencies {
 			if (hasProperty("deps.parchment")) parchment("org.parchmentmc.data:parchment-${prop("deps.parchment")}@zip")
 		})
 	modImplementation(libs.fabric.loader)
+	implementation(libs.moulberry.mixinconstraints)
+	include(libs.moulberry.mixinconstraints)
 	modImplementation("net.fabricmc.fabric-api:fabric-api:${prop("deps.fabric-api")}")
 	modImplementation("com.terraformersmc:modmenu:${prop("deps.modmenu")}")
-	modApi("me.shedaniel.cloth:cloth-config-fabric:${prop("deps.cloth-config")}")
-	modImplementation("com.zigythebird.playeranim:PlayerAnimationLibFabric:${prop("deps.player_animation_library")}")
-	//modImplementation("maven.modrinth:supplementaries:${prop("deps.supplementaries_version")}")
-	modImplementation("maven.modrinth:carry-on:${prop("deps.carryon_version")}")
-	compileOnly("org.projectlombok:lombok:1.18.36")
-	annotationProcessor("org.projectlombok:lombok:1.18.36")
 
-	testCompileOnly("org.projectlombok:lombok:1.18.36")
-	testAnnotationProcessor("org.projectlombok:lombok:1.18.36")
+	compileOnly("org.projectlombok:lombok:1.18.44")
+	annotationProcessor("org.projectlombok:lombok:1.18.44")
+
+	testCompileOnly("org.projectlombok:lombok:1.18.44")
+	testAnnotationProcessor("org.projectlombok:lombok:1.18.44")
+
+	modApi("me.shedaniel.cloth:cloth-config-fabric:${prop("deps.cloth-config")}")
+	modImplementation("maven.modrinth:carry-on:${prop("deps.carryon_version")}")
+	modImplementation("com.zigythebird.playeranim:PlayerAnimationLibFabric:${prop("deps.player_animation_library")}")
 }
 
-tasks.named<ProcessResources>("processResources") {
-	val mcVersion = stonecutter.current.version.split("-")[0]  // e.g., "1.21.9"
-
-	// Lista base de mixins client
-	val clientMixins = mutableListOf(
-		"AbstractClientPlayerEntityMixin",
-		"ItemInHandLayerMixin",
-		"LivingEntityRendererMixin",
-		"PlayerEntityRendererMixin"
-	)
-
-	if (stonecutter.compare(mcVersion, "1.21.2") >= 0) {
-		clientMixins.add("InventoryAccessor")
-		clientMixins.add("HumanoidRenderStateMixin")
-		clientMixins.add("PlayerRendererAccesor")
-		clientMixins.add("ItemStackRenderStateMixin")
+stonecutter {
+	replacements.string(current.parsed >= "1.21.11") {
+		replace("ResourceLocation", "Identifier")
+		replace("location()", "identifier()")
 	}
-
-	// Añadimos el mixin solo en 1.21.9+
-	if (stonecutter.compare(mcVersion, "1.21.9") >= 0) {
-		clientMixins.add("ClientMannequinMixin")
+	replacements.string(current.parsed < "1.21.11") {
+		replace("Identifier", "ResourceLocation")
+		replace("identifier()", "location()")
 	}
-
-	// Generamos el array COMPLETO como string (con corchetes y comas perfectas)
-	val clientArrayString = clientMixins.joinToString(", ") { "\"$it\"" }  // ["mixin1", "mixin2", ...]
-	val clientFull = "[\n    $clientArrayString\n  ]"
-
-	// Mapa con el placeholder
-	val placeholders = mapOf(
-		"client_array" to clientFull
-	)
-
-	// Expandimos el JSON con esto
-	filesMatching("cpa.mixins.json") {
-		expand(placeholders)
-	}
-
-	// Para cache de Gradle
-	inputs.property("mcVersion", mcVersion)
-	inputs.property("clientArray", clientFull)
 }

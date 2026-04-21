@@ -70,7 +70,7 @@ are defined in `gradle.properties` as `[VERSIONED]` then set in `versions/{versi
 
 #### 5. **Rename package structure**
 
-Rename the `com.example.cpa` package in
+Rename the `com.example.modtemplate` package in
 `src/main/java/` to match your `mod.group` and `mod.id`.
 
 #### 6. **Update resource files**
@@ -120,8 +120,8 @@ Be careful to run the correct task for the selected Stonecutter platform and Min
 
 The template uses a platform abstraction pattern to keep shared code loader-agnostic:
 
-* **Shared code** goes in `com.example.cpa` (no platform dependencies)
-* **Platform-specific code** goes in `com.example.cpa.platform.{fabric|neoforge}`
+* **Shared code** goes in `com.example.modtemplate` (no platform dependencies)
+* **Platform-specific code** goes in `com.github.razorplay01.cpa.platform.{fabric|neoforge}`
 * The `Platform` interface provides loader-specific functionality to shared code
 
 ### Adding Dependencies

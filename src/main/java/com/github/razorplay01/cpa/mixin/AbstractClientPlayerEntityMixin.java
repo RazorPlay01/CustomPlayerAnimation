@@ -58,16 +58,16 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 	private AnimationContext actualAnimationContext;
 
 	//? if < 1.21.2 {
-	/*protected AbstractClientPlayerEntityMixin(Level level, BlockPos blockPos, float f, GameProfile gameProfile) {
+	protected AbstractClientPlayerEntityMixin(Level level, BlockPos blockPos, float f, GameProfile gameProfile) {
 		super(level, blockPos, f, gameProfile);
 	}
-	*///?}
+	//?}
 
 	//? if >= 1.21.2 {
-	protected AbstractClientPlayerEntityMixin(Level level, GameProfile gameProfile) {
+	/*protected AbstractClientPlayerEntityMixin(Level level, GameProfile gameProfile) {
 		super(level, gameProfile);
 	}
-	//?}
+	*///?}
 
 	@Inject(method = "<init>", at = @At(value = "TAIL"))
 	private void init(ClientLevel clientLevel, GameProfile gameProfile, CallbackInfo ci) {

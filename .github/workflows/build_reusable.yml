@@ -10,7 +10,6 @@ jobs:
   build:
     name: Build Project
     runs-on: ubuntu-latest
-    timeout-minutes: 120
     outputs:
       artifact-name: ${{ steps.upload.outputs.artifact-name }}
 
@@ -41,25 +40,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Cache NeoForge/Create artifacts
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/create/
-            ~/.cache/neoforge/
-            versions/**/build/create/
-            versions/**/build/neoforge/
-          key: neoforge-create-${{ runner.os }}-${{ hashFiles('versions/**/build.gradle', 'gradle.properties') }}
-          restore-keys: |
-            neoforge-create-${{ runner.os }}-
-
-      - name: Set Gradle JVM options for more memory
-        run: |
-          echo "org.gradle.jvmargs=-Xmx6g -XX:+UseG1GC -XX:MaxGCPauseMillis=200" >> gradle.properties
-
       - name: Build with Gradle
-        timeout-minutes: 120
-        run: ./gradlew buildAndCollect --no-daemon --info --stacktrace
+        run: ./gradlew buildAndCollect --no-daemon
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4

@@ -2,15 +2,14 @@ plugins {
 	alias(libs.plugins.stonecutter)
 	alias(libs.plugins.dotenv)
 	alias(libs.plugins.fabric.loom).apply(false)
+	alias(libs.plugins.fabric.loom.remap).apply(false)
 	alias(libs.plugins.neoforged.moddev).apply(false)
 	alias(libs.plugins.jsonlang.postprocess).apply(false)
 	alias(libs.plugins.mod.publish.plugin).apply(false)
-}
-
-configurations.all {
-	resolutionStrategy {
-		force("net.neoforged:AutoRenamingTool:2.0.17:all")
-	}
+	alias(libs.plugins.kotlin.jvm).apply(false)
+	alias(libs.plugins.devtools.ksp).apply(false)
+	alias(libs.plugins.fletching.table).apply(false)
+	alias(libs.plugins.legacyforge.moddev).apply(false)
 }
 
 stonecutter active file(".sc_active_version")
@@ -38,16 +37,14 @@ tasks.register("runActiveClient") {
 	group = "stonecutter"
 	description = "Run client of the active Stonecutter version (always up-to-date)"
 
-	// Forzamos recompilar recursos y clases
 	dependsOn(stonecutter.current!!.project + ":processResources")
 	dependsOn(stonecutter.current!!.project + ":classes")
 
-	// Ejecutamos el cliente al final
 	finalizedBy(stonecutter.current!!.project + ":runClient")
 }
 
 stonecutter parameters {
-	constants.match(node.metadata.project.substringAfterLast('-'), "fabric", "neoforge")
+	constants.match(node.metadata.project.substringAfterLast('-'), "fabric", "neoforge", "forge")
 	filters.include("**/*.fsh", "**/*.vsh")
 	swaps["mod_version"] = "\"" + property("mod.version") + "\";"
 	swaps["mod_id"] = "\"" + property("mod.id") + "\";"

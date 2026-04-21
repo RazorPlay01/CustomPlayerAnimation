@@ -21,22 +21,22 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 //? if >= 1.21.2 {
-import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
+/*import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
-//?}
+*///?}
 //? if >= 1.21.2 && <=1.21.8 {
 /*import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.client.renderer.MultiBufferSource;*/
 //?}
 //? if > 1.21.8 {
-import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+/*import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ExtendedItemStackRenderState;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
-//?}
+*///?}
 
 //? if <= 1.21.1 {
-/*@Mixin(ItemInHandLayer.class)
+@Mixin(ItemInHandLayer.class)
 public abstract class ItemInHandLayerMixin<T extends LivingEntity, M extends EntityModel<T> & ArmedModel> extends RenderLayer<T, M> {
 
 	protected ItemInHandLayerMixin(RenderLayerParent<T, M> renderLayerParent) {
@@ -88,16 +88,16 @@ public abstract class ItemInHandLayerMixin<T extends LivingEntity, M extends Ent
 
 		matrices.popPose();
 	}
-*///?}
+//?}
 
 //? if >= 1.21.2 {
-@Mixin(ItemInHandLayer.class)
+/*@Mixin(ItemInHandLayer.class)
 public abstract class ItemInHandLayerMixin<S extends ArmedEntityRenderState, M extends EntityModel<S> & ArmedModel> extends RenderLayer<S, M> {
 
 	protected ItemInHandLayerMixin(RenderLayerParent<S, M> renderLayerParent) {
 		super(renderLayerParent);
 	}
-//?}
+*///?}
 
 	//? if >= 1.21.2 && <=1.21.8 {
 	/*@Inject(method = "renderArmWithItem", at = @At("HEAD"), cancellable = true)
@@ -153,13 +153,13 @@ public abstract class ItemInHandLayerMixin<S extends ArmedEntityRenderState, M e
 //?}
 //? if > 1.21.8 {
 
-	//? if > 1.21.8 && <=1.21.10 {
-	/*@Inject(method = "submitArmWithItem(Lnet/minecraft/client/renderer/entity/state/ArmedEntityRenderState;Lnet/minecraft/client/renderer/item/ItemStackRenderState;Lnet/minecraft/world/entity/HumanoidArm;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;I)V", at = @At("HEAD"), cancellable = true)
+	/*//? if > 1.21.8 && <=1.21.10 {
+	/^@Inject(method = "submitArmWithItem(Lnet/minecraft/client/renderer/entity/state/ArmedEntityRenderState;Lnet/minecraft/client/renderer/item/ItemStackRenderState;Lnet/minecraft/world/entity/HumanoidArm;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;I)V", at = @At("HEAD"), cancellable = true)
 	private void renderArmWithItem(S armedEntityRenderState, ItemStackRenderState itemStackRenderState, HumanoidArm humanoidArm, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, CallbackInfo ci) {
-	*///? }else{
+	^///? }else{
 	@Inject(method = "submitArmWithItem(Lnet/minecraft/client/renderer/entity/state/ArmedEntityRenderState;Lnet/minecraft/client/renderer/item/ItemStackRenderState;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/HumanoidArm;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/SubmitNodeCollector;I)V", at = @At("HEAD"), cancellable = true)
 	private void renderArmWithItem(ArmedEntityRenderState armedEntityRenderState, ItemStackRenderState itemStackRenderState, ItemStack itemStack, HumanoidArm humanoidArm, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, CallbackInfo ci) {
-	//?}
+		//?}
 
 		if (!(armedEntityRenderState instanceof AvatarRenderState playerRenderState)) return;
 		LivingEntity livingEntity = ((HumanoidRenderStateAccessor) playerRenderState).getLivingEntity();
@@ -178,10 +178,10 @@ public abstract class ItemInHandLayerMixin<S extends ArmedEntityRenderState, M e
 
 	@Unique
 	public void onRenderItem(LivingEntity entity, EntityModel<?> model, ItemStack itemStack, HumanoidArm arm,
-							 PoseStack poseStack,
-							 SubmitNodeCollector submitNodeCollector,
-							 net.minecraft.client.renderer.entity.state.LivingEntityRenderState livingEntityRenderState,
-							 int light, CallbackInfo info) {
+	                         PoseStack poseStack,
+	                         SubmitNodeCollector submitNodeCollector,
+	                         net.minecraft.client.renderer.entity.state.LivingEntityRenderState livingEntityRenderState,
+	                         int light, CallbackInfo info) {
 		if (!(model instanceof HumanoidModel<?> humanoid)) {
 			return;
 		}
@@ -206,10 +206,10 @@ public abstract class ItemInHandLayerMixin<S extends ArmedEntityRenderState, M e
 
 	@Unique
 	private void renderMapInHand(LivingEntity entity, HumanoidModel<?> humanoid, ItemStack itemStack, HumanoidArm arm,
-								 PoseStack poseStack,
-								 SubmitNodeCollector submitNodeCollector,
-								 net.minecraft.client.renderer.entity.state.LivingEntityRenderState livingEntityRenderState,
-								 int light) {
+	                             PoseStack poseStack,
+	                             SubmitNodeCollector submitNodeCollector,
+	                             net.minecraft.client.renderer.entity.state.LivingEntityRenderState livingEntityRenderState,
+	                             int light) {
 		poseStack.pushPose();
 		humanoid.translateToHand((HumanoidRenderState) livingEntityRenderState, arm, poseStack);
 
@@ -223,5 +223,5 @@ public abstract class ItemInHandLayerMixin<S extends ArmedEntityRenderState, M e
 
 		poseStack.popPose();
 	}
-	//?}
+	*///?}
 }

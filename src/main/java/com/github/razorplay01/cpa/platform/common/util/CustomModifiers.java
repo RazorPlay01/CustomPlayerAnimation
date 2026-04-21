@@ -18,17 +18,17 @@ import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
 import static com.github.razorplay01.cpa.platform.common.util.Util.*;
 
 //? if <= 1.21.8 {
-/*import net.minecraft.client.player.AbstractClientPlayer;
-*///?} else {
-import net.minecraft.world.entity.Avatar;
-//?}
+import net.minecraft.client.player.AbstractClientPlayer;
+//?} else {
+/*import net.minecraft.world.entity.Avatar;
+*///?}
 
 public class CustomModifiers {
 	private CustomModifiers() {
 		// []
 	}
 
-	public static AdjustmentModifier createLeanModifier(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ Avatar player/*?}*/) {
+	public static AdjustmentModifier createLeanModifier(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*Avatar player*//*?}*/) {
 		return new AdjustmentModifier(partName -> {
 			if (!"body".equals(partName)) {
 				return Optional.empty();
@@ -108,7 +108,7 @@ public class CustomModifiers {
 		});
 	}
 
-	public static AdjustmentModifier createBowModifier(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ Avatar player/*?}*/) {
+	public static AdjustmentModifier createBowModifier(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*Avatar player*//*?}*/) {
 		return new AdjustmentModifier(partName -> {
 			boolean isUsingBow = player.isUsingItem() && player.getUseItem().getItem() instanceof BowItem;
 			if (!isUsingBow) return Optional.empty();
@@ -125,7 +125,7 @@ public class CustomModifiers {
 		});
 	}
 
-	public static AdjustmentModifier createShieldModifier(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ Avatar player/*?}*/) {
+	public static AdjustmentModifier createShieldModifier(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*Avatar player*//*?}*/) {
 		return new AdjustmentModifier(partName -> {
 			boolean isUsingShield = player.isUsingItem() && player.getUseItem().getItem() instanceof ShieldItem;
 			if (!isUsingShield) return Optional.empty();
@@ -143,7 +143,7 @@ public class CustomModifiers {
 		});
 	}
 
-	public static AdjustmentModifier createSwingModifier(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ Avatar player/*?}*/, AnimationContainer animationContainer) {
+	public static AdjustmentModifier createSwingModifier(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*Avatar player*//*?}*/, AnimationContainer animationContainer) {
 		return new AdjustmentModifier(partName -> {
 			if (!isSwingingSwordOrTools(player, animationContainer)) {
 				return Optional.empty();

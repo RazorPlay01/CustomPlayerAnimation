@@ -2,12 +2,11 @@
   "package": "com.github.razorplay01.cpa.mixin",
   "required": true,
   "minVersion": "0.8",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "${java}",
   "injectors": {
     "defaultRequire": 1
   },
-  "mixins": [
-    "InventoryAccessor"
-  ],
-  "client": ${client_array}
+  ${refmap}
+  "mixins": [],
+  "client": []
 }
