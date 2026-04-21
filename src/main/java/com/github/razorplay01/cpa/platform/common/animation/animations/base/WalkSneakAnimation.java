@@ -31,12 +31,7 @@ public class WalkSneakAnimation implements ICustomAnimation {
         var animationContainer = context.mainAnimationContainer();
         var config = CONFIG.getMainAnimations().moveAnimations.walkingSneakAnimationConfig;
 
-		double baseSpeed = (5 * context.playerData().getMovementSpeed()
-				* CONFIG.getMainAnimations().moveAnimations.getAnimationMoveSpeedMultiplier()
-				* CONFIG.getMainAnimations().moveAnimations.walkingSneakAnimationConfig.getSpeedMultiplier());
-		double scaleMultiplier = Util.getScaleSpeedMultiplier(context.player());
-		animationContainer.setAnimationSpeed((float) (baseSpeed * scaleMultiplier));
-
+		context.mainAnimationContainer().setAnimationSpeed(Util.getAnimationSpeedMultiplier(5, context, config));
         animationContainer.setAnimationFadeTime(config.getFadeTime());
         animationContainer.setAnimationPriority(config.getPriority());
     }

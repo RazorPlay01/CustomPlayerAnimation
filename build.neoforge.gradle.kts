@@ -5,7 +5,7 @@ plugins {
 
 platform {
 	loader = "neoforge"
-	dependencies {
+	/*dependencies {
 		required("minecraft") {
 			forgeVersionRange = "[${prop("deps.minecraft")},)"
 		}
@@ -16,15 +16,15 @@ platform {
 			modrinth = "9s6osm5g"
 			curseforge = "348521"
 			slug("cloth-config")
-			versionRange = ">=${prop("deps.cloth-config")}"
+			//forgeVersionRange = "[${prop("deps.cloth-config")},)"
 		}
 		required("player_animation_library") {
 			modrinth = "ha1mEyJS"
 			curseforge = "1283899"
 			slug("player-animation-library")
-			versionRange = ">=${prop("deps.player_animation_library")}"
+			//forgeVersionRange = "[${prop("deps.player_animation_library")},)"
 		}
-	}
+	}*/
 }
 
 neoForge {
@@ -61,6 +61,12 @@ neoForge {
 
 repositories {
 	mavenCentral()
+	maven("https://libraries.minecraft.net") {
+		name = "Minecraft Libraries"
+	}
+	maven("https://maven.neoforged.net/releases/") {
+		name = "NeoForged Releases"
+	}
 	maven("https://maven.terraformersmc.com/") { name = "Terraformers" }
 	maven("https://maven.shedaniel.me/")
 	maven("https://maven.terraformersmc.com/releases/")
@@ -69,6 +75,15 @@ repositories {
 }
 
 dependencies {
+	configurations.all {
+		resolutionStrategy {
+			force("com.google.code.gson:gson:2.10")
+			force("io.netty:netty-buffer:4.1.118.Final")
+			force("io.netty:netty-common:4.1.118.Final")
+			force("it.unimi.dsi:fastutil:8.5.12")
+			force("org.slf4j:slf4j-api:2.0.13")
+		}
+	}
 	api("me.shedaniel.cloth:cloth-config-neoforge:${prop("deps.cloth-config")}")
 	implementation ("com.zigythebird.playeranim:PlayerAnimationLibNeo:${prop("deps.player_animation_library")}")
 	runtimeOnly("org.javassist:javassist:3.30.2-GA")

@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 //? if >= 1.21.2 {
 import net.minecraft.world.item.component.Weapon;
-//?}
+		//?}
 //? if <= 1.21.10 {
 /*import net.minecraft.world.entity.animal.horse.*;
 import net.minecraft.world.entity.vehicle.Boat;
@@ -67,13 +67,13 @@ public class Util {
 	/**
 	 * Calcula el multiplicador de velocidad basado en la escala del jugador.
 	 *
-	 * @param player         El jugador
-	 * CONFIG.getMainAnimations().moveAnimations.animationMoveSpeedScaleMultiplier Valor configurable por el usuario que define cuánto
-	 *                       afecta la escala a la velocidad de animación:
-	 *                       0.0 = la escala NO afecta la animación
-	 *                       0.5 = la escala afecta parcialmente
-	 *                       1.0 = la escala afecta completamente (por defecto)
-	 *                       2.0 = la escala afecta el doble de lo normal
+	 * @param player El jugador
+	 *               CONFIG.getMainAnimations().moveAnimations.animationMoveSpeedScaleMultiplier Valor configurable por el usuario que define cuánto
+	 *               afecta la escala a la velocidad de animación:
+	 *               0.0 = la escala NO afecta la animación
+	 *               0.5 = la escala afecta parcialmente
+	 *               1.0 = la escala afecta completamente (por defecto)
+	 *               2.0 = la escala afecta el doble de lo normal
 	 */
 	public static double getScaleSpeedMultiplier(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ net.minecraft.world.entity.Avatar player/*?}*/) {
 		double scale = getPlayerScale(player);
@@ -83,6 +83,14 @@ public class Util {
 		// influence = 0 → retorna 1.0
 		// influence = 1 → retorna 1/scale
 		return 1.0 + (1.0 / scale - 1.0) * CONFIG.getMainAnimations().moveAnimations.animationMoveSpeedScaleMultiplier;
+	}
+
+	public static float getAnimationSpeedMultiplier(double baseMultiplier, AnimationContext animationContext, ClientConfig.AnimationConfig animationConfig) {
+		double baseSpeed = (baseMultiplier * animationContext.playerData().getMovementSpeed()
+				* CONFIG.getMainAnimations().moveAnimations.getAnimationMoveSpeedMultiplier()
+				* animationConfig.getSpeedMultiplier());
+		double scaleMultiplier = Util.getScaleSpeedMultiplier(animationContext.player());
+		return (float) (baseSpeed * scaleMultiplier);
 	}
 
 	public static boolean isBoat(Object vehicle) {

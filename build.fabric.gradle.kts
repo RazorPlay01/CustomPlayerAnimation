@@ -111,7 +111,7 @@ tasks.named<ProcessResources>("processResources") {
 		clientMixins.add("ClientMannequinMixin")
 	}
 
-	// ← ESTO ES LO NUEVO: Generamos el array COMPLETO como string (con corchetes y comas perfectas)
+	// Generamos el array COMPLETO como string (con corchetes y comas perfectas)
 	val clientArrayString = clientMixins.joinToString(", ") { "\"$it\"" }  // ["mixin1", "mixin2", ...]
 	val clientFull = "[\n    $clientArrayString\n  ]"
 

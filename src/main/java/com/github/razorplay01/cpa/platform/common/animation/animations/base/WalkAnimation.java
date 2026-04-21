@@ -14,11 +14,7 @@ public class WalkAnimation implements ICustomAnimation {
 		if (!CONFIG.getMainAnimations().moveAnimations.walkingAnimationConfig.isEnabled()) {
 			context.mainAnimationContainer().disableAnimation();
 		} else {
-			double baseSpeed = context.playerData().getMovementSpeed()
-					* CONFIG.getMainAnimations().moveAnimations.getAnimationMoveSpeedMultiplier()
-					* CONFIG.getMainAnimations().moveAnimations.walkingAnimationConfig.getSpeedMultiplier();
-			double scaleMultiplier = Util.getScaleSpeedMultiplier(context.player());
-			context.mainAnimationContainer().setAnimationSpeed((float) (baseSpeed * scaleMultiplier));
+			context.mainAnimationContainer().setAnimationSpeed(Util.getAnimationSpeedMultiplier(1, context, CONFIG.getMainAnimations().moveAnimations.walkingAnimationConfig));
 			context.mainAnimationContainer().setAnimationFadeTime(CONFIG.getMainAnimations().moveAnimations.walkingAnimationConfig.getFadeTime());
 			context.mainAnimationContainer().setAnimationPriority(CONFIG.getMainAnimations().moveAnimations.walkingAnimationConfig.getPriority());
 

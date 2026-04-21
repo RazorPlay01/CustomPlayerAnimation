@@ -14,11 +14,7 @@ public class WalkSneakBackwardsAnimation implements ICustomAnimation {
 		if (!CONFIG.getMainAnimations().moveAnimations.walkingSneakBackwardsAnimationConfig.isEnabled()) {
 			context.mainAnimationContainer().disableAnimation();
 		} else {
-			double baseSpeed = (5 * context.playerData().getMovementSpeed()
-					* CONFIG.getMainAnimations().moveAnimations.getAnimationMoveSpeedMultiplier()
-					* CONFIG.getMainAnimations().moveAnimations.walkingSneakBackwardsAnimationConfig.getSpeedMultiplier());
-			double scaleMultiplier = Util.getScaleSpeedMultiplier(context.player());
-			context.mainAnimationContainer().setAnimationSpeed((float) (baseSpeed * scaleMultiplier));
+			context.mainAnimationContainer().setAnimationSpeed(Util.getAnimationSpeedMultiplier(5, context, CONFIG.getMainAnimations().moveAnimations.walkingSneakBackwardsAnimationConfig));
 			context.mainAnimationContainer().setAnimationFadeTime(CONFIG.getMainAnimations().moveAnimations.walkingSneakBackwardsAnimationConfig.getFadeTime());
 			context.mainAnimationContainer().setAnimationPriority(CONFIG.getMainAnimations().moveAnimations.walkingSneakBackwardsAnimationConfig.getPriority());
 
