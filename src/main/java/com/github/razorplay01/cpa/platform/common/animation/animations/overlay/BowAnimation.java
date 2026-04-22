@@ -4,7 +4,6 @@ import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.platform.common.util.enums.Modifiers;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
-import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.item.BowItem;
 
@@ -14,7 +13,13 @@ import static com.github.razorplay01.cpa.platform.common.util.Util.LEFT_PREFIX;
 import static com.github.razorplay01.cpa.platform.common.util.Util.RIGHT_PREFIX;
 import static com.github.razorplay01.cpa.platform.common.util.Util.configureAnimationContainer;
 import static com.github.razorplay01.cpa.platform.common.util.Util.disableBothArms;
-
+import static net.minecraft.world.InteractionHand.MAIN_HAND;
+//? if >=1.21.1{
+import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
+//?}
+//? if <1.21.1{
+/*import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
+*///?}
 public class BowAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
@@ -56,6 +61,6 @@ public class BowAnimation implements ICustomAnimation {
         } else {
             context.player().setYBodyRot(context.playerData().getPlayerHeadYaw() + 90);
         }
-        ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).enabled = (!isRightHand);
+        ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId()))./*? if >=1.21.1 {*/enabled = !isRightHand/*?} else {*/ /*setEnabled(!isRightHand)*//*?}*/;
     }
 }

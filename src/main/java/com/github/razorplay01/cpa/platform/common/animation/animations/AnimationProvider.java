@@ -54,17 +54,17 @@ public class AnimationProvider {
 			new GenericHandSwingAnimation(),
 			new SwordAnimation(),
 			//? if >= 1.21.11 {
-			/*new SpearAnimation(),
-			*///?}
+			new SpearAnimation(),
+			//?}
 			new PickaxeAnimation(),
 			new AxeAnimation(),
 			new ShovelAnimation()
 
 			// Compat Animations
 			//new SupplementariesCompatAnimation(),
-			//? if >= 1.21.2 && < 26 {
-			//, new com.github.razorplay01.cpa.platform.common.animation.animations.compat.CarryOnCompatAnimation()
-			//?}
+			//? if >= 1.20 && < 26 {
+			/*, new com.github.razorplay01.cpa.platform.common.animation.animations.compat.CarryOnCompatAnimation()
+			*///?}
 	);
 	public static final List<ICustomAnimation> SPECIAL_ANIMATIONS = List.of(
 			new UpHandAnimation(),

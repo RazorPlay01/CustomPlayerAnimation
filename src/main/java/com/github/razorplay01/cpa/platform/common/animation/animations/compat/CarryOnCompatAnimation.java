@@ -1,5 +1,5 @@
 package com.github.razorplay01.cpa.platform.common.animation.animations.compat;
-//? if >= 1.21.2 && < 26 {
+//? if >= 1.20 && < 26 {
 
 /*import com.github.razorplay01.cpa.ModTemplate;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
@@ -23,5 +23,5 @@ public class CarryOnCompatAnimation implements ICustomAnimation {
 		return carry.isCarrying() && !context.player().isSwimming() && !context.player().isFallFlying();
 	}
 
-}*/
-		//?}
+}
+*///?}

@@ -4,17 +4,25 @@ import com.github.razorplay01.cpa.platform.Platform;
 
 import com.github.razorplay01.cpa.platform.common.config.ClientConfig;
 import com.github.razorplay01.cpa.platform.common.config.ConfigWrapper;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
+import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
+import net.minecraft.resources.Identifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+//? if >=1.21.1{
 import com.zigythebird.playeranim.animation.PlayerAnimResources;
 import com.zigythebird.playeranim.animation.PlayerAnimationController;
 import com.zigythebird.playeranim.api.PlayerAnimationFactory;
 import com.zigythebird.playeranimcore.animation.Animation;
 import com.zigythebird.playeranimcore.enums.PlayState;
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
-import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
-import net.minecraft.resources.ResourceLocation;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//?}
+
+//? if <1.21.1{
+/*import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
+import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationRegistry;
+*///?}
 
 //? fabric {
 import com.github.razorplay01.cpa.platform.fabric.FabricPlatform;
@@ -28,7 +36,7 @@ import com.github.razorplay01.cpa.platform.fabric.FabricPlatform;
 public class ModTemplate {
 
 	public static final String MOD_ID = /*$ mod_id*/ "cpa";
-	public static final String MOD_VERSION = /*$ mod_version*/ "5.6.1";
+	public static final String MOD_VERSION = /*$ mod_version*/ "5.8.1";
 	public static final String MOD_FRIENDLY_NAME = /*$ mod_name*/ "Custom Player Animations";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
@@ -36,23 +44,25 @@ public class ModTemplate {
 
 	public static ClientConfig CONFIG;
 
-	public static final ResourceLocation MAIN_ANIMATION_CONTAINER_LAYER_ID = of("main_animation_container");
-	public static final ResourceLocation OVERLAY_ANIMATION_CONTAINER_LAYER_ID = of("overlay_animation_container");
-	public static final ResourceLocation SPECIAL_ANIMATION_CONTAINER_LAYER_ID = of("special_animation_container");
+	//? if >=1.21.1{
+	public static final Identifier MAIN_ANIMATION_CONTAINER_LAYER_ID = of("main_animation_container");
+	public static final Identifier OVERLAY_ANIMATION_CONTAINER_LAYER_ID = of("overlay_animation_container");
+	public static final Identifier SPECIAL_ANIMATION_CONTAINER_LAYER_ID = of("special_animation_container");
+	//?}
 
 
 	public static void onInitialize() {
 		LOGGER.info("Initializing {} on {}", MOD_ID, ModTemplate.xplat().loader());
 		LOGGER.debug("{}: { version: {}; friendly_name: {} }", MOD_ID, MOD_VERSION, MOD_FRIENDLY_NAME);
+		AutoConfig.register(ConfigWrapper.class, PartitioningSerializer.wrap(JanksonConfigSerializer::new));
+		CONFIG = AutoConfig.getConfigHolder(ConfigWrapper.class).getConfig().client;
 	}
 
 	public static void onInitializeClient() {
 		LOGGER.info("Initializing {} Client on {}", MOD_ID, ModTemplate.xplat().loader());
 		LOGGER.debug("{}: { version: {}; friendly_name: {} }", MOD_ID, MOD_VERSION, MOD_FRIENDLY_NAME);
 
-		AutoConfig.register(ConfigWrapper.class, PartitioningSerializer.wrap(JanksonConfigSerializer::new));
-		CONFIG = AutoConfig.getConfigHolder(ConfigWrapper.class).getConfig().client;
-
+		//? if >=1.21.1{
 		PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(MAIN_ANIMATION_CONTAINER_LAYER_ID, 1,
 				player -> new PlayerAnimationController(player,
 						(controller, state, animSetter) -> PlayState.STOP
@@ -68,6 +78,7 @@ public class ModTemplate {
 						(controller, state, animSetter) -> PlayState.STOP
 				)
 		);
+		//?}
 	}
 
 	public static Platform xplat() {
@@ -83,12 +94,24 @@ public class ModTemplate {
 		/*return new ForgePlatform();
 		*///?}
 	}
-
+	//? if >=1.21.1{
 	public static Animation getAnimation(String animationId) {
 		return PlayerAnimResources.getAnimation(of(animationId));
 	}
 
-	public static ResourceLocation of(String path) {
-		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+	public static Identifier of(String path) {
+		return Identifier.fromNamespaceAndPath(MOD_ID, path);
 	}
+	//?}
+
+	//? if <1.21.1{
+	/*public static KeyframeAnimation getAnimation(String animationId) {
+		KeyframeAnimation playable = PlayerAnimationRegistry.getAnimation(new Identifier(MOD_ID, animationId));
+		KeyframeAnimation anim = playable instanceof KeyframeAnimation ? playable : null;
+		if (anim == null) {
+			LOGGER.error("Animation {} not found.", animationId);
+		}
+		return anim;
+	}
+	*///?}
 }

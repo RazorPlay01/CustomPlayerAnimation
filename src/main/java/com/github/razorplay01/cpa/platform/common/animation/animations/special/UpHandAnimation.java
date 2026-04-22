@@ -7,10 +7,10 @@ import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimati
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
-import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.resources.Identifier;
 
 import java.util.Objects;
 import java.util.Set;
@@ -20,9 +20,13 @@ import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
 import static com.github.razorplay01.cpa.ModTemplate.getAnimation;
 import static com.github.razorplay01.cpa.platform.common.util.Util.*;
 
-//? if <= 1.21.10 {
-import net.minecraft.resources.ResourceLocation;
+
+//? if >=1.21.1{
+import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
 //?}
+//? if <1.21.1{
+/*import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
+*///?}
 
 public class UpHandAnimation implements ICustomAnimation {
 	public void playAnimation(AnimationContext context) {
@@ -48,10 +52,10 @@ public class UpHandAnimation implements ICustomAnimation {
 
 	private static HandStates determineHandStates(
 			//? if <= 1.21.8 {
-			net.minecraft.client.player.AbstractClientPlayer player
-			//?} else {
-			/*net.minecraft.world.entity.Avatar player
-			*///?}
+			/*net.minecraft.client.player.AbstractClientPlayer player
+			*///?} else {
+			net.minecraft.world.entity.Avatar player
+			//?}
 			) {
 		return new HandStates(
 				isHandUp(player.getMainHandItem()),
@@ -103,7 +107,7 @@ public class UpHandAnimation implements ICustomAnimation {
 		boolean isMainRightArm = arm == HumanoidArm.RIGHT;
 		String animationId = (isMainRightArm ? RIGHT_PREFIX : LEFT_PREFIX) + AnimationsId.UP_HAND_ANIMATION.getAnimationId();
 		context.specialAnimationContainer().setCurrentAnimationId(animationId);
-		((MirrorModifier) context.specialAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).enabled = isMainRightArm;
+		((MirrorModifier) context.specialAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId()))./*? if >=1.21.1 {*/enabled = isMainRightArm/*?} else {*/ /*setEnabled(isMainRightArm)*//*?}*/;
 	}
 
 	private static boolean isHandUp(ItemStack itemStack) {
@@ -119,30 +123,35 @@ public class UpHandAnimation implements ICustomAnimation {
 	public static Set<Item> getUpHandItems() {
 		return CONFIG.getSpecialAnimations().upHandItemIds.stream()
 				.map(idStr -> {
-					/*? if <=1.21.10 {*/ResourceLocation/*?} else {*/ /*net.minecraft.resources.ResourceLocation*//*?}*/ id;
+					Identifier id;
 					if (idStr.contains(":")) {
-						id = /*? if <=1.21.10 {*/ResourceLocation/*?} else {*/ /*net.minecraft.resources.ResourceLocation*//*?}*/.tryParse(idStr);
+						id = Identifier.tryParse(idStr);
 					} else {
-						id = /*? if <=1.21.10 {*/ResourceLocation/*?} else {*/ /*net.minecraft.resources.ResourceLocation*//*?}*/.fromNamespaceAndPath("minecraft", idStr.toLowerCase());
+						//? if >=1.21.1{
+						id = Identifier.fromNamespaceAndPath("minecraft", idStr.toLowerCase());
+						//?}
+						//? if <1.21.1{
+						/*id = new Identifier("minecraft", idStr.toLowerCase());
+						*///?}
 					}
 
 
 					//? if <= 1.21.1 {
-					if (id != null) {
+					/*if (id != null) {
 						Item item = BuiltInRegistries.ITEM.get(id);
 						if (item != Items.AIR) {
 							return item;
 						}
 					}
-					//?}
+					*///?}
 					//? if >= 1.21.2 {
-					/*if (id != null && BuiltInRegistries.ITEM.get(id).isPresent()) {
+					if (id != null && BuiltInRegistries.ITEM.get(id).isPresent()) {
 						Item item = BuiltInRegistries.ITEM.get(id).get().value();
 						if (item != Items.AIR) {
 							return item;
 						}
 					}
-					*///?}
+					//?}
 
 					return null;
 				})

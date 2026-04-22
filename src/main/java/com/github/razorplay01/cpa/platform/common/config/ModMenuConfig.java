@@ -13,11 +13,11 @@ public class ModMenuConfig implements ModMenuApi {
 	@Override
 	public ConfigScreenFactory<?> getModConfigScreenFactory() {
 		//? if < 1.21.11 {
-		return parent -> me.shedaniel.autoconfig.AutoConfig.getConfigScreen(ConfigWrapper.class, parent).get();
-		//?}
-		//? if >= 1.21.11 {
-		/*return parent -> me.shedaniel.autoconfig.AutoConfigClient.getConfigScreen(ConfigWrapper.class, parent).get();
+		/*return parent -> me.shedaniel.autoconfig.AutoConfig.getConfigScreen(ConfigWrapper.class, parent).get();
 		*///?}
+		//? if >= 1.21.11 {
+		return parent -> me.shedaniel.autoconfig.AutoConfigClient.getConfigScreen(ConfigWrapper.class, parent).get();
+		//?}
 	}
 }
 //?}

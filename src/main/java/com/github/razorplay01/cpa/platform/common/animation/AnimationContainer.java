@@ -1,9 +1,6 @@
 package com.github.razorplay01.cpa.platform.common.animation;
 
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
-import com.zigythebird.playeranimcore.animation.Animation;
-import com.zigythebird.playeranimcore.animation.AnimationController;
-import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractModifier;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,13 +11,26 @@ import java.util.Set;
 
 import static com.github.razorplay01.cpa.ModTemplate.getAnimation;
 
+//? if >=1.21.1{
+import com.zigythebird.playeranimcore.animation.Animation;
+import com.zigythebird.playeranimcore.animation.AnimationController;
+import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractModifier;
+//?}
+//? if <1.21.1{
+/*import dev.kosmx.playerAnim.api.layered.IAnimation;
+import dev.kosmx.playerAnim.api.layered.ModifierLayer;
+import dev.kosmx.playerAnim.api.layered.modifier.AbstractModifier;
+import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
+*///?}
+
+
 @Getter
 @Setter
 @AllArgsConstructor
 public class AnimationContainer {
-	private final AnimationController animationController;
+	private final /*? if >=1.21.1 {*/AnimationController/*?} else {*/ /*ModifierLayer<IAnimation>*//*?}*/ animationController;
 	private final HashMap<String, AbstractModifier> animationModifiers;
-	private Animation currentAnimation;
+	private /*? if >=1.21.1 {*/Animation/*?} else {*/ /*KeyframeAnimation*//*?}*/ currentAnimation;
 	private String currentAnimationId;
 	private String prevAnimationId;
 	private int animationFadeTime;
@@ -46,7 +56,7 @@ public class AnimationContainer {
 		animationContainer.setCurrentAnimationId(animationId);
 	}
 
-	public void setCurrentAnimation(Animation animation) {
+	public void setCurrentAnimation(/*? if >=1.21.1 {*/Animation/*?} else {*/ /*KeyframeAnimation*//*?}*/ animation) {
 		this.currentAnimation = animation;
 	}
 

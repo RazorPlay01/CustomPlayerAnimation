@@ -2,7 +2,7 @@ package com.github.razorplay01.cpa.platform.forge;
 
 //? forge {
 
-/*import com.example.modtemplate.ModTemplate;
+/*import com.github.razorplay01.cpa.ModTemplate;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;

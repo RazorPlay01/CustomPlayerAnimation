@@ -48,10 +48,10 @@ public class ClimbAnimations implements ICustomAnimation {
 
     private static Block getPlayerBlock(AnimationContext context) {
 		//? if <=1.21.8 {
-		return context.player().clientLevel.getBlockState(context.player().blockPosition()).getBlock();
-		//?} else {
-		/*return context.player().level().getBlockState(context.player().blockPosition()).getBlock();
-		*///?}
+		/*return context.player().clientLevel.getBlockState(context.player().blockPosition()).getBlock();
+		*///?} else {
+		return context.player().level().getBlockState(context.player().blockPosition()).getBlock();
+		//?}
     }
 
     private static boolean isLadderOrVine(Block block) {
@@ -87,17 +87,17 @@ public class ClimbAnimations implements ICustomAnimation {
     }
 
 	//? if <= 1.21.1 {
-	private static boolean hasLeatherBoots(AnimationContext context) {
+	/*private static boolean hasLeatherBoots(AnimationContext context) {
 		return String.valueOf(context.player().getArmorSlots()).contains("leather_boots");
 	}
-	//?}
+	*///?}
 	//? if >= 1.21.2 {
-    /*private static boolean hasLeatherBoots(AnimationContext context) {
+    private static boolean hasLeatherBoots(AnimationContext context) {
 		if (!(context.player() instanceof Player player)) return false;
         ItemStack itemStack = ((com.github.razorplay01.cpa.mixin.InventoryAccessor) player.getInventory()).getEquipment().get(EquipmentSlot.FEET);
         return String.valueOf(itemStack.getItemName()).contains("leather_boots");
     }
-	*///?}
+	//?}
 
     public static void playClimbAnimation(AnimationContext context) {
         if (!context.player().onClimbable()) {
@@ -134,10 +134,10 @@ public class ClimbAnimations implements ICustomAnimation {
     private static void setBodyRotationInLeadderAndVineBlocks(AnimationContext context) {
         if (!(context.player().getUseItem().getItem() instanceof BowItem)) {
 			//? if <=1.21.8 {
-			String blockStateString = String.valueOf(context.player().clientLevel.getBlockState(context.player().blockPosition()));
-			//?} else {
-			/*String blockStateString = String.valueOf(context.player().level().getBlockState(context.player().blockPosition()));
-			*///?}
+			/*String blockStateString = String.valueOf(context.player().clientLevel.getBlockState(context.player().blockPosition()));
+			*///?} else {
+			String blockStateString = String.valueOf(context.player().level().getBlockState(context.player().blockPosition()));
+			//?}
             context.playerData().setPlayerBodyYaw(context.player().getVisualRotationYInDegrees());
             context.playerData().setPlayerHeadYaw(context.player().getYHeadRot());
             if (blockStateString.contains("facing=north") || blockStateString.contains("south=true")) {

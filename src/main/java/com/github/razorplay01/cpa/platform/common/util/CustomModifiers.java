@@ -4,8 +4,6 @@ import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
 import com.github.razorplay01.cpa.platform.common.config.ClientConfig;
 import com.github.razorplay01.cpa.platform.common.util.enums.BodyParts;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.IAnimationControl;
-import com.zigythebird.playeranimcore.animation.layered.modifier.AdjustmentModifier;
-import com.zigythebird.playeranimcore.math.Vec3f;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.BowItem;
@@ -18,9 +16,19 @@ import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
 import static com.github.razorplay01.cpa.platform.common.util.Util.*;
 
 //? if <= 1.21.8 {
-import net.minecraft.client.player.AbstractClientPlayer;
-//?} else {
-/*import net.minecraft.world.entity.Avatar;
+/*import net.minecraft.client.player.AbstractClientPlayer;
+*///?} else {
+import net.minecraft.world.entity.Avatar;
+//?}
+
+//? if >=1.21.1{
+
+import com.zigythebird.playeranimcore.animation.layered.modifier.AdjustmentModifier;
+import com.zigythebird.playeranimcore.math.Vec3f;
+//?}
+//? if <1.21.1{
+/*import dev.kosmx.playerAnim.api.layered.modifier.AdjustmentModifier;
+import dev.kosmx.playerAnim.core.util.Vec3f;
 *///?}
 
 public class CustomModifiers {
@@ -28,7 +36,7 @@ public class CustomModifiers {
 		// []
 	}
 
-	public static AdjustmentModifier createLeanModifier(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*Avatar player*//*?}*/) {
+	public static AdjustmentModifier createLeanModifier(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ Avatar player/*?}*/) {
 		return new AdjustmentModifier(partName -> {
 			if (!"body".equals(partName)) {
 				return Optional.empty();
@@ -102,13 +110,13 @@ public class CustomModifiers {
 			}
 
 			return Optional.of(new AdjustmentModifier.PartModifier(
-					new Vec3f(leanForward, 0.0f, -leanSide),
+					/*? if >=1.21.1 {*/new Vec3f(leanForward, 0.0f, -leanSide),/*?} else {*/ /*new Vec3f(-leanForward, 0.0f, leanSide),*//*?}*/
 					Vec3f.ZERO
 			));
 		});
 	}
 
-	public static AdjustmentModifier createBowModifier(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*Avatar player*//*?}*/) {
+	public static AdjustmentModifier createBowModifier(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ Avatar player/*?}*/) {
 		return new AdjustmentModifier(partName -> {
 			boolean isUsingBow = player.isUsingItem() && player.getUseItem().getItem() instanceof BowItem;
 			if (!isUsingBow) return Optional.empty();
@@ -125,12 +133,12 @@ public class CustomModifiers {
 		});
 	}
 
-	public static AdjustmentModifier createShieldModifier(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*Avatar player*//*?}*/) {
+	public static AdjustmentModifier createShieldModifier(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ Avatar player/*?}*/) {
 		return new AdjustmentModifier(partName -> {
 			boolean isUsingShield = player.isUsingItem() && player.getUseItem().getItem() instanceof ShieldItem;
 			if (!isUsingShield) return Optional.empty();
 
-			float limitedPitch = Math.clamp(player.getXRot(), -45, 45);
+			float limitedPitch = Math.max(-45, Math.min(player.getXRot(), 45));
 			float pitch = (float) Math.toRadians(limitedPitch) * 0.5f;
 
 			if (partName.equals(BodyParts.LEFT_ARM.getPartId()) || partName.equals(BodyParts.RIGHT_ARM.getPartId())) {
@@ -143,7 +151,7 @@ public class CustomModifiers {
 		});
 	}
 
-	public static AdjustmentModifier createSwingModifier(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*Avatar player*//*?}*/, AnimationContainer animationContainer) {
+	public static AdjustmentModifier createSwingModifier(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ Avatar player/*?}*/, AnimationContainer animationContainer) {
 		return new AdjustmentModifier(partName -> {
 			if (!isSwingingSwordOrTools(player, animationContainer)) {
 				return Optional.empty();

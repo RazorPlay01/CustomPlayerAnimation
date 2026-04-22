@@ -18,6 +18,7 @@ import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.*
 import org.gradle.language.jvm.tasks.ProcessResources
 import org.gradle.plugins.ide.idea.model.IdeaModel
+import java.io.File
 import java.util.*
 import javax.inject.Inject
 
@@ -113,7 +114,8 @@ abstract class ModPlatformPlugin @Inject constructor() : Plugin<Project> {
 			"$modVersion$channelTag",
 			mcVersion,
 			extension,
-			extension.requiredJava.get()
+			extension.requiredJava.get(),
+			stonecutter
 		)
 		configureJava(stonecutter, extension.requiredJava.get())
 		registerBuildAndCollectTask(extension, "$modVersion$channelTag")
@@ -141,11 +143,50 @@ abstract class ModPlatformPlugin @Inject constructor() : Plugin<Project> {
 		modVersion: String,
 		mcVersion: String,
 		extension: ModPlatformExtension,
-		requiredJava: JavaVersion
+		requiredJava: JavaVersion,
+		stonecutter: StonecutterBuildExtension
 	) {
 		tasks.named<ProcessResources>("processResources") {
 			dependsOn(tasks.named("stonecutterGenerate"))
 			dependsOn("kspKotlin")
+
+			// Determinar el nombre de carpeta según la versión
+			val currentVersion = stonecutter.current.parsed
+			val folderName = if (currentVersion < "1.21.1") "player_animation" else "player_animations"
+
+			// NO excluir primero, procesar normalmente y luego renombrar
+			logger.lifecycle("[$modId] Configurando carpeta de animaciones: assets/cpa/$folderName para versión ${stonecutter.current.version}")
+
+			// Renombrar después del procesamiento
+			doLast {
+				val resourcesDir = outputs.files.singleFile
+				val animationsDir = File(resourcesDir, "assets/cpa/player_animations")
+				val animationDir = File(resourcesDir, "assets/cpa/player_animation")
+
+				// Si la versión es < 1.21.1 y existe player_animations, renombrar a player_animation
+				if (currentVersion < "1.21.1") {
+					if (animationsDir.exists()) {
+						if (animationDir.exists()) {
+							animationDir.deleteRecursively()
+						}
+						animationsDir.renameTo(animationDir)
+						logger.lifecycle("[$modId] ✓ Renombrado player_animations -> player_animation")
+					} else {
+						logger.warn("[$modId] ⚠ No se encontró la carpeta player_animations en el output")
+					}
+				}
+				// Si la versión es >= 1.21.1, asegurar que use player_animations
+				else {
+					if (animationDir.exists() && !animationsDir.exists()) {
+						animationDir.renameTo(animationsDir)
+						logger.lifecycle("[$modId] ✓ Renombrado player_animation -> player_animations")
+					} else if (animationsDir.exists()) {
+						logger.lifecycle("[$modId] ✓ Ya existe player_animations, no se requiere renombrado")
+					} else {
+						logger.warn("[$modId] ⚠ No se encontró ninguna carpeta de animaciones en el output")
+					}
+				}
+			}
 
 			filesMatching("*.mixins.json") {
 				val refmapLine = if (isForge) {

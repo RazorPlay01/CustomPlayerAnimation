@@ -5,28 +5,34 @@ import com.github.razorplay01.cpa.platform.common.config.ClientConfig;
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.platform.common.util.enums.BodyParts;
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.world.item.*;
+
+//? if >= 1.21.2 {
+import net.minecraft.world.item.component.Weapon;
+		//?}
+//? if <= 1.21.10 {
+/*import net.minecraft.world.entity.animal.horse.*;
+import net.minecraft.world.entity.vehicle.Boat;
+*///?}else{
+import net.minecraft.world.entity.vehicle.boat.Boat;
+import net.minecraft.world.entity.animal.equine.*;
+//?}
+
+//? if >=1.21.1{
 import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractModifier;
 import com.zigythebird.playeranimcore.animation.layered.modifier.AdjustmentModifier;
 import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
 import com.zigythebird.playeranimcore.math.Vec3f;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.CustomModelData;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.minecraft.world.item.component.Tool;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-//? if >= 1.21.2 {
-/*import net.minecraft.world.item.component.Weapon;
-		*///?}
-//? if <= 1.21.10 {
-import net.minecraft.world.entity.animal.horse.*;
-import net.minecraft.world.entity.vehicle.Boat;
-//?}else{
-/*import net.minecraft.world.entity.vehicle.boat.Boat;
-import net.minecraft.world.entity.animal.equine.*;
+
+//?}
+//? if <1.21.1{
+/*import dev.kosmx.playerAnim.api.layered.modifier.AbstractModifier;
+import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
+import dev.kosmx.playerAnim.api.layered.modifier.AdjustmentModifier;
+import dev.kosmx.playerAnim.core.util.Vec3f;
 *///?}
 
 import java.util.List;
@@ -43,25 +49,30 @@ public class Util {
 		//[]
 	}
 
-	//? if <= 1.21.1 {
-	public static int getCustomModelDataId(ItemStack itemStack) {
+	//? if 1.21.1 {
+	/*public static int getCustomModelDataId(ItemStack itemStack) {
 		return Optional.of(itemStack.getComponentsPatch())
 				.map(componentsPatch -> (Optional<CustomModelData>) componentsPatch.get(DataComponents.CUSTOM_MODEL_DATA))
 				.flatMap(optional -> optional.map(CustomModelData::value))
 				.orElse(0);
 	}
-	//?}
+	*///?}
 	//? if >= 1.21.2 && < 26 {
 	/*public static List<Float> getCustomModelDataId(ItemStack itemStack) {
 		return Optional.of(itemStack.getComponentsPatch())
 				.map(componentsPatch -> (Optional<CustomModelData>) componentsPatch.get(DataComponents.CUSTOM_MODEL_DATA))
 				.flatMap(optional -> optional.map(CustomModelData::floats))
 				.orElse(List.of(0.0f));
-	}*/
-	//?}
+	}
+	*///?}
 
-	public static double getPlayerScale(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*net.minecraft.world.entity.Avatar player*//*?}*/) {
-		return player.getAttribute(Attributes.SCALE).getBaseValue();
+	public static double getPlayerScale(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ net.minecraft.world.entity.Avatar player/*?}*/) {
+		//? if >=1.21.1{
+		return player.getAttribute(net.minecraft.world.entity.ai.attributes.Attributes.SCALE).getBaseValue();
+		//?}
+		//? if <1.21.1{
+		/*return 1.0;
+		*///?}
 	}
 
 	/**
@@ -75,7 +86,7 @@ public class Util {
 	 *               1.0 = la escala afecta completamente (por defecto)
 	 *               2.0 = la escala afecta el doble de lo normal
 	 */
-	public static double getScaleSpeedMultiplier(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*net.minecraft.world.entity.Avatar player*//*?}*/) {
+	public static double getScaleSpeedMultiplier(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ net.minecraft.world.entity.Avatar player/*?}*/) {
 		double scale = getPlayerScale(player);
 		if (scale <= 0) scale = 1.0;
 
@@ -124,23 +135,28 @@ public class Util {
 		for (AbstractModifier modifier : container.getAnimationModifiers().values()) {
 			container.getAnimationController().addModifierLast(modifier);
 			if (modifier instanceof MirrorModifier mirrorModifier) {
-				mirrorModifier.enabled = false;
+				/*? if >=1.21.1 {*/mirrorModifier.enabled = false/*?} else {*/ /*mirrorModifier.setEnabled(false)*//*?}*/;
 			}
 		}
 	}
 
-	public static boolean isSwingingSwordOrTools(/*? if <=1.21.8 {*/AbstractClientPlayer player/*?} else {*/ /*net.minecraft.world.entity.Avatar player*//*?}*/, AnimationContainer animationContainer) {
+	public static boolean isSwingingSwordOrTools(/*? if <=1.21.8 {*//*AbstractClientPlayer player*//*?} else {*/ net.minecraft.world.entity.Avatar player/*?}*/, AnimationContainer animationContainer) {
 		return player.swinging &&
-				(player.getMainHandItem().getItem() instanceof ShovelItem ||
+				(player.getMainHandItem().getItem() instanceof net.minecraft.world.item.ShovelItem ||
+						//? if >=1.21.1{
 						player.getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.TOOL) ||
-						player.getMainHandItem().getItem() instanceof AxeItem ||
+						//?}
+						//? if <1.21.1{
+						/*player.getMainHandItem().getItem() instanceof net.minecraft.world.item.PickaxeItem ||
+						*///?}
+						player.getMainHandItem().getItem() instanceof net.minecraft.world.item.AxeItem ||
 
 						//? if <= 1.21.1 {
-						player.getMainHandItem().getItem() instanceof net.minecraft.world.item.SwordItem ||
-						 //?}
+						/*player.getMainHandItem().getItem() instanceof net.minecraft.world.item.SwordItem ||
+						 *///?}
 						//? if >= 1.21.2 {
-						/*player.getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.WEAPON) ||
-						*///?}
+						player.getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.WEAPON) ||
+						//?}
 
 
 						player.getMainHandItem().getItem() instanceof TridentItem) &&
@@ -189,23 +205,23 @@ public class Util {
 	}
 
 	/*? if >= 1.21.11 {*/
-	/*public static boolean isSpear(ItemStack itemStack) {
+	public static boolean isSpear(ItemStack itemStack) {
 		return itemStack.get(DataComponents.KINETIC_WEAPON) != null && !(itemStack.getItem() instanceof TridentItem);
 	}
-	*//*?}*/
+	/*?}*/
 
 	public static boolean isSword(ItemStack itemStack) {
 		//? if <= 1.21.1 {
-		return itemStack.getItem() instanceof net.minecraft.world.item.SwordItem;
-		 //?}
+		/*return itemStack.getItem() instanceof net.minecraft.world.item.SwordItem;
+		 *///?}
 		//? if >= 1.21.2 {
-		/*Weapon weapon = itemStack.get(DataComponents.WEAPON);
+		Weapon weapon = itemStack.get(DataComponents.WEAPON);
 		if (weapon != null) {
 			// Opcionalmente, verifica los modificadores de atributos para confirmar que es una espada
-			ItemAttributeModifiers attributes = itemStack.get(DataComponents.ATTRIBUTE_MODIFIERS);
+			net.minecraft.world.item.component.ItemAttributeModifiers attributes = itemStack.get(DataComponents.ATTRIBUTE_MODIFIERS);
 			if (attributes != null) {
-				for (ItemAttributeModifiers.Entry entry : attributes.modifiers()) {
-					if (entry.attribute().equals(Attributes.ATTACK_DAMAGE)) {
+				for (net.minecraft.world.item.component.ItemAttributeModifiers.Entry entry : attributes.modifiers()) {
+					if (entry.attribute().equals(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE)) {
 						return true; // Es probable que sea una espada
 					}
 				}
@@ -213,36 +229,51 @@ public class Util {
 			return true; // Si tiene el componente WEAPON, es una espada u otra arma cuerpo a cuerpo
 		}
 		return false;
-		*///?}
+		//?}
 	}
 
 	public static boolean isShovel(ItemStack itemStack) {
-		Tool tool = itemStack.get(DataComponents.TOOL);
+		//? if >=1.21.1{
+		net.minecraft.world.item.component.Tool tool = itemStack.get(DataComponents.TOOL);
 		if (tool != null) {
 			// Usa un BlockState representativo que pertenezca a BlockTags.MINEABLE_WITH_SHOVEL
-			BlockState dirtState = Blocks.DIRT.defaultBlockState();
+			net.minecraft.world.level.block.state.BlockState dirtState = net.minecraft.world.level.block.Blocks.DIRT.defaultBlockState();
 			return tool.isCorrectForDrops(dirtState);
 		}
 		return false;
+		//?}
+		//? if <1.21.1{
+		/*return itemStack.getItem() instanceof net.minecraft.world.item.ShovelItem;
+		*///?}
 	}
 
 	public static boolean isPickaxe(ItemStack itemStack) {
-		Tool tool = itemStack.get(DataComponents.TOOL);
+		//? if >=1.21.1{
+		net.minecraft.world.item.component.Tool tool = itemStack.get(DataComponents.TOOL);
 		if (tool != null) {
 			// Usa un BlockState representativo que pertenezca a BlockTags.MINEABLE_WITH_PICKAXE
-			BlockState stoneState = Blocks.STONE.defaultBlockState();
+			net.minecraft.world.level.block.state.BlockState stoneState = net.minecraft.world.level.block.Blocks.STONE.defaultBlockState();
 			return tool.isCorrectForDrops(stoneState);
 		}
 		return false;
+		//?}
+		//? if <1.21.1{
+		/*return itemStack.getItem() instanceof net.minecraft.world.item.PickaxeItem;
+		*///?}
 	}
 
 	public static boolean isAxe(ItemStack itemStack) {
-		Tool tool = itemStack.get(DataComponents.TOOL);
+		//? if >=1.21.1{
+		net.minecraft.world.item.component.Tool tool = itemStack.get(DataComponents.TOOL);
 		if (tool != null) {
 			// Usa un BlockState representativo que pertenezca a BlockTags.MINEABLE_WITH_AXE
-			BlockState oakLogState = Blocks.OAK_LOG.defaultBlockState();
+			net.minecraft.world.level.block.state.BlockState oakLogState = net.minecraft.world.level.block.Blocks.OAK_LOG.defaultBlockState();
 			return tool.isCorrectForDrops(oakLogState);
 		}
 		return false;
+		//?}
+		//? if <1.21.1{
+		/*return itemStack.getItem() instanceof net.minecraft.world.item.AxeItem;
+		*///?}
 	}
 }

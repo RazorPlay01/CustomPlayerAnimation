@@ -3,10 +3,8 @@ package com.github.razorplay01.cpa.platform.common.animation.animations.overlay;
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.platform.common.util.enums.BodyParts;
 import com.github.razorplay01.cpa.platform.common.util.enums.Modifiers;
-import com.github.razorplay01.cpa.platform.common.util.interfaces.IAnimationControl;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
-import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
 import net.minecraft.world.item.TridentItem;
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
@@ -14,7 +12,12 @@ import static com.github.razorplay01.cpa.ModTemplate.getAnimation;
 import static com.github.razorplay01.cpa.platform.common.util.Util.LEFT_PREFIX;
 import static com.github.razorplay01.cpa.platform.common.util.Util.RIGHT_PREFIX;
 import static com.github.razorplay01.cpa.platform.common.util.Util.configureAnimationContainer;
-
+//? if >=1.21.1{
+import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
+//?}
+//? if <1.21.1{
+/*import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
+*///?}
 public class TridentAnimation implements ICustomAnimation {
     @Override
     public void playAnimation(AnimationContext context) {
@@ -45,6 +48,6 @@ public class TridentAnimation implements ICustomAnimation {
             context.overlayAnimationContainer().setCurrentAnimationId((isRightHand ? RIGHT_PREFIX : LEFT_PREFIX) + AnimationsId.TRIDENT_ANIMATION.getAnimationId());
         }
         context.player().setYBodyRot(context.playerData().getPlayerHeadYaw() + yawOffset);
-        ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId())).enabled = !isRightHand;
+        ((MirrorModifier) context.overlayAnimationContainer().getAnimationModifiers().get(Modifiers.MIRROR_MODIFIER.getModifierId()))./*? if >=1.21.1 {*/enabled = isRightHand/*?} else {*/ /*setEnabled(isRightHand)*//*?}*/;
     }
 }

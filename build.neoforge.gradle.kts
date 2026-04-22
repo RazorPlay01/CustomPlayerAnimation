@@ -1,3 +1,5 @@
+import kotlin.toString
+
 plugins {
 	id("mod-platform")
 	id("net.neoforged.moddev")
@@ -65,6 +67,7 @@ repositories {
 	strictMaven("https://api.modrinth.com/maven", "maven.modrinth") { name = "Modrinth" }
 	strictMaven("https://repo.redlance.org/public")
 	strictMaven("https://maven.shedaniel.me/")
+	strictMaven("https://maven.kosmx.dev/")
 }
 
 dependencies {

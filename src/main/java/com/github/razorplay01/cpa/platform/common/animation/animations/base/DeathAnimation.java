@@ -50,7 +50,7 @@ public class DeathAnimation implements ICustomAnimation {
 			return AnimationsId.DEATH_DEFAULT_ANIMATION;
 		}
 
-		if (lastDamageSource.is(DamageTypes.IN_FIRE) || lastDamageSource.is(DamageTypes.ON_FIRE) || lastDamageSource.is(DamageTypes.CAMPFIRE)) {
+		if (lastDamageSource.is(DamageTypes.IN_FIRE) || lastDamageSource.is(DamageTypes.ON_FIRE) /*? if >=1.21.1 {*/|| lastDamageSource.is(DamageTypes.CAMPFIRE)/*?}*/) {
 			return getAnimationIfEnabled(CONFIG.getMainAnimations().deathAnimations.deathBurnAnimationConfig, AnimationsId.DEATH_BURN_ANIMATION);
 		} else if (lastDamageSource.is(DamageTypes.EXPLOSION) || lastDamageSource.is(DamageTypes.PLAYER_EXPLOSION)) {
 			return getAnimationIfEnabled(CONFIG.getMainAnimations().deathAnimations.deathExplosionAnimationConfig, AnimationsId.DEATH_EXPLOSION_ANIMATION);

@@ -9,15 +9,15 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.mehvahdjukaar.supplementaries.common.items.BubbleBlowerItem;
 import net.mehvahdjukaar.supplementaries.common.items.FluteItem;
 import net.mehvahdjukaar.supplementaries.common.items.SlingshotItem;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 
 import static dev.razorplay.customplayeranimations.util.Util.disableBothArms;
 
 public class SupplementariesCompatAnimation implements ICustomAnimation {
     public void playAnimation(AnimationContext context) {
-        if (!FirstPersonConditionRegistry.hasCondition(ResourceLocation.fromNamespaceAndPath(CustomPlayerAnimations.MOD_ID, "flute_item"))) {
-            FirstPersonConditionRegistry.register(ResourceLocation.fromNamespaceAndPath(CustomPlayerAnimations.MOD_ID, "flute_item"), player ->
+        if (!FirstPersonConditionRegistry.hasCondition(Identifier.fromNamespaceAndPath(CustomPlayerAnimations.MOD_ID, "flute_item"))) {
+            FirstPersonConditionRegistry.register(Identifier.fromNamespaceAndPath(CustomPlayerAnimations.MOD_ID, "flute_item"), player ->
                     context.player().getUseItem().getItem() instanceof FluteItem
             );
         }

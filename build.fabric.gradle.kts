@@ -23,11 +23,21 @@ platform {
 			slug("cloth-config")
 			versionRange = ">=${prop("deps.cloth-config")}"
 		}
-		required("player_animation_library") {
-			modrinth = "ha1mEyJS"
-			curseforge = "1283899"
-			slug("player-animation-library")
-			versionRange = ">=${prop("deps.player_animation_library")}"
+		findProperty("deps.player_animation_library")?.let { version ->
+			required("player_animation_library") {
+				modrinth = "ha1mEyJS"
+				curseforge = "1283899"
+				slug("player-animation-library")
+				versionRange = ">=$version"
+			}
+		}
+		findProperty("deps.player_animator")?.let { version ->
+			required("playeranimator") {
+				modrinth = "gedNE4y2"
+				curseforge = "658587"
+				slug("playeranimator")
+				versionRange = ">=$version"
+			}
 		}
 	}
 }
@@ -65,6 +75,7 @@ repositories {
 	strictMaven("https://api.modrinth.com/maven", "maven.modrinth") { name = "Modrinth" }
 	strictMaven("https://repo.redlance.org/public")
 	strictMaven("https://maven.shedaniel.me/")
+	strictMaven("https://maven.kosmx.dev/")
 }
 
 dependencies {
@@ -88,7 +99,12 @@ dependencies {
 
 	modApi("me.shedaniel.cloth:cloth-config-fabric:${prop("deps.cloth-config")}")
 	modImplementation("maven.modrinth:carry-on:${prop("deps.carryon_version")}")
-	modImplementation("com.zigythebird.playeranim:PlayerAnimationLibFabric:${prop("deps.player_animation_library")}")
+	findProperty("deps.player_animation_library")?.let { version ->
+		modImplementation("com.zigythebird.playeranim:PlayerAnimationLibFabric:$version")
+	}
+	findProperty("deps.player_animator")?.let { version ->
+		modImplementation("dev.kosmx.player-anim:player-animation-lib-fabric:$version")
+	}
 }
 
 stonecutter {

@@ -11,13 +11,6 @@ import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimate
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
 import com.mojang.authlib.GameProfile;
-import com.zigythebird.playeranim.api.PlayerAnimationAccess;
-import com.zigythebird.playeranimcore.animation.AnimationController;
-import com.zigythebird.playeranimcore.animation.RawAnimation;
-import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractFadeModifier;
-import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
-import com.zigythebird.playeranimcore.animation.layered.modifier.SpeedModifier;
-import com.zigythebird.playeranimcore.easing.EasingType;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -40,6 +33,26 @@ import static com.github.razorplay01.cpa.platform.common.util.CustomModifiers.*;
 import static com.github.razorplay01.cpa.platform.common.util.Util.*;
 import static net.minecraft.world.InteractionHand.*;
 
+//? if >=1.21.1{
+import com.zigythebird.playeranim.api.PlayerAnimationAccess;
+import com.zigythebird.playeranimcore.animation.AnimationController;
+import com.zigythebird.playeranimcore.animation.RawAnimation;
+import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractFadeModifier;
+import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
+import com.zigythebird.playeranimcore.animation.layered.modifier.SpeedModifier;
+import com.zigythebird.playeranimcore.easing.EasingType;
+//?}
+//? if <1.21.1{
+/*import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
+import dev.kosmx.playerAnim.api.layered.modifier.MirrorModifier;
+import dev.kosmx.playerAnim.api.layered.modifier.SpeedModifier;
+import dev.kosmx.playerAnim.core.util.Ease;
+import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
+import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
+import dev.kosmx.playerAnim.api.layered.ModifierLayer;
+import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
+*///?}
+
 @Mixin(AbstractClientPlayer.class)
 public abstract class AbstractClientPlayerEntityMixin extends Player implements IAnimationControl, ICustomAnimatedPlayer {
 	@Unique
@@ -58,19 +71,20 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 	private AnimationContext actualAnimationContext;
 
 	//? if < 1.21.2 {
-	protected AbstractClientPlayerEntityMixin(Level level, BlockPos blockPos, float f, GameProfile gameProfile) {
+	/*protected AbstractClientPlayerEntityMixin(Level level, BlockPos blockPos, float f, GameProfile gameProfile) {
 		super(level, blockPos, f, gameProfile);
-	}
-	//?}
-
-	//? if >= 1.21.2 {
-	/*protected AbstractClientPlayerEntityMixin(Level level, GameProfile gameProfile) {
-		super(level, gameProfile);
 	}
 	*///?}
 
+	//? if >= 1.21.2 {
+	protected AbstractClientPlayerEntityMixin(Level level, GameProfile gameProfile) {
+		super(level, gameProfile);
+	}
+	//?}
+
 	@Inject(method = "<init>", at = @At(value = "TAIL"))
 	private void init(ClientLevel clientLevel, GameProfile gameProfile, CallbackInfo ci) {
+		//? if >=1.21.1{
 		this.mainAnimationContainer = new AnimationContainer(
 				(AnimationController) PlayerAnimationAccess.getPlayerAnimationLayer((AbstractClientPlayer) (Object) this, MAIN_ANIMATION_CONTAINER_LAYER_ID),
 				new HashMap<>(
@@ -112,6 +126,54 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 				0,
 				0,
 				0);
+		//?}
+		//? if <1.21.1{
+		/*this.mainAnimationContainer = new AnimationContainer(
+				new ModifierLayer<>(),
+				new HashMap<>(
+						Map.of(Modifiers.MIRROR_MODIFIER.getModifierId(), new MirrorModifier(),
+								Modifiers.SPEED_MODIFIER.getModifierId(), new SpeedModifier(1.0f),
+								Modifiers.ADJUSTMENT_MODIFIER.getModifierId(), createLeanModifier((AbstractClientPlayer) (Object) this))),
+				getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()),
+				AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId(),
+				"",
+				0,
+				0,
+				0,
+				0);
+		this.overlayAnimationContainer = new AnimationContainer(
+				new ModifierLayer<>(),
+				new HashMap<>(
+						Map.of(Modifiers.MIRROR_MODIFIER.getModifierId(), new MirrorModifier(),
+								Modifiers.SPEED_MODIFIER.getModifierId(), new SpeedModifier(1.0f),
+								Modifiers.SHIELD_MODIFIER.getModifierId(), createShieldModifier((AbstractClientPlayer) (Object) this),
+								Modifiers.HAND_SWING_MODIFIER.getModifierId(), createSwingModifier((AbstractClientPlayer) (Object) this, mainAnimationContainer),
+								Modifiers.BOW_MODIFIER.getModifierId(), createBowModifier((AbstractClientPlayer) (Object) this)
+						)),
+				getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()),
+				AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId(),
+				"",
+				0,
+				0,
+				0,
+				0);
+		this.specialAnimationContainer = new AnimationContainer(
+				new ModifierLayer<>(),
+				new HashMap<>(
+						Map.of(Modifiers.MIRROR_MODIFIER.getModifierId(), new MirrorModifier(),
+								Modifiers.SPEED_MODIFIER.getModifierId(), new SpeedModifier(1.0f))),
+				getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()),
+				AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId(),
+				"",
+				0,
+				0,
+				0,
+				0);
+		PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(1, mainAnimationContainer.getAnimationController());
+		PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(2, overlayAnimationContainer.getAnimationController());
+		PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(3, specialAnimationContainer.getAnimationController());
+		*///?}
+
 		// Main Animation Container
 		addModifiersToContainer(mainAnimationContainer);
 
@@ -176,9 +238,10 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
 	@Unique
 	public void enabledAllBodyPartsAnimation(AnimationContainer animationContainer) {
-		animationContainer.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
-			//[]
-		});
+		//? if >=1.21.1{
+			animationContainer.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
+			});
+		//?}
 		animationContainer.getDisabledBoneIds().clear();
 	}
 
@@ -243,14 +306,29 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 	private void applyDisableToContainer(AnimationContainer container) {
 		Set<String> disabledIds = container.getDisabledBoneIds();
 		if (disabledIds.isEmpty()) {
+			//? if >=1.21.1{
 			container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
 			});
+			//?}
 		} else {
+			//? if >=1.21.1{
 			container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
 				for (String boneId : disabledIds) {
 					getBoneFunc.apply(boneId).setEnabled(false);
 				}
 			});
+			//?}
+
+			//? if <1.21.1{
+			/*KeyframeAnimation.AnimationBuilder internalBuilder = container.getCurrentAnimation().mutableCopy();
+			for (String boneId : disabledIds) {
+				var part = internalBuilder.getPart(boneId);
+				if (part != null) {
+					part.setEnabled(false);
+				}
+			}
+			container.setCurrentAnimation(internalBuilder.build());
+			*///?}
 		}
 	}
 
@@ -308,8 +386,14 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 	@Unique
 	public void playCurrentAnimation(AnimationContainer animationContainer) {
 		animationContainer.getAnimationController().replaceAnimationWithFade(
-				AbstractFadeModifier.standardFadeIn((int) (animationContainer.getAnimationFadeTime() * CONFIG.getGeneral().getAnimationFadeTimeMultiplier()), EasingType.EASE_IN_OUT_SINE),
-				RawAnimation.begin().thenPlay(animationContainer.getCurrentAnimation()), false
+				AbstractFadeModifier.standardFadeIn((int) (animationContainer.getAnimationFadeTime() * CONFIG.getGeneral().getAnimationFadeTimeMultiplier()), /*? if >=1.21.1 {*/EasingType.EASE_IN_OUT_SINE/*?} else {*/ /*Ease.INOUTSINE*//*?}*/),
+				//? if >=1.21.1{
+				RawAnimation.begin().thenPlay(animationContainer.getCurrentAnimation())
+				 //?}
+				//? if <1.21.1{
+				/*new KeyframeAnimationPlayer(animationContainer.getCurrentAnimation())
+				*///?}
+				, false
 		);
 	}
 

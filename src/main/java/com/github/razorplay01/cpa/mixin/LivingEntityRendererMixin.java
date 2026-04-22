@@ -15,24 +15,24 @@ import org.joml.Quaternionfc;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 //? if >= 1.21.2 {
-/*import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
-*///?}
+//?}
 //? if >= 1.21.2 && <=1.21.8 {
 /*import net.minecraft.client.renderer.entity.state.PlayerRenderState;
 import net.minecraft.world.entity.player.Player;
 *///?}
 //? if > 1.21.8 {
-/*import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.world.entity.Avatar;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-*///?}
+//?}
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
 
 //? if < 1.21.2 {
-@Mixin(LivingEntityRenderer.class)
+/*@Mixin(LivingEntityRenderer.class)
 public abstract class LivingEntityRendererMixin<T extends LivingEntity> {
 
 	@WrapWithCondition(
@@ -47,16 +47,16 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity> {
 		if (!(livingEntity instanceof net.minecraft.world.entity.player.Player)) return true;
 		return !CONFIG.getMainAnimations().deathAnimations.isEnabled();
 	}
-//?}
+*///?}
 
 
 //? if >= 1.21.2 {
-/*@Mixin(LivingEntityRenderer.class)
+@Mixin(LivingEntityRenderer.class)
 public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extends LivingEntityRenderState, M extends EntityModel<? super S>> extends EntityRenderer<T, S> implements RenderLayerParent<S, M> {
 	protected LivingEntityRendererMixin(EntityRendererProvider.Context context) {
 		super(context);
 	}
-*///?}
+//?}
 
 	//? if >= 1.21.2 && <=1.21.8 {
 	/*@WrapWithCondition(
@@ -74,7 +74,7 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extend
 	}
 *///?}
 //? if > 1.21.8 {
-	/*@WrapWithCondition(
+	@WrapWithCondition(
 			method = "setupRotations(Lnet/minecraft/client/renderer/entity/state/LivingEntityRenderState;Lcom/mojang/blaze3d/vertex/PoseStack;FF)V",
 			at = @At(
 					value = "INVOKE",
@@ -96,17 +96,17 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, S extend
 
 
 			//? if <=1.21.10 {
-			((ExtendedItemStackRenderState) armed.leftHandItem)
+			/*((ExtendedItemStackRenderState) armed.leftHandItem)
 					.setItemStack(livingEntity.getItemHeldByArm(HumanoidArm.LEFT));
 			((ExtendedItemStackRenderState) armed.rightHandItem)
 					.setItemStack(livingEntity.getItemHeldByArm(HumanoidArm.RIGHT));
-			//?} else {
-			/^((ExtendedItemStackRenderState) armed.leftHandItemState)
+			*///?} else {
+			((ExtendedItemStackRenderState) armed.leftHandItemState)
 					.setItemStack(livingEntity.getItemHeldByArm(HumanoidArm.LEFT));
 			((ExtendedItemStackRenderState) armed.rightHandItemState)
 					.setItemStack(livingEntity.getItemHeldByArm(HumanoidArm.RIGHT));
-			^///?}
+			//?}
 		}
 	}
-	*///?}
+	//?}
 }

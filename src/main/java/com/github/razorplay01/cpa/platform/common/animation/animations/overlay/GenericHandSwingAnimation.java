@@ -3,20 +3,27 @@ package com.github.razorplay01.cpa.platform.common.animation.animations.overlay;
 import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
 import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.platform.common.util.enums.BodyParts;
-import com.github.razorplay01.cpa.platform.common.util.interfaces.IAnimationControl;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
-import com.zigythebird.playeranimcore.animation.Animation;
-import com.zigythebird.playeranimcore.animation.RawAnimation;
-import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractFadeModifier;
-import com.zigythebird.playeranimcore.easing.EasingType;
-import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.*;
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
 import static com.github.razorplay01.cpa.ModTemplate.getAnimation;
+
+//? if >=1.21.1{
+import com.zigythebird.playeranimcore.animation.Animation;
+import com.zigythebird.playeranimcore.animation.RawAnimation;
+import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractFadeModifier;
+import com.zigythebird.playeranimcore.easing.EasingType;
+//?}
+//? if <1.21.1{
+/*import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
+import dev.kosmx.playerAnim.api.layered.IAnimation;
+import dev.kosmx.playerAnim.core.util.Ease;
+import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
+import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
+*///?}
 
 public class GenericHandSwingAnimation implements ICustomAnimation {
 	// Rastrear si el brazo estaba deshabilitado en el tick anterior
@@ -64,15 +71,20 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
 				!(CONFIG.getOverlayAnimations().swordAnimations.isEnabled() &&
 
 						//? if < 1.21.2 {
-						context.player().getMainHandItem().getItem() instanceof net.minecraft.world.item.SwordItem ||
-						//?}
-						//? if >= 1.21.2 {
-						/*context.player().getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.WEAPON) ||
+						/*context.player().getMainHandItem().getItem() instanceof net.minecraft.world.item.SwordItem ||
 						*///?}
+						//? if >= 1.21.2 {
+						context.player().getMainHandItem().getItem().getDefaultInstance().getComponents().has(net.minecraft.core.component.DataComponents.WEAPON) ||
+						//?}
 
 						 context.player().getMainHandItem().getItem() instanceof TridentItem) &&
 				!(CONFIG.getOverlayAnimations().toolsAnimations.axeAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem() instanceof AxeItem) &&
-				!(CONFIG.getOverlayAnimations().toolsAnimations.pickaxeAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem().getDefaultInstance().getComponents().has(DataComponents.TOOL)) &&
+				//? if >=1.21.1{
+				!(CONFIG.getOverlayAnimations().toolsAnimations.pickaxeAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem().getDefaultInstance().getComponents().has(net.minecraft.core.component.DataComponents.TOOL)) &&
+				//?}
+				//? if <1.21.1{
+				/*!(CONFIG.getOverlayAnimations().toolsAnimations.pickaxeAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem() instanceof PickaxeItem) &&
+				*///?}
 				!(CONFIG.getOverlayAnimations().toolsAnimations.shovelAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem() instanceof ShovelItem);
 
 		// También devolver true si necesitamos reactivar un brazo que estaba previamente deshabilitado
@@ -112,6 +124,7 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
 	 * esté habilitada, incluso después de que se apliquen otras deshabilitaciones
 	 */
 	private void updateAnimationController(AnimationContainer container, String partIdToEnable) {
+		//? if >=1.21.1{
 		container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
 			// Primero habilitar explícitamente la parte del cuerpo que queremos reactivar
 			getBoneFunc.apply(partIdToEnable).setEnabled(true);
@@ -124,6 +137,24 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
 				}
 			}
 		});
+		//?}
+
+		//? if <1.21.1{
+		/*KeyframeAnimation.AnimationBuilder internalBuilder = container.getCurrentAnimation().mutableCopy();
+		var part = internalBuilder.getPart(partIdToEnable);
+		if (part != null) {
+			part.setEnabled(true);
+		}
+		for (String boneId : container.getDisabledBoneIds()) {
+			if (!boneId.equals(partIdToEnable)) {
+				var disablePart = internalBuilder.getPart(boneId);
+				if (disablePart != null) {
+					disablePart.setEnabled(false);
+				}
+			}
+		}
+		container.setCurrentAnimation(internalBuilder.build());
+		*///?}
 	}
 
 	/**
@@ -133,41 +164,46 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
 	 */
 	private void forceAnimationChange(AnimationContext context) {
 		// Guardar las animaciones actuales de cada contenedor, con chequeo de null
-		Animation currentMainAnimation = null;
-		var mainQueued = context.mainAnimationContainer().getAnimationController().getCurrentAnimation();
+		/*? if >=1.21.1 {*/Animation/*?} else {*/ /*IAnimation*//*?}*/ currentMainAnimation = null;
+		var mainQueued = context.mainAnimationContainer().getAnimationController()/*? if >=1.21.1 {*/.getCurrentAnimation()/*?} else {*/ /*.getAnimation()*//*?}*/;
 		if (mainQueued != null) {
-			currentMainAnimation = mainQueued.animation();
+			currentMainAnimation = mainQueued/*? if >=1.21.1 {*/.animation()/*?}*/;
 		}
 
-		Animation currentOverlayAnimation = null;
-		var overlayQueued = context.overlayAnimationContainer().getAnimationController().getCurrentAnimation();
+		/*? if >=1.21.1 {*/Animation/*?} else {*/ /*IAnimation*//*?}*/ currentOverlayAnimation = null;
+		var overlayQueued = context.overlayAnimationContainer().getAnimationController()/*? if >=1.21.1 {*/.getCurrentAnimation()/*?} else {*/ /*.getAnimation()*//*?}*/;
 		if (overlayQueued != null) {
-			currentOverlayAnimation = overlayQueued.animation();
+			currentOverlayAnimation = overlayQueued/*? if >=1.21.1 {*/.animation()/*?}*/;
 		}
 
-		Animation currentSpecialAnimation = null;
-		var specialQueued = context.specialAnimationContainer().getAnimationController().getCurrentAnimation();
+		/*? if >=1.21.1 {*/Animation/*?} else {*/ /*IAnimation*//*?}*/ currentSpecialAnimation = null;
+		var specialQueued = context.specialAnimationContainer().getAnimationController()/*? if >=1.21.1 {*/.getCurrentAnimation()/*?} else {*/ /*.getAnimation()*//*?}*/;
 		if (specialQueued != null) {
-			currentSpecialAnimation = specialQueued.animation();
+			currentSpecialAnimation = specialQueued/*? if >=1.21.1 {*/.animation()/*?}*/;
 		}
 
 		// Crear una animación en blanco para resetear el estado
-		RawAnimation blankAnimation =
+		/*? if >=1.21.1 {*/RawAnimation/*?} else {*/ /*IAnimation*//*?}*/ blankAnimation =
+				//? if >=1.21.1{
 				RawAnimation.begin().thenPlay(getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()));
+				//?}
+				//? if <1.21.1{
+				/*new KeyframeAnimationPlayer(getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()));
+				*///?}
 
 		// Aplicar la animación en blanco con una transición muy rápida
 		context.mainAnimationContainer().getAnimationController().replaceAnimationWithFade(
-				AbstractFadeModifier.standardFadeIn(1, EasingType.EASE_IN_OUT_SINE),
+				AbstractFadeModifier.standardFadeIn(1, /*? if >=1.21.1 {*/EasingType.EASE_IN_OUT_SINE/*?} else {*/ /*Ease.INOUTSINE*//*?}*/),
 				blankAnimation, false
 		);
 
 		context.overlayAnimationContainer().getAnimationController().replaceAnimationWithFade(
-				AbstractFadeModifier.standardFadeIn(1, EasingType.EASE_IN_OUT_SINE),
+				AbstractFadeModifier.standardFadeIn(1, /*? if >=1.21.1 {*/EasingType.EASE_IN_OUT_SINE/*?} else {*/ /*Ease.INOUTSINE*//*?}*/),
 				blankAnimation, false
 		);
 
 		context.specialAnimationContainer().getAnimationController().replaceAnimationWithFade(
-				AbstractFadeModifier.standardFadeIn(1, EasingType.EASE_IN_OUT_SINE),
+				AbstractFadeModifier.standardFadeIn(1, /*? if >=1.21.1 {*/EasingType.EASE_IN_OUT_SINE/*?} else {*/ /*Ease.INOUTSINE*//*?}*/),
 				blankAnimation, false
 		);
 
@@ -175,21 +211,21 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
 		// Solo restaurar si la animación original no era null
 		if (currentMainAnimation != null) {
 			context.mainAnimationContainer().getAnimationController().replaceAnimationWithFade(
-					AbstractFadeModifier.standardFadeIn(2, EasingType.EASE_IN_OUT_SINE),
+					AbstractFadeModifier.standardFadeIn(2, /*? if >=1.21.1 {*/EasingType.EASE_IN_OUT_SINE/*?} else {*/ /*Ease.INOUTSINE*//*?}*/),
 					currentMainAnimation, false
 			);
 		}
 
 		if (currentOverlayAnimation != null) {
 			context.overlayAnimationContainer().getAnimationController().replaceAnimationWithFade(
-					AbstractFadeModifier.standardFadeIn(2, EasingType.EASE_IN_OUT_SINE),
+					AbstractFadeModifier.standardFadeIn(2, /*? if >=1.21.1 {*/EasingType.EASE_IN_OUT_SINE/*?} else {*/ /*Ease.INOUTSINE*//*?}*/),
 					currentOverlayAnimation, false
 			);
 		}
 
 		if (currentSpecialAnimation != null) {
 			context.specialAnimationContainer().getAnimationController().replaceAnimationWithFade(
-					AbstractFadeModifier.standardFadeIn(2, EasingType.EASE_IN_OUT_SINE),
+					AbstractFadeModifier.standardFadeIn(2, /*? if >=1.21.1 {*/EasingType.EASE_IN_OUT_SINE/*?} else {*/ /*Ease.INOUTSINE*//*?}*/),
 					currentSpecialAnimation, false
 			);
 		}

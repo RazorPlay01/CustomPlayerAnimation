@@ -5,27 +5,33 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.MapItem;
-import net.minecraft.world.level.saveddata.maps.MapId;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import org.joml.Matrix4f;
 //? if >= 1.21.2 {
-/*import net.minecraft.client.renderer.state.MapRenderState;
-*///?}
-//? if < 1.21.11 {
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.state.MapRenderState;
 //?}
-//? if >= 1.21.11 {
-/*import net.minecraft.client.renderer.rendertype.RenderType;
-import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.resources.ResourceLocation;
+//? if < 1.21.11 {
+/*import net.minecraft.resources.Identifier;
+import net.minecraft.client.renderer.RenderType;
 *///?}
+//? if >= 1.21.11 {
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.resources.Identifier;
+//?}
 
 import static com.mojang.math.Axis.YP;
 import static com.mojang.math.Axis.ZP;
+
+//? if >=1.21.1{
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.level.saveddata.maps.MapId;
+//?}
+//? if <1.21.1{
+//?}
+
 
 public class MapRenderer {
 
@@ -33,22 +39,29 @@ public class MapRenderer {
 		//[]
 	}
 
-	//? if < 1.21.11 {
-	private static final RenderType MAP_BACKGROUND = RenderType
-			.text(ResourceLocation.withDefaultNamespace("textures/map/map_background.png"));
+	//? if <1.21.1{
+	/*private static final RenderType MAP_BACKGROUND = RenderType
+			.text(new Identifier("textures/map/map_background.png"));
 	private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderType
-			.text(ResourceLocation.withDefaultNamespace("textures/map/map_background_checkerboard.png"));
-	//?}
-
-	//? if >= 1.21.11 {
-	/*private static final RenderType MAP_BACKGROUND = RenderTypes
-			.text(ResourceLocation.withDefaultNamespace("textures/map/map_background.png"));
-	private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderTypes
-			.text(ResourceLocation.withDefaultNamespace("textures/map/map_background_checkerboard.png"));
+			.text(new Identifier("textures/map/map_background_checkerboard.png"));
 	*///?}
 
+	//? if >=1.21.1 && < 1.21.11 {
+	/*private static final RenderType MAP_BACKGROUND = RenderType
+			.text(Identifier.withDefaultNamespace("textures/map/map_background.png"));
+	private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderType
+			.text(Identifier.withDefaultNamespace("textures/map/map_background_checkerboard.png"));
+	*///?}
+
+	//? if >= 1.21.11 {
+	private static final RenderType MAP_BACKGROUND = RenderTypes
+			.text(Identifier.withDefaultNamespace("textures/map/map_background.png"));
+	private static final RenderType MAP_BACKGROUND_CHECKERBOARD = RenderTypes
+			.text(Identifier.withDefaultNamespace("textures/map/map_background_checkerboard.png"));
+	//?}
+
 	//? if <=1.21.8 {
-	public static void renderFirstPersonMap(PoseStack matrices, MultiBufferSource vertexConsumers, int light, ItemStack stack) {
+	/*public static void renderFirstPersonMap(PoseStack matrices, MultiBufferSource vertexConsumers, int light, ItemStack stack) {
 		Minecraft client = Minecraft.getInstance();
 		matrices.mulPose(YP.rotationDegrees(160.0f));
 		matrices.mulPose(ZP.rotationDegrees(180.0f));
@@ -56,7 +69,12 @@ public class MapRenderer {
 
 		matrices.translate(-0.1, -1.2, 0.0);
 		matrices.scale(0.0098125f, 0.0098125f, 0.0098125f);
+		//? if >=1.21.1{
 		MapId mapid = stack.get(DataComponents.MAP_ID);
+		//?}
+		//? if <1.21.1{
+		/^Integer mapid = MapItem.getMapId(stack);
+		^///?}
 
 		MapItemSavedData mapState = MapItem.getSavedData(stack, client.level);
 		VertexConsumer vertexConsumer = vertexConsumers
@@ -75,21 +93,26 @@ public class MapRenderer {
 
 		if (mapState != null) {
 			//? if <= 1.21.1 {
-			client.gameRenderer.getMapRenderer().render(matrices, vertexConsumers, mapid, mapState, false, light);
-			//?}
+			/^client.gameRenderer.getMapRenderer().render(matrices, vertexConsumers, mapid, mapState, false, light);
+			^///?}
 			//? if >= 1.21.2 {
-			/*MapRenderState mapRenderState = new MapRenderState();
+			MapRenderState mapRenderState = new MapRenderState();
 			client.getMapRenderer().extractRenderState(mapid, mapState, mapRenderState);
 			client.getMapRenderer().render(mapRenderState, matrices, vertexConsumers, false, light);
-			*///?}
+			//?}
 		}
 	}
 
 	private static void addVertex(VertexConsumer cons, Matrix4f matrix4f, float x, float y, float z, float u, float v, int lightmapUV) {
+		//? if >=1.21.1{
 		cons.addVertex(matrix4f, x, y, z).setColor(-1).setUv(u, v).setLight(lightmapUV);
+		//?}
+		//? if <1.21.1{
+		/^cons.vertex(matrix4f, x, y, z).color(-1).uv(u, v).uv2(lightmapUV).endVertex();
+		^///?}
 	}
-	//?} else {
-	/*public static void renderFirstPersonMap(PoseStack poseStack,
+	*///?} else {
+	public static void renderFirstPersonMap(PoseStack poseStack,
 											net.minecraft.client.renderer.SubmitNodeCollector submitNodeCollector, int light, ItemStack stack,
 											boolean small, boolean leftHanded) {
 
@@ -142,5 +165,5 @@ public class MapRenderer {
 			client.getMapRenderer().render(mapRenderState, poseStack, submitNodeCollector, false, light);
 		}
 	}
-	*///?}
+	//?}
 }
