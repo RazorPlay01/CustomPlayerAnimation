@@ -23,20 +23,20 @@ platform {
 			slug("cloth-config")
 			versionRange = ">=${prop("deps.cloth-config")}"
 		}
-		findProperty("deps.player_animation_library")?.let { version ->
+		if (hasProperty("deps.player_animation_library")) {
 			required("player_animation_library") {
 				modrinth = "ha1mEyJS"
 				curseforge = "1283899"
 				slug("player-animation-library")
-				versionRange = ">=$version"
+				versionRange = ">=${prop("deps.player_animation_library")}"
 			}
 		}
-		findProperty("deps.player_animator")?.let { version ->
+		if (hasProperty("deps.player_animator")) {
 			required("playeranimator") {
 				modrinth = "gedNE4y2"
 				curseforge = "658587"
 				slug("playeranimator")
-				versionRange = ">=$version"
+				versionRange = ">=${prop("deps.player_animator")}"
 			}
 		}
 	}
