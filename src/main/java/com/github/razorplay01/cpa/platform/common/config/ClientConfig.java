@@ -35,10 +35,16 @@ public class ClientConfig implements ConfigData {
 	@ConfigEntry.Gui.CollapsibleObject
 	private SpecialAnimations specialAnimations = new SpecialAnimations();
 
+	public interface AnimationConfigInterface {
+		float getSpeedMultiplier();
+		int getFadeTime();
+		int getPriority();
+	}
+
 	@Getter
 	@AllArgsConstructor
 	@NoArgsConstructor
-	public static class AnimationConfig {
+	public static class AnimationConfig implements AnimationConfigInterface {
 		boolean isEnabled = true;
 		float speedMultiplier = 1;
 		int fadeTime = 10;
@@ -50,7 +56,7 @@ public class ClientConfig implements ConfigData {
 	}
 
 	@Getter
-	public static class SwordAnimationConfig {
+	public static class SwordAnimationConfig implements AnimationConfigInterface {
 		float speedMultiplier = 1;
 		int fadeTime = 10;
 		int priority = 0;
@@ -346,23 +352,35 @@ public class ClientConfig implements ConfigData {
 	}
 
 	public static class LeanEffect {
-		@Getter private boolean enableLeanEffect = true;
-		@Getter private boolean invertLeanDirection = false;
-		@Getter private float leanSmoothingFactor = 0.2f;
+		@Getter
+		private boolean enableLeanEffect = true;
+		@Getter
+		private boolean invertLeanDirection = false;
+		@Getter
+		private float leanSmoothingFactor = 0.2f;
 
-		@Getter private float leanForwardIntensity = 1.0f;
-		@Getter private float leanSideIntensity = 1.0f;
+		@Getter
+		private float leanForwardIntensity = 1.0f;
+		@Getter
+		private float leanSideIntensity = 1.0f;
 
-		@Getter private float maxLeanForward = 2.0f;
-		@Getter private float maxLeanSide = 2.0f;
+		@Getter
+		private float maxLeanForward = 2.0f;
+		@Getter
+		private float maxLeanSide = 2.0f;
 
 		// === NUEVAS OPCIONES PARA LEAN BASADO EN MIRADA ===
-		@Getter private boolean enableLookLean = true;
+		@Getter
+		private boolean enableLookLean = true;
 
-		@Getter private boolean enablePitchLean = true;                     // Si true, el pitch afecta al lean forward/back
-		@Getter private float pitchLeanIntensity = 0.2f;                   // Cuánto afecta mirar arriba/abajo (positivo = mirar abajo inclina adelante)
+		@Getter
+		private boolean enablePitchLean = true;                     // Si true, el pitch afecta al lean forward/back
+		@Getter
+		private float pitchLeanIntensity = 0.2f;                   // Cuánto afecta mirar arriba/abajo (positivo = mirar abajo inclina adelante)
 
-		@Getter private boolean enableYawLean = false;                      // Si true, la diferencia yaw (cabeza vs cuerpo) afecta al lean lateral
-		@Getter private float yawLeanIntensity = 0.2f;                     // Cuánto afecta girar la cabeza a los lados
+		@Getter
+		private boolean enableYawLean = false;                      // Si true, la diferencia yaw (cabeza vs cuerpo) afecta al lean lateral
+		@Getter
+		private float yawLeanIntensity = 0.2f;                     // Cuánto afecta girar la cabeza a los lados
 	}
 }
