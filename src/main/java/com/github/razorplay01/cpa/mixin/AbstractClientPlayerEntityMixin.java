@@ -41,6 +41,7 @@ import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractFadeMod
 import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
 import com.zigythebird.playeranimcore.animation.layered.modifier.SpeedModifier;
 import com.zigythebird.playeranimcore.easing.EasingType;
+import com.zigythebird.playeranimcore.animation.Animation;
 //?}
 //? if <1.21.1{
 /*import dev.kosmx.playerAnim.api.layered.modifier.AbstractFadeModifier;
@@ -51,6 +52,7 @@ import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
 import dev.kosmx.playerAnim.core.data.KeyframeAnimation;
 import dev.kosmx.playerAnim.api.layered.ModifierLayer;
 import dev.kosmx.playerAnim.minecraftApi.PlayerAnimationAccess;
+import dev.kosmx.playerAnim.api.layered.IAnimation;
 *///?}
 
 @Mixin(AbstractClientPlayer.class)
@@ -174,13 +176,8 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 		PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(3, specialAnimationContainer.getAnimationController());
 		*///?}
 
-		// Main Animation Container
 		addModifiersToContainer(mainAnimationContainer);
-
-		// Overlay Animation Container
 		addModifiersToContainer(overlayAnimationContainer);
-
-		// UpHand Animation Container
 		addModifiersToContainer(specialAnimationContainer);
 	}
 
@@ -236,20 +233,11 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 		animationContainer.getDisabledBoneIds().add(bodyPart.getPartId());
 	}
 
-	@Unique
-	public void enabledAllBodyPartsAnimation(AnimationContainer animationContainer) {
-		//? if >=1.21.1{
-			animationContainer.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
-			});
-		//?}
-		animationContainer.getDisabledBoneIds().clear();
-	}
-
 	@Override
 	public void disableBodyPartAnimationInAllContainers(BodyParts bodyPart) {
-		this.disableBodyPartAnimation(actualAnimationContext.mainAnimationContainer(), bodyPart);
-		this.disableBodyPartAnimation(actualAnimationContext.overlayAnimationContainer(), bodyPart);
-		this.disableBodyPartAnimation(actualAnimationContext.specialAnimationContainer(), bodyPart);
+		this.disableBodyPartAnimation(mainAnimationContainer, bodyPart);
+		this.disableBodyPartAnimation(overlayAnimationContainer, bodyPart);
+		this.disableBodyPartAnimation(specialAnimationContainer, bodyPart);
 	}
 
 	@Override
@@ -259,6 +247,34 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 		} else {
 			this.disableBodyPartAnimation(animationContainer, actualAnimationContext.player().getMainArm() == HumanoidArm.RIGHT ? BodyParts.LEFT_ARM : BodyParts.RIGHT_ARM);
 		}
+	}
+
+	@Override
+	public void enableBodyPartAnimation(AnimationContainer animationContainer, BodyParts bodyPart) {
+		animationContainer.getDisabledBoneIds().remove(bodyPart.getPartId());
+	}
+
+	@Override
+	public void enableBodyPartAnimationInAllContainers(BodyParts bodyPart) {
+		this.enableBodyPartAnimation(mainAnimationContainer, bodyPart);
+		this.enableBodyPartAnimation(overlayAnimationContainer, bodyPart);
+		this.enableBodyPartAnimation(specialAnimationContainer, bodyPart);
+	}
+
+	@Override
+	public void forceEnableBodyPart(BodyParts bodyPart) {
+		String partIdToEnable = bodyPart.getPartId();
+
+		// Remover la parte del cuerpo de la lista de partes desactivadas en todos los contenedores
+		enableBodyPartAnimationInAllContainers(bodyPart);
+
+		// Forzar actualización de los controladores de animación
+		cpa$updateAnimationControllerForEnable(mainAnimationContainer, partIdToEnable);
+		cpa$updateAnimationControllerForEnable(overlayAnimationContainer, partIdToEnable);
+		cpa$updateAnimationControllerForEnable(specialAnimationContainer, partIdToEnable);
+
+		// Forzar un cambio de animación para asegurar que se actualice el estado
+		cpa$forceAnimationRefresh();
 	}
 
 	@Override
@@ -290,26 +306,33 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
 	@Unique
 	private void enableAllBodyPartsInAllContainers() {
-		enabledAllBodyPartsAnimation(mainAnimationContainer);
-		enabledAllBodyPartsAnimation(overlayAnimationContainer);
-		enabledAllBodyPartsAnimation(specialAnimationContainer);
+		cpa$enabledAllBodyPartsAnimation(mainAnimationContainer);
+		cpa$enabledAllBodyPartsAnimation(overlayAnimationContainer);
+		cpa$enabledAllBodyPartsAnimation(specialAnimationContainer);
+	}
+
+	@Unique
+	private void cpa$enabledAllBodyPartsAnimation(AnimationContainer animationContainer) {
+		//? if >=1.21.1{
+		animationContainer.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {});
+		 //?}
+		animationContainer.getDisabledBoneIds().clear();
 	}
 
 	@Unique
 	private void applyDisables() {
-		applyDisableToContainer(mainAnimationContainer);
-		applyDisableToContainer(overlayAnimationContainer);
-		applyDisableToContainer(specialAnimationContainer);
+		cpa$applyDisableToContainer(mainAnimationContainer);
+		cpa$applyDisableToContainer(overlayAnimationContainer);
+		cpa$applyDisableToContainer(specialAnimationContainer);
 	}
 
 	@Unique
-	private void applyDisableToContainer(AnimationContainer container) {
+	private void cpa$applyDisableToContainer(AnimationContainer container) {
 		Set<String> disabledIds = container.getDisabledBoneIds();
 		if (disabledIds.isEmpty()) {
 			//? if >=1.21.1{
-			container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
-			});
-			//?}
+			container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {});
+			 //?}
 		} else {
 			//? if >=1.21.1{
 			container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
@@ -330,6 +353,115 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 			container.setCurrentAnimation(internalBuilder.build());
 			*///?}
 		}
+	}
+
+	/**
+	 * Actualiza el controlador de animación para asegurar que la parte del cuerpo especificada
+	 * esté habilitada, incluso después de que se apliquen otras deshabilitaciones
+	 */
+	@Unique
+	private void cpa$updateAnimationControllerForEnable(AnimationContainer container, String partIdToEnable) {
+		//? if >=1.21.1{
+		container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
+			// Primero habilitar explícitamente la parte del cuerpo que queremos reactivar
+			getBoneFunc.apply(partIdToEnable).setEnabled(true);
+
+			// Luego desactivar solo las partes que deben permanecer desactivadas
+			for (String boneId : container.getDisabledBoneIds()) {
+				// Verificar que no estamos desactivando la parte que acabamos de habilitar
+				if (!boneId.equals(partIdToEnable)) {
+					getBoneFunc.apply(boneId).setEnabled(false);
+				}
+			}
+		});
+		//?}
+		//? if <1.21.1{
+		/*KeyframeAnimation.AnimationBuilder internalBuilder = container.getCurrentAnimation().mutableCopy();
+		var part = internalBuilder.getPart(partIdToEnable);
+		if (part != null) {
+			part.setEnabled(true);
+		}
+		for (String boneId : container.getDisabledBoneIds()) {
+			if (!boneId.equals(partIdToEnable)) {
+				var disablePart = internalBuilder.getPart(boneId);
+				if (disablePart != null) {
+					disablePart.setEnabled(false);
+				}
+			}
+		}
+		container.setCurrentAnimation(internalBuilder.build());
+		*///?}
+	}
+
+	/**
+	 * Fuerza un cambio de animación para asegurar que se actualice el estado
+	 * Guarda las animaciones actuales, aplica una animación en blanco y luego restaura las originales
+	 */
+	@Unique
+	private void cpa$forceAnimationRefresh() {
+		// Guardar las animaciones actuales de cada contenedor
+
+		/*? if >=1.21.1 {*/Animation/*?} else {*/
+		/*IAnimation*//*?}*/ currentMainAnimation = cpa$getCurrentAnimation(mainAnimationContainer);
+		/*? if >=1.21.1 {*/Animation/*?} else {*/
+		/*IAnimation*//*?}*/ currentOverlayAnimation = cpa$getCurrentAnimation(overlayAnimationContainer);
+		/*? if >=1.21.1 {*/Animation/*?} else {*/
+		/*IAnimation*//*?}*/ currentSpecialAnimation = cpa$getCurrentAnimation(specialAnimationContainer);
+
+		// Crear animación en blanco
+		/*? if >=1.21.1 {*/Animation/*?} else {*/
+		/*IAnimation*//*?}*/ blankAnimation =
+				//? if >=1.21.1{
+				getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId());
+				//?}
+				//? if <1.21.1{
+				/*new KeyframeAnimationPlayer(getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()));
+		*///?}
+
+		// Aplicar la animación en blanco con una transición muy rápida
+		cpa$replaceAnimationSafely(mainAnimationContainer, blankAnimation, 1);
+		cpa$replaceAnimationSafely(overlayAnimationContainer, blankAnimation, 1);
+		cpa$replaceAnimationSafely(specialAnimationContainer, blankAnimation, 1);
+
+		// Restaurar las animaciones originales
+		if (currentMainAnimation != null) {
+			cpa$replaceAnimationSafely(mainAnimationContainer, currentMainAnimation, 2);
+		}
+		if (currentOverlayAnimation != null) {
+			cpa$replaceAnimationSafely(overlayAnimationContainer, currentOverlayAnimation, 2);
+		}
+		if (currentSpecialAnimation != null) {
+			cpa$replaceAnimationSafely(specialAnimationContainer, currentSpecialAnimation, 2);
+		}
+	}
+
+	/**
+	 * Obtiene la animación actual de un contenedor de manera segura
+	 */
+	@Unique
+	private /*? if >=1.21.1 {*/Animation/*?} else {*//*IAnimation*//*?}*/ cpa$getCurrentAnimation(AnimationContainer container) {
+		var queued = container.getAnimationController()./*? if >=1.21.1 {*/getCurrentAnimation()/*?} else {*//*getAnimation()*//*?}*/;
+		if (queued != null) {
+			//? if >=1.21.1{
+			return queued.animation();
+			//?}
+			//? if <1.21.1{
+			/*return queued;
+			*///?}
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * Reemplaza una animación de manera segura
+	 */
+	@Unique
+	private void cpa$replaceAnimationSafely(AnimationContainer container, /*? if >=1.21.1 {*/Animation/*?} else {*//*IAnimation*//*?}*/ animation, int fadeTime) {
+		container.getAnimationController().replaceAnimationWithFade(
+				AbstractFadeModifier.standardFadeIn(fadeTime, /*? if >=1.21.1 {*/EasingType.EASE_IN_OUT_SINE/*?} else {*/ /*Ease.INOUTSINE*//*?}*/),
+				animation, false
+		);
 	}
 
 	@Unique

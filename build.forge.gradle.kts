@@ -18,7 +18,7 @@ platform {
 			slug("cloth-config")
 			versionRange = ">=${prop("deps.cloth-config")}"
 		}
-		required("playeranimator") {
+		required("player-animator") {
 			modrinth = "gedNE4y2"
 			curseforge = "658587"
 			slug("playeranimator")

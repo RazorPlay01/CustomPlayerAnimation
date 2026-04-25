@@ -32,7 +32,7 @@ platform {
 			}
 		}
 		if (hasProperty("deps.player_animator")) {
-			required("playeranimator") {
+			required("player-animator") {
 				modrinth = "gedNE4y2"
 				curseforge = "658587"
 				slug("playeranimator")

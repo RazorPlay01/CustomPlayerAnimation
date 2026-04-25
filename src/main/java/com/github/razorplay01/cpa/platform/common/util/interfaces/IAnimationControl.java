@@ -14,6 +14,12 @@ public interface IAnimationControl {
 
 	void disableBodyPartAnimationInAllContainers(BodyParts bodyParts);
 
+	void enableBodyPartAnimation(AnimationContainer animationContainer, BodyParts bodyPart);
+
+	void enableBodyPartAnimationInAllContainers(BodyParts bodyParts);
+
+	void forceEnableBodyPart(BodyParts bodyPart);
+
 	void setMainArmPose(HumanoidModel.ArmPose armPose);
 
 	void setOffArmPose(HumanoidModel.ArmPose armPose);
