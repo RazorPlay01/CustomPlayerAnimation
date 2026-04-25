@@ -316,6 +316,17 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 		//? if >=1.21.1{
 		animationContainer.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {});
 		 //?}
+
+		//? if <1.21.1{
+		/*ModifierLayer<?> layer = animationContainer.getAnimationController();
+		IAnimation animation = layer.getAnimation();
+
+		if (animation instanceof KeyframeAnimationPlayer player) {
+			com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension extension = (com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension) player;
+			extension.cpa$clearDisabledBones();
+		}
+		*///?}
+
 		animationContainer.getDisabledBoneIds().clear();
 	}
 
@@ -329,30 +340,28 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 	@Unique
 	private void cpa$applyDisableToContainer(AnimationContainer container) {
 		Set<String> disabledIds = container.getDisabledBoneIds();
-		if (disabledIds.isEmpty()) {
-			//? if >=1.21.1{
-			container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {});
-			 //?}
-		} else {
-			//? if >=1.21.1{
-			container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
-				for (String boneId : disabledIds) {
-					getBoneFunc.apply(boneId).setEnabled(false);
-				}
-			});
-			//?}
 
-			//? if <1.21.1{
-			/*KeyframeAnimation.AnimationBuilder internalBuilder = container.getCurrentAnimation().mutableCopy();
+		//? if >=1.21.1{
+	if (disabledIds.isEmpty()) {
+		container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {});
+	} else {
+		container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
 			for (String boneId : disabledIds) {
-				var part = internalBuilder.getPart(boneId);
-				if (part != null) {
-					part.setEnabled(false);
-				}
+				getBoneFunc.apply(boneId).setEnabled(false);
 			}
-			container.setCurrentAnimation(internalBuilder.build());
-			*///?}
+		});
+	}
+	//?}
+
+		//? if <1.21.1{
+		/*ModifierLayer<?> layer = container.getAnimationController();
+		IAnimation animation = layer.getAnimation();
+
+		if (animation instanceof KeyframeAnimationPlayer player) {
+			com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension extension = (com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension) player;
+			extension.cpa$setDisabledBones(disabledIds);
 		}
+		*///?}
 	}
 
 	/**
@@ -362,34 +371,27 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 	@Unique
 	private void cpa$updateAnimationControllerForEnable(AnimationContainer container, String partIdToEnable) {
 		//? if >=1.21.1{
-		container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
-			// Primero habilitar explícitamente la parte del cuerpo que queremos reactivar
-			getBoneFunc.apply(partIdToEnable).setEnabled(true);
-
-			// Luego desactivar solo las partes que deben permanecer desactivadas
-			for (String boneId : container.getDisabledBoneIds()) {
-				// Verificar que no estamos desactivando la parte que acabamos de habilitar
-				if (!boneId.equals(partIdToEnable)) {
-					getBoneFunc.apply(boneId).setEnabled(false);
-				}
-			}
-		});
-		//?}
-		//? if <1.21.1{
-		/*KeyframeAnimation.AnimationBuilder internalBuilder = container.getCurrentAnimation().mutableCopy();
-		var part = internalBuilder.getPart(partIdToEnable);
-		if (part != null) {
-			part.setEnabled(true);
-		}
+	container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
+		getBoneFunc.apply(partIdToEnable).setEnabled(true);
 		for (String boneId : container.getDisabledBoneIds()) {
 			if (!boneId.equals(partIdToEnable)) {
-				var disablePart = internalBuilder.getPart(boneId);
-				if (disablePart != null) {
-					disablePart.setEnabled(false);
-				}
+				getBoneFunc.apply(boneId).setEnabled(false);
 			}
 		}
-		container.setCurrentAnimation(internalBuilder.build());
+	});
+	//?}
+
+		//? if <1.21.1{
+		/*Set<String> remainingDisabled = new HashSet<>(container.getDisabledBoneIds());
+		remainingDisabled.remove(partIdToEnable);
+
+		ModifierLayer<?> layer = container.getAnimationController();
+		IAnimation animation = layer.getAnimation();
+
+		if (animation instanceof KeyframeAnimationPlayer player) {
+			com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension extension = (com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension) player;
+			extension.cpa$setDisabledBones(remainingDisabled);
+		}
 		*///?}
 	}
 
