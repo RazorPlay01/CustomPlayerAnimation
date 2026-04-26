@@ -16,13 +16,13 @@ platform {
 			modrinth = "9s6osm5g"
 			curseforge = "348521"
 			slug("cloth-config")
-			versionRange = ">=${prop("deps.cloth-config")}"
+			versionRange = "[${prop("deps.cloth-config")},)"
 		}
 		required("player-animator") {
 			modrinth = "gedNE4y2"
 			curseforge = "658587"
 			slug("playeranimator")
-			versionRange = ">=${prop("deps.cloth-config")}"
+			versionRange = "[${prop("deps.cloth-config")},)"
 		}
 	}
 }

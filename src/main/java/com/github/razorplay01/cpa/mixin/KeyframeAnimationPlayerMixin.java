@@ -1,7 +1,9 @@
 package com.github.razorplay01.cpa.mixin;
 
 //? if <1.21.1 {
-/*import com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension;
+
+/*import com.github.razorplay01.cpa.ModTemplate;
+import com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension;
 import com.moulberry.mixinconstraints.annotations.IfModLoaded;
 import dev.kosmx.playerAnim.api.TransformType;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
@@ -59,8 +61,14 @@ public class KeyframeAnimationPlayerMixin implements IKeyframeAnimationPlayerExt
 			@NotNull Vec3f value0,
 			CallbackInfoReturnable<Vec3f> cir
 	) {
+		// Log más detallado
+		if (!cpa$disabledBones.isEmpty()) {
+			ModTemplate.LOGGER.debug("Checking bone: {} against disabled: {} -> contains: {}", modelName, cpa$disabledBones, this.cpa$disabledBones.contains(modelName));
+		}
+
 		// Si el hueso está deshabilitado, retornar el valor vanilla directamente
 		if (this.cpa$disabledBones.contains(modelName)) {
+			ModTemplate.LOGGER.debug(">>> DISABLING {} <<<", modelName);
 			cir.setReturnValue(value0);
 		}
 	}

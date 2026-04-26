@@ -1,5 +1,6 @@
 {
   "package": "com.github.razorplay01.cpa.mixin",
+  "plugin": "com.moulberry.mixinconstraints.ConstraintsMixinPlugin",
   "required": true,
   "minVersion": "0.8",
   "compatibilityLevel": "${java}",

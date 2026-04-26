@@ -36,7 +36,7 @@ import com.github.razorplay01.cpa.platform.fabric.FabricPlatform;
 public class ModTemplate {
 
 	public static final String MOD_ID = /*$ mod_id*/ "cpa";
-	public static final String MOD_VERSION = /*$ mod_version*/ "5.8.1";
+	public static final String MOD_VERSION = /*$ mod_version*/ "5.8.3";
 	public static final String MOD_FRIENDLY_NAME = /*$ mod_name*/ "Custom Player Animations";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
