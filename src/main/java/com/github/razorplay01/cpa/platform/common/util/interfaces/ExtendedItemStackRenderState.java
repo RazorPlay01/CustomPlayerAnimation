@@ -3,9 +3,7 @@ package com.github.razorplay01.cpa.platform.common.util.interfaces;
 import net.minecraft.world.item.ItemStack;
 
 public interface ExtendedItemStackRenderState {
+	ItemStack getItemStack();
 
-	public ItemStack getItemStack();
-
-	public void setItemStack(ItemStack item);
-
+	void setItemStack(ItemStack item);
 }

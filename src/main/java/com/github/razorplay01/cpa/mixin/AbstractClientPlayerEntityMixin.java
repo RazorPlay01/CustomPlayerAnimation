@@ -265,15 +265,12 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 	public void forceEnableBodyPart(BodyParts bodyPart) {
 		String partIdToEnable = bodyPart.getPartId();
 
-		// Remover la parte del cuerpo de la lista de partes desactivadas en todos los contenedores
 		enableBodyPartAnimationInAllContainers(bodyPart);
 
-		// Forzar actualización de los controladores de animación
 		cpa$updateAnimationControllerForEnable(mainAnimationContainer, partIdToEnable);
 		cpa$updateAnimationControllerForEnable(overlayAnimationContainer, partIdToEnable);
 		cpa$updateAnimationControllerForEnable(specialAnimationContainer, partIdToEnable);
 
-		// Forzar un cambio de animación para asegurar que se actualice el estado
 		cpa$forceAnimationRefresh();
 	}
 
@@ -364,10 +361,6 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 		*///?}
 	}
 
-	/**
-	 * Actualiza el controlador de animación para asegurar que la parte del cuerpo especificada
-	 * esté habilitada, incluso después de que se apliquen otras deshabilitaciones
-	 */
 	@Unique
 	private void cpa$updateAnimationControllerForEnable(AnimationContainer container, String partIdToEnable) {
 		//? if >=1.21.1{
@@ -395,14 +388,8 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 		*///?}
 	}
 
-	/**
-	 * Fuerza un cambio de animación para asegurar que se actualice el estado
-	 * Guarda las animaciones actuales, aplica una animación en blanco y luego restaura las originales
-	 */
 	@Unique
 	private void cpa$forceAnimationRefresh() {
-		// Guardar las animaciones actuales de cada contenedor
-
 		/*? if >=1.21.1 {*/Animation/*?} else {*/
 		/*IAnimation*//*?}*/ currentMainAnimation = cpa$getCurrentAnimation(mainAnimationContainer);
 		/*? if >=1.21.1 {*/Animation/*?} else {*/
@@ -410,7 +397,6 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 		/*? if >=1.21.1 {*/Animation/*?} else {*/
 		/*IAnimation*//*?}*/ currentSpecialAnimation = cpa$getCurrentAnimation(specialAnimationContainer);
 
-		// Crear animación en blanco
 		/*? if >=1.21.1 {*/Animation/*?} else {*/
 		/*IAnimation*//*?}*/ blankAnimation =
 				//? if >=1.21.1{
@@ -420,12 +406,10 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 				/*new KeyframeAnimationPlayer(getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()));
 		*///?}
 
-		// Aplicar la animación en blanco con una transición muy rápida
 		cpa$replaceAnimationSafely(mainAnimationContainer, blankAnimation, 1);
 		cpa$replaceAnimationSafely(overlayAnimationContainer, blankAnimation, 1);
 		cpa$replaceAnimationSafely(specialAnimationContainer, blankAnimation, 1);
 
-		// Restaurar las animaciones originales
 		if (currentMainAnimation != null) {
 			cpa$replaceAnimationSafely(mainAnimationContainer, currentMainAnimation, 2);
 		}
@@ -437,9 +421,6 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 		}
 	}
 
-	/**
-	 * Obtiene la animación actual de un contenedor de manera segura
-	 */
 	@Unique
 	private /*? if >=1.21.1 {*/Animation/*?} else {*//*IAnimation*//*?}*/ cpa$getCurrentAnimation(AnimationContainer container) {
 		var queued = container.getAnimationController()./*? if >=1.21.1 {*/getCurrentAnimation()/*?} else {*//*getAnimation()*//*?}*/;
@@ -455,9 +436,6 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 		}
 	}
 
-	/**
-	 * Reemplaza una animación de manera segura
-	 */
 	@Unique
 	private void cpa$replaceAnimationSafely(AnimationContainer container, /*? if >=1.21.1 {*/Animation/*?} else {*//*IAnimation*//*?}*/ animation, int fadeTime) {
 		container.getAnimationController().replaceAnimationWithFade(
