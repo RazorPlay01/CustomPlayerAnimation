@@ -92,7 +92,8 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 				new HashMap<>(
 						Map.of(Modifiers.MIRROR_MODIFIER.getModifierId(), new MirrorModifier(),
 								Modifiers.SPEED_MODIFIER.getModifierId(), new SpeedModifier(1.0f),
-								Modifiers.ADJUSTMENT_MODIFIER.getModifierId(), createLeanModifier((AbstractClientPlayer) (Object) this))),
+								Modifiers.ADJUSTMENT_MODIFIER.getModifierId(), createLeanModifier((AbstractClientPlayer) (Object) this)
+						)),
 				getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()),
 				AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId(),
 				"",
@@ -311,8 +312,9 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 	@Unique
 	private void cpa$enabledAllBodyPartsAnimation(AnimationContainer animationContainer) {
 		//? if >=1.21.1{
-		animationContainer.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {});
-		 //?}
+		animationContainer.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
+		});
+		//?}
 
 		//? if <1.21.1{
 		/*ModifierLayer<?> layer = animationContainer.getAnimationController();
@@ -334,21 +336,60 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 		cpa$applyDisableToContainer(specialAnimationContainer);
 	}
 
+	//? if >=1.21.1{
+	@Unique
+	private void cpa$preserveOnlyHeadRoll(java.util.function.Function<String, com.zigythebird.playeranimcore.bones.AdvancedPlayerAnimBone> getBoneFunc, Set<String> disabledIds) {
+		String headId = BodyParts.HEAD.getPartId();
+
+		if (disabledIds.contains(headId)) {
+			return;
+		}
+
+		com.zigythebird.playeranimcore.bones.AdvancedPlayerAnimBone head = getBoneFunc.apply(headId);
+		if (head == null) {
+			return;
+		}
+
+		head.rotXEnabled = false;
+		head.rotYEnabled = false;
+		head.rotZEnabled = true;
+	}
+	//?}
+	//? if <1.21.1{
+	/*@Unique
+	private void cpa$preserveOnlyHeadRollLegacy(com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension extension, Set<String> disabledIds) {
+		String headId = BodyParts.HEAD.getPartId();
+
+		if (disabledIds.contains(headId)) {
+			return;
+		}
+
+		Set<String> disabledChannels = new HashSet<>();
+		disabledChannels.add("rotX");
+		disabledChannels.add("rotY");
+
+		extension.cpa$setDisabledBoneChannels(headId, disabledChannels);
+	}
+	*///?}
+
 	@Unique
 	private void cpa$applyDisableToContainer(AnimationContainer container) {
 		Set<String> disabledIds = container.getDisabledBoneIds();
 
 		//? if >=1.21.1{
-	if (disabledIds.isEmpty()) {
-		container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {});
-	} else {
-		container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
-			for (String boneId : disabledIds) {
-				getBoneFunc.apply(boneId).setEnabled(false);
-			}
-		});
-	}
-	//?}
+		if (disabledIds.isEmpty()) {
+			container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
+				cpa$preserveOnlyHeadRoll(getBoneFunc, disabledIds);
+			});
+		} else {
+			container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
+				for (String boneId : disabledIds) {
+					getBoneFunc.apply(boneId).setEnabled(false);
+					cpa$preserveOnlyHeadRoll(getBoneFunc, disabledIds);
+				}
+			});
+		}
+		//?}
 
 		//? if <1.21.1{
 		/*ModifierLayer<?> layer = container.getAnimationController();
@@ -356,7 +397,10 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
 		if (animation instanceof KeyframeAnimationPlayer player) {
 			com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension extension = (com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension) player;
+			extension.cpa$clearDisabledBones();
+			extension.cpa$clearAllDisabledChannels();
 			extension.cpa$setDisabledBones(disabledIds);
+			cpa$preserveOnlyHeadRollLegacy(extension, disabledIds);
 		}
 		*///?}
 	}
@@ -364,15 +408,15 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 	@Unique
 	private void cpa$updateAnimationControllerForEnable(AnimationContainer container, String partIdToEnable) {
 		//? if >=1.21.1{
-	container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
-		getBoneFunc.apply(partIdToEnable).setEnabled(true);
-		for (String boneId : container.getDisabledBoneIds()) {
-			if (!boneId.equals(partIdToEnable)) {
-				getBoneFunc.apply(boneId).setEnabled(false);
+		container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
+			getBoneFunc.apply(partIdToEnable).setEnabled(true);
+			for (String boneId : container.getDisabledBoneIds()) {
+				if (!boneId.equals(partIdToEnable)) {
+					getBoneFunc.apply(boneId).setEnabled(false);
+				}
 			}
-		}
-	});
-	//?}
+		});
+		//?}
 
 		//? if <1.21.1{
 		/*Set<String> remainingDisabled = new HashSet<>(container.getDisabledBoneIds());
@@ -390,21 +434,25 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
 	@Unique
 	private void cpa$forceAnimationRefresh() {
-		/*? if >=1.21.1 {*/Animation/*?} else {*/
-		/*IAnimation*//*?}*/ currentMainAnimation = cpa$getCurrentAnimation(mainAnimationContainer);
-		/*? if >=1.21.1 {*/Animation/*?} else {*/
-		/*IAnimation*//*?}*/ currentOverlayAnimation = cpa$getCurrentAnimation(overlayAnimationContainer);
-		/*? if >=1.21.1 {*/Animation/*?} else {*/
-		/*IAnimation*//*?}*/ currentSpecialAnimation = cpa$getCurrentAnimation(specialAnimationContainer);
+		/*? if >=1.21.1 {*/
+		Animation/*?} else {*/
+				/*IAnimation*//*?}*/ currentMainAnimation = cpa$getCurrentAnimation(mainAnimationContainer);
+		/*? if >=1.21.1 {*/
+		Animation/*?} else {*/
+				/*IAnimation*//*?}*/ currentOverlayAnimation = cpa$getCurrentAnimation(overlayAnimationContainer);
+		/*? if >=1.21.1 {*/
+		Animation/*?} else {*/
+				/*IAnimation*//*?}*/ currentSpecialAnimation = cpa$getCurrentAnimation(specialAnimationContainer);
 
-		/*? if >=1.21.1 {*/Animation/*?} else {*/
-		/*IAnimation*//*?}*/ blankAnimation =
+		/*? if >=1.21.1 {*/
+		Animation/*?} else {*/
+				/*IAnimation*//*?}*/ blankAnimation =
 				//? if >=1.21.1{
 				getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId());
-				//?}
-				//? if <1.21.1{
-				/*new KeyframeAnimationPlayer(getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()));
-		*///?}
+		//?}
+		//? if <1.21.1{
+		/*new KeyframeAnimationPlayer(getAnimation(AnimationsId.BLANK_LOOP_ANIMATION.getAnimationId()));
+		 *///?}
 
 		cpa$replaceAnimationSafely(mainAnimationContainer, blankAnimation, 1);
 		cpa$replaceAnimationSafely(overlayAnimationContainer, blankAnimation, 1);
@@ -430,7 +478,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 			//?}
 			//? if <1.21.1{
 			/*return queued;
-			*///?}
+			 *///?}
 		} else {
 			return null;
 		}
@@ -501,10 +549,10 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 				AbstractFadeModifier.standardFadeIn((int) (animationContainer.getAnimationFadeTime() * CONFIG.getGeneral().getAnimationFadeTimeMultiplier()), /*? if >=1.21.1 {*/EasingType.EASE_IN_OUT_SINE/*?} else {*/ /*Ease.INOUTSINE*//*?}*/),
 				//? if >=1.21.1{
 				RawAnimation.begin().thenPlay(animationContainer.getCurrentAnimation())
-				 //?}
+				//?}
 				//? if <1.21.1{
 				/*new KeyframeAnimationPlayer(animationContainer.getCurrentAnimation())
-				*///?}
+				 *///?}
 				, false
 		);
 	}

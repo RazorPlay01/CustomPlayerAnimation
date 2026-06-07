@@ -233,24 +233,105 @@ public abstract class ClientMannequinMixin extends Mannequin implements IAnimati
 
 	@Unique
 	private void applyDisables() {
-		applyDisableToContainer(mainAnimationContainer);
-		applyDisableToContainer(overlayAnimationContainer);
-		applyDisableToContainer(specialAnimationContainer);
+		cpa$applyDisableToContainer(mainAnimationContainer);
+		cpa$applyDisableToContainer(overlayAnimationContainer);
+		cpa$applyDisableToContainer(specialAnimationContainer);
 	}
 
+	//? if >=1.21.1{
 	@Unique
-	private void applyDisableToContainer(AnimationContainer container) {
+	private void cpa$preserveOnlyHeadRoll(java.util.function.Function<String, com.zigythebird.playeranimcore.bones.AdvancedPlayerAnimBone> getBoneFunc, Set<String> disabledIds) {
+		String headId = BodyParts.HEAD.getPartId();
+
+		if (disabledIds.contains(headId)) {
+			return;
+		}
+
+		com.zigythebird.playeranimcore.bones.AdvancedPlayerAnimBone head = getBoneFunc.apply(headId);
+		if (head == null) {
+			return;
+		}
+
+		head.rotXEnabled = false;
+		head.rotYEnabled = false;
+		head.rotZEnabled = true;
+	}
+	//?}
+	//? if <1.21.1{
+	/*@Unique
+	private void cpa$preserveOnlyHeadRollLegacy(com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension extension, Set<String> disabledIds) {
+		String headId = BodyParts.HEAD.getPartId();
+
+		if (disabledIds.contains(headId)) {
+			return;
+		}
+
+		Set<String> disabledChannels = new HashSet<>();
+		disabledChannels.add("rotX");
+		disabledChannels.add("rotY");
+
+		extension.cpa$setDisabledBoneChannels(headId, disabledChannels);
+	}
+	*///?}
+
+	@Unique
+	private void cpa$applyDisableToContainer(AnimationContainer container) {
 		Set<String> disabledIds = container.getDisabledBoneIds();
+
+		//? if >=1.21.1{
 		if (disabledIds.isEmpty()) {
 			container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
+				cpa$preserveOnlyHeadRoll(getBoneFunc, disabledIds);
 			});
 		} else {
 			container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
 				for (String boneId : disabledIds) {
 					getBoneFunc.apply(boneId).setEnabled(false);
+					cpa$preserveOnlyHeadRoll(getBoneFunc, disabledIds);
 				}
 			});
 		}
+		//?}
+
+		//? if <1.21.1{
+		/*ModifierLayer<?> layer = container.getAnimationController();
+		IAnimation animation = layer.getAnimation();
+
+		if (animation instanceof KeyframeAnimationPlayer player) {
+			com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension extension = (com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension) player;
+			extension.cpa$clearDisabledBones();
+			extension.cpa$clearAllDisabledChannels();
+			extension.cpa$setDisabledBones(disabledIds);
+			cpa$preserveOnlyHeadRollLegacy(extension, disabledIds);
+		}
+		*///?}
+	}
+
+	@Unique
+	private void cpa$updateAnimationControllerForEnable(AnimationContainer container, String partIdToEnable) {
+		//? if >=1.21.1{
+		container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
+			getBoneFunc.apply(partIdToEnable).setEnabled(true);
+			for (String boneId : container.getDisabledBoneIds()) {
+				if (!boneId.equals(partIdToEnable)) {
+					getBoneFunc.apply(boneId).setEnabled(false);
+				}
+			}
+		});
+		//?}
+
+		//? if <1.21.1{
+		/*Set<String> remainingDisabled = new HashSet<>(container.getDisabledBoneIds());
+		remainingDisabled.remove(partIdToEnable);
+
+		ModifierLayer<?> layer = container.getAnimationController();
+		IAnimation animation = layer.getAnimation();
+
+		if (animation instanceof KeyframeAnimationPlayer player) {
+			com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension extension = (com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension) player;
+			extension.cpa$setDisabledBones(remainingDisabled);
+		}
+		*///?}
 	}
 
 	@Unique

@@ -50,7 +50,6 @@ public class CustomModifiers {
 
 			PlayerData data = ((IAnimationControl) player).getAnimationContext().playerData();
 
-			// Velocidad desde posición
 			Vec3 velocity = new Vec3(data.getVectorX(), data.getVectorY(), data.getVectorZ());
 
 			float bodyYawRad = (float) Math.toRadians(player.yBodyRot);
@@ -63,20 +62,16 @@ public class CustomModifiers {
 				sideVel    = -sideVel;
 			}
 
-			// Lean target (sin lerp aún)
 			float targetLeanForward = forwardVel * leanConfig.getLeanForwardIntensity();
 			float targetLeanSide    = sideVel    * leanConfig.getLeanSideIntensity();
 
-			// === NUEVO: Suavizado con lerp ===
-			float smoothing = leanConfig.getLeanSmoothingFactor();  // Ej: 0.2f para suave
+			float smoothing = leanConfig.getLeanSmoothingFactor();
 			float leanForward = Mth.lerp(smoothing, data.getPrevLeanForward(), targetLeanForward);
 			float leanSide    = Mth.lerp(smoothing, data.getPrevLeanSide(), targetLeanSide);
 
-			// Actualiza prev para el próximo tick
 			data.setPrevLeanForward(leanForward);
 			data.setPrevLeanSide(leanSide);
 
-			// === Lean por mirada (si activado) ===
 			if (leanConfig.isEnableLookLean()) {
 				if (leanConfig.isEnablePitchLean()) {
 					float pitchDegrees = player.getXRot();
@@ -92,15 +87,12 @@ public class CustomModifiers {
 				}
 			}
 
-			// Multiplicador general
 			leanForward *= data.getLeanMultiplier();
 			leanSide    *= data.getLeanMultiplier();
 
-			// Clamps
 			leanForward = Mth.clamp(leanForward, -leanConfig.getMaxLeanForward(), leanConfig.getMaxLeanForward());
 			leanSide    = Mth.clamp(leanSide, -leanConfig.getMaxLeanSide(), leanConfig.getMaxLeanSide());
 
-			// Desactivar en especiales
 			if (player.isFallFlying() || player.getVehicle() != null ||
 					player.isVisuallySwimming() || player.isAutoSpinAttack()) {
 				return Optional.of(new AdjustmentModifier.PartModifier(

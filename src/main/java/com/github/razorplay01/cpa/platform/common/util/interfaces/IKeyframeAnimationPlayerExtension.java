@@ -8,5 +8,10 @@ public interface IKeyframeAnimationPlayerExtension {
 	void cpa$clearDisabledBones();
 	Set<String> cpa$getDisabledBones();
 	boolean cpa$isBoneDisabled(String boneName);
+
+	void cpa$setDisabledBoneChannels(String boneId, Set<String> channels);
+	void cpa$clearDisabledBoneChannels(String boneId);
+	void cpa$clearAllDisabledChannels();
+	boolean cpa$isBoneChannelDisabled(String boneId, String channel);
 }
 *///?}
