@@ -172,11 +172,11 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 				0,
 				0,
 				0);
-		PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(1, mainAnimationContainer.getAnimationController());
-		PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(2, overlayAnimationContainer.getAnimationController());
-		PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(3, specialAnimationContainer.getAnimationController());
+		PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(CONFIG.getMainAnimations().animationPriority, mainAnimationContainer.getAnimationController());
+		PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(CONFIG.getOverlayAnimations().animationPriority, overlayAnimationContainer.getAnimationController());
+		PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(CONFIG.getSpecialAnimations().animationPriority, specialAnimationContainer.getAnimationController());
 		*///?}
-
+		
 		addModifiersToContainer(mainAnimationContainer);
 		addModifiersToContainer(overlayAnimationContainer);
 		addModifiersToContainer(specialAnimationContainer);

@@ -1,5 +1,5 @@
-# 5.9.1
+# 5.9.2
 If you like my mods and want to support my work, go [here](https://boosty.to/razorplay) :)
 
 Change Log:
-- support has been added for animations that modify the head's Z-axis.
+- The ability to modify the priority of animation containers from the settings menu has been added to facilitate compatibility with other mods such as TAC or Better Combat

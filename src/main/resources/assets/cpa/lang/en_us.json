@@ -41,6 +41,7 @@
   "text.autoconfig.cpa.option.client.lean_effect.yawLeanIntensity": "Yaw Lean Intensity",
   "text.autoconfig.cpa.option.client.lean_effect.yawLeanIntensity.@Tooltip": "Controls how strongly turning the head left/right affects the sideways lean. Higher values = more tilt.",
 
+  "text.autoconfig.cpa.option.client.mainAnimations.animationPriority": "Animation Priority",
   "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations": "Idle Animations",
 
   "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.turnAnimations": "Turn Animations",
@@ -297,6 +298,7 @@
   "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathDrownAnimationConfig.fadeTime": "Animation Fade Time",
   "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathDrownAnimationConfig.priority": "Animation Priority",
 
+  "text.autoconfig.cpa.option.client.overlayAnimations.animationPriority": "Animation Priority",
   "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation": "Use Item Animations",
 
   "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.bowAnimationsConfig": "Bow Animation",
@@ -376,6 +378,7 @@
   "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.shovelAnimationsConfig.fadeTime": "Animation Fade Time",
   "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.shovelAnimationsConfig.priority": "Animation Priority",
 
+  "text.autoconfig.cpa.option.client.specialAnimations.animationPriority": "Animation Priority",
   "text.autoconfig.cpa.option.client.specialAnimations.upHandAnimationConfig": "Up Hand Animation",
   "text.autoconfig.cpa.option.client.specialAnimations.upHandAnimationConfig.isEnabled": "Is Enabled",
   "text.autoconfig.cpa.option.client.specialAnimations.upHandAnimationConfig.speedMultiplier": "Animation Speed Multiplier",

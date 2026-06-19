@@ -74,18 +74,18 @@ public abstract class PlayerEntityRendererMixin<AvatarlikeEntity extends Avatar 
 			method = "extractRenderState(Lnet/minecraft/world/entity/Avatar;Lnet/minecraft/client/renderer/entity/state/AvatarRenderState;F)V",
 			at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/player/AvatarRenderer;getArmPose(Lnet/minecraft/world/entity/Avatar;Lnet/minecraft/world/entity/HumanoidArm;)Lnet/minecraft/client/model/HumanoidModel$ArmPose;",
 					shift = At.Shift.BY))
-	private void setModelPose(AvatarlikeEntity avatarlikeEntity, AvatarRenderState avatarRenderState, float f, CallbackInfo ci) {
-		if (avatarlikeEntity instanceof Avatar avatar) {
-			((IAnimationControl) avatar).setMainArmPose(PlayerRendererAccesor.getArmPose(avatarlikeEntity, avatarlikeEntity.getMainHandItem(), InteractionHand.MAIN_HAND));
-			((IAnimationControl) avatar).setOffArmPose(PlayerRendererAccesor.getArmPose(avatarlikeEntity, avatarlikeEntity.getOffhandItem(), InteractionHand.OFF_HAND));
+	private void setModelPose(AvatarlikeEntity entity, AvatarRenderState state, float partialTicks, CallbackInfo ci) {
+		if (entity instanceof Avatar avatar) {
+			((IAnimationControl) avatar).setMainArmPose(PlayerRendererAccesor.getArmPose(entity, entity.getMainHandItem(), InteractionHand.MAIN_HAND));
+			((IAnimationControl) avatar).setOffArmPose(PlayerRendererAccesor.getArmPose(entity, entity.getOffhandItem(), InteractionHand.OFF_HAND));
 		}
 	}
 
 	@Inject(
 			method = "extractRenderState(Lnet/minecraft/world/entity/Avatar;Lnet/minecraft/client/renderer/entity/state/AvatarRenderState;F)V",
 			at = @At("RETURN"))
-	private void onExtractRenderState(AvatarlikeEntity avatar, AvatarRenderState avatarRenderState, float f, CallbackInfo ci) {
-		((HumanoidRenderStateAccessor) avatarRenderState).setLivingEntity(avatar);
+	private void onExtractRenderState(AvatarlikeEntity entity, AvatarRenderState state, float partialTicks, CallbackInfo ci) {
+		((HumanoidRenderStateAccessor) state).setLivingEntity(entity);
 	}
 }
 		//?}

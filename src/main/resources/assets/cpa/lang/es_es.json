@@ -41,6 +41,7 @@
   "text.autoconfig.cpa.option.client.lean_effect.yawLeanIntensity": "Intensidad de inclinación por yaw",
   "text.autoconfig.cpa.option.client.lean_effect.yawLeanIntensity.@Tooltip": "Controla cuánto afecta girar la cabeza a los lados a la inclinación lateral. Valores más altos = más inclinación.",
 
+  "text.autoconfig.cpa.option.client.mainAnimations.animationPriority": "Prioridad del Contenedor de Animación",
   "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations": "Animaciones de Reposo",
 
   "text.autoconfig.cpa.option.client.mainAnimations.idleAnimations.turnAnimations": "Animaciones de Giro",
@@ -297,6 +298,7 @@
   "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathDrownAnimationConfig.fadeTime": "Tiempo de Transición de Animación",
   "text.autoconfig.cpa.option.client.mainAnimations.deathAnimations.deathDrownAnimationConfig.priority": "Prioridad de Animación",
 
+  "text.autoconfig.cpa.option.client.overlayAnimations.animationPriority": "Prioridad del Contenedor de Animación",
   "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation": "Animaciones de Uso de Objetos",
 
   "text.autoconfig.cpa.option.client.overlayAnimations.useItemAnimation.bowAnimationsConfig": "Animación de Arco",
@@ -360,6 +362,8 @@
   "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.shovelAnimationsConfig.speedMultiplier": "Multiplicador de Velocidad de Animación",
   "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.shovelAnimationsConfig.fadeTime": "Tiempo de Transición de Animación",
   "text.autoconfig.cpa.option.client.overlayAnimations.toolsAnimations.shovelAnimationsConfig.priority": "Prioridad de Animación",
+
+  "text.autoconfig.cpa.option.client.specialAnimations.animationPriority": "Prioridad del Contenedor de Animación",
 
   "text.autoconfig.cpa.option.client.specialAnimations.upHandAnimationConfig": "Animación de Mano Levantada",
   "text.autoconfig.cpa.option.client.specialAnimations.upHandAnimationConfig.isEnabled": "Está Activada",

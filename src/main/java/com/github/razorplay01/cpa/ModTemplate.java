@@ -63,17 +63,17 @@ public class ModTemplate {
 		LOGGER.debug("{}: { version: {}; friendly_name: {} }", MOD_ID, MOD_VERSION, MOD_FRIENDLY_NAME);
 
 		//? if >=1.21.1{
-		PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(MAIN_ANIMATION_CONTAINER_LAYER_ID, 1,
+		PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(MAIN_ANIMATION_CONTAINER_LAYER_ID, CONFIG.getMainAnimations().animationPriority,
 				player -> new PlayerAnimationController(player,
 						(controller, state, animSetter) -> PlayState.STOP
 				)
 		);
-		PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(OVERLAY_ANIMATION_CONTAINER_LAYER_ID, 2,
+		PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(OVERLAY_ANIMATION_CONTAINER_LAYER_ID, CONFIG.getOverlayAnimations().animationPriority,
 				player -> new PlayerAnimationController(player,
 						(controller, state, animSetter) -> PlayState.STOP
 				)
 		);
-		PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(SPECIAL_ANIMATION_CONTAINER_LAYER_ID, 3,
+		PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(SPECIAL_ANIMATION_CONTAINER_LAYER_ID, CONFIG.getSpecialAnimations().animationPriority,
 				player -> new PlayerAnimationController(player,
 						(controller, state, animSetter) -> PlayState.STOP
 				)

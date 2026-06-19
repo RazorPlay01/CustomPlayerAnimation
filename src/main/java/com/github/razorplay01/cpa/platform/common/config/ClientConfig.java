@@ -37,7 +37,9 @@ public class ClientConfig implements ConfigData {
 
 	public interface AnimationConfigInterface {
 		float getSpeedMultiplier();
+
 		int getFadeTime();
+
 		int getPriority();
 	}
 
@@ -84,6 +86,8 @@ public class ClientConfig implements ConfigData {
 	}
 
 	public static class MainAnimations {
+		public int animationPriority = -3;
+
 		@ConfigEntry.Gui.CollapsibleObject
 		public IdleAnimations idleAnimations = new IdleAnimations();
 
@@ -107,6 +111,8 @@ public class ClientConfig implements ConfigData {
 	}
 
 	public static class OverlayAnimations {
+		public int animationPriority = -2;
+
 		@ConfigEntry.Gui.CollapsibleObject
 		public UseItemAnimation useItemAnimation = new UseItemAnimation();
 
@@ -124,6 +130,8 @@ public class ClientConfig implements ConfigData {
 
 	@Getter
 	public static class SpecialAnimations {
+		public int animationPriority = -1;
+
 		@ConfigEntry.Gui.CollapsibleObject
 		public AnimationConfig upHandAnimationConfig = new AnimationConfig();
 		@ConfigEntry.Gui.Tooltip
