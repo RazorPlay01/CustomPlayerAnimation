@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
@@ -61,7 +60,7 @@ public class MapRenderer {
 	//?}
 
 	//? if <=1.21.8 {
-	/*public static void renderFirstPersonMap(PoseStack matrices, MultiBufferSource vertexConsumers, int light, ItemStack stack) {
+	/*public static void renderFirstPersonMap(PoseStack matrices, net.minecraft.client.renderer.MultiBufferSource vertexConsumers, int light, ItemStack stack) {
 		Minecraft client = Minecraft.getInstance();
 		matrices.mulPose(YP.rotationDegrees(160.0f));
 		matrices.mulPose(ZP.rotationDegrees(180.0f));
