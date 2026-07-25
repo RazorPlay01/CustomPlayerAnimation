@@ -18,13 +18,13 @@ platform {
 			modrinth = "9s6osm5g"
 			curseforge = "348521"
 			slug("cloth-config")
-			forgeVersionRange = "[${prop("deps.cloth-config")},)"
+			forgeVersionRange = "[1,)"
 		}
 		required("player_animation_library") {
 			modrinth = "ha1mEyJS"
 			curseforge = "1283899"
 			slug("player-animation-library")
-			forgeVersionRange = "[${prop("deps.player_animation_library")},)"
+			forgeVersionRange = "[1,)"
 		}
 	}
 }
@@ -78,6 +78,7 @@ dependencies {
 			force("io.netty:netty-common:4.1.118.Final")
 			force("it.unimi.dsi:fastutil:8.5.12")
 			force("org.slf4j:slf4j-api:2.0.13")
+			force("org.joml:joml:1.10.8")
 		}
 	}
 

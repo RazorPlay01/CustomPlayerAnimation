@@ -4,6 +4,7 @@ import dev.kikugie.fletching_table.extension.FletchingTableExtension
 import dev.kikugie.stonecutter.build.StonecutterBuildExtension
 import me.modmuss50.mpp.ModPublishExtension
 import me.modmuss50.mpp.ReleaseType
+import me.modmuss50.mpp.platforms.modrinth.ModrinthEnvironment
 import org.gradle.api.JavaVersion
 import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Plugin
@@ -396,6 +397,7 @@ abstract class ModPlatformPlugin @Inject constructor() : Plugin<Project> {
 	) = modrinth {
 		if (staging) apiEndpoint = "https://staging-api.modrinth.com/v2"
 		projectId = project.prop("publish.modrinth")
+		environment = ModrinthEnvironment.CLIENT_ONLY
 		accessToken = acesssToken
 		minecraftVersions.addAll(listOf(currentVersion) + additionalVersions)
 
@@ -415,6 +417,8 @@ abstract class ModPlatformPlugin @Inject constructor() : Plugin<Project> {
 		acesssToken: String?
 	) = curseforge {
 		projectId = project.prop("publish.curseforge")
+		client = true
+		server = false
 		accessToken = acesssToken
 		minecraftVersions.addAll(listOf(currentVersion) + additionalVersions)
 
