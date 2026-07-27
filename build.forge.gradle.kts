@@ -22,13 +22,13 @@ platform {
 		required("forge") {
 			forgeLikeVersionRange.set("[1,)")
 		}
-		required("cloth-config") {
+		required("cloth_config") {
 			modrinth = "9s6osm5g"
 			curseforge = "348521"
 			slug("cloth-config")
 			forgeLikeVersionRange.set("[1,)")
 		}
-		required("player-animator") {
+		required("playeranimator") {
 			modrinth = "gedNE4y2"
 			curseforge = "658587"
 			slug("playeranimator")
