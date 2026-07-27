@@ -1,7 +1,6 @@
 package com.github.razorplay01.cpa;
 
 import com.github.razorplay01.cpa.platform.Platform;
-
 import com.github.razorplay01.cpa.platform.common.config.ClientConfig;
 import com.github.razorplay01.cpa.platform.common.config.ConfigWrapper;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -30,7 +29,7 @@ import com.github.razorplay01.cpa.platform.fabric.FabricPlatform;
 /*import com.github.razorplay01.cpa.platform.neoforge.NeoforgePlatform;
  *///?} forge {
 /*import com.github.razorplay01.cpa.platform.forge.ForgePlatform;
-*///?}
+ *///?}
 
 @SuppressWarnings("LoggingSimilarMessage")
 public class ModTemplate {
@@ -49,7 +48,6 @@ public class ModTemplate {
 	public static final Identifier OVERLAY_ANIMATION_CONTAINER_LAYER_ID = of("overlay_animation_container");
 	public static final Identifier SPECIAL_ANIMATION_CONTAINER_LAYER_ID = of("special_animation_container");
 	//?}
-
 
 	public static void onInitialize() {
 		LOGGER.info("Initializing {} on {}", MOD_ID, ModTemplate.xplat().loader());
@@ -92,8 +90,9 @@ public class ModTemplate {
 		/*return new NeoforgePlatform();
 		 *///?} forge {
 		/*return new ForgePlatform();
-		*///?}
+		 *///?}
 	}
+
 	//? if >=1.21.1{
 	public static Animation getAnimation(String animationId) {
 		return PlayerAnimResources.getAnimation(of(animationId));

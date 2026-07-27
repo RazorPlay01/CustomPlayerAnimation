@@ -5,6 +5,7 @@ package com.github.razorplay01.cpa.platform.neoforge;
 /*import com.github.razorplay01.cpa.platform.Platform;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.fml.loading.VersionInfo;
 
 public class NeoforgePlatform implements Platform {
 

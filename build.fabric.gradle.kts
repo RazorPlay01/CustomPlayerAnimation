@@ -1,34 +1,47 @@
 plugins {
 	id("mod-platform")
-	id("net.fabricmc.fabric-loom-remap")
+	id("dev.kikugie.loom-back-compat")
+}
+
+stonecutter {
+	val (version, loader) = current.project.split('-', limit = 2)
+	properties.tags(version, loader)
+
+	replacements.string(current.parsed >= "1.21.11") {
+		replace("ResourceLocation", "Identifier")
+		replace("location()", "identifier()")
+	}
+	replacements.string(current.parsed >= "26.1.2") {
+		replace("FabricDataOutput", "FabricPackOutput")
+	}
 }
 
 platform {
 	loader = "fabric"
 	dependencies {
 		required("minecraft") {
-			versionRange = ">=${prop("deps.minecraft")}"
+			fabricLikeVersionRange = prop("deps.minecraft")
 		}
 		required("fabric-api") {
 			slug("fabric-api")
-			versionRange = ">=${prop("deps.fabric-api")}"
+			fabricLikeVersionRange = ">=${prop("deps.fabric-api")}"
 		}
 		required("fabricloader") {
-			versionRange = ">=${libs.fabric.loader.get().version}"
+			fabricLikeVersionRange = ">=${prop("deps.fabric-loader")}"
 		}
 		optional("modmenu") {}
 		required("cloth-config") {
 			modrinth = "9s6osm5g"
 			curseforge = "348521"
 			slug("cloth-config")
-			versionRange = ">=${prop("deps.cloth-config")}"
+			fabricLikeVersionRange = ">=${prop("deps.cloth-config")}"
 		}
 		if (hasProperty("deps.player_animation_library")) {
 			required("player_animation_library") {
 				modrinth = "ha1mEyJS"
 				curseforge = "1283899"
 				slug("player-animation-library")
-				versionRange = ">=${prop("deps.player_animation_library")}"
+				fabricLikeVersionRange = ">=${prop("deps.player_animation_library")}"
 			}
 		}
 		if (hasProperty("deps.player_animator")) {
@@ -36,14 +49,14 @@ platform {
 				modrinth = "gedNE4y2"
 				curseforge = "658587"
 				slug("playeranimator")
-				versionRange = ">=${prop("deps.player_animator")}"
+				fabricLikeVersionRange = ">=${prop("deps.player_animator")}"
 			}
 		}
 	}
 }
 
 loom {
-	accessWidenerPath = rootProject.file("src/main/resources/aw/${stonecutter.current.version}.accesswidener")
+	accessWidenerPath = rootProject.file("src/main/resources/aw/${sc.current.version}.accesswidener")
 	runs.named("client") {
 		client()
 		ideConfigGenerated(true)
@@ -63,8 +76,7 @@ loom {
 
 fabricApi {
 	configureDataGeneration {
-		outputDirectory =
-			file("${rootDir}/versions/datagen/${stonecutter.current.version.split("-")[0]}/src/main/generated")
+		outputDirectory = file("${rootDir}/versions/datagen/${sc.current.version.split("-")[0]}/src/main/generated")
 		client = true
 	}
 }
@@ -78,42 +90,36 @@ repositories {
 	strictMaven("https://maven.kosmx.dev/")
 }
 
+configurations.all {
+	resolutionStrategy {
+		force("net.fabricmc:fabric-loader:${prop("deps.fabric-loader")}")
+	}
+}
+
 dependencies {
 	minecraft("com.mojang:minecraft:${prop("deps.minecraft")}")
-	mappings(
-		loom.layered {
+	if (sc.current.parsed < "26") {
+		mappings(loom.layered {
 			officialMojangMappings()
-			if (hasProperty("deps.parchment")) parchment("org.parchmentmc.data:parchment-${prop("deps.parchment")}@zip")
+			if (hasProperty("deps.parchment"))
+				parchment("org.parchmentmc.data:parchment-${prop("deps.parchment")}@zip")
 		})
-	modImplementation(libs.fabric.loader)
-	implementation(libs.moulberry.mixinconstraints)
-	include(libs.moulberry.mixinconstraints)
+	}
+	modImplementation("net.fabricmc:fabric-loader:${prop("deps.fabric-loader")}")
+	// implementation(libs.moulberry.mixinconstraints)
+	// include(libs.moulberry.mixinconstraints)
 	modImplementation("net.fabricmc.fabric-api:fabric-api:${prop("deps.fabric-api")}")
 	modImplementation("com.terraformersmc:modmenu:${prop("deps.modmenu")}")
 
-	compileOnly("org.projectlombok:lombok:1.18.44")
-	annotationProcessor("org.projectlombok:lombok:1.18.44")
-
-	testCompileOnly("org.projectlombok:lombok:1.18.44")
-	testAnnotationProcessor("org.projectlombok:lombok:1.18.44")
+	compileOnly("org.projectlombok:lombok:1.18.46")
+	annotationProcessor("org.projectlombok:lombok:1.18.46")
 
 	modApi("me.shedaniel.cloth:cloth-config-fabric:${prop("deps.cloth-config")}")
-	modImplementation("maven.modrinth:carry-on:${prop("deps.carryon_version")}")
+	modCompileOnly("maven.modrinth:carry-on:${prop("deps.carryon_version")}")
 	findProperty("deps.player_animation_library")?.let { version ->
 		modImplementation("com.zigythebird.playeranim:PlayerAnimationLibFabric:$version")
 	}
 	findProperty("deps.player_animator")?.let { version ->
 		modImplementation("dev.kosmx.player-anim:player-animation-lib-fabric:$version")
-	}
-}
-
-stonecutter {
-	replacements.string(current.parsed >= "1.21.11") {
-		replace("ResourceLocation", "Identifier")
-		replace("location()", "identifier()")
-	}
-	replacements.string(current.parsed < "1.21.11") {
-		replace("Identifier", "ResourceLocation")
-		replace("identifier()", "location()")
 	}
 }

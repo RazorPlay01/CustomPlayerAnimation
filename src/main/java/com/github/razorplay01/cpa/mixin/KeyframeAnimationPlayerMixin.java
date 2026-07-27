@@ -4,7 +4,6 @@ package com.github.razorplay01.cpa.mixin;
 
 /*import com.github.razorplay01.cpa.ModTemplate;
 import com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension;
-import com.moulberry.mixinconstraints.annotations.IfModLoaded;
 import dev.kosmx.playerAnim.api.TransformType;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
 import dev.kosmx.playerAnim.core.util.Vec3f;
@@ -20,7 +19,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-@IfModLoaded(value = "player-animator")
 @Mixin(value = KeyframeAnimationPlayer.class, remap = false)
 public class KeyframeAnimationPlayerMixin implements IKeyframeAnimationPlayerExtension {
 	@Unique
