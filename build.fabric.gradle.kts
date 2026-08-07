@@ -55,6 +55,23 @@ platform {
 	}
 }
 
+mixins {
+	client {
+		always(
+			"AbstractClientPlayerEntityMixin",
+			"InventoryAccessor",
+			"ItemInHandLayerMixin",
+			"LivingEntityRendererMixin",
+			"PlayerEntityRendererMixin",
+		)
+		minVersion("1.21.9","ClientMannequinMixin")
+		minVersion("1.21.2","HumanoidRenderStateMixin")
+		minVersion("1.21.2","ItemStackRenderStateMixin")
+		minVersion("1.21.2","PlayerRendererAccesor")
+		maxVersion("1.20.1","KeyframeAnimationPlayerMixin")
+	}
+}
+
 loom {
 	accessWidenerPath = rootProject.file("src/main/resources/aw/${sc.current.version}.accesswidener")
 	runs.named("client") {

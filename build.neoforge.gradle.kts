@@ -37,6 +37,23 @@ platform {
 	}
 }
 
+mixins {
+	client {
+		always(
+			"AbstractClientPlayerEntityMixin",
+			"InventoryAccessor",
+			"ItemInHandLayerMixin",
+			"LivingEntityRendererMixin",
+			"PlayerEntityRendererMixin",
+		)
+		minVersion("1.21.9","ClientMannequinMixin")
+		minVersion("1.21.2","HumanoidRenderStateMixin")
+		minVersion("1.21.2","ItemStackRenderStateMixin")
+		minVersion("1.21.2","PlayerRendererAccesor")
+		maxVersion("1.20.1","KeyframeAnimationPlayerMixin")
+	}
+}
+
 neoForge {
 	version = prop("deps.neoforge")
 	accessTransformers.from(rootProject.file("src/main/resources/aw/${stonecutter.current.version}.cfg"))

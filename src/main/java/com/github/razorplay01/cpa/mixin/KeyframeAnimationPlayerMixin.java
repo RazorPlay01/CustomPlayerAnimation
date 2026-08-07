@@ -2,7 +2,8 @@ package com.github.razorplay01.cpa.mixin;
 
 //? if <1.21.1 {
 
-/*import com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension;
+/*import com.github.razorplay01.cpa.ModTemplate;
+import com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension;
 import dev.kosmx.playerAnim.api.TransformType;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
 import dev.kosmx.playerAnim.core.util.Vec3f;
@@ -25,9 +26,6 @@ public class KeyframeAnimationPlayerMixin implements IKeyframeAnimationPlayerExt
 
 	@Unique
 	private final Map<String, Set<String>> cpa$disabledChannels = new HashMap<>();
-
-	@Unique
-	private final ThreadLocal<Boolean> cpa$insideGetOriginal = ThreadLocal.withInitial(() -> false);
 
 	@Unique
 	private static final String CHANNEL_ROT_X = "rotX";
@@ -95,20 +93,14 @@ public class KeyframeAnimationPlayerMixin implements IKeyframeAnimationPlayerExt
 			@NotNull Vec3f value0,
 			CallbackInfoReturnable<Vec3f> cir
 	) {
-		if (cpa$insideGetOriginal.get()) {
-			return;
-		}
-
 		if (this.cpa$disabledBones.contains(modelName)) {
 			cir.setReturnValue(value0);
 			return;
 		}
-
 		Set<String> disabledChannelsForBone = this.cpa$disabledChannels.get(modelName);
 		if (disabledChannelsForBone == null || disabledChannelsForBone.isEmpty()) {
 			return;
 		}
-
 		if (type == TransformType.ROTATION) {
 			boolean disableX = disabledChannelsForBone.contains(CHANNEL_ROT_X);
 			boolean disableY = disabledChannelsForBone.contains(CHANNEL_ROT_Y);
@@ -142,11 +134,9 @@ public class KeyframeAnimationPlayerMixin implements IKeyframeAnimationPlayerExt
 	) {
 		Set<String> savedChannels = this.cpa$disabledChannels.remove(modelName);
 
-		cpa$insideGetOriginal.set(true);
 		try {
 			return player.get3DTransform(modelName, type, tickDelta, value0);
 		} finally {
-			cpa$insideGetOriginal.set(false);
 			if (savedChannels != null) {
 				this.cpa$disabledChannels.put(modelName, savedChannels);
 			}

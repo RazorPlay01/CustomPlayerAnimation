@@ -3,7 +3,7 @@ loomx.loom_version="1.16-SNAPSHOT"
 mod.id = "cpa"
 mod.name = "Custom Player Animations"
 mod.group = "com.github.razorplay01"
-mod.version = "5.9.7"
+mod.version = "5.9.8"
 mod.channel_tag = ""
 mod.description = "Improves and customizes the player's default animations."
 mod.authors = ["RazorPlay01"]
@@ -102,7 +102,7 @@ deps.carryon_version = "YypTC9By"
 
 [neoforge."26.1.2"]
 deps.minecraft = "26.1.2"
-deps.neoforge = "26.1.2.29-beta"
+deps.neoforge = "26.1.2.94"
 deps.player_animation_library = "1.2.2+mc.26.1"
 deps.cloth-config = "26.1.154"
 deps.carryon_version = "YypTC9By"
@@ -110,7 +110,7 @@ publish.additionalVersions = ["26.1.1", "26.1"]
 
 [neoforge."26.2"]
 deps.minecraft = "26.2"
-deps.neoforge = "26.1.0.19-beta"
+deps.neoforge = "26.2.0.51-beta"
 deps.player_animation_library = "1.2.4+mc.26.2"
 deps.cloth-config = "26.2.155"
 deps.carryon_version = "YypTC9By"
