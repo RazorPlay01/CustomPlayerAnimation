@@ -1,7 +1,7 @@
 package com.github.razorplay01.cpa.mixin;
 
-import com.github.razorplay01.cpa.platform.common.util.interfaces.HumanoidRenderStateAccessor;
-import com.github.razorplay01.cpa.platform.common.util.interfaces.IAnimationControl;
+import com.github.razorplay01.cpa.util.interfaces.HumanoidRenderStateAccessor;
+import com.github.razorplay01.cpa.util.interfaces.IAnimationControl;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.entity.HumanoidArm;
 import org.spongepowered.asm.mixin.Mixin;

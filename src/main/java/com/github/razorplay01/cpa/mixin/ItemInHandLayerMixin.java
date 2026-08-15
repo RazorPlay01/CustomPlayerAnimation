@@ -1,7 +1,7 @@
 package com.github.razorplay01.cpa.mixin;
 
-import com.github.razorplay01.cpa.platform.common.util.MapRenderer;
-import com.github.razorplay01.cpa.platform.common.util.interfaces.HumanoidRenderStateAccessor;
+import com.github.razorplay01.cpa.util.MapRenderer;
+import com.github.razorplay01.cpa.util.interfaces.HumanoidRenderStateAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.model.ArmedModel;
@@ -31,7 +31,7 @@ import net.minecraft.client.renderer.MultiBufferSource;*/
 //? if > 1.21.8 {
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import com.github.razorplay01.cpa.platform.common.util.interfaces.ExtendedItemStackRenderState;
+import com.github.razorplay01.cpa.util.interfaces.ExtendedItemStackRenderState;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 //?}
 

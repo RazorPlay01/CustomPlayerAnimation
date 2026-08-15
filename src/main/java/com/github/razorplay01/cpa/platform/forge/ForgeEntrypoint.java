@@ -3,7 +3,7 @@ package com.github.razorplay01.cpa.platform.forge;
 //? forge {
 
 /*import com.github.razorplay01.cpa.ModTemplate;
-import com.github.razorplay01.cpa.platform.common.config.ConfigWrapper;
+import com.github.razorplay01.cpa.config.ConfigWrapper;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ConfigScreenHandler;

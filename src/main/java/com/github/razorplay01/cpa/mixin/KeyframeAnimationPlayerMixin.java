@@ -3,7 +3,7 @@ package com.github.razorplay01.cpa.mixin;
 //? if <1.21.1 {
 
 /*import com.github.razorplay01.cpa.ModTemplate;
-import com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension;
+import com.github.razorplay01.cpa.util.interfaces.IKeyframeAnimationPlayerExtension;
 import dev.kosmx.playerAnim.api.TransformType;
 import dev.kosmx.playerAnim.api.layered.KeyframeAnimationPlayer;
 import dev.kosmx.playerAnim.core.util.Vec3f;

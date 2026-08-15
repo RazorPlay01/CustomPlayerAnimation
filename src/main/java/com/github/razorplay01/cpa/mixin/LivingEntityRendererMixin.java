@@ -1,7 +1,7 @@
 package com.github.razorplay01.cpa.mixin;
 
-import com.github.razorplay01.cpa.platform.common.util.interfaces.ExtendedItemStackRenderState;
-import com.github.razorplay01.cpa.platform.common.util.interfaces.HumanoidRenderStateAccessor;
+import com.github.razorplay01.cpa.util.interfaces.ExtendedItemStackRenderState;
+import com.github.razorplay01.cpa.util.interfaces.HumanoidRenderStateAccessor;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import net.minecraft.client.model.EntityModel;

@@ -1,15 +1,15 @@
 package com.github.razorplay01.cpa.mixin;
 
-import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
-import com.github.razorplay01.cpa.platform.common.animation.animations.AnimationProvider;
-import com.github.razorplay01.cpa.platform.common.util.PlayerData;
-import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
-import com.github.razorplay01.cpa.platform.common.util.enums.BodyParts;
-import com.github.razorplay01.cpa.platform.common.util.enums.Modifiers;
-import com.github.razorplay01.cpa.platform.common.util.interfaces.IAnimationControl;
-import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimatedPlayer;
-import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
-import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
+import com.github.razorplay01.cpa.animation.AnimationContainer;
+import com.github.razorplay01.cpa.animation.animations.AnimationProvider;
+import com.github.razorplay01.cpa.util.PlayerData;
+import com.github.razorplay01.cpa.util.enums.AnimationsId;
+import com.github.razorplay01.cpa.util.enums.BodyParts;
+import com.github.razorplay01.cpa.util.enums.Modifiers;
+import com.github.razorplay01.cpa.util.interfaces.IAnimationControl;
+import com.github.razorplay01.cpa.util.interfaces.ICustomAnimatedPlayer;
+import com.github.razorplay01.cpa.util.interfaces.ICustomAnimation;
+import com.github.razorplay01.cpa.util.records.AnimationContext;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -29,8 +29,8 @@ import java.util.*;
 
 import static com.github.razorplay01.cpa.ModTemplate.*;
 import static com.github.razorplay01.cpa.ModTemplate.getAnimation;
-import static com.github.razorplay01.cpa.platform.common.util.CustomModifiers.*;
-import static com.github.razorplay01.cpa.platform.common.util.Util.*;
+import static com.github.razorplay01.cpa.util.CustomModifiers.*;
+import static com.github.razorplay01.cpa.util.Util.*;
 import static net.minecraft.world.InteractionHand.*;
 
 //? if >=1.21.1{
@@ -176,7 +176,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 		PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(CONFIG.getOverlayAnimations().animationPriority, overlayAnimationContainer.getAnimationController());
 		PlayerAnimationAccess.getPlayerAnimLayer((AbstractClientPlayer) (Object) this).addAnimLayer(CONFIG.getSpecialAnimations().animationPriority, specialAnimationContainer.getAnimationController());
 		*///?}
-		
+
 		addModifiersToContainer(mainAnimationContainer);
 		addModifiersToContainer(overlayAnimationContainer);
 		addModifiersToContainer(specialAnimationContainer);
@@ -321,7 +321,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 		IAnimation animation = layer.getAnimation();
 
 		if (animation instanceof KeyframeAnimationPlayer player) {
-			com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension extension = (com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension) player;
+			com.github.razorplay01.cpa.util.interfaces.IKeyframeAnimationPlayerExtension extension = (com.github.razorplay01.cpa.util.interfaces.IKeyframeAnimationPlayerExtension) player;
 			extension.cpa$clearDisabledBones();
 		}
 		*///?}
@@ -357,7 +357,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 	//?}
 	//? if <1.21.1{
 	/*@Unique
-	private void cpa$preserveOnlyHeadRollLegacy(com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension extension, Set<String> disabledIds) {
+	private void cpa$preserveOnlyHeadRollLegacy(com.github.razorplay01.cpa.util.interfaces.IKeyframeAnimationPlayerExtension extension, Set<String> disabledIds) {
 		String headId = BodyParts.HEAD.getPartId();
 
 		if (disabledIds.contains(headId)) {
@@ -396,7 +396,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 		IAnimation animation = layer.getAnimation();
 
 		if (animation instanceof KeyframeAnimationPlayer player) {
-			com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension extension = (com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension) player;
+			com.github.razorplay01.cpa.util.interfaces.IKeyframeAnimationPlayerExtension extension = (com.github.razorplay01.cpa.util.interfaces.IKeyframeAnimationPlayerExtension) player;
 			extension.cpa$clearDisabledBones();
 			extension.cpa$clearAllDisabledChannels();
 			extension.cpa$setDisabledBones(disabledIds);
@@ -426,7 +426,7 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 		IAnimation animation = layer.getAnimation();
 
 		if (animation instanceof KeyframeAnimationPlayer player) {
-			com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension extension = (com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension) player;
+			com.github.razorplay01.cpa.util.interfaces.IKeyframeAnimationPlayerExtension extension = (com.github.razorplay01.cpa.util.interfaces.IKeyframeAnimationPlayerExtension) player;
 			extension.cpa$setDisabledBones(remainingDisabled);
 		}
 		*///?}

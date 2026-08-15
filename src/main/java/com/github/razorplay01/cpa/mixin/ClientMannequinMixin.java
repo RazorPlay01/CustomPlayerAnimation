@@ -2,16 +2,16 @@ package com.github.razorplay01.cpa.mixin;
 
 //? if >=1.21.9 {
 
-import com.github.razorplay01.cpa.platform.common.animation.AnimationContainer;
-import com.github.razorplay01.cpa.platform.common.animation.animations.AnimationProvider;
-import com.github.razorplay01.cpa.platform.common.util.PlayerData;
-import com.github.razorplay01.cpa.platform.common.util.enums.AnimationsId;
-import com.github.razorplay01.cpa.platform.common.util.enums.BodyParts;
-import com.github.razorplay01.cpa.platform.common.util.enums.Modifiers;
-import com.github.razorplay01.cpa.platform.common.util.interfaces.IAnimationControl;
-import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimatedPlayer;
-import com.github.razorplay01.cpa.platform.common.util.interfaces.ICustomAnimation;
-import com.github.razorplay01.cpa.platform.common.util.records.AnimationContext;
+import com.github.razorplay01.cpa.animation.AnimationContainer;
+import com.github.razorplay01.cpa.animation.animations.AnimationProvider;
+import com.github.razorplay01.cpa.util.PlayerData;
+import com.github.razorplay01.cpa.util.enums.AnimationsId;
+import com.github.razorplay01.cpa.util.enums.BodyParts;
+import com.github.razorplay01.cpa.util.enums.Modifiers;
+import com.github.razorplay01.cpa.util.interfaces.IAnimationControl;
+import com.github.razorplay01.cpa.util.interfaces.ICustomAnimatedPlayer;
+import com.github.razorplay01.cpa.util.interfaces.ICustomAnimation;
+import com.github.razorplay01.cpa.util.records.AnimationContext;
 import com.zigythebird.playeranim.api.PlayerAnimationAccess;
 import com.zigythebird.playeranimcore.animation.AnimationController;
 import com.zigythebird.playeranimcore.animation.RawAnimation;
@@ -42,8 +42,8 @@ import java.util.Set;
 
 import static com.github.razorplay01.cpa.ModTemplate.*;
 import static com.github.razorplay01.cpa.ModTemplate.getAnimation;
-import static com.github.razorplay01.cpa.platform.common.util.CustomModifiers.*;
-import static com.github.razorplay01.cpa.platform.common.util.Util.*;
+import static com.github.razorplay01.cpa.util.CustomModifiers.*;
+import static com.github.razorplay01.cpa.util.Util.*;
 import static net.minecraft.world.InteractionHand.*;
 
 @Mixin(ClientMannequin.class)

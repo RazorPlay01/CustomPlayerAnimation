@@ -1,0 +1,39 @@
+package com.github.razorplay01.cpa.animation.animations.base;
+
+import com.github.razorplay01.cpa.animation.AnimationContainer;
+import com.github.razorplay01.cpa.util.enums.AnimationsId;
+import com.github.razorplay01.cpa.util.interfaces.ICustomAnimation;
+import com.github.razorplay01.cpa.util.records.AnimationContext;
+import net.minecraft.world.entity.player.Player;
+
+import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
+import static com.github.razorplay01.cpa.util.Util.configureAnimationContainer;
+
+public class CreativeFlyIdleAnimation implements ICustomAnimation {
+    @Override
+    public void playAnimation(AnimationContext context) {
+        playFlyIdleCreativeAnimation(context);
+    }
+
+    @Override
+    public boolean shouldPlayAnimation(AnimationContext context) {
+		if (!(context.player() instanceof Player)) return false;
+		//? if >=1.21.11{
+		if (context.player() instanceof net.minecraft.world.entity.decoration.Mannequin) return false;
+		//?}
+		Player player =  (Player) context.player();
+		return player.getAbilities().flying &&
+				!player.isPassenger() &&
+				player.isCreative();
+    }
+
+    private static void playFlyIdleCreativeAnimation(AnimationContext context) {
+        if (!CONFIG.getMainAnimations().idleAnimations.idleCreativeFlyingAnimationConfig.isEnabled()) {
+            context.mainAnimationContainer().disableAnimation();
+        } else {
+            configureAnimationContainer(CONFIG.getMainAnimations().idleAnimations.idleCreativeFlyingAnimationConfig, context.mainAnimationContainer());
+
+			AnimationContainer.setAnimation(context.mainAnimationContainer(), AnimationsId.IDLE_CREATIVE_FLY_ANIMATION);
+        }
+    }
+}

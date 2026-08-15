@@ -1,8 +1,8 @@
 package com.github.razorplay01.cpa;
 
 import com.github.razorplay01.cpa.platform.Platform;
-import com.github.razorplay01.cpa.platform.common.config.ClientConfig;
-import com.github.razorplay01.cpa.platform.common.config.ConfigWrapper;
+import com.github.razorplay01.cpa.config.ClientConfig;
+import com.github.razorplay01.cpa.config.ConfigWrapper;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;

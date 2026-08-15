@@ -7,7 +7,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
-import com.github.razorplay01.cpa.platform.common.config.ConfigWrapper;
+import com.github.razorplay01.cpa.config.ConfigWrapper;
 
 import java.util.function.Supplier;
 
