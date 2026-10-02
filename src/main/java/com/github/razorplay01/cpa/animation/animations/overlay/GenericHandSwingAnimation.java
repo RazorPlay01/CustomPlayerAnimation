@@ -1,5 +1,6 @@
 package com.github.razorplay01.cpa.animation.animations.overlay;
 
+import com.github.razorplay01.cpa.util.Util;
 import com.github.razorplay01.cpa.util.enums.BodyParts;
 import com.github.razorplay01.cpa.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.util.records.AnimationContext;
@@ -7,6 +8,8 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.*;
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
+import static com.github.razorplay01.cpa.util.Util.isAxe;
+import static com.github.razorplay01.cpa.util.Util.isShovel;
 
 public class GenericHandSwingAnimation implements ICustomAnimation {
 	// Rastrear si el brazo estaba deshabilitado en el tick anterior
@@ -27,14 +30,15 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
 		}
 
 		// Si el jugador está golpeando, deshabilitar el brazo correspondiente
-		if (context.player().swinging) {
-			BodyParts swingingArm = context.player().swingingArm == context.playerData().getRightHand()
+		if (Util.isSwinging(context.player())) {
+			InteractionHand swingingHand = Util.getSwingingHand(context.player());
+			BodyParts swingingArm = swingingHand == context.playerData().getRightHand()
 					? BodyParts.RIGHT_ARM
 					: BodyParts.LEFT_ARM;
 			context.iAnimationControl().disableBodyPartAnimationInAllContainers(swingingArm);
 			wasArmDisabled = true;
-			lastSwingingArm = context.player().swingingArm;
-		} else if (wasArmDisabled && !context.player().swinging) {
+			lastSwingingArm = swingingHand;
+		} else if (wasArmDisabled && !Util.isSwinging(context.player())) {
 			// Si el jugador ya no está golpeando pero el brazo estaba deshabilitado
 			wasArmDisabled = false;
 			needToForceEnableArm = true;
@@ -52,17 +56,17 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
 	@Override
 	public boolean shouldPlayAnimation(AnimationContext context) {
 		// Siempre verificar para manejar la reactivación del brazo incluso cuando ya no está golpeando
-		boolean isSwinging = context.player().swinging &&
+		boolean isSwinging = Util.isSwinging(context.player()) &&
 				!(CONFIG.getOverlayAnimations().swordAnimations.isEnabled() &&
 						//? if < 1.21.2 {
-						/*context.player().getMainHandItem().getItem() instanceof net.minecraft.world.item.SwordItem ||
-						*///?}
-						//? if >= 1.21.2 {
-						context.player().getMainHandItem().getItem().getDefaultInstance().getComponents().has(net.minecraft.core.component.DataComponents.WEAPON) ||
+						context.player().getMainHandItem().getItem() instanceof net.minecraft.world.item.SwordItem ||
 						//?}
+						//? if >= 1.21.2 {
+						/*context.player().getMainHandItem().getItem().getDefaultInstance().getComponents().has(net.minecraft.core.component.DataComponents.WEAPON) ||
+						*///?}
 						context.player().getMainHandItem().getItem() instanceof TridentItem) &&
 				!(CONFIG.getOverlayAnimations().toolsAnimations.axeAnimationsConfig.isEnabled() &&
-						context.player().getMainHandItem().getItem() instanceof AxeItem) &&
+						isAxe(context.player().getMainHandItem())) &&
 				//? if >=1.21.1{
 				!(CONFIG.getOverlayAnimations().toolsAnimations.pickaxeAnimationsConfig.isEnabled() &&
 						context.player().getMainHandItem().getItem().getDefaultInstance().getComponents().has(net.minecraft.core.component.DataComponents.TOOL)) &&
@@ -71,7 +75,7 @@ public class GenericHandSwingAnimation implements ICustomAnimation {
 				/*!(CONFIG.getOverlayAnimations().toolsAnimations.pickaxeAnimationsConfig.isEnabled() && context.player().getMainHandItem().getItem() instanceof PickaxeItem) &&
 				 *///?}
 				!(CONFIG.getOverlayAnimations().toolsAnimations.shovelAnimationsConfig.isEnabled() &&
-						context.player().getMainHandItem().getItem() instanceof ShovelItem);
+						isShovel(context.player().getMainHandItem()));
 
 		// También devolver true si necesitamos reactivar un brazo que estaba previamente deshabilitado
 		return isSwinging || wasArmDisabled || needToForceEnableArm;

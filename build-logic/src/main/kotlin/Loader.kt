@@ -54,7 +54,7 @@ sealed class Loader(val id: String) {
 					"main" to listOf("${ctx.modGroup}.${ctx.modId}.platform.fabric.FabricEntrypoint"),
 					"client" to listOf("${ctx.modGroup}.${ctx.modId}.platform.fabric.FabricClientEntrypoint"),
 					"fabric-datagen" to listOf("${ctx.modGroup}.${ctx.modId}.platform.fabric.datagen.FabricDataGeneratorEntrypoint"),
-					"modmenu" to listOf("com.github.razorplay01.cpa.platform.common.config.ModMenuConfig")
+					"modmenu" to listOf("com.github.razorplay01.cpa.config.ModMenuConfig")
 				),
 				mixins = listOf("${ctx.modId}.mixins.json"),
 				depends = ctx.extension.dependencies.required.associate { it.modid.get() to it.fabricLikeVersionRange.get() },

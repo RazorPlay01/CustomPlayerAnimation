@@ -1,7 +1,7 @@
 package com.github.razorplay01.cpa.animation.animations.compat;
 //? if >= 1.20 && < 26 {
 
-/*import com.github.razorplay01.cpa.ModTemplate;
+import com.github.razorplay01.cpa.ModTemplate;
 import com.github.razorplay01.cpa.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.util.records.AnimationContext;
 import net.minecraft.world.entity.player.Player;
@@ -24,4 +24,4 @@ public class CarryOnCompatAnimation implements ICustomAnimation {
 	}
 
 }
-*///?}
+//?}

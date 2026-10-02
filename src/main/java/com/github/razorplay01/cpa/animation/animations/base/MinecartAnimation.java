@@ -5,10 +5,10 @@ import com.github.razorplay01.cpa.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.util.records.AnimationContext;
 //? if <= 1.21.10 {
-/*import net.minecraft.world.entity.vehicle.Minecart;
-*///?}else{
-import net.minecraft.world.entity.vehicle.minecart.Minecart;
-//?}
+import net.minecraft.world.entity.vehicle.Minecart;
+//?}else{
+/*import net.minecraft.world.entity.vehicle.minecart.Minecart;
+*///?}
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
 import static com.github.razorplay01.cpa.util.Util.configureAnimationContainer;

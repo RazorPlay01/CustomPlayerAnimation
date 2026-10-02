@@ -6,7 +6,7 @@ import com.github.razorplay01.cpa.config.ConfigWrapper;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +35,7 @@ import com.github.razorplay01.cpa.platform.fabric.FabricPlatform;
 public class ModTemplate {
 
 	public static final String MOD_ID = /*$ mod_id*/ "cpa";
-	public static final String MOD_VERSION = /*$ mod_version*/ "5.9.8";
+	public static final String MOD_VERSION = /*$ mod_version*/ "5.9.9";
 	public static final String MOD_FRIENDLY_NAME = /*$ mod_name*/ "Custom Player Animations";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
@@ -44,9 +44,9 @@ public class ModTemplate {
 	public static ClientConfig CONFIG;
 
 	//? if >=1.21.1{
-	public static final Identifier MAIN_ANIMATION_CONTAINER_LAYER_ID = of("main_animation_container");
-	public static final Identifier OVERLAY_ANIMATION_CONTAINER_LAYER_ID = of("overlay_animation_container");
-	public static final Identifier SPECIAL_ANIMATION_CONTAINER_LAYER_ID = of("special_animation_container");
+	public static final ResourceLocation MAIN_ANIMATION_CONTAINER_LAYER_ID = of("main_animation_container");
+	public static final ResourceLocation OVERLAY_ANIMATION_CONTAINER_LAYER_ID = of("overlay_animation_container");
+	public static final ResourceLocation SPECIAL_ANIMATION_CONTAINER_LAYER_ID = of("special_animation_container");
 	//?}
 
 	public static void onInitialize() {
@@ -98,14 +98,14 @@ public class ModTemplate {
 		return PlayerAnimResources.getAnimation(of(animationId));
 	}
 
-	public static Identifier of(String path) {
-		return Identifier.fromNamespaceAndPath(MOD_ID, path);
+	public static ResourceLocation of(String path) {
+		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
 	}
 	//?}
 
 	//? if <1.21.1{
 	/*public static KeyframeAnimation getAnimation(String animationId) {
-		KeyframeAnimation playable = PlayerAnimationRegistry.getAnimation(new Identifier(MOD_ID, animationId));
+		KeyframeAnimation playable = PlayerAnimationRegistry.getAnimation(new ResourceLocation(MOD_ID, animationId));
 		KeyframeAnimation anim = playable instanceof KeyframeAnimation ? playable : null;
 		if (anim == null) {
 			LOGGER.error("Animation {} not found.", animationId);

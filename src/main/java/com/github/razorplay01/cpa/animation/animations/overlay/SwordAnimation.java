@@ -31,7 +31,7 @@ public class SwordAnimation extends BaseToolSwingAnimation {
 
 	@Override
 	protected boolean isCorrectItem(ItemStack itemStack) {
-		if (isAxe(itemStack) || isPickaxe(itemStack) || isShovel(itemStack)/*? if >=1.21.11 {*/ || isSpear(itemStack)/*?}*/)
+		if (isAxe(itemStack) || isPickaxe(itemStack) || isShovel(itemStack)/*? if >=1.21.11 {*/ /*|| isSpear(itemStack)*//*?}*/)
 			return false;
 		return isSword(itemStack) || itemStack.getItem() instanceof TridentItem;
 	}

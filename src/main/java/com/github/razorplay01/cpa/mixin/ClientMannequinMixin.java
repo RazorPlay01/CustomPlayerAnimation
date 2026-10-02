@@ -2,7 +2,7 @@ package com.github.razorplay01.cpa.mixin;
 
 //? if >=1.21.9 {
 
-import com.github.razorplay01.cpa.animation.AnimationContainer;
+/*import com.github.razorplay01.cpa.animation.AnimationContainer;
 import com.github.razorplay01.cpa.animation.animations.AnimationProvider;
 import com.github.razorplay01.cpa.util.PlayerData;
 import com.github.razorplay01.cpa.util.enums.AnimationsId;
@@ -258,7 +258,7 @@ public abstract class ClientMannequinMixin extends Mannequin implements IAnimati
 	}
 	//?}
 	//? if <1.21.1{
-	/*@Unique
+	/^@Unique
 	private void cpa$preserveOnlyHeadRollLegacy(com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension extension, Set<String> disabledIds) {
 		String headId = BodyParts.HEAD.getPartId();
 
@@ -272,7 +272,7 @@ public abstract class ClientMannequinMixin extends Mannequin implements IAnimati
 
 		extension.cpa$setDisabledBoneChannels(headId, disabledChannels);
 	}
-	*///?}
+	^///?}
 
 	@Unique
 	private void cpa$applyDisableToContainer(AnimationContainer container) {
@@ -294,7 +294,7 @@ public abstract class ClientMannequinMixin extends Mannequin implements IAnimati
 		//?}
 
 		//? if <1.21.1{
-		/*ModifierLayer<?> layer = container.getAnimationController();
+		/^ModifierLayer<?> layer = container.getAnimationController();
 		IAnimation animation = layer.getAnimation();
 
 		if (animation instanceof KeyframeAnimationPlayer player) {
@@ -304,7 +304,7 @@ public abstract class ClientMannequinMixin extends Mannequin implements IAnimati
 			extension.cpa$setDisabledBones(disabledIds);
 			cpa$preserveOnlyHeadRollLegacy(extension, disabledIds);
 		}
-		*///?}
+		^///?}
 	}
 
 	@Unique
@@ -321,7 +321,7 @@ public abstract class ClientMannequinMixin extends Mannequin implements IAnimati
 		//?}
 
 		//? if <1.21.1{
-		/*Set<String> remainingDisabled = new HashSet<>(container.getDisabledBoneIds());
+		/^Set<String> remainingDisabled = new HashSet<>(container.getDisabledBoneIds());
 		remainingDisabled.remove(partIdToEnable);
 
 		ModifierLayer<?> layer = container.getAnimationController();
@@ -331,7 +331,7 @@ public abstract class ClientMannequinMixin extends Mannequin implements IAnimati
 			com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension extension = (com.github.razorplay01.cpa.platform.common.util.interfaces.IKeyframeAnimationPlayerExtension) player;
 			extension.cpa$setDisabledBones(remainingDisabled);
 		}
-		*///?}
+		^///?}
 	}
 
 	@Unique
@@ -409,4 +409,4 @@ public abstract class ClientMannequinMixin extends Mannequin implements IAnimati
 		}
 	}
 }
-//?}
+*///?}

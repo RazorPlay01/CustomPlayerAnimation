@@ -3,7 +3,6 @@ package com.github.razorplay01.cpa.animation.animations.overlay;
 import com.github.razorplay01.cpa.config.ClientConfig;
 import com.github.razorplay01.cpa.util.enums.AnimationsId;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ShovelItem;
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
 import static com.github.razorplay01.cpa.util.Util.isShovel;
@@ -11,7 +10,7 @@ import static com.github.razorplay01.cpa.util.Util.isShovel;
 public class ShovelAnimation extends BaseToolSwingAnimation {
 	@Override
 	protected boolean isCorrectItem(ItemStack itemStack) {
-		return isShovel(itemStack) && itemStack.getItem() instanceof ShovelItem;
+		return isShovel(itemStack) /*? <26.3 { */&& itemStack.getItem() instanceof net.minecraft.world.item.ShovelItem/*?} */;
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package com.github.razorplay01.cpa.animation.animations.overlay;
 
 import com.github.razorplay01.cpa.config.ClientConfig;
 import com.github.razorplay01.cpa.util.enums.AnimationsId;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 
 import static com.github.razorplay01.cpa.ModTemplate.CONFIG;
@@ -11,7 +10,7 @@ import static com.github.razorplay01.cpa.util.Util.isAxe;
 public class AxeAnimation extends BaseToolSwingAnimation {
 	@Override
 	protected boolean isCorrectItem(ItemStack itemStack) {
-		return isAxe(itemStack) && itemStack.getItem() instanceof AxeItem;
+		return isAxe(itemStack) /*? <26.3 { */&& itemStack.getItem() instanceof net.minecraft.world.item.AxeItem/*?} */;
 	}
 
 	@Override

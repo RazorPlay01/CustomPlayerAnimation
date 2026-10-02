@@ -1,6 +1,7 @@
 package com.github.razorplay01.cpa.animation.animations.overlay;
 
 import com.github.razorplay01.cpa.config.ClientConfig;
+import com.github.razorplay01.cpa.util.Util;
 import com.github.razorplay01.cpa.util.enums.AnimationsId;
 import com.github.razorplay01.cpa.util.enums.Modifiers;
 import com.github.razorplay01.cpa.util.interfaces.ICustomAnimation;
@@ -97,9 +98,9 @@ public abstract class BaseToolSwingAnimation implements ICustomAnimation {
 	 * Verifica si el jugador está balanceando esta herramienta
 	 */
 	protected boolean isPlayerSwingingTool(AnimationContext context) {
-		return context.player().swinging &&
+		return Util.isSwinging(context.player()) &&
 				isCorrectItem(context.player().getMainHandItem()) &&
-				context.player().swingingArm.equals(MAIN_HAND);
+				Util.getSwingingHand(context.player()).equals(MAIN_HAND);
 	}
 
 	/**

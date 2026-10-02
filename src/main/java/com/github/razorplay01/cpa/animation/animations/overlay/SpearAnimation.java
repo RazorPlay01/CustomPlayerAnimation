@@ -1,5 +1,5 @@
 //? if >= 1.21.11 {
-package com.github.razorplay01.cpa.animation.animations.overlay;
+/*package com.github.razorplay01.cpa.animation.animations.overlay;
 
 import com.github.razorplay01.cpa.util.Util;
 import com.github.razorplay01.cpa.util.enums.AnimationsId;
@@ -7,6 +7,7 @@ import com.github.razorplay01.cpa.util.enums.Modifiers;
 import com.github.razorplay01.cpa.util.interfaces.ICustomAnimation;
 import com.github.razorplay01.cpa.util.records.AnimationContext;
 import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Avatar;
 import net.minecraft.world.item.ItemStack;
 
@@ -25,6 +26,9 @@ public class SpearAnimation implements ICustomAnimation {
 	private final Map<UUID, Boolean> animationsInProgress = new HashMap<>();
 	private final Map<UUID, Long> animationStartTimes = new HashMap<>();
 	private final Map<UUID, Float> animationDurations = new HashMap<>();
+	// Última mano con la que el jugador ha dado un golpe (jab). En 26.3 el SwingState
+	// se limpia al terminar el golpe, así que hay que recordarla para reproducir la animación.
+	private final Map<UUID, InteractionHand> lastSwingingHand = new HashMap<>();
 
 	@Override
 	public void playAnimation(AnimationContext context) {
@@ -40,12 +44,24 @@ public class SpearAnimation implements ICustomAnimation {
 
 		boolean isRightHand;
 
+		// Recordar la mano del golpe mientras está activo
+		if (Util.isSwinging(context.player())) {
+			InteractionHand swingingHand = Util.getSwingingHand(context.player());
+			if (swingingHand != null) {
+				lastSwingingHand.put(uuid, swingingHand);
+			}
+		}
+
 		if (context.player().isUsingItem()) {
 			// Charge: usamos la mano con la que está usando
 			isRightHand = context.player().getUsedItemHand().equals(context.playerData().getRightHand());
 		} else {
-			// Jab: usamos la mano con la que está swinging
-			isRightHand = context.player().swingingArm.equals(context.playerData().getRightHand());
+			// Jab: usamos la mano con la que está swingando (o la última registrada)
+			InteractionHand swingingHand = Util.getSwingingHand(context.player());
+			if (swingingHand == null) {
+				swingingHand = lastSwingingHand.getOrDefault(uuid, context.playerData().getRightHand());
+			}
+			isRightHand = swingingHand.equals(context.playerData().getRightHand());
 		}
 
 
@@ -94,7 +110,7 @@ public class SpearAnimation implements ICustomAnimation {
 		if (!Util.isSpear(itemStack)) return false;
 
 		// Jab (clic izquierdo)
-		if (player.swinging && player.swingingArm == MAIN_HAND) {
+		if (Util.isSwinging(player) && Util.getSwingingHand(player) == MAIN_HAND) {
 			return true;
 		}
 
@@ -133,4 +149,4 @@ public class SpearAnimation implements ICustomAnimation {
 		}
 	}
 }
-//?}
+*///?}

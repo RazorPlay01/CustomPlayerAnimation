@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.Objects;
 import java.util.Set;
@@ -52,10 +52,10 @@ public class UpHandAnimation implements ICustomAnimation {
 
 	private static HandStates determineHandStates(
 			//? if <= 1.21.8 {
-			/*net.minecraft.client.player.AbstractClientPlayer player
-			*///?} else {
-			net.minecraft.world.entity.Avatar player
-			//?}
+			net.minecraft.client.player.AbstractClientPlayer player
+			//?} else {
+			/*net.minecraft.world.entity.Avatar player
+			*///?}
 			) {
 		return new HandStates(
 				isHandUp(player.getMainHandItem()),
@@ -123,35 +123,35 @@ public class UpHandAnimation implements ICustomAnimation {
 	public static Set<Item> getUpHandItems() {
 		return CONFIG.getSpecialAnimations().upHandItemIds.stream()
 				.map(idStr -> {
-					Identifier id;
+					ResourceLocation id;
 					if (idStr.contains(":")) {
-						id = Identifier.tryParse(idStr);
+						id = ResourceLocation.tryParse(idStr);
 					} else {
 						//? if >=1.21.1{
-						id = Identifier.fromNamespaceAndPath("minecraft", idStr.toLowerCase());
+						id = ResourceLocation.fromNamespaceAndPath("minecraft", idStr.toLowerCase());
 						//?}
 						//? if <1.21.1{
-						/*id = new Identifier("minecraft", idStr.toLowerCase());
+						/*id = new ResourceLocation("minecraft", idStr.toLowerCase());
 						*///?}
 					}
 
 
 					//? if <= 1.21.1 {
-					/*if (id != null) {
+					if (id != null) {
 						Item item = BuiltInRegistries.ITEM.get(id);
 						if (item != Items.AIR) {
 							return item;
 						}
 					}
-					*///?}
+					//?}
 					//? if >= 1.21.2 {
-					if (id != null && BuiltInRegistries.ITEM.get(id).isPresent()) {
+					/*if (id != null && BuiltInRegistries.ITEM.get(id).isPresent()) {
 						Item item = BuiltInRegistries.ITEM.get(id).get().value();
 						if (item != Items.AIR) {
 							return item;
 						}
 					}
-					//?}
+					*///?}
 
 					return null;
 				})

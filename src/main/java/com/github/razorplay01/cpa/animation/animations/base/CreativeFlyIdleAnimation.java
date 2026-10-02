@@ -19,8 +19,8 @@ public class CreativeFlyIdleAnimation implements ICustomAnimation {
     public boolean shouldPlayAnimation(AnimationContext context) {
 		if (!(context.player() instanceof Player)) return false;
 		//? if >=1.21.11{
-		if (context.player() instanceof net.minecraft.world.entity.decoration.Mannequin) return false;
-		//?}
+		/*if (context.player() instanceof net.minecraft.world.entity.decoration.Mannequin) return false;
+		*///?}
 		Player player =  (Player) context.player();
 		return player.getAbilities().flying &&
 				!player.isPassenger() &&
