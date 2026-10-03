@@ -38,6 +38,14 @@ deps.player_animator = "1.0.2-rc1+1.20"
 deps.cloth-config = "11.1.136"
 deps.carryon_version = "Mkla4B3q"
 
+[fabric."1.20.4"]
+deps.minecraft = "1.20.4"
+deps.fabric-api = "0.97.3+1.20.4"
+deps.modmenu = "9.0.0"
+deps.player_animator = "1.0.2-rc1+1.20.4"
+deps.cloth-config = "13.0.138"
+deps.carryon_version = "EvDx8gEe"
+
 [fabric."1.21.1"]
 deps.minecraft = "1.21.1"
 deps.fabric-api = "0.116.7+1.21.1"
@@ -91,6 +99,13 @@ deps.forge = "47.4.10"
 deps.player_animator = "1.0.2-rc1+1.20"
 deps.cloth-config = "11.1.136"
 deps.carryon_version = "edGQD16r"
+
+[forge."1.20.4"]
+deps.minecraft = "1.20.4"
+deps.forge = "49.2.0"
+deps.player_animator = "1.0.2-rc1+1.20.4"
+deps.cloth-config = "13.0.138"
+deps.carryon_version = "8a6KfB5j"
 
 [neoforge]
 
