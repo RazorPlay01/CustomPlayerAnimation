@@ -279,18 +279,33 @@ public abstract class ClientMannequinMixin extends Mannequin implements IAnimati
 		Set<String> disabledIds = container.getDisabledBoneIds();
 
 		//? if >=1.21.1{
+		// El post-animation-setup-consumer SOLO se ejecuta cuando la API inicializa una nueva
+		// animación (setupNewAnimation). Mientras haya una animación activa, deshabilitar un bone
+		// aquí no surte efecto hasta que la animación cambie. Además de registrar el consumer
+		// (para reaplicarlo tras cada setup), aplicamos el deshabilitado directamente a los bones
+		// en cada tick. getBone() está pensado justamente para deshabilitar/habilitar ejes de un
+		// bone en medio de una animación, así que el efecto es inmediato y continuo.
+		var cpa$controller = container.getAnimationController();
 		if (disabledIds.isEmpty()) {
-			container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
+			cpa$controller.setPostAnimationSetupConsumer(getBoneFunc -> {
 				cpa$preserveOnlyHeadRoll(getBoneFunc, disabledIds);
 			});
 		} else {
-			container.getAnimationController().setPostAnimationSetupConsumer(getBoneFunc -> {
+			cpa$controller.setPostAnimationSetupConsumer(getBoneFunc -> {
 				for (String boneId : disabledIds) {
 					getBoneFunc.apply(boneId).setEnabled(false);
 					cpa$preserveOnlyHeadRoll(getBoneFunc, disabledIds);
 				}
 			});
 		}
+
+		for (String boneId : disabledIds) {
+			var cpa$bone = cpa$controller.getBone(boneId);
+			if (cpa$bone != null) {
+				cpa$bone.setEnabled(false);
+			}
+		}
+		cpa$preserveOnlyHeadRoll(cpa$controller::getBone, disabledIds);
 		//?}
 
 		//? if <1.21.1{
